@@ -1,0 +1,16 @@
+{
+  "name": "cinevore",
+  "version": "1.0.0",
+  "description": "Le réseau social des cinévores",
+  "main": "",
+  "scripts": {
+    "dev": "concurrently \"cd cinevore-server && pnpm dev\" \"cd cinevore-client && pnpm dev\"",
+    "start": "concurrently \"cd cinevore-server && pnpm start\" \"cd cinevore-client && pnpm start\""
+  },
+  "keywords": [],
+  "author": "Theodros Yimer",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.0.1"
+  }
+}
