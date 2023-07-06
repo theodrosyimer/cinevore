@@ -9,7 +9,7 @@ import { Film } from '../models/film.js'
 export async function getFilms(req, res) {
   const [films, fieldData] = await Film.fetchAll().catch(error => {
     console.log(error)
-    return res.sendStatus(500)
+    return res.status(500)
   })
 
   if (!films.length) {

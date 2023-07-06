@@ -27,15 +27,18 @@ npm start
 
 ## Technologies used
 
-- [git](https://git-scm.com/)
-- [GitHub](https://github.com)
-- NextJS
-- React
-- Tailwind
+- [TypeScript](https://www.typescriptlang.org/)
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
 - [Node.js](https://nodejs.org/en/)
 - [Express](https://expressjs.com/)
 - [MySQL](https://www.mysql.com/)
+
+### Dependencies
+
+- drizzle-orm
+- [mysql2](https://www.npmjs.com/package/mysql2)
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-- [dotenv-vault-core](https://www.npmjs.com/package/dotenv-vault-core)
-- [vite](https://vitejs.dev/)
+- [multer](https://www.npmjs.com/package/multer)
