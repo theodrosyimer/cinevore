@@ -1,4 +1,4 @@
-import Films from "@/components/FilmsList"
+import Films from "@/components/films-list"
 
 export default function UserFilmsPage({ params }: {
   params: {
