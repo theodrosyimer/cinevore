@@ -1,11 +1,13 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-nested-ternary */
+import type { NextFunction, Request, Response } from 'express'
+
 import jwt from 'jsonwebtoken'
 
 import { hasNullValue } from '../lib/misc.js'
 
 // TODO: handle param as an input to set expiration time
-export function generateToken(req, res, next) {
+export function generateToken(req: Request, res: Response, next: NextFunction) {
   const hasNoDataInput = !Object.values(req.body).length
 
   if (hasNoDataInput) {
@@ -45,7 +47,7 @@ export function generateToken(req, res, next) {
   )
 }
 
-export function verifyToken(req, res, next) {
+export function verifyToken(req: Request, res: Response, next: NextFunction) {
   const { token } = req.body
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {

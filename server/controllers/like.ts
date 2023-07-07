@@ -1,11 +1,13 @@
 /* eslint-disable no-shadow */
 /* eslint-disable babel/camelcase */
+import type { Request, Response } from 'express'
+
 import { Review } from '../models/review.js'
 import { Like } from '../models/like.js'
 import { Film } from '../models/film.js'
 
 /* eslint-disable no-empty-function */
-// export async function getLikes(req, res) {
+// export async function getLikes(req: Request, res: Response) {
 //   const [reviews, fieldData] = await Like.fetchAll().catch(error => {
 //     console.log(error)
 //     return error
@@ -33,7 +35,7 @@ import { Film } from '../models/film.js'
 //   res.status(200).json({ reviews: reviewsAndLikes })
 // }
 
-export async function getLikesByFilmId(req, res) {
+export async function getLikesByFilmId(req: Request, res: Response) {
   const filmId = +req.params.filmId
 
   if (Number.isNaN(filmId)) {
@@ -76,7 +78,7 @@ export async function getLikesByFilmId(req, res) {
   res.status(200).json({ film_likes: likes })
 }
 
-// export async function getLikesByUserId(req, res) {
+// export async function getLikesByUserId(req: Request, res: Response) {
 //   const userId = +req.params.userId
 
 //   if (Number.isNaN(userId)) {
@@ -119,7 +121,7 @@ export async function getLikesByFilmId(req, res) {
 //   res.status(200).json({ reviews: reviewsAndLikes })
 // }
 
-// export async function getLikeByFilmId(req, res) {
+// export async function getLikeByFilmId(req: Request, res: Response) {
 //   const filmId = +req.params.filmId
 //   const reviewId = +req.params.reviewId
 
@@ -158,7 +160,7 @@ export async function getLikesByFilmId(req, res) {
 //   res.status(200).json({ reviews: reviews[0] })
 // }
 
-// export async function getLike(req, res) {
+// export async function getLike(req: Request, res: Response) {
 //   const id = +req.params.reviewId
 
 //   if (Number.isNaN(id)) {
@@ -188,7 +190,7 @@ export async function getLikesByFilmId(req, res) {
 //   res.status(200).json({ review: reviews[0] })
 // }
 
-export async function postLikeFilm(req, res) {
+export async function postLikeFilm(req: Request, res: Response) {
   const filmId = +req.params.filmId
 
   if (Number.isNaN(filmId)) {
@@ -228,7 +230,7 @@ export async function postLikeFilm(req, res) {
     })
 }
 
-export async function deleteLikeFilm(req, res) {
+export async function deleteLikeFilm(req: Request, res: Response) {
   const filmId = +req.params.filmId
   const likeId = +req.params.likeId
 
@@ -275,7 +277,7 @@ export async function deleteLikeFilm(req, res) {
     })
 }
 
-// export async function putLikeFilm(req, res) {
+// export async function putLikeFilm(req: Request, res: Response) {
 //   const filmId = +req.params.filmId
 //   const reviewId = +req.params.reviewId
 
@@ -319,7 +321,7 @@ export async function deleteLikeFilm(req, res) {
 //     })
 // }
 
-export async function getLikesByReviewId(req, res) {
+export async function getLikesByReviewId(req: Request, res: Response) {
   const filmId = +req.params.filmId
   const reviewId = +req.params.reviewId
 
@@ -363,7 +365,7 @@ export async function getLikesByReviewId(req, res) {
   res.status(200).json({ review_likes: likes })
 }
 
-export async function postLikeReview(req, res) {
+export async function postLikeReview(req: Request, res: Response) {
   const filmId = +req.params.filmId
   const reviewId = +req.params.reviewId
 
@@ -404,7 +406,7 @@ export async function postLikeReview(req, res) {
     })
 }
 
-// export async function putLikeReview(req, res) {
+// export async function putLikeReview(req: Request, res: Response) {
 //   const filmId = +req.params.filmId
 //   const reviewId = +req.params.reviewId
 
@@ -447,7 +449,7 @@ export async function postLikeReview(req, res) {
 //       return error
 //     })
 // }
-export async function deleteLikeReview(req, res) {
+export async function deleteLikeReview(req: Request, res: Response) {
   const reviewId = +req.params.reviewId
   const likeId = +req.params.likeId
 

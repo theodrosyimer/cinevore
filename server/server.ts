@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable prettier/prettier */
 import { createServer } from 'node:http'
-import express from 'express'
+import express, { type Express, Request, Response } from 'express'
 import bodyparser from 'body-parser'
-import { config } from 'dotenv-vault-core'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import cors from 'cors'
+import { env } from '@/env.mjs'
 
 import { authenticateJWTMiddleware } from './middlewares/auth.js'
 import { get404 } from './controllers/error.js'
@@ -17,14 +17,13 @@ import { signUpRouter } from './routes/signup.js'
 import { loginRouter } from './routes/login.js'
 import { filmRouter } from './routes/film.js'
 import { userRouter } from './routes/user.js'
-
-config()
+import type { AddressInfo } from 'node:net'
 
 const rootDir = dirname(fileURLToPath(import.meta.url))
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = env.NODE_ENV === 'development'
 
-const app = express()
+const app: Express = express()
 app.use(cors())
 // app.use(
 //   cors({
@@ -36,7 +35,7 @@ app.use(cors())
 // )
 
 app.use(bodyparser.urlencoded({ extended: false }))
-app.use(bodyparser.json())
+app.use(express.json())
 app.use(express.static(join(rootDir, 'static')))
 
 app.use('/admin', authenticateJWTMiddleware, adminRouter)
@@ -47,7 +46,7 @@ app.use(filmRouter)
 app.use(userRouter)
 
 isDev
-  ? app.get('/myAdminDevPanel', (req, res) => {
+  ? app.get('/myAdminDevPanel', (req: Request, res: Response) => {
     res.sendFile(`${rootDir}/static/index.html`)
   })
   : null
@@ -58,10 +57,8 @@ app.use(get404)
 
 const httpServer = createServer(app)
 
-httpServer.listen(process.env.PORT, () => {
-  console.log(`
-Server running on http://localhost:${httpServer.address().port}
-myAdminDevPanel available on http://localhost:${httpServer.address().port
-    }/myAdminDevPanel
-`)
+httpServer.listen(env.SERVER_PORT, () => {
+  const { port } = httpServer.address() as AddressInfo
+
+  console.log(`Server running on http://localhost:${port}`)
 })

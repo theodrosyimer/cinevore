@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-shadow */
+import type { Request, Response } from 'express'
+
 import { User } from '../models/user.js'
 import { hashPassword, validateUser } from '../lib/hash.js'
 import { hasNullValue } from '../lib/misc.js'
@@ -11,7 +13,7 @@ export const auth = {
   logOut,
 }
 
-export async function login(req, res) {
+export async function login(req: Request, res: Response) {
   const hasNoDataInput = !Object.values(req.body).length
 
   if (hasNoDataInput) {
@@ -42,7 +44,7 @@ export async function login(req, res) {
     console.log(err)
   })
 
-  const isValidUser = await validateUser(password, hashedPassword).catch(
+  const isValidUser = await validateUser(password, hashedPassword ? hashedPassword : '').catch(
     (err) => {
       console.log(err)
     }
@@ -65,7 +67,7 @@ export async function login(req, res) {
     : res.status(400).json({ error: 'User does not exists' })
 }
 
-export function getLoggedUser(req, res) {
+export function getLoggedUser(req: Request, res: Response) {
   const hasNoUserData = !Object.values(req.user).length
 
   if (hasNoUserData) {
@@ -75,7 +77,7 @@ export function getLoggedUser(req, res) {
   res.status(200).json(req.user)
 }
 
-export function logOut(req, res) {
+export function logOut(req: Request, res: Response) {
   const hasNoDataInput = !Object.values(req.body).length
 
   if (hasNoDataInput) {

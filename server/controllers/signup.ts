@@ -1,5 +1,7 @@
 /* eslint-disable babel/camelcase */
 /* eslint-disable no-shadow */
+import type { Request, Response } from 'express'
+
 import { User } from '../models/user.js'
 import { hashPassword } from '../lib/hash.js'
 import { hasNullValue } from '../lib/misc.js'
@@ -11,7 +13,7 @@ const EMAIL_REGEX =
 const PASSWORD_REGEX =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g
 
-export async function signUp(req, res) {
+export async function signUp(req: Request, res: Response) {
   const hasNoDataInput = !Object.values(req.body).length
 
   if (hasNoDataInput) {
@@ -54,7 +56,7 @@ export async function signUp(req, res) {
     role,
   })
     .then(results => {
-      console.log(results)
+      // console.log(results)
       if (results.affectedRows === 0) {
         return res.status(400).json({ error: 'User already exists!' })
       }

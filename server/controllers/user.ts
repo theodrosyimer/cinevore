@@ -1,4 +1,6 @@
 /* eslint-disable no-shadow */
+import type { Request, Response } from 'express'
+
 import { User } from '../models/user.js'
 import { hashPassword } from '../lib/hash.js'
 
@@ -8,7 +10,7 @@ const EMAIL_REGEX =
 const PASSWORD_REGEX =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g
 
-export function getUsers(req, res) {
+export function getUsers(req: Request, res: Response) {
   User.fetchAll()
     .then(([users, fieldData]) => {
       if (!users) {
@@ -25,7 +27,7 @@ export function getUsers(req, res) {
     })
 }
 
-export function getUser(req, res) {
+export function getUser(req: Request, res: Response) {
   const id = +req.params.id
 
   if (Number.isNaN(id)) {
@@ -49,7 +51,7 @@ export function getUser(req, res) {
     })
 }
 
-export async function postUser(req, res) {
+export async function postUser(req: Request, res: Response) {
   const hasNoDataInput = !Object.values(req.body).length
 
   if (hasNoDataInput) {
@@ -95,7 +97,7 @@ export async function postUser(req, res) {
     })
 }
 
-export async function putUser(req, res) {
+export async function putUser(req: Request, res: Response) {
   const id = +req.params.id
 
   if (Number.isNaN(id)) {
@@ -138,7 +140,7 @@ export async function putUser(req, res) {
     })
 }
 
-export async function deleteUser(req, res) {
+export async function deleteUser(req: Request, res: Response) {
   const id = +req.params.id
 
   if (Number.isNaN(id)) {

@@ -3,7 +3,7 @@
 import db from '../lib/database.js'
 
 export class Comment {
-  static addToFilm = ({ filmId, userId, content }) =>
+  static addToFilm = ({ filmId, userId, content }: { filmId: number, userId: number, content: string }) =>
     db.execute(
       'INSERT INTO comment (comment_id, film_id, user_id, content) VALUES (?, ?, ?, ?)',
       [null, filmId, userId, content]
@@ -11,28 +11,28 @@ export class Comment {
 
   static fetchAll = () => db.execute('SELECT * FROM comment')
 
-  static fetchAllByFilmId = filmId =>
+  static fetchAllByFilmId = (filmId: number) =>
     db.execute('SELECT * FROM comment WHERE comment.film_id = ?', [filmId])
 
-  static fetchAllByUserId = userID =>
+  static fetchAllByUserId = (userID: number) =>
     db.execute('SELECT * FROM comment WHERE user_id = ?', [userID])
 
-  static findOneByFilmId = (commentId, filmId) =>
+  static findOneByFilmId = (commentId: number, filmId: number) =>
     db.execute(
       'SELECT * FROM comment WHERE comment.comment_id = ? AND film_id = ?',
       [commentId, filmId]
     )
 
-  static findOneById = commentId =>
+  static findOneById = (commentId: number) =>
     db.execute('SELECT * FROM comment WHERE comment.comment_id = ?', [
       commentId,
     ])
 
-  static updateById = (commentId, content) =>
+  static updateById = (commentId: number, content: string) =>
     db.execute(
       `UPDATE comment SET content='${content}' WHERE comment.comment_id = ${commentId}`
     )
 
-  static deleteById = commentId =>
+  static deleteById = (commentId: number) =>
     db.execute('DELETE FROM comment WHERE comment.comment_id = ?', [commentId])
 }

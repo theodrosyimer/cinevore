@@ -3,7 +3,7 @@
 import db from '../lib/database.js'
 
 export class Review {
-  static addToFilm = ({ filmId, userId, content }) =>
+  static addToFilm = ({ filmId, userId, content }: { filmId: Number, userId: Number, content: string }) =>
     db.execute(
       'INSERT INTO review (review_id, film_id, user_id, content) VALUES (?, ?, ?, ?)',
       [null, filmId, userId, content]
@@ -11,26 +11,26 @@ export class Review {
 
   static fetchAll = () => db.execute('SELECT * FROM review')
 
-  static fetchAllByFilmId = filmId =>
+  static fetchAllByFilmId = (filmId: number) =>
     db.execute('SELECT * FROM review WHERE review.film_id = ?', [filmId])
 
-  static fetchAllByUserId = userID =>
+  static fetchAllByUserId = (userID: number) =>
     db.execute('SELECT * FROM review WHERE user_id = ?', [userID])
 
-  static findOneByFilmId = (reviewId, filmId) =>
+  static findOneByFilmId = (reviewId: number, filmId: number) =>
     db.execute(
       'SELECT * FROM review WHERE review.review_id = ? AND film_id = ?',
       [reviewId, filmId]
     )
 
-  static findOneById = reviewId =>
+  static findOneById = (reviewId: number) =>
     db.execute('SELECT * FROM review WHERE review.review_id = ?', [reviewId])
 
-  static updateById = (reviewId, content) =>
+  static updateById = (reviewId: number, content: string) =>
     db.execute(
       `UPDATE review SET content='${content}' WHERE review.review_id = ${reviewId}`
     )
 
-  static deleteById = reviewId =>
+  static deleteById = (reviewId: number) =>
     db.execute('DELETE FROM review WHERE review.review_id = ?', [reviewId])
 }

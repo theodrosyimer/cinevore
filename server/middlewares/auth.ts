@@ -1,22 +1,25 @@
 /* eslint-disable no-unused-vars */
+import type { NextFunction, Request, Response } from 'express'
+
 import jwt from 'jsonwebtoken'
-import { config } from 'dotenv-vault-core'
+import { env } from '@/env.mjs'
 
-import { hasNullValue } from '../lib/misc.js'
+import { hasNullValue, sendErrorResponse } from '../lib/misc.js'
 
-config()
 const JWT_DURATION = 15 * 60
 
-export function authenticateJWTMiddleware(req, res, next) {
+export function authenticateJWTMiddleware(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization
 
   if (authHeader) {
     const token = authHeader.split(' ')[1]
 
+    if (!token) return sendErrorResponse(400, 'No valid token was provided!')
+
     // console.log(jwt.decode(token))
 
     console.log(req.url)
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    jwt.verify(token, env.JWT_SECRET, (err, user) => {
       if (err) {
         return res.status(403).json({ error: 'Unauthorized User!' })
       }
@@ -28,22 +31,22 @@ export function authenticateJWTMiddleware(req, res, next) {
     // eslint-disable-next-line prettier/prettier
     // res.status(401)
     //   .json({ error: 'Unauthenticated User!' })
-    res.redirect(302, 'http://localhost:5173/pages/form/form.html')
+    res.redirect(302, `${env.PUBLIC_CLIENT_URL}/auth/login`)
   }
 }
 
 // TODO: handle param as an input to set expiration time
-export function generateTokenMiddleware(req, res, next) {
+export function generateTokenMiddleware(req: Request, res: Response, next: NextFunction) {
   const hasNoDataInput = !Object.values(req.body).length
 
   if (hasNoDataInput) {
-    return res.status(400).json({ error: 'No data was given!' })
+    return sendErrorResponse(400, 'No data was given!')
   }
 
   const { id, lastname, firstname, email, role } = req.body
 
   if (hasNullValue([lastname, firstname, email, role])) {
-    return res.status(400).json({ error: 'Some input is missing' })
+    return sendErrorResponse(400, 'Some input is missing')
   }
 
   // Generate an access token
@@ -55,7 +58,7 @@ export function generateTokenMiddleware(req, res, next) {
       email,
       role,
     },
-    process.env.JWT_SECRET,
+    env.JWT_SECRET,
     { expiresIn: JWT_DURATION }
   )
 

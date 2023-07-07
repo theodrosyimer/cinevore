@@ -1,12 +1,14 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable babel/camelcase */
+import type { Request, Response } from 'express'
+
 import { Review } from '../models/review.js'
 import { User } from '../models/user.js'
 import { Like } from '../models/like.js'
 import { Film } from '../models/film.js'
 
 /* eslint-disable no-empty-function */
-export async function getFilms(req, res) {
+export async function getFilms(req: Request, res: Response) {
   const [films, fieldData] = await Film.fetchAll().catch(error => {
     console.log(error)
     return res.status(500)
@@ -61,7 +63,7 @@ export async function getFilms(req, res) {
   res.status(200).json({ films: filmsAndReviews })
 }
 
-export async function getFilmsByUserId(req, res) {
+export async function getFilmsByUserId(req: Request, res: Response) {
   const id = +req.params.userId
 
   if (Number.isNaN(id)) {
@@ -125,7 +127,7 @@ export async function getFilmsByUserId(req, res) {
   res.status(200).json({ films: filmsAndReviews })
 }
 
-export async function getFilmByUserId(req, res) {
+export async function getFilmByUserId(req: Request, res: Response) {
   const userId = +req.params.userId
   const filmId = +req.params.filmId
 
@@ -192,7 +194,7 @@ export async function getFilmByUserId(req, res) {
   res.status(200).json({ films: filmsAndReviews })
 }
 
-export async function getFilm(req, res) {
+export async function getFilm(req: Request, res: Response) {
   const id = +req.params.filmId
 
   if (Number.isNaN(id)) {
@@ -251,7 +253,7 @@ export async function getFilm(req, res) {
   res.status(200).json(films[0])
 }
 
-export async function postFilm(req, res) {
+export async function postFilm(req: Request, res: Response) {
   const hasNoDataInput = !Object.values(req.body).length
 
   if (hasNoDataInput) {
@@ -281,7 +283,7 @@ export async function postFilm(req, res) {
     })
 }
 
-export async function putFilm(req, res) {
+export async function putFilm(req: Request, res: Response) {
   const filmId = +req.params.filmId
 
   if (Number.isNaN(filmId)) {
@@ -322,7 +324,7 @@ export async function putFilm(req, res) {
     })
 }
 
-export async function deleteFilm(req, res) {
+export async function deleteFilm(req: Request, res: Response) {
   const filmId = +req.params.filmId
 
   if (Number.isNaN(filmId)) {
