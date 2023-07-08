@@ -1,4 +1,3 @@
-import { User } from "../models/user"
 import { Inspect } from "./utility-types"
 
 const userRoles = ['user', 'admin', 'superadmin'] as const

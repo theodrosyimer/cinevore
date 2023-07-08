@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable prettier/prettier */
 import { createServer } from 'node:http'
-import express, { type Express, Request, Response } from 'express'
+import express, { type Application, Request, Response } from 'express'
 import bodyparser from 'body-parser'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import cors from 'cors'
-import { env } from '@/env.mjs'
+import type { AddressInfo } from 'node:net'
+// import { env } from '@/env.mjs'
+import { config } from 'dotenv'
 
 import { authenticateJWTMiddleware } from './middlewares/auth.js'
 import { get404 } from './controllers/error.js'
@@ -17,13 +19,14 @@ import { signUpRouter } from './routes/signup.js'
 import { loginRouter } from './routes/login.js'
 import { filmRouter } from './routes/film.js'
 import { userRouter } from './routes/user.js'
-import type { AddressInfo } from 'node:net'
+
+config()
 
 const rootDir = dirname(fileURLToPath(import.meta.url))
 
-const isDev = env.NODE_ENV === 'development'
+const isDev = process.env.NODE_ENV === 'development'
 
-const app: Express = express()
+const app: Application = express()
 app.use(cors())
 // app.use(
 //   cors({
@@ -57,7 +60,7 @@ app.use(get404)
 
 const httpServer = createServer(app)
 
-httpServer.listen(env.SERVER_PORT, () => {
+httpServer.listen(process.env.SERVER_PORT, () => {
   const { port } = httpServer.address() as AddressInfo
 
   console.log(`Server running on http://localhost:${port}`)

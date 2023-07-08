@@ -3,8 +3,13 @@
 import type { NextFunction, Request, Response } from 'express'
 
 import jwt from 'jsonwebtoken'
+// import { env } from '@/env.mjs'
+import { config } from 'dotenv'
 
-import { hasNullValue } from '../lib/misc.js'
+import { hasNullValue } from '@/lib/misc.js'
+config()
+
+const jwtSecret = process.env.JWT_SECRET ?? 'mysecret'
 
 // TODO: handle param as an input to set expiration time
 export function generateToken(req: Request, res: Response, next: NextFunction) {
@@ -31,7 +36,7 @@ export function generateToken(req: Request, res: Response, next: NextFunction) {
       email,
       role,
     },
-    process.env.JWT_SECRET,
+    jwtSecret,
     tokenType === 'short'
       ? { expiresIn: '5min' }
       : tokenType === 'long'
@@ -50,7 +55,7 @@ export function generateToken(req: Request, res: Response, next: NextFunction) {
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
   const { token } = req.body
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  jwt.verify(token, jwtSecret, (err, user) => {
     if (err) {
       return res.status(400).json({ error: 'No valid token was provided!' })
     }
