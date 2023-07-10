@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc",
-    "start": "node dist/server.js",
-    "dev": "tsx --watch ./server.ts"
+    "start": "node --unhandled-rejections=strict dist/server.js",
+    "dev": "npx tsx --watch ./server.ts"
   },
   "eslintConfig": {
     "root": true

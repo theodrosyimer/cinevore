@@ -10,7 +10,7 @@ export type User = {
   firstname: string
   email: string
   emailVerified: boolean
-  role: UserRole = 'user'
+  role: UserRole
 }
 
 let u: User = {
@@ -19,4 +19,5 @@ let u: User = {
   firstname: 'John',
   email: '',
   emailVerified: false,
+  role: 'user'
 }
