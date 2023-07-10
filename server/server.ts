@@ -3,10 +3,13 @@ const dotenvResult = config()
 if (dotenvResult.error) {
   throw dotenvResult.error
 }
-
+/* eslint-disable no-unused-expressions */
+/* eslint-disable prettier/prettier */
 import express, { type Application, Request, Response } from 'express'
 import { createServer } from 'http'
 import bodyparser from 'body-parser'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
 import cors from 'cors'
 import type { AddressInfo } from 'net'
 
@@ -19,6 +22,10 @@ import { signUpRouter } from './routes/signup.js'
 import { loginRouter } from './routes/login.js'
 import { filmRouter } from './routes/film.js'
 import { userRouter } from './routes/user.js'
+
+const rootDir = dirname(fileURLToPath(import.meta.url))
+
+const isDev = process.env.NODE_ENV === 'development'
 
 const app: Application = express()
 app.use(cors())
@@ -33,6 +40,7 @@ app.use(cors())
 
 app.use(bodyparser.urlencoded({ extended: false }))
 app.use(express.json())
+app.use(express.static(join(rootDir, 'public')))
 
 app.use('/admin', authenticateJWTMiddleware, adminRouter)
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import db from '../lib/database.js'
+import db from '../utils/database.js'
 
 export class Film {
   static create = ({ userId, content }: { userId: number, content: string }) =>

@@ -1,6 +1,6 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import db from '../lib/database.js'
+import db from '../utils/database.js'
 
 export class Review {
   static addToFilm = ({ filmId, userId, content }: { filmId: Number, userId: Number, content: string }) =>

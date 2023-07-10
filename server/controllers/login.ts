@@ -3,9 +3,9 @@
 import type { Request, Response } from 'express'
 
 import { User } from '../models/user.js'
-import { hashPassword, validateUser } from '../lib/hash.js'
-import { hasNullValue } from '../lib/misc.js'
-import { generateToken } from '../lib/token.js'
+import { hashPassword, validateUser } from '../utils/hash.js'
+import { hasNullValue } from '../utils/misc.js'
+import { generateToken } from '../utils/token.js'
 
 export const auth = {
   postLogin: login,

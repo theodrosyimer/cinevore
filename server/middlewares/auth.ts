@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 // import { env } from '@/env.mjs'
 import { config } from 'dotenv'
 
-import { hasNullValue, sendErrorResponse } from '../lib/misc.js'
+import { hasNullValue, sendErrorResponse } from '../utils/misc.js'
 
 config()
 const JWT_DURATION = 15 * 60

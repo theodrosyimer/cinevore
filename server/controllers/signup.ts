@@ -3,9 +3,9 @@
 import type { Request, Response } from 'express'
 
 import { User } from '../models/user.js'
-import { hashPassword } from '../lib/hash.js'
-import { hasNullValue } from '../lib/misc.js'
-import { generateToken } from '../lib/token.js'
+import { hashPassword } from '../utils/hash.js'
+import { hasNullValue } from '../utils/misc.js'
+import { generateToken } from '../utils/token.js'
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
