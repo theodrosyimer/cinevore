@@ -1,15 +1,20 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import db from '../utils/database.js'
+import db from '@/core/services/database.js'
 
 export type UserType = {
+  id: number
   lastname: string
   firstname: string
   username: string
   email: string
   password: string
   role: 0 | 1
+  bio: string
+  avatar_filename: string
+  date_created: Date
+  last_updated: Date
 }
 
 type UserTypeOptional = Partial<UserType>
@@ -30,13 +35,13 @@ export class User {
 
   static fetchAll = () => db.execute('SELECT * FROM user')
 
-  static findById = (id: number) =>
+  static getById = (id: number) =>
     db.execute(
-      'SELECT user_id, role_id, lastname, firstname, email, bio, avatar, date_created, last_updated FROM user WHERE user.user_id = ?',
+      'SELECT user_id, role_id, lastname, firstname, email, bio, avatar_filename, date_created, last_updated FROM user WHERE user.user_id = ?',
       [id]
     )
 
-  static findByEmail = (email: string) =>
+  static getByEmail = (email: string) =>
     db.execute('SELECT * FROM user WHERE user.email = ?', [email])
 
   static deleteById = (id: number) =>

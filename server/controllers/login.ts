@@ -3,9 +3,9 @@
 import type { Request, Response } from 'express'
 
 import { User } from '../models/user.js'
-import { hashPassword, validateUser } from '../utils/hash.js'
-import { hasNullValue } from '../utils/misc.js'
-import { generateToken } from '../utils/token.js'
+import { hashPassword, validateUserPassword } from '../lib/hash.js'
+import { hasNullValue } from '../lib/utils.js'
+import { generateToken } from '../lib/token.js'
 
 export const auth = {
   postLogin: login,
@@ -26,7 +26,7 @@ export async function login(req: Request, res: Response) {
     return res.status(400).json({ error: 'Some input is missing' })
   }
 
-  const [results, tableInfos] = await User.findByEmail(email).catch(
+  const [results, tableInfos] = await User.getByEmail(email).catch(
     (err) => {
       console.log(err)
     }
@@ -44,7 +44,7 @@ export async function login(req: Request, res: Response) {
     console.log(err)
   })
 
-  const isValidUser = await validateUser(password, hashedPassword ? hashedPassword : '').catch(
+  const isValidUser = await validateUserPassword(password, hashedPassword ? hashedPassword : '').catch(
     (err) => {
       console.log(err)
     }

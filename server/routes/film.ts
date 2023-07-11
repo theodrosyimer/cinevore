@@ -4,7 +4,6 @@ import { Router } from 'express'
 import {
   getFilm,
   getFilms,
-  getFilmsByUserId,
   postFilm,
   putFilm,
   deleteFilm,
@@ -37,52 +36,51 @@ export const filmRouter = router
 
 router.get('/films', authenticateJWTMiddleware, getFilms)
 
-router.get('/films/:userId', authenticateJWTMiddleware, getFilmsByUserId)
 
-router.get('/film/:filmId', authenticateJWTMiddleware, getFilm)
+router.get('/films/:filmId', authenticateJWTMiddleware, getFilm)
 
-router.post('/film', authenticateJWTMiddleware, postFilm)
+router.post('/films', authenticateJWTMiddleware, postFilm)
 
-router.put('/film/:filmId', authenticateJWTMiddleware, putFilm)
+router.put('/films/:filmId', authenticateJWTMiddleware, putFilm)
 
-router.delete('/film/:filmId', authenticateJWTMiddleware, deleteFilm)
+router.delete('/films/:filmId', authenticateJWTMiddleware, deleteFilm)
 
 /* *********************************************** */
 /*                       LIKE                      */
 /* *********************************************** */
 
-router.get('/film/:filmId/likes', authenticateJWTMiddleware, getLikesByFilmId)
+router.get('/films/:filmId/likes', authenticateJWTMiddleware, getLikesByFilmId)
 
 router.get(
-  '/film/:filmId/review/:reviewId/likes',
+  '/films/:filmId/review/:reviewId/likes',
   authenticateJWTMiddleware,
   getLikesByReviewId
 )
 
-router.post('/film/:filmId/like', authenticateJWTMiddleware, postLikeFilm)
+router.post('/films/:filmId/like', authenticateJWTMiddleware, postLikeFilm)
 
 router.post(
-  '/film/:filmId/review/:reviewId/like',
+  '/films/:filmId/review/:reviewId/like',
   authenticateJWTMiddleware,
   postLikeReview
 )
 
-// router.put('/film/:filmId/like/:likeId', authenticateJWTMiddleware, putLikeFilm)
+// router.put('/films/:filmId/like/:likeId', authenticateJWTMiddleware, putLikeFilm)
 
 // router.put(
-//   '/film/:filmId/review/:reviewId/like/:likeId',
+//   '/films/:filmId/review/:reviewId/like/:likeId',
 //   authenticateJWTMiddleware,
 //   putLikeReview
 // )
 
 router.delete(
-  '/film/:filmId/like/:likeId',
+  '/films/:filmId/like/:likeId',
   authenticateJWTMiddleware,
   deleteLikeFilm
 )
 
 router.delete(
-  '/film/:filmId/review/:reviewId/like/:likeId',
+  '/films/:filmId/review/:reviewId/like/:likeId',
   authenticateJWTMiddleware,
   deleteLikeReview
 )
@@ -92,33 +90,33 @@ router.delete(
 /* *********************************************** */
 
 router.get(
-  '/film/:filmId/reviews',
+  '/films/:filmId/reviews',
   authenticateJWTMiddleware,
   getReviewsByFilmId
 )
 
 router.get(
-  '/film/:filmId/reviews/:userId',
+  '/films/:filmId/reviews/:userId',
   authenticateJWTMiddleware,
   getReviewsByUserId
 )
 
 router.get(
-  '/film/:filmId/review/:reviewId',
+  '/films/:filmId/review/:reviewId',
   authenticateJWTMiddleware,
   getReviewByFilmId
 )
 
-router.post('/film/:filmId/review', authenticateJWTMiddleware, postReview)
+router.post('/films/:filmId/review', authenticateJWTMiddleware, postReview)
 
 router.put(
-  '/film/:filmId/review/:reviewId',
+  '/films/:filmId/review/:reviewId',
   authenticateJWTMiddleware,
   putReview
 )
 
 router.delete(
-  '/film/:filmId/review/:reviewId',
+  '/films/:filmId/review/:reviewId',
   authenticateJWTMiddleware,
   deleteReview
 )

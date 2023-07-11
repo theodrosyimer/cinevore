@@ -1,8 +1,8 @@
 /* eslint-disable no-shadow */
 import type { Request, Response } from 'express'
 
-import { User } from '../models/user.js'
-import { hashPassword } from '../utils/hash.js'
+import { User } from '@/models/user.js'
+import { hashPassword } from '@/lib/hash.js'
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -38,7 +38,7 @@ export function getUser(req: Request, res: Response) {
     })
   }
 
-  User.findById(id)
+  User.getById(id)
     .then(([user]) => {
       if (!user.length) {
         return res.status(404).json({ error: 'User was not found!' })
@@ -98,9 +98,9 @@ export async function postUser(req: Request, res: Response) {
 }
 
 export async function putUser(req: Request, res: Response) {
-  const id = +req.params.id
+  const id = Number(req.params.id)
 
-  if (Number.isNaN(id)) {
+  if (Number.isNaN(id) || !id) {
     return res.status(400).json({
       error: `Invalid parameter type! \`id\` must be of type number, received ${JSON.stringify(
         req.params.id
@@ -112,7 +112,7 @@ export async function putUser(req: Request, res: Response) {
   const isNotAdmin = role !== 1
 
   if (isNotAdmin) {
-    const [results, tableInfos] = await User.findById(userId).catch(error => {
+    const [results, tableInfos] = await User.getById(userId).catch(error => {
       console.log(error)
       return error.message
     })
@@ -155,7 +155,7 @@ export async function deleteUser(req: Request, res: Response) {
   const isNotAdmin = role !== 1
 
   if (isNotAdmin) {
-    const [results, tableInfos] = await User.findById(userId).catch(error => {
+    const [results, tableInfos] = await User.getById(userId).catch(error => {
       console.log(error)
       return error.message
     })

@@ -3,9 +3,9 @@
 import type { Request, Response } from 'express'
 
 import { User } from '../models/user.js'
-import { hashPassword } from '../utils/hash.js'
-import { hasNullValue } from '../utils/misc.js'
-import { generateToken } from '../utils/token.js'
+import { hashPassword } from '../lib/hash.js'
+import { hasNullValue } from '../lib/utils.js'
+import { generateToken } from '../lib/token.js'
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -29,7 +29,7 @@ export async function signUp(req: Request, res: Response) {
     return res.status(400).json({ error: 'Some input is missing' })
   }
 
-  const [results, tableInfos] = await User.findByEmail(email).catch(err => {
+  const [results, tableInfos] = await User.getByEmail(email).catch(err => {
     console.log(err)
   })
 

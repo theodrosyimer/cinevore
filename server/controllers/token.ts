@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 // import { env } from '@/env.mjs'
 import { config } from 'dotenv'
 
-import { hasNullValue } from '@/utils/misc.js'
+import { hasNullValue } from '@/lib/utils.js'
 config()
 
 const jwtSecret = process.env.JWT_SECRET ?? 'mysecret'

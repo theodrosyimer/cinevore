@@ -20,7 +20,7 @@ export async function getFilms(req: Request, res: Response) {
 
   const filmsAndReviews = await Promise.all(
     films.map(async film => {
-      const [user, userTableInfos] = await User.findById(film.user_id).catch(
+      const [user, userTableInfos] = await User.getById(film.user_id).catch(
         error => {
           console.log(error)
           return res.status(400).json({ error: 'No user was found!' })
@@ -85,7 +85,7 @@ export async function getFilmsByUserId(req: Request, res: Response) {
 
   const filmsAndReviews = await Promise.all(
     films.map(async film => {
-      const [user, userTableInfos] = await User.findById(film.user_id).catch(
+      const [user, userTableInfos] = await User.getById(film.user_id).catch(
         error => {
           console.log(error)
           return res.status(400).json({ error: 'No user was found!' })
@@ -152,7 +152,7 @@ export async function getFilmByUserId(req: Request, res: Response) {
 
   const filmsAndReviews = await Promise.all(
     films.map(async film => {
-      const [user, userTableInfos] = await User.findById(film.user_id).catch(
+      const [user, userTableInfos] = await User.getById(film.user_id).catch(
         error => {
           console.log(error)
           return res.status(400).json({ error: 'No user was found!' })
@@ -220,7 +220,7 @@ export async function getFilm(req: Request, res: Response) {
     return error
   })
 
-  const [user, userTableInfos] = await User.findById(films[0].user_id).catch(
+  const [user, userTableInfos] = await User.getById(films[0].user_id).catch(
     error => {
       console.log(error)
       return res.status(400).json({ error: 'No user was found!' })

@@ -10,6 +10,6 @@ export type Inspect<T> = {
   [key in keyof T]: T[key]
 }
 
-export type ArrayValues<T> = {
+export type ExtractArrayValuesFromObjectProps<T extends Record<any, Array<any>>> = {
   [key in keyof T]: T[key][number]
 }

@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 // import { env } from '@/env.mjs'
 import { config } from 'dotenv'
 
-import { hasNullValue, sendErrorResponse } from '../utils/misc.js'
+import { hasNullValue, sendErrorResponse } from '../lib/utils.js'
 
 config()
 const JWT_DURATION = 15 * 60
@@ -34,7 +34,7 @@ export function authenticateJWTMiddleware(req: Request, res: Response, next: Nex
     // eslint-disable-next-line prettier/prettier
     // res.status(401)
     //   .json({ error: 'Unauthenticated User!' })
-    res.redirect(302, `${env.CLIENT_URL}/login`)
+    res.redirect(302, `${process.env.CLIENT_URL}/login`)
   }
 }
 
