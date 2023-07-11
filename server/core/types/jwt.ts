@@ -1,5 +1,10 @@
+import { UserRoles } from "../../users/types/create-user"
+import { PermissionFlag } from "@/core/middlewares/permissionflag-enum"
+import { ValuesOf } from "./utility-types"
+
 export type Jwt = {
-    refreshKey: string
     userId: string
-    permissionFlags: string
+    refreshKey?: string
+    role: ValuesOf<UserRoles>
+    permissionFlag: PermissionFlag
 }

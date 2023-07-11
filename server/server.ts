@@ -40,8 +40,8 @@ app.use(express.static(join(ROOT_DIRECTORY, 'static')))
 app.use(cors())
 app.use(helmet())
 
-routes.push(new UsersRoutes(app))
-routes.push(new AuthRoutes(app))
+// routes.push(new UsersRoutes(app))
+// routes.push(new AuthRoutes(app))
 
 
 app.use('/admin', authenticateJWTMiddleware, adminRouter)
@@ -50,7 +50,7 @@ app.use(uploadRouter)
 app.use(signUpRouter)
 app.use(loginRouter)
 app.use(filmRouter)
-// app.use(userRouter)
+app.use(userRouter)
 
 app.use('/token', tokenRouter)
 app.use(get404)

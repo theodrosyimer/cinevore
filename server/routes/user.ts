@@ -8,7 +8,7 @@ import {
   getUser,
   putUser,
   deleteUser,
-  // postUser,
+  postUser,
 } from '../controllers/user.js'
 // import { getFilmByUserId } from '../controllers/film.js'
 import { authenticateJWTMiddleware } from '../middlewares/auth.js'
@@ -20,7 +20,7 @@ export const userRouter = router
 
 router.get('/users', authenticateJWTMiddleware, getUsers)
 
-// router.post('/users', authenticateJWTMiddleware, postUser)
+router.post('/users', authenticateJWTMiddleware, postUser)
 
 router.get('/users/:id', authenticateJWTMiddleware, getUser)
 

@@ -1,8 +1,10 @@
 /* eslint-disable no-shadow */
 import type { Request, Response } from 'express'
 
-import { User } from '@/models/user.js'
+// import { User } from '@/models/user.js'
+import UsersModel from "@/users/models/users.js"
 import { hashPassword } from '@/lib/hash.js'
+import { sendErrorResponse } from '../lib/utils'
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -11,7 +13,7 @@ const PASSWORD_REGEX =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g
 
 export function getUsers(req: Request, res: Response) {
-  User.fetchAll()
+  UsersModel.getAll()
     .then(([users, fieldData]) => {
       if (!users) {
         return res.status(400).json({ error: 'No users was found!' })
@@ -28,19 +30,19 @@ export function getUsers(req: Request, res: Response) {
 }
 
 export function getUser(req: Request, res: Response) {
-  const id = +req.params.id
+  const id = req.params.id
 
-  if (Number.isNaN(id)) {
-    res.status(400).json({
+  if (Number.isNaN(id) || id == null) {
+    return res.status(400).json({
       error: `Invalid parameter type! \`id\` must be of type number, received ${JSON.stringify(
         req.params.id
       )}`,
     })
   }
 
-  User.getById(id)
+  UsersModel.getById(id)
     .then(([user]) => {
-      if (!user.length) {
+      if (Array.isArray(user) && !user.length) {
         return res.status(404).json({ error: 'User was not found!' })
       }
       res.status(200).json(user[0])
@@ -76,7 +78,11 @@ export async function postUser(req: Request, res: Response) {
 
   const hashedPassword = await hashPassword(password)
 
-  User.create({
+  if (hashedPassword == null) {
+    return sendErrorResponse(400, `Failed to hash the password!`)
+  }
+
+  UsersModel.create({
     lastname,
     firstname,
     username,
@@ -100,7 +106,7 @@ export async function postUser(req: Request, res: Response) {
 export async function putUser(req: Request, res: Response) {
   const id = Number(req.params.id)
 
-  if (Number.isNaN(id) || !id) {
+  if (Number.isNaN(id) || id == null) {
     return res.status(400).json({
       error: `Invalid parameter type! \`id\` must be of type number, received ${JSON.stringify(
         req.params.id
@@ -112,7 +118,7 @@ export async function putUser(req: Request, res: Response) {
   const isNotAdmin = role !== 1
 
   if (isNotAdmin) {
-    const [results, tableInfos] = await User.getById(userId).catch(error => {
+    const [results, tableInfos] = await UsersModel.getById(userId).catch(error => {
       console.log(error)
       return error.message
     })
@@ -130,7 +136,7 @@ export async function putUser(req: Request, res: Response) {
     return res.status(400).json({ error: 'No input was provided!' })
   }
 
-  User.updateById(id, req.body)
+  UsersModel.updateById(id, req.body)
     .then(results => {
       res.status(200).json({ message: 'User successfully updated' })
     })
@@ -141,7 +147,7 @@ export async function putUser(req: Request, res: Response) {
 }
 
 export async function deleteUser(req: Request, res: Response) {
-  const id = +req.params.id
+  const id = req.params.id
 
   if (Number.isNaN(id)) {
     res.status(400).json({
@@ -155,7 +161,7 @@ export async function deleteUser(req: Request, res: Response) {
   const isNotAdmin = role !== 1
 
   if (isNotAdmin) {
-    const [results, tableInfos] = await User.getById(userId).catch(error => {
+    const [results, tableInfos] = await UsersModel.getById(userId).catch(error => {
       console.log(error)
       return error.message
     })
@@ -167,7 +173,7 @@ export async function deleteUser(req: Request, res: Response) {
     }
   }
 
-  User.deleteById(id)
+  UsersModel.deleteById(id)
     .then(([results]) => {
       if (!results.affectedRows)
         return res.status(404).json({ error: 'User was not found!' })

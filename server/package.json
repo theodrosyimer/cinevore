@@ -7,7 +7,15 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node --unhandled-rejections=strict dist/server.js",
-    "dev": "npx tsx --watch ./server.ts"
+    "dev": "tsx watch ./server.ts",
+    "introspect": "drizzle-kit introspect:mysql --config=drizzle.config.ts",
+    "generate": "drizzle-kit generate:mysql --config=drizzle.config.ts",
+    "migrate": "drizzle-kit migrate:mysql --config=drizzle.config.ts",
+    "push": "drizzle-kit push:mysql --config=drizzle.config.ts",
+    "drop": "drizzle-kit drop --config=drizzle.config.ts",
+    "up": "drizzle-kit up:mysql --config=drizzle.config.ts",
+    "check": "drizzle-kit check:mysql --config=drizzle.config.ts",
+    "studio": "drizzle-kit studio --config=drizzle.config.ts"
   },
   "eslintConfig": {
     "root": true
@@ -23,12 +31,13 @@
     "debug": "^4.3.4",
     "dotenv": "^16.0.3",
     "dotenv-vault-core": "^0.7.0",
+    "drizzle-orm": "^0.27.1",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
     "multer": "1.4.5-lts.1",
-    "mysql2": "3.3.2",
+    "mysql2": "^3.5.1",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -42,6 +51,7 @@
     "@types/multer": "^1.4.7",
     "@types/node": "^20.4.0",
     "concurrently": "^8.2.0",
+    "drizzle-kit": "^0.19.3",
     "typescript": "^5.1.6"
   }
 }
