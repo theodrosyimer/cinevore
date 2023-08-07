@@ -1,13 +1,12 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-nested-ternary */
-import type { NextFunction, Request, Response } from 'express'
 
+// import { config } from 'dotenv'
+// config()
+import type { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-// import { env } from '@/env.mjs'
-import { config } from 'dotenv'
 
 import { hasNullValue } from '@/lib/utils.js'
-config()
 
 const jwtSecret = process.env.JWT_SECRET ?? 'mysecret'
 

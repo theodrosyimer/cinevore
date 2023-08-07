@@ -1,9 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { createPool } from 'mysql2'
-// import { env } from '@/env.mjs'
-import { config } from 'dotenv'
 
-config()
+import { createPool } from 'mysql2'
 
 const pool = createPool({
   host: process.env.DB_HOST,

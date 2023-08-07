@@ -10,7 +10,7 @@
     "dev": "tsx watch ./server.ts",
     "introspect": "drizzle-kit introspect:mysql --config=drizzle.config.ts",
     "generate": "drizzle-kit generate:mysql --config=drizzle.config.ts",
-    "migrate": "drizzle-kit migrate:mysql --config=drizzle.config.ts",
+    "migrate": "tsx core/services/migrate.ts",
     "push": "drizzle-kit push:mysql --config=drizzle.config.ts",
     "drop": "drizzle-kit drop --config=drizzle.config.ts",
     "up": "drizzle-kit up:mysql --config=drizzle.config.ts",

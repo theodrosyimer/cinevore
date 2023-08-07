@@ -37,6 +37,7 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "users/models/schema.ts",
   ],
   "exclude": [
     "node_modules",

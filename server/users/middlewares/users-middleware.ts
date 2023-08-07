@@ -1,5 +1,6 @@
 import express from 'express'
-import userService from '@/users/services/users-service'
+import UsersService from '@/users/services/users-service'
+import { error } from 'console'
 
 class UsersMiddleware {
     async validateSameEmailDoesntExist(
@@ -7,7 +8,7 @@ class UsersMiddleware {
         res: express.Response,
         next: express.NextFunction
     ) {
-        const user = await userService.getByEmail(req.body.email)
+        const user = await UsersService.getByEmail(req.body.email)
         if (user) {
             res.status(400).send({ errors: ['User email already exists'] })
         } else {
@@ -61,13 +62,23 @@ class UsersMiddleware {
         res: express.Response,
         next: express.NextFunction
     ) {
-        const user = await userService.getById(req.params.userId)
+        const user = await UsersService.getById(+req.params.userId).catch(error => {
+            console.log(error)
+            res.status(400).json({
+                error: {
+                    message: `User ${req.params.userId} not found`
+                },
+            })
+        })
+
         if (user) {
             res.locals.user = user
             next()
         } else {
-            res.status(404).send({
-                errors: [`User ${req.params.userId} not found`],
+            res.status(404).json({
+                error: {
+                    message: `User ${req.params.userId} not found`
+                },
             })
         }
     }

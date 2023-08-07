@@ -3,7 +3,7 @@
 import type { Request, Response } from 'express'
 
 import { User } from '../models/user.js'
-import { hashPassword, validateUserPassword } from '../lib/hash.js'
+import { hashPassword, validateUserPassword } from '../lib/bcrypt.js'
 import { hasNullValue } from '../lib/utils.js'
 import { generateToken } from '../lib/token.js'
 

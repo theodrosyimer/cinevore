@@ -1,7 +1,7 @@
 import mongooseService from '@/core/services/mongoose.service'
 import shortid from 'shortid'
 import debug from 'debug'
-import { CreateUser } from '@/users/types/create-user'
+import { CreateUser } from '@/users/types/user'
 import { PatchUser } from '@/users/types/patch-user'
 import { PutUser } from '@/users/types/put-user'
 import { PermissionFlag } from '@/core/middlewares/permissionflag-enum'

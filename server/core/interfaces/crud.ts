@@ -1,10 +1,10 @@
-import { RowDataPacket, OkPacket, ResultSetHeader, FieldPacket } from 'mysql2'
+import { MySqlRawQueryResult } from 'drizzle-orm/mysql2'
 
 export interface CRUD {
     list: (limit: number, page: number) => Promise<any>
     create: (resource: any) => Promise<any>
-    putById: (id: string, resource: any) => Promise<string>
-    patchById: (id: string, resource: any) => Promise<string>
-    getById: (id: string) => Promise<any>
-    deleteById: (id: string) => Promise<string | [RowDataPacket[] | RowDataPacket[][] | OkPacket | OkPacket[] | ResultSetHeader, FieldPacket[]]>
+    putById: (id: number, resource: any) => Promise<string>
+    patchById: (id: number, resource: any) => Promise<string>
+    getById: (id: number) => Promise<any>
+    deleteById: (id: number) => Promise<string | void | MySqlRawQueryResult>
 }

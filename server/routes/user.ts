@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import { Router } from 'express'
 
-
 import {
   getUsers,
   getUser,

@@ -1,15 +1,13 @@
-import UsersModel from '@/users/models/users'
+import UsersModel from '@/users/models/users-drizzle'
 import { CRUD } from '@/core/interfaces/crud'
-import { CreateUser } from '@/users/types/create-user'
-import { PutUser } from '@/users/types/put-user'
-import { PatchUser } from '@/users/types/patch-user'
+import { NewUser, PatchUser, PutUser } from '@/users/types/user'
 
 class UsersService implements CRUD {
-    async create(resource: CreateUser) {
+    async create(resource: NewUser) {
         return UsersModel.create(resource)
     }
 
-    async deleteById(id: string) {
+    async deleteById(id: number) {
         return UsersModel.deleteById(id)
     }
 
@@ -18,15 +16,15 @@ class UsersService implements CRUD {
         return UsersModel.getAll()
     }
 
-    async patchById(id: string, resource: PatchUser): Promise<any> {
+    async patchById(id: number, resource: PatchUser): Promise<any> {
         return UsersModel.updateById(id, resource)
     }
 
-    async putById(id: string, resource: PutUser): Promise<any> {
+    async putById(id: number, resource: PutUser): Promise<any> {
         return UsersModel.updateById(id, resource)
     }
 
-    async getById(id: string) {
+    async getById(id: number) {
         return UsersModel.getById(id)
     }
 

@@ -1,9 +1,6 @@
 import type { Request, Response } from 'express'
 
-// import { UsersModel } from '@/models/user.js'
-import UsersModel from '@/users/models/users'
-
-import { deleteFile } from '@/lib/utils.js'
+import { deleteFile, sendErrorResponse } from '@/lib/utils.js'
 import { UPLOADS_DIRECTORY } from '@/server.js'
 import UsersService from '@/users/services/users-service'
 
@@ -15,8 +12,7 @@ export const uploadFiles = async (req: Request, res: Response) => {
     return res.status(400).json({ error: { message: `You must select a file.` } })
   }
 
-  // const userId = req.params.id
-  const userId = '1'
+  const userId = +req.params.id
 
   if (Number.isNaN(userId)) {
     return res.status(400).json({
@@ -25,21 +21,24 @@ export const uploadFiles = async (req: Request, res: Response) => {
       )}`,
     })
   }
-  const [results, userInfos] = await UsersService.getById(userId).catch((error) => {
+  const userData = await UsersService.getById(userId).catch((error) => {
     console.log(error)
   })
-  const user = results[0]
 
-  if (user.avatar_filename) {
+  if (!userData || !(Array.isArray(userData) && userData.length)) return sendErrorResponse(res, 400, 'No User found!')
+
+  const [user] = userData
+
+  if (user?.avatarFilename) {
     // console.log('Delete file')
-    await deleteFile(`${UPLOADS_DIRECTORY}${user.avatar_filename}`)
+    await deleteFile(`${UPLOADS_DIRECTORY}${user.avatarFilename}`)
       .catch((error) => {
         console.log(error)
       })
   }
 
   UsersService.patchById(userId, {
-    avatar_filename: req.file.filename,
+    avatarFilename: req.file.filename,
   }).then(() => {
     return res.status(200).json({ message: 'Avatar successfully uploaded', user: { ...user, avatar_filename: req.file?.filename } })
   }).catch((error) => {
