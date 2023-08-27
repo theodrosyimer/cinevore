@@ -1,7 +1,10 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 
-import Providers from './providers'
+import ReactQueryProvider from '@/contexts/react-query'
+import ThemeContextProvider from '../contexts/theme'
+import Header from '../components/header'
+import Footer from '../components/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +20,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <ThemeContextProvider>
+          <ReactQueryProvider>
+            <Header />
+            {children}
+            <Footer />
+          </ReactQueryProvider>
+        </ThemeContextProvider>
       </body>
     </html>
   )
