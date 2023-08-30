@@ -4,9 +4,11 @@ import Logo from './logo'
 
 export default function Header() {
   return (
-    <header>
-      <Logo />
-      <Navbar />
+    <header className=''>
+      <div className="flex justify-between">
+        <Logo />
+        <Navbar />
+      </div>
     </header>
   )
 }

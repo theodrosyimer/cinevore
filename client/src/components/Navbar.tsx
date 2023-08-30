@@ -6,7 +6,7 @@ type Props = {}
 export default function Navbar({}: Props) {
   return (
     <nav>
-      <ul>
+      <ul className='flex gap-4'>
         <li>
           <Link href="/">Home</Link>
         </li>

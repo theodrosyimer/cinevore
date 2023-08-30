@@ -1,6 +1,6 @@
 import { env } from "../../../env.mjs"
 
-export default function UserProfilePage({ params }: { params: { username: string } }) {
+export default function UploadPage({ params }: { params: { username: string } }) {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
 

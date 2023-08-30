@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className='grid justify-items-center'>
       <ul>
         <li>
           <Link href="/about">About</Link>
