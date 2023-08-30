@@ -148,6 +148,9 @@ export async function putUser(req: Request, res: Response) {
 export async function deleteUser(req: Request, res: Response) {
   const id = +req.params.id
 
+  // const { searchParams } = new URL(req.url)
+  // const id2 = Number(searchParams.get('userId'))
+
   if (Number.isNaN(id)) {
     res.status(400).json({
       error: `Invalid parameter type! \`id\` must be of type number, received ${JSON.stringify(

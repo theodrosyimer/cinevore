@@ -4,6 +4,7 @@ import { db } from '@/core/services/drizzle'
 import { user } from './schema.js'
 import { NewUser, PatchUser, PutUser } from '@/users/types/user'
 import { PermissionFlag } from '@/core/middlewares/permissionflag-enum'
+import { SelectedFields } from 'drizzle-orm/mysql-core'
 
 const log: debug.IDebugger = debug('app:users-model')
 
@@ -19,7 +20,7 @@ class UsersModel {
 
   getAll = async () => db.select().from(user)
 
-  getById = async (id: number) => db.select().from(user).where(eq(user.userId, id))
+  getById = async (id: number, selectedColumns: SelectedFields = {}) => db.select(selectedColumns).from(user).where(eq(user.userId, id))
 
   getByEmail = async (email: string) => db.select().from(user).where(eq(user.email, email))
 
