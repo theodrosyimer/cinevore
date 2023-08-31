@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Cinevore',
-  description: 'Cinevore your social network for film discovery just got even better.',
+  description: 'Cinevore your social network for film discovery.',
 }
 
 export default function RootLayout({
