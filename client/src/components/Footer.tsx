@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer className='grid justify-items-center'>
       <ul>
@@ -15,7 +15,7 @@ export default function Footer() {
           <Link href="/help">Help</Link>
         </li>
       </ul>
-      <p>Copyright &copy; 2023 - filmovore.com</p>
+      <p>Copyright &copy; 2023 - cinevore.com</p>
     </footer>
   )
 }

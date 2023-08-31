@@ -1,4 +1,4 @@
-import { env } from "../../../env.mjs"
+import { env } from "../../../../../env.mjs"
 
 export default function UploadPage({ params }: { params: { username: string } }) {
   return (

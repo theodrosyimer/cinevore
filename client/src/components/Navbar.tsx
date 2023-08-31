@@ -17,10 +17,10 @@ export default function Navbar({}: Props) {
           <Link href="/lists">Lists</Link>
         </li>
         <li>
-          <Link href="/login">Log In</Link>
+          <Link href="/login">Login</Link>
         </li>
         <li>
-          <Link href="/signup">Sign Up</Link>
+          <Link href="/register">Signup</Link>
         </li>
       </ul>
     </nav>

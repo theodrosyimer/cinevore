@@ -2,6 +2,7 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@tanstack/eslint-plugin-query/recommended",
-    "next-babel"
+    "next-babel",
+    "thyi/eslint-config"
   ]
 }

@@ -12,12 +12,13 @@ export const uploadFiles = async (req: Request, res: Response) => {
     return res.status(400).json({ error: { message: `You must select a file.` } })
   }
 
-  const userId = +req.params.id
+  // const userId = +req.params.id
+  const userId = 1
 
   if (Number.isNaN(userId)) {
     return res.status(400).json({
       error: `Invalid parameter type! \`id\` must be of type number, received ${JSON.stringify(
-        req.params.id
+        userId
       )}`,
     })
   }

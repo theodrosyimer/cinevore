@@ -3,8 +3,8 @@ import { Inter } from 'next/font/google'
 
 import ReactQueryProvider from '@/contexts/react-query'
 // import ThemeContextProvider from '@/contexts/theme'
-import Header from '@/components/header'
-import Footer from '@/components/footer'
+import { Header } from '@/components/header'
+import { Footer } from '@/components/footer'
 import { ThemeProvider } from '@/components/theme-provider'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { cn } from '@/lib/utils'
@@ -30,9 +30,9 @@ export default function RootLayout({
       )}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ReactQueryProvider>
-            <Header />
+            {/* <Header /> */}
             {children}
-            <Footer />
+            {/* <Footer /> */}
             <TailwindIndicator />
 
           </ReactQueryProvider>
