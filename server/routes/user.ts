@@ -2,16 +2,16 @@
 /* eslint-disable no-unused-vars */
 import { Router } from 'express'
 
-
 import {
   getUsers,
   getUser,
   putUser,
   deleteUser,
-  // postUser,
+  postUser,
 } from '../controllers/user.js'
 // import { getFilmByUserId } from '../controllers/film.js'
 import { authenticateJWTMiddleware } from '../middlewares/auth.js'
+import { getFilmsByUserId } from '../controllers/film.js'
 
 const router = Router()
 
@@ -19,10 +19,13 @@ export const userRouter = router
 
 router.get('/users', authenticateJWTMiddleware, getUsers)
 
-// router.post('/user', authenticateJWTMiddleware, postUser)
+router.post('/users', authenticateJWTMiddleware, postUser)
 
-router.get('/user/:id', authenticateJWTMiddleware, getUser)
+router.get('/users/:id', authenticateJWTMiddleware, getUser)
 
-router.put('/user/:id', authenticateJWTMiddleware, putUser)
+router.put('/users/:id', authenticateJWTMiddleware, putUser)
 
-router.delete('/user/:id', authenticateJWTMiddleware, deleteUser)
+router.delete('/users/:id', authenticateJWTMiddleware, deleteUser)
+
+// Film services
+router.get('/users/:userId/films/', authenticateJWTMiddleware, getFilmsByUserId)

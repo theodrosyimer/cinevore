@@ -18,6 +18,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "noUncheckedIndexedAccess": true,
     "plugins": [
       {
         "name": "next"
@@ -26,9 +27,6 @@
     "paths": {
       "@/*": [
         "./src/*"
-      ],
-      "@*": [
-        "./*"
       ],
     }
   },

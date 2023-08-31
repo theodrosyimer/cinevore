@@ -1,8 +1,9 @@
 /* eslint-disable no-shadow */
 import type { Request, Response } from 'express'
 
-import { User } from '../models/user.js'
-import { hashPassword } from '../lib/hash.js'
+import UsersModel from "@/users/models/users-drizzle"
+import { hashPassword } from '@/lib/bcrypt'
+import { hasNullValue, sendErrorResponse } from '@/lib/utils'
 
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -11,13 +12,12 @@ const PASSWORD_REGEX =
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g
 
 export function getUsers(req: Request, res: Response) {
-  User.fetchAll()
-    .then(([users, fieldData]) => {
+  UsersModel.getAll()
+    .then((users) => {
       if (!users) {
         return res.status(400).json({ error: 'No users was found!' })
       }
-
-      users.forEach(user => (user.password = null))
+      users.forEach(user => user)
 
       res.status(200).json({ users })
     })
@@ -30,20 +30,19 @@ export function getUsers(req: Request, res: Response) {
 export function getUser(req: Request, res: Response) {
   const id = +req.params.id
 
-  if (Number.isNaN(id)) {
-    res.status(400).json({
+  if (Number.isNaN(id) || id == null) {
+    return res.status(400).json({
       error: `Invalid parameter type! \`id\` must be of type number, received ${JSON.stringify(
         req.params.id
       )}`,
     })
   }
 
-  User.findById(id)
-    .then(([user]) => {
-      if (!user.length) {
+  UsersModel.getById(id)
+    .then((results) => {
+      if (!results || !results.length) {
         return res.status(404).json({ error: 'User was not found!' })
       }
-      res.status(200).json(user[0])
     })
     .catch(error => {
       console.log(error)
@@ -58,8 +57,11 @@ export async function postUser(req: Request, res: Response) {
     return res.status(400).json({ error: 'No input was provided!' })
   }
 
-  const { lastname, firstname, username, email, password, role } = req.body
+  const { lastname, firstname, username, email, password } = req.body
 
+  if (hasNullValue([lastname, firstname, username, email, password])) {
+    return sendErrorResponse(res, 400, 'Not all data was provided')
+  }
   const { role: _role } = req.user
   const isNotAdmin = _role !== 1
 
@@ -76,13 +78,16 @@ export async function postUser(req: Request, res: Response) {
 
   const hashedPassword = await hashPassword(password)
 
-  User.create({
+  if (hashedPassword == null) {
+    return sendErrorResponse(res, 400, `Failed to hash the password!`)
+  }
+
+  UsersModel.create({
     lastname,
     firstname,
     username,
     email,
     password: hashedPassword,
-    role,
   })
     .then(results => {
       if (results.affectedRows === 0) {
@@ -98,9 +103,9 @@ export async function postUser(req: Request, res: Response) {
 }
 
 export async function putUser(req: Request, res: Response) {
-  const id = +req.params.id
+  const id = Number(req.params.id)
 
-  if (Number.isNaN(id)) {
+  if (Number.isNaN(id) || id == null) {
     return res.status(400).json({
       error: `Invalid parameter type! \`id\` must be of type number, received ${JSON.stringify(
         req.params.id
@@ -112,7 +117,7 @@ export async function putUser(req: Request, res: Response) {
   const isNotAdmin = role !== 1
 
   if (isNotAdmin) {
-    const [results, tableInfos] = await User.findById(userId).catch(error => {
+    const [results, tableInfos] = await UsersModel.getById(userId).catch(error => {
       console.log(error)
       return error.message
     })
@@ -130,7 +135,7 @@ export async function putUser(req: Request, res: Response) {
     return res.status(400).json({ error: 'No input was provided!' })
   }
 
-  User.updateById(id, req.body)
+  UsersModel.updateById(id, req.body)
     .then(results => {
       res.status(200).json({ message: 'User successfully updated' })
     })
@@ -142,6 +147,9 @@ export async function putUser(req: Request, res: Response) {
 
 export async function deleteUser(req: Request, res: Response) {
   const id = +req.params.id
+
+  // const { searchParams } = new URL(req.url)
+  // const id2 = Number(searchParams.get('userId'))
 
   if (Number.isNaN(id)) {
     res.status(400).json({
@@ -155,7 +163,7 @@ export async function deleteUser(req: Request, res: Response) {
   const isNotAdmin = role !== 1
 
   if (isNotAdmin) {
-    const [results, tableInfos] = await User.findById(userId).catch(error => {
+    const [results, tableInfos] = await UsersModel.getById(userId).catch(error => {
       console.log(error)
       return error.message
     })
@@ -167,7 +175,7 @@ export async function deleteUser(req: Request, res: Response) {
     }
   }
 
-  User.deleteById(id)
+  UsersModel.deleteById(id)
     .then(([results]) => {
       if (!results.affectedRows)
         return res.status(404).json({ error: 'User was not found!' })

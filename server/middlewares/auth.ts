@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars */
+
+// import { config } from 'dotenv'
+// config()
 import type { NextFunction, Request, Response } from 'express'
-
 import jwt from 'jsonwebtoken'
-// import { env } from '@/env.mjs'
-import { config } from 'dotenv'
 
-import { hasNullValue, sendErrorResponse } from '../lib/misc.js'
+import { hasNullValue, sendErrorResponse } from '../lib/utils.js'
 
-config()
 const JWT_DURATION = 15 * 60
 const jwtSecret = process.env.JWT_SECRET ?? 'mysecret'
 
@@ -17,7 +16,7 @@ export function authenticateJWTMiddleware(req: Request, res: Response, next: Nex
   if (authHeader) {
     const token = authHeader.split(' ')[1]
 
-    if (!token) return sendErrorResponse(400, 'No valid token was provided!')
+    if (!token) return sendErrorResponse(res, 400, 'No valid token was provided!')
 
     // console.log(jwt.decode(token))
 
@@ -34,7 +33,7 @@ export function authenticateJWTMiddleware(req: Request, res: Response, next: Nex
     // eslint-disable-next-line prettier/prettier
     // res.status(401)
     //   .json({ error: 'Unauthenticated User!' })
-    res.redirect(302, `${env.CLIENT_URL}/login`)
+    res.redirect(302, `${process.env.CLIENT_URL}/login`)
   }
 }
 
@@ -43,13 +42,13 @@ export function generateTokenMiddleware(req: Request, res: Response, next: NextF
   const hasNoDataInput = !Object.values(req.body).length
 
   if (hasNoDataInput) {
-    return sendErrorResponse(400, 'No data was given!')
+    return sendErrorResponse(res, 400, 'No data was given!')
   }
 
   const { id, lastname, firstname, email, role } = req.body
 
   if (hasNullValue([lastname, firstname, email, role])) {
-    return sendErrorResponse(400, 'Some input is missing')
+    return sendErrorResponse(res, 400, 'Some input is missing')
   }
 
   // Generate an access token

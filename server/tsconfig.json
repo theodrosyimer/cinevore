@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
     "target": "ESNext",
     "lib": [
-      "esnext"
+      "ESNext"
     ],
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -14,7 +15,6 @@
     // "emitDeclarationOnly": true,
     // "sourceMap": true,
     "inlineSourceMap": true,
-    "outDir": "./dist",
     "isolatedModules": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -37,9 +37,10 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "env.mjs",
+    "users/models/schema.ts",
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "test/**/*.ts"
   ]
 }

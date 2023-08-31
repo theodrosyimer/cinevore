@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
-import db from '../lib/database.js'
+import db from '../core/services/database.js'
 
 export class Like {
   static addToFilm = ({ filmId, userId }: { filmId: Number, userId: number }) =>
