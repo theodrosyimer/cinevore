@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { MainNav } from "@/components/main-nav"
 import { SiteFooter } from "@/components/site-footer"
+import { Header } from "@/components/header"
 // import { Footer } from "@/components/footer"
 
 interface SiteLayoutProps {
@@ -16,23 +17,8 @@ export default async function SiteLayout({
 }: SiteLayoutProps) {
   return (
     <>
-      <header className="container z-40 bg-background">
-        <div className="flex h-20 items-center justify-between py-6">
-          <MainNav items={siteLayoutConfig.mainNav} />
-          <nav>
-            <Link
-              href="/login"
-              className={cn(
-                buttonVariants({ variant: "secondary", size: "sm" }),
-                "px-4"
-              )}
-            >
-              Login
-            </Link>
-          </nav>
-        </div>
-      </header>
-      <main className="flex-1">{children}</main>
+      <Header />
+      <main className="">{children}</main>
       <SiteFooter />
     </>
   )
