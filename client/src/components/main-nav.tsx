@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { useSelectedLayoutSegment } from "next/navigation"
+import { usePathname, useSelectedLayoutSegment } from "next/navigation"
 
 import { MainNavItem } from "@/types"
 import { siteConfig } from "@/config/site"
@@ -17,7 +17,10 @@ interface MainNavProps {
 
 export function MainNav({ items, children }: MainNavProps) {
   const segment = useSelectedLayoutSegment()
+  const path = usePathname()
+
   const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false)
+  // console.log('PATH:', path)
 
   return (
     <div className="flex gap-6 md:gap-10">
@@ -29,21 +32,29 @@ export function MainNav({ items, children }: MainNavProps) {
       </Link>
       {items?.length ? (
         <nav className="hidden gap-6 md:flex">
-          {items?.map((item, index) => (
-            <Link
-              key={index}
-              href={item.disabled ? "#" : item.href}
-              className={cn(
-                "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
-                item.href.startsWith(`/${segment}`)
-                  ? "text-foreground"
-                  : "text-foreground/60",
-                item.disabled && "cursor-not-allowed opacity-80"
-              )}
-            >
-              {item.title}
-            </Link>
-          ))}
+          {items?.map((item, index) => {
+            // console.log('ITEM_HREF:', item.href)
+            // console.log('SEGMENT:', segment)
+
+            // console.log('ITEM_HREF = SEGMENT:', item.href.startsWith(`/${segment}`))
+
+            return (
+              <Link
+                key={index}
+                href={item.disabled ? "#" : item.href}
+                className={cn(
+                  "flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
+                  item.href.startsWith(`/${segment}`)
+                    ? "text-foreground"
+                    : "text-foreground/60",
+                  // path === item.href ? "text-accent-foreground" : "transparent",
+                  item.disabled && "cursor-not-allowed opacity-80"
+                )}
+              >
+                {item.title}
+              </Link>
+            )
+          })}
         </nav>
       ) : null}
       <button
