@@ -5,9 +5,12 @@ export type Film = {
 }
 
 export function useFilms() {
-  const filmsData = useQuery<Film>(['films'], async () => {
-    const res = await fetch('https://swapi.dev/api/films')
-    return await res.json()
+  const filmsData = useQuery<Film>({
+    queryKey: ['films'],
+    queryFn: async () => {
+      const data = await fetch('https://swapi.dev/api/films').then(res => res.json())
+      return data
+    }
   })
-  return filmsData as Film[]
+  return filmsData
 }
