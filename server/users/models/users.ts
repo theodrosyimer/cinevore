@@ -17,22 +17,18 @@ class UsersModel {
     log('Created new instance of UsersModel')
   }
 
-  // create = ({
-  //   lastname,
-  //   firstname,
-  //   username,
-  //   email,
-  //   password,
-  //   role = 0,
-  // }: CreateUser) =>
-  //   db.execute(
-  //     'INSERT INTO user (user_id, lastname, firstname, username, email, password, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
-  //     [null, lastname, firstname, username, email, password, role]
-  //   )
-
-  create = async (newUser: NewUser) => {
-    return db.insert(user).values({ ...newUser, roleId: 0 })
-  }
+  create = ({
+    lastname,
+    firstname,
+    username,
+    email,
+    password,
+    roleId = 0,
+  }: User) =>
+    db.execute(
+      'INSERT INTO user (user_id, lastname, firstname, username, email, password, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [null, lastname, firstname, username, email, password, role]
+    )
 
   getAll = () => dbMysql.execute('SELECT * FROM user')
 
