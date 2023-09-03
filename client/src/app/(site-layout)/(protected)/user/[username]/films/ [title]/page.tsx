@@ -1,17 +1,23 @@
-import Film from "@/components/Film"
+// import Film from "@/components/Film"
+
+export const metadata = {
+  title: "Film's Details Page",
+  description: "Details about a film.",
+}
 
 export default function UserFilmPage({ params }: {
   params: {
-    username: string,
+    title: string,
     id: number
   }
 }) {
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <>
 
-      <Film></Film>
+      <h1 className="text-4xl font-bold text-center">Film title: {params.title}</h1>
+      {/* <Film></Film> */}
 
-    </main>
+    </>
   )
 }

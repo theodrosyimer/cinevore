@@ -1,8 +1,13 @@
-import { env } from "../../../../../env.mjs"
+import { env } from "@env.mjs"
+
+export const metadata = {
+  title: "Upload Page",
+  description: "Upload your avatar's image.",
+}
 
 export default function UploadPage({ params }: { params: { username: string } }) {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <>
 
       <form
         className="mt-4"
@@ -20,6 +25,6 @@ export default function UploadPage({ params }: { params: { username: string } })
         </div>
         <button type="submit" className="">Submit</button>
       </form>
-    </main>
+    </>
   )
 }

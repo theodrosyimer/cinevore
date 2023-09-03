@@ -1,6 +1,11 @@
 import Films from "@/components/films-list"
 
-export default function UserFilmsPage({ params }: {
+export const metadata = {
+  title: "Job Details Page",
+  description: "Job details by name.",
+}
+
+export default function JobDetailsPage({ params }: {
   params: {
     username: string,
     id: number

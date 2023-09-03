@@ -1,6 +1,11 @@
 import Films from "@/components/films-list"
 
-export default function UserFilmsPage({ params }: {
+export const metadata = {
+  title: "Create List Page",
+  description: "Create a new list of films.",
+}
+
+export default function NewListPage({ params }: {
   params: {
     username: string,
     id: number
@@ -9,7 +14,7 @@ export default function UserFilmsPage({ params }: {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold text-center">Films from {params.username}</h1>
+      <h1 className="text-4xl font-bold text-center">Create a new list.</h1>
 
       <section>
         <Films />
