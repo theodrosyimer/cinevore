@@ -11,9 +11,9 @@ export type FuseResult<T> = Fuse.FuseResult<T>
 
 const names = ['Tim', 'Joe', 'Bel', 'Lee']
 
-interface DocsSearchProps extends React.HTMLAttributes<HTMLFormElement> {}
+interface SearchProps extends React.HTMLAttributes<HTMLFormElement> {}
 
-export function DocsSearch({ className, ...props }: DocsSearchProps) {
+export function Search({ className, ...props }: SearchProps) {
   const [results, setResults] = React.useState<FuseResult<string>[]>([])
 
   function onSubmit(event: React.SyntheticEvent) {
@@ -44,12 +44,12 @@ export function DocsSearch({ className, ...props }: DocsSearchProps) {
           setResults(fuse.search(value))
         }}
       />
-      <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 sm:flex">
+      {/* <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 sm:flex">
         <span className="text-xs">⌘</span>K
       </kbd>
-      <br />
+      <br /> */}
 
-      <pre>Results: {JSON.stringify(results, null, 2)}</pre>
+      {/* <pre>Results: {JSON.stringify(results, null, 2)}</pre> */}
 
     </form>
   )
