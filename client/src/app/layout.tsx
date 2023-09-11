@@ -40,11 +40,13 @@ export const metadata = {
     "Movies",
     "Social Network",
     "Reviews",
+    "TheMovieDB API",
     "Next.js",
     "React",
     "Tailwind CSS",
     "Server Components",
     "Radix UI",
+    "React-Query",
   ],
   authors: [
     {
