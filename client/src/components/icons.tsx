@@ -23,6 +23,7 @@ import {
   Twitter,
   User,
   X,
+  Film,
   // type Icon as LucideIcon,
   type LucideIcon,
 } from "lucide-react"
@@ -30,7 +31,7 @@ import {
 export type Icon = LucideIcon
 
 export const Icons = {
-  logo: Command,
+  logo: Film,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,
