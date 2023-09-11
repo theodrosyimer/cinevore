@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query"
 import { z } from "zod"
 
 export const filmSchema = z.object({
-  id: z.number(),
+  episode_id: z.number(),
   title: z.string(),
+  opening_crawl: z.string(),
 })
 
 export type Film = z.infer<typeof filmSchema>

@@ -12,10 +12,9 @@ async function getFilms() {
 }
 
 export function useFilms() {
-  const filmData = useQuery({
+  const filmsData = useQuery({
     queryKey: ['films'],
-    queryFn: () => getFilms(),
+    queryFn: getFilms,
   })
-  return filmData
+  return filmsData
 }
-
