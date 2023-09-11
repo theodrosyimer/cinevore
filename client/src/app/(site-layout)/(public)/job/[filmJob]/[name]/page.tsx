@@ -1,4 +1,4 @@
-import Films from "@/components/films-list"
+import FilmCardList from "@/components/film-card-list"
 
 export const metadata = {
   title: "Job Details Page",
@@ -17,7 +17,7 @@ export default function JobDetailsPage({ params }: {
       <h1 className="text-4xl font-bold text-center">Films from {params.username}</h1>
 
       <section>
-        <Films />
+        <FilmCardList />
       </section>
 
     </main>

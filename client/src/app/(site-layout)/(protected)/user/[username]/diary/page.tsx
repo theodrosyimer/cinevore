@@ -1,4 +1,4 @@
-import Films from "@/components/films-list"
+import FilmCardList from "@/components/film-card-list"
 
 export const metadata = {
   title: "Diary Page",
@@ -17,7 +17,7 @@ export default function DiaryPage({ params }: {
       <h1 className="text-4xl font-bold text-center">Diary</h1>
 
       <section>
-        <Films />
+        <FilmCardList />
       </section>
 
     </>

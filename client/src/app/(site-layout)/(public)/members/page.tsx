@@ -1,3 +1,7 @@
+export const metadata = {
+  title: "Members Page",
+  description: "Find all your preferred films here.",
+}
 
 export default function UsersPage({ params }: { params: { username: string } }) {
   return (
