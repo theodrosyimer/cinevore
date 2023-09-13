@@ -1,11 +1,20 @@
-import { env } from "@env.mjs"
+import { env } from "@/env.mjs"
+import { authOptions } from "@/lib/auth"
+import { getCurrentUser } from "@/lib/session"
+import { redirect } from "next/navigation"
 
 export const metadata = {
   title: "Upload Page",
   description: "Upload your avatar's image.",
 }
 
-export default function UploadPage({ params }: { params: { username: string } }) {
+export default async function UploadPage({ params }: { params: { username: string } }) {
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
+
   return (
     <>
 

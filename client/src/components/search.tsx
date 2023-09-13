@@ -28,13 +28,13 @@ export function Search({ className, ...props }: SearchProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className={cn("relative w-full", className)}
+      className={cn("relative w-full ml-4", className)}
       {...props}
     >
       <Input
         type="search"
         placeholder="Search for Films, Actors..."
-        className="h-8 w-full sm:w-64 sm:pr-12"
+        className="h-8 w-full sm:w-64 sm:pr-12  md:max-w-40"
         onChange={async (e) => {
           const { value } = e.currentTarget
           // Dynamically load fuse.js

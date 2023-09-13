@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,7 +10,7 @@
     "lint": "next lint",
     "introspect": "drizzle-kit introspect:mysql --config=drizzle.config.ts",
     "generate": "drizzle-kit generate:mysql --config=drizzle.config.ts",
-    "migrate": "tsx lib/migrate.ts",
+    "migrate": "tsx ./src/lib/migrate.ts",
     "push": "drizzle-kit push:mysql --config=drizzle.config.ts",
     "drop": "drizzle-kit drop --config=drizzle.config.ts",
     "up": "drizzle-kit up:mysql --config=drizzle.config.ts",
@@ -31,6 +32,7 @@
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.5",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
@@ -50,7 +52,7 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.2.2",
-    "zod": "^3.22.2"
+    "zod": "3.21.4"
   },
   "eslintConfig": {
     "root": true

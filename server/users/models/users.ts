@@ -25,9 +25,9 @@ class UsersModel {
     password,
     roleId = 0,
   }: User) =>
-    db.execute(
+    dbMysql.execute(
       'INSERT INTO user (user_id, lastname, firstname, username, email, password, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [null, lastname, firstname, username, email, password, role]
+      [null, lastname, firstname, username, email, password, roleId]
     )
 
   getAll = () => dbMysql.execute('SELECT * FROM user')

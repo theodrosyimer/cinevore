@@ -1,20 +1,23 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { NextAuthOptions } from "next-auth"
-import EmailProvider from "next-auth/providers/email"
+import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import GitHubProvider from "next-auth/providers/github"
-import { Client } from "postmark"
+import CredentialsProvider from "next-auth/providers/credentials"
+// import EmailProvider from "next-auth/providers/email"
+// import { Client } from "postmark"
 
-import { env } from "@env.mjs"
+import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
 import { db } from "@/lib/db"
+import UsersModel from "@/drizzle/users"
+import { JWT } from "next-auth/jwt/types"
 
-const postmarkClient = new Client(env.POSTMARK_API_TOKEN)
+// const postmarkClient = new Client(env.POSTMARK_API_TOKEN)
 
 export const authOptions: NextAuthOptions = {
   // huh any! I know.
   // This is a temporary fix for prisma client.
   // @see https://github.com/prisma/prisma/issues/16117
-  adapter: DrizzleAdapter(db as any),
+  adapter: DrizzleAdapter(db),
   session: {
     strategy: "jwt",
   },
@@ -26,48 +29,75 @@ export const authOptions: NextAuthOptions = {
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
     }),
-    EmailProvider({
-      from: env.SMTP_FROM,
-      sendVerificationRequest: async ({ identifier, url, provider }) => {
-        const user = await db.user.findUnique({
-          where: {
-            email: identifier,
-          },
-          select: {
-            emailVerified: true,
-          },
-        })
-
-        const templateId = user?.emailVerified
-          ? env.POSTMARK_SIGN_IN_TEMPLATE
-          : env.POSTMARK_ACTIVATION_TEMPLATE
-        if (!templateId) {
-          throw new Error("Missing template id")
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: {
+          label: "Username",
+          type: "text",
+          placeholder: "theo",
+        },
+        password: {
+          label: "Password",
+          type: "password",
+        },
+      },
+      async authorize(credentials) {
+        if (!credentials) {
+          return null
         }
 
-        const result = await postmarkClient.sendEmailWithTemplate({
-          TemplateId: parseInt(templateId),
-          To: identifier,
-          From: provider.from as string,
-          TemplateModel: {
-            action_url: url,
-            product_name: siteConfig.name,
-          },
-          Headers: [
-            {
-              // Set this to prevent Gmail from threading emails.
-              // See https://stackoverflow.com/questions/23434110/force-emails-not-to-be-grouped-into-conversations/25435722.
-              Name: "X-Entity-Ref-ID",
-              Value: new Date().getTime() + "",
-            },
-          ],
-        })
-
-        if (result.ErrorCode) {
-          throw new Error(result.Message)
+        const [dbUser] = await UsersModel.getByUsername(credentials.username)
+        if (dbUser && dbUser.password === credentials.password) {
+          // const { id, password, username } = dbUser
+          // return { id, password, username } as User
+          return dbUser
         }
+        return null
       },
     }),
+    // EmailProvider({
+    //   from: env.SMTP_FROM,
+    //   sendVerificationRequest: async ({ identifier, url, provider }) => {
+    //     const user = await db.user.findUnique({
+    //       where: {
+    //         email: identifier,
+    //       },
+    //       select: {
+    //         emailVerified: true,
+    //       },
+    //     })
+
+    //     const templateId = user?.emailVerified
+    //       ? env.POSTMARK_SIGN_IN_TEMPLATE
+    //       : env.POSTMARK_ACTIVATION_TEMPLATE
+    //     if (!templateId) {
+    //       throw new Error("Missing template id")
+    //     }
+
+    //     const result = await postmarkClient.sendEmailWithTemplate({
+    //       TemplateId: parseInt(templateId),
+    //       To: identifier,
+    //       From: provider.from as string,
+    //       TemplateModel: {
+    //         action_url: url,
+    //         product_name: siteConfig.name,
+    //       },
+    //       Headers: [
+    //         {
+    //           // Set this to prevent Gmail from threading emails.
+    //           // See https://stackoverflow.com/questions/23434110/force-emails-not-to-be-grouped-into-conversations/25435722.
+    //           Name: "X-Entity-Ref-ID",
+    //           Value: new Date().getTime() + "",
+    //         },
+    //       ],
+    //     })
+
+    //     if (result.ErrorCode) {
+    //       throw new Error(result.Message)
+    //     }
+    //   },
+    // }),
   ],
   callbacks: {
     async session({ token, session }) {
@@ -81,11 +111,17 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     async jwt({ token, user }) {
-      const dbUser = await db.user.findFirst({
-        where: {
-          email: token.email,
-        },
-      })
+      // const dbUser = await db.user.findFirst({
+      //   where: {
+      //     email: token.email,
+      //   },
+      // })
+
+      // if (!token.email) {
+      //   return null
+      // }
+
+      const [dbUser] = await UsersModel.getByEmail(token.email as string)
 
       if (!dbUser) {
         if (user) {
@@ -95,11 +131,11 @@ export const authOptions: NextAuthOptions = {
       }
 
       return {
-        id: dbUser.id,
-        name: dbUser.name,
+        id: dbUser.id.toString(),
+        name: dbUser.username,
         email: dbUser.email,
         picture: dbUser.image,
-      }
+      } as JWT
     },
   },
 }
