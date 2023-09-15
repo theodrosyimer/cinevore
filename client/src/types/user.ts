@@ -1,10 +1,11 @@
 // import { PermissionFlag } from "@/core/middlewares/permissionflag-enum"
-import { InferInsertModel, getTableColumns } from "drizzle-orm"
+import { InferInsertModel, InferSelectModel, getTableColumns } from "drizzle-orm"
 import { user } from "@/drizzle/schema"
 
 export type User = InferInsertModel<typeof user>
 
 export type NewUser = InferInsertModel<typeof user>
+export type SelectUser = InferSelectModel<typeof user>
 
 export type PatchUser = Partial<User>
 

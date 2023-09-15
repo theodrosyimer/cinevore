@@ -8,17 +8,20 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { UserAccountNav } from '@/components/user-account-nav'
 import { User } from 'next-auth'
 
-type UserAccountNavProps = {
-  user: User & {
-    id: string
-  }
-}
+import { getCurrentUser } from "@/lib/session"
+import { notFound } from "next/navigation"
 
-export function Header({ user }: UserAccountNavProps) {
+export async function Header() {
+  const user = await getCurrentUser()
+
+  // if (!user) {
+  //   return notFound()
+  // }
+
   return (
     <>
-      <header className="container z-40 bg-background">
-        <div className="flex h-20 justify-between py-6">
+      <header className="sticky top-0 z-40 border-b bg-background">
+        <div className="container flex h-20 justify-between py-6">
           <MainNav items={siteLayoutConfig.mainNav} />
 
           <div className="flex place-items-center gap-4">

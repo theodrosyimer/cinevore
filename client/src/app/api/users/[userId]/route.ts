@@ -4,6 +4,9 @@ import { z } from "zod"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { userNameSchema } from "@/lib/validations/user"
+import UsersModel from "@/drizzle/users"
+import { user } from "@/drizzle/schema"
+import { eq } from "drizzle-orm"
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -30,14 +33,15 @@ export async function PATCH(
     const payload = userNameSchema.parse(body)
 
     // Update the user.
-    await db.user.update({
-      where: {
-        id: session.user.id,
-      },
-      data: {
-        name: payload.name,
-      },
-    })
+    await db.update(user).set(payload).where(eq(user.id, params.userId))
+    // await db.update({
+    //   where: {
+    //     id: session.user.id,
+    //   },
+    //   data: {
+    //     name: payload.name,
+    //   },
+    // })
 
     return new Response(null, { status: 200 })
   } catch (error) {

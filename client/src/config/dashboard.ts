@@ -14,18 +14,28 @@ export const dashboardConfig: DashboardConfig = {
   ],
   sidebarNav: [
     {
-      title: "Films",
-      href: "/dashboard",
+      title: "Users",
+      href: "/me/dashboard",
+      icon: "media",
+    },
+    {
+      title: "Reviews",
+      href: "/me/dashboard/reviews",
+      icon: "media",
+    },
+    {
+      title: "Comments",
+      href: "/me/dashboard/comments",
       icon: "media",
     },
     {
       title: "Billing",
-      href: "/dashboard/billing",
+      href: "/me/dashboard/billing",
       icon: "billing",
     },
     {
       title: "Settings",
-      href: "/dashboard/settings",
+      href: "/me/dashboard/settings",
       icon: "settings",
     },
   ],

@@ -6,10 +6,9 @@ import CredentialsProvider from "next-auth/providers/credentials"
 // import { Client } from "postmark"
 
 import { env } from "@/env.mjs"
-import { siteConfig } from "@/config/site"
 import { db } from "@/lib/db"
 import UsersModel from "@/drizzle/users"
-import { JWT } from "next-auth/jwt/types"
+import { hashPassword, validateUserPassword } from "@/lib/bcrypt"
 
 // const postmarkClient = new Client(env.POSTMARK_API_TOKEN)
 
@@ -23,6 +22,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/login",
+    newUser: "/register",
   },
   providers: [
     GitHubProvider({
@@ -32,10 +32,15 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: {
-          label: "Username",
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "theo@example.com",
+        },
+        name: {
+          label: "Name",
           type: "text",
-          placeholder: "theo",
+          placeholder: "Theo",
         },
         password: {
           label: "Password",
@@ -47,12 +52,42 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        const [dbUser] = await UsersModel.getByUsername(credentials.username)
-        if (dbUser && dbUser.password === credentials.password) {
-          // const { id, password, username } = dbUser
-          // return { id, password, username } as User
-          return dbUser
+        let [dbUser] = await UsersModel.getByEmail(credentials.email)
+
+        // console.log("dbUser", dbUser)
+        // console.log(await validateUserPassword(credentials.password, dbUser?.password))
+
+        if (!dbUser) {
+          const hashedPassword = await hashPassword(credentials.password)
+
+          if (!hashedPassword) {
+            // throw new Error("Failed to hash password")
+            return null
+          }
+
+          await UsersModel.create({
+            email: credentials.email,
+            password: hashedPassword,
+            name: credentials.name,
+          })
+
+          const results = await UsersModel.getByEmail(credentials.email)
+
+          dbUser = results[0]
         }
+
+        if (dbUser && dbUser.password) {
+          if (await validateUserPassword(credentials.password, dbUser.password)) {
+            return dbUser
+          }
+          else {
+            return null
+
+          }
+
+        }
+        // console.log("credentials", credentials)
+
         return null
       },
     }),
@@ -126,16 +161,20 @@ export const authOptions: NextAuthOptions = {
       if (!dbUser) {
         if (user) {
           token.id = user?.id
+          token.name = user?.name
+          token.email = user?.email
+          token.picture = user?.image
         }
         return token
       }
 
       return {
-        id: dbUser.id.toString(),
-        name: dbUser.username,
+        id: dbUser.id,
+        name: dbUser.name,
         email: dbUser.email,
         picture: dbUser.image,
-      } as JWT
+      }
+
     },
   },
 }

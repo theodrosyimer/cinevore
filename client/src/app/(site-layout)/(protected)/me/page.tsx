@@ -13,10 +13,12 @@ export default async function UserProfilePage({ params }: { params: { username: 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
-
+  console.log(user)
   return (
     <>
-      <h1 className="text-4xl font-bold text-center">User Profile</h1>
+      <h1 className="text-4xl font-bold text-center">Welcome back <br />
+        {user.name ? user.name[0]?.toUpperCase() + user.name.slice(1) : user.email}
+      </h1>
     </>
   )
 }

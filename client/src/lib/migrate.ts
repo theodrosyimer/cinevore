@@ -26,7 +26,7 @@ async function main() {
 
   const adminPassword = await hashPassword('!#tHeodros1') as string
 
-  await dbMigrationOnly.insert(user).values({ lastname: 'Yimer', firstname: 'Theodros', username: 'theo', email: 'theo@example.com', password: adminPassword, roleId: 1, emailVerified: null })
+  await dbMigrationOnly.insert(user).values({ lastname: 'Yimer', firstname: 'Theodros', name: 'theo', email: 'theo@example.com', password: adminPassword, roleId: 1, emailVerified: null })
 }
 
 await main()

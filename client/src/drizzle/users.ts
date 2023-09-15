@@ -24,7 +24,7 @@ class UsersModel {
 
   getByEmail = async (email: string) => db.select().from(user).where(eq(user.email, email))
 
-  getByUsername = async (username: string) => db.select().from(user).where(eq(user.username, username))
+  getByName = async (name: string) => db.select().from(user).where(eq(user.name, name))
 
   getByEmailWithPassword = async (email: string) => db.select({ id: user.id, roleId: user.roleId, email: user.email, password: user.password }).from(user).where(eq(user.email, email))
 
