@@ -136,25 +136,17 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ token, session }) {
-      if (token) {
+      if (token && session.user) {
         session.user.id = token.id
         session.user.name = token.name
         session.user.email = token.email
-        session.user.image = token.picture
+        session.user.image = token.image
+        session.user.roleId = token.roleId
       }
 
       return session
     },
     async jwt({ token, user }) {
-      // const dbUser = await db.user.findFirst({
-      //   where: {
-      //     email: token.email,
-      //   },
-      // })
-
-      // if (!token.email) {
-      //   return null
-      // }
 
       const [dbUser] = await UsersModel.getByEmail(token.email as string)
 
@@ -163,7 +155,8 @@ export const authOptions: NextAuthOptions = {
           token.id = user?.id
           token.name = user?.name
           token.email = user?.email
-          token.picture = user?.image
+          token.image = user?.image
+          token.roleId = user?.roleId
         }
         return token
       }
@@ -172,7 +165,8 @@ export const authOptions: NextAuthOptions = {
         id: dbUser.id,
         name: dbUser.name,
         email: dbUser.email,
-        picture: dbUser.image,
+        image: dbUser.image,
+        roleId: dbUser.roleId,
       }
 
     },

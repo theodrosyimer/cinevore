@@ -1,20 +1,20 @@
 import { DashboardHeader } from "@/components/dashboard-header"
 import { ReviewCreateButton } from "@/components/review-create-button"
-import { ReviewItem } from "@/components/review-item"
 import { DashboardShell } from "@/components/shell"
+import { UserItem } from "@/components/user-item"
 
 export default function DashboardLoading() {
   return (
     <DashboardShell>
-      <DashboardHeader heading="Posts" text="Create and manage posts.">
+      <DashboardHeader heading="Users" text="Create and manage users.">
         <ReviewCreateButton />
       </DashboardHeader>
       <div className="divide-border-200 divide-y rounded-md border">
-        <ReviewItem.Skeleton />
-        <ReviewItem.Skeleton />
-        <ReviewItem.Skeleton />
-        <ReviewItem.Skeleton />
-        <ReviewItem.Skeleton />
+        <UserItem.Skeleton />
+        <UserItem.Skeleton />
+        <UserItem.Skeleton />
+        <UserItem.Skeleton />
+        <UserItem.Skeleton />
       </div>
     </DashboardShell>
   )

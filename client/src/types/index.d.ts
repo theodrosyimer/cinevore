@@ -3,29 +3,45 @@ import type { Icon } from "lucide-react"
 
 import { Icons } from "@/components/icons"
 
-export type NavItem = {
+export interface NavItem {
   title: string
   href: string
   disabled?: boolean
-}
-
-export type MainNavItem = NavItem
-
-export type SidebarNavItem = {
-  title: string
-  disabled?: boolean
   external?: boolean
   icon?: keyof typeof Icons
-} & (
-    | {
-      href: string
-      items?: never
-    }
-    | {
-      href?: string
-      items: NavLink[]
-    }
-  )
+  label?: string
+}
+
+export interface NavItemWithChildren extends NavItem {
+  items: NavItemWithChildren[]
+}
+
+export interface MainNavItem extends NavItem {}
+
+export interface SidebarNavItem extends NavItemWithChildren {}
+
+
+// export type NavItem = {
+//   title: string
+//   href: string
+//   disabled?: boolean
+//   external?: boolean
+//   icon?: keyof typeof Icons
+//   label?: string
+// }
+
+// export type MainNavItem = NavItem
+
+// export type SidebarNavItem = Omit<NavItem, 'href'> & (
+//   | {
+//     href: string
+//     items?: never
+//   }
+//   | {
+//     href?: string
+//     items: NavLink[]
+//   }
+// )
 
 export type SiteConfig = {
   name: string
@@ -43,12 +59,18 @@ export type DocsConfig = {
   sidebarNav: SidebarNavItem[]
 }
 
-export type MarketingConfig = {
+export type SiteLayoutConfig = {
   mainNav: MainNavItem[]
+  sidebarNav: SidebarNavItem[]
 }
 
 export type DashboardConfig = {
   mainNav: MainNavItem[]
+  sidebarNav: SidebarNavItem[]
+}
+
+export type SettingsConfig = {
+  // mainNav: MainNavItem[]
   sidebarNav: SidebarNavItem[]
 }
 

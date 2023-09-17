@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/site-footer"
 import { Header } from "@/components/header"
+import { SiteHeader } from "@/components/site-header"
 // import { Footer } from "@/components/footer"
 
 interface SiteLayoutProps {
@@ -12,7 +13,8 @@ export default async function SiteLayout({
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
+      <SiteHeader />
       <main className="">{children}</main>
       <SiteFooter className="border-t" />
     </>

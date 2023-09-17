@@ -2,16 +2,16 @@
 import { InferInsertModel, InferSelectModel, getTableColumns } from "drizzle-orm"
 import { user } from "@/drizzle/schema"
 
-export type User = InferInsertModel<typeof user>
+// export type User = InferInsertModel<typeof user>
 
 export type NewUser = InferInsertModel<typeof user>
 export type SelectUser = InferSelectModel<typeof user>
 
-export type PatchUser = Partial<User>
+export type PatchUser = Partial<NewUser>
 
-export type PutUser = User
+export type PutUser = NewUser
 
-export type UserVerification = Pick<User, 'id' | 'roleId' | 'email' | 'password'>
+export type UserVerification = Pick<NewUser, 'id' | 'roleId' | 'email' | 'password'>
 
 const userRoles = { 'user': 0, 'admin': 1, 'superadmin': 2 } as const
 

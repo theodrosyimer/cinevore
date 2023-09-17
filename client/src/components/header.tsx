@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { MainNav } from '@/components/main-nav'
-import { siteLayoutConfig } from '@/config/site-nav'
+import { siteLayoutConfig } from '@/config/nav'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Search } from '@/components/search'
