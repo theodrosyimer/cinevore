@@ -21,6 +21,11 @@ export const siteLayoutConfig: SiteLayoutConfig = {
     {
       title: "Pricing",
       href: "/pricing",
+    },
+    {
+      title: "Admin Dashboard",
+      href: "/admin/dashboard",
+      label: "admin",
     }
   ],
   sidebarNav: [
