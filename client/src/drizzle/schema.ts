@@ -15,12 +15,13 @@ import {
 
 export const user = mysqlTable("user", {
   id: varchar("id", { length: 255 }).$default(() => sql`UUID()`).notNull().primaryKey(),
-  roleId: int("role_id").default(0).notNull().references(() => role.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  // roleId: int("role_id").default(0).notNull().references(() => role.roleId, { onDelete: "cascade", onUpdate: "cascade" }),
+  role: mysqlEnum('role', ['user', 'admin', 'superadmin']).notNull().primaryKey().default('user'),
   lastname: varchar("lastname", { length: 60 }),
   firstname: varchar("firstname", { length: 50 }),
   name: varchar("name", { length: 255 }).unique(),
   // username: varchar("username", { length: 50 }),
-  email: varchar("email", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
   emailVerified: timestamp("emailVerified", {
     mode: "date",
     // fsp: 3,
@@ -37,12 +38,9 @@ export const user = mysqlTable("user", {
       email: uniqueIndex("email").on(table.email),
       name: uniqueIndex("username").on(table.name),
       id: uniqueIndex("id").on(table.id),
-      fkRoleUser: index("FK_role_user").on(table.roleId),
+      fkRoleUser: index("FK_role_user").on(table.role),
     }
   })
-
-export type NewUser = InferInsertModel<typeof user>
-export type SelectUser = InferSelectModel<typeof user>
 
 export const film = mysqlTable("film", {
   id: int("id").autoincrement().primaryKey().notNull(),
@@ -58,8 +56,6 @@ export const film = mysqlTable("film", {
     }
   })
 
-export type NewFilm = InferInsertModel<typeof film>
-export type SelectFilm = InferSelectModel<typeof film>
 
 
 export const filmList = mysqlTable("film_list", {
@@ -72,8 +68,6 @@ export const filmList = mysqlTable("film_list", {
     }
   })
 
-export type NewFilmList = InferInsertModel<typeof filmList>
-export type SelectFilmList = InferSelectModel<typeof filmList>
 
 export const filmLike = mysqlTable("film_like", {
   id: int("id").autoincrement().primaryKey().notNull(),
@@ -90,8 +84,6 @@ export const filmLike = mysqlTable("film_like", {
     }
   })
 
-export type NewFilmLike = InferInsertModel<typeof filmLike>
-export type SelectFilmLike = InferSelectModel<typeof filmLike>
 
 export const comment = mysqlTable("comment", {
   id: int("id").autoincrement().primaryKey().notNull(),
@@ -109,8 +101,6 @@ export const comment = mysqlTable("comment", {
     }
   })
 
-export type NewComment = InferInsertModel<typeof comment>
-export type SelectComment = InferSelectModel<typeof comment>
 
 export const reviewLike = mysqlTable("review_like", {
   id: int("id").autoincrement().primaryKey().notNull(),
@@ -127,8 +117,6 @@ export const reviewLike = mysqlTable("review_like", {
     }
   })
 
-export type NewReviewLike = InferInsertModel<typeof reviewLike>
-export type SelectReviewLike = InferSelectModel<typeof reviewLike>
 
 export const review = mysqlTable("review", {
   id: int("id").autoincrement().primaryKey().notNull(),
@@ -146,21 +134,18 @@ export const review = mysqlTable("review", {
     }
   })
 
-export type NewReview = InferInsertModel<typeof review>
-export type SelectReview = InferSelectModel<typeof review>
 
-export const role = mysqlTable("role", {
-  id: int("id").primaryKey().notNull(),
-  role: mysqlEnum('role', ['user', 'admin', 'superadmin']).notNull(),
-},
-  (table) => {
-    return {
-      id: uniqueIndex("id").on(table.id),
-      role: uniqueIndex("role").on(table.role),
-    }
-  })
-
-export type Role = InferInsertModel<typeof role>
+// export const role = mysqlTable("role", {
+//   id: int("id").primaryKey().notNull(),
+//   // role: mysqlEnum('role', ['user', 'admin', 'superadmin']).notNull(),
+//   role: mysqlEnum('role', ['user', 'admin', 'superadmin']).notNull().primaryKey().default('user'),
+// },
+//   (table) => {
+//     return {
+//       // id: uniqueIndex("id").on(table.id),
+//       role: uniqueIndex("role").on(table.role),
+//     }
+//   })
 
 export const accounts = mysqlTable(
   "account",
@@ -186,8 +171,6 @@ export const accounts = mysqlTable(
   })
 )
 
-export type NewAccount = InferInsertModel<typeof accounts>
-export type SelectAccount = InferSelectModel<typeof accounts>
 
 export const sessions = mysqlTable("session", {
   sessionToken: varchar("sessionToken", { length: 255 }).notNull().primaryKey(),
@@ -209,5 +192,3 @@ export const verificationTokens = mysqlTable(
   })
 )
 
-export type NewVerificationTokens = InferInsertModel<typeof verificationTokens>
-export type SelectVerificationTokens = InferSelectModel<typeof verificationTokens>

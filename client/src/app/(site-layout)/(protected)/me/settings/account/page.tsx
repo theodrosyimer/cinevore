@@ -6,11 +6,11 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 
 export default async function SettingsAccountPage() {
-  const user = await getCurrentUser()
+  // const user = await getCurrentUser()
 
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login")
-  }
+  // if (!user) {
+  //   redirect(authOptions?.pages?.signIn || "/login")
+  // }
 
   return (
     <div className="space-y-6">

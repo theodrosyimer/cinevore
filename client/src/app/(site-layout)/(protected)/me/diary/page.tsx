@@ -15,11 +15,7 @@ export default async function DiaryPage({ params }: {
   }
 }) {
 
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login")
-  }
+  // const user = await getCurrentUser()
 
   return (
     <>

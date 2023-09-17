@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "3f059d67-1afb-4629-a39e-ba2b094d72d6",
+  "id": "eb60b148-8d0a-49c9-b61c-00243416bfa5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -673,51 +673,6 @@
       },
       "uniqueConstraints": {}
     },
-    "role": {
-      "name": "role",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "role": {
-          "name": "role",
-          "type": "enum('user','admin','superadmin')",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "id": {
-          "name": "id",
-          "columns": [
-            "id"
-          ],
-          "isUnique": true
-        },
-        "role": {
-          "name": "role",
-          "columns": [
-            "role"
-          ],
-          "isUnique": true
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "role_id": {
-          "name": "role_id",
-          "columns": [
-            "id"
-          ]
-        }
-      },
-      "uniqueConstraints": {}
-    },
     "session": {
       "name": "session",
       "columns": {
@@ -779,13 +734,13 @@
           "notNull": true,
           "autoincrement": false
         },
-        "role_id": {
-          "name": "role_id",
-          "type": "int",
+        "role": {
+          "name": "role",
+          "type": "enum('user','admin','superadmin')",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": 0
+          "default": "'user'"
         },
         "lastname": {
           "name": "lastname",
@@ -804,13 +759,6 @@
         "name": {
           "name": "name",
           "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "username": {
-          "name": "username",
-          "type": "varchar(50)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -887,7 +835,7 @@
         "username": {
           "name": "username",
           "columns": [
-            "username"
+            "name"
           ],
           "isUnique": true
         },
@@ -901,35 +849,40 @@
         "FK_role_user": {
           "name": "FK_role_user",
           "columns": [
-            "role_id"
+            "role"
           ],
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "user_role_id_role_id_fk": {
-          "name": "user_role_id_role_id_fk",
-          "tableFrom": "user",
-          "tableTo": "role",
-          "columnsFrom": [
-            "role_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "user_id": {
           "name": "user_id",
           "columns": [
             "id"
           ]
+        },
+        "user_role": {
+          "name": "user_role",
+          "columns": [
+            "role"
+          ]
         }
       },
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "user_name_unique": {
+          "name": "user_name_unique",
+          "columns": [
+            "name"
+          ]
+        },
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "columns": [
+            "email"
+          ]
+        }
+      }
     },
     "verificationToken": {
       "name": "verificationToken",

@@ -11,7 +11,7 @@ import { authOptions } from "@/lib/auth"
 export default async function IndexPage() {
   // const stars = await getGitHubStars()
   // const stars = '10'
-  const user = await getCurrentUser()
+  // const user = await getCurrentUser()
 
 
 

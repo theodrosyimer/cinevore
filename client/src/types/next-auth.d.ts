@@ -1,11 +1,11 @@
-import { NewUser } from "@/types/user"
+import { NewUser } from "@/types/db"
 // import { User } from "next-auth"
 import { JWT } from "next-auth/jwt"
 import { type } from "os"
 
 type UserId = string
 
-type UserAuth = Pick<NewUser, 'name' | 'email' | 'image' | 'roleId'>
+type UserAuth = Pick<NewUser, 'name' | 'email' | 'image' | 'role'>
 
 
 declare module "next-auth/jwt" {

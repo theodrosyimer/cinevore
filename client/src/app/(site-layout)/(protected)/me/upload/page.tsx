@@ -20,7 +20,8 @@ export default async function UploadPage({ params }: { params: { username: strin
 
       <form
         className="mt-4"
-        action={`${env.NEXT_PUBLIC_APP_URL}/upload`}
+        // action={`${env.NEXT_PUBLIC_APP_URL}/upload`}
+        action={`${env.NEXT_PUBLIC_APP_URL}/api/upload`}
         method="POST"
         encType="multipart/form-data"
       >

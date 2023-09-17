@@ -1,10 +1,10 @@
 import Link from "next/link"
-import { SelectReview, review } from "@/drizzle/schema"
+import { review } from "@/drizzle/schema"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { UserOperations } from "@/components/user-operations"
-import { SelectUser } from "@/types/user"
+import { SelectUser, SelectReview } from "@/types/db"
 
 interface UserItemProps {
   user: Pick<SelectUser, "id" | "name" | "updatedAt" | "createdAt">

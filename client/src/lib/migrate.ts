@@ -1,6 +1,6 @@
 import { migrate } from 'drizzle-orm/mysql2/migrator'
 import mysql from "mysql2/promise"
-import { role, user } from '@/drizzle/schema'
+import { user } from '@/drizzle/schema'
 import { hashPassword } from '@/lib/bcrypt'
 import { drizzle } from 'drizzle-orm/mysql2'
 import { env } from '@/env.mjs'
@@ -22,11 +22,19 @@ const dbMigrationOnly = drizzle(connection)
 async function main() {
   await migrate(dbMigrationOnly, { migrationsFolder: './src/drizzle' })
 
-  await dbMigrationOnly.insert(role).values([{ role: 'user', id: 0 }, { role: 'admin', id: 1 }])
+  // await dbMigrationOnly.insert(role).values([{ role: 'user', id: 0 }, { role: 'admin', id: 1 }, { role: 'superadmin', id: 2 }])
 
   const adminPassword = await hashPassword('!#tHeodros1') as string
 
-  await dbMigrationOnly.insert(user).values({ lastname: 'Yimer', firstname: 'Theodros', name: 'theo', email: 'theo@example.com', password: adminPassword, roleId: 1, emailVerified: null })
+  await dbMigrationOnly.insert(user).values({
+    lastname: 'Yimer',
+    firstname: 'Theodros',
+    name: 'theo',
+    email: 'theo@example.com',
+    password: adminPassword,
+    role: 'admin',
+    emailVerified: null,
+  })
 }
 
 await main()

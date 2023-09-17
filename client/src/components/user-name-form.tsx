@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SelectUser } from "@/drizzle/schema"
+import { SelectUser } from "@/types/db"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 

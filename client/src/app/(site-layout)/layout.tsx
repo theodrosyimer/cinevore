@@ -15,7 +15,7 @@ export default async function SiteLayout({
     <>
       {/* <Header /> */}
       <SiteHeader />
-      <main className="">{children}</main>
+      <main className="mt-6">{children}</main>
       <SiteFooter className="border-t" />
     </>
   )

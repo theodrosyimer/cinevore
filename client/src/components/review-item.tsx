@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { SelectReview, review } from "@/drizzle/schema"
+import { SelectReview } from "@/types/db"
+import { review } from "@/drizzle/schema"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"

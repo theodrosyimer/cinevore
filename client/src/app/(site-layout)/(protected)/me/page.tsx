@@ -11,9 +11,9 @@ export default async function UserProfilePage({ params }: { params: { username: 
   const user = await getCurrentUser()
 
   if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login")
+    return null
   }
-  console.log(user)
+  // console.log(user)
   return (
     <>
       <h1 className="text-4xl font-bold text-center">Welcome back <br />

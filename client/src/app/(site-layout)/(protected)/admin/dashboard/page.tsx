@@ -16,12 +16,6 @@ export const metadata = {
 }
 
 export default async function DashboardPage() {
-  const currentUser = await getCurrentUser()
-
-  if (!currentUser) {
-    redirect(authOptions?.pages?.signIn || "/login")
-  }
-
   const users = await db.query.user.findMany({
     // where: eq(user.id, currentUser.id),
     // columns: {

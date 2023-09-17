@@ -6,6 +6,7 @@ export default withAuth(
   async function middleware(req) {
     const token = await getToken({ req })
     const isAuth = !!token
+    const isAdminSegment = req.nextUrl.pathname.startsWith("/admin")
     const isAuthPage =
       req.nextUrl.pathname.startsWith("/login") ||
       req.nextUrl.pathname.startsWith("/register")
@@ -14,12 +15,17 @@ export default withAuth(
       if (isAuth) {
         return NextResponse.redirect(new URL("/me", req.url))
       }
-
       return null
+    }
+
+    if (isAdminSegment && token?.role !== "admin") {
+      return NextResponse.redirect(new URL("/", req.url))
     }
 
     if (!isAuth) {
       let from = req.nextUrl.pathname
+      // console.log('FROM:', from)
+
       if (req.nextUrl.search) {
         from += req.nextUrl.search
       }

@@ -2,7 +2,7 @@
 import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
 import { user } from '@/drizzle/schema'
-import { NewUser, PatchUser, PutUser } from '@/types/user'
+import { NewUser, PatchUser, PutUser } from '@/types/db'
 // import { PermissionFlag } from '@/core/middlewares/permissionflag-enum'
 import { SelectedFields } from 'drizzle-orm/mysql-core'
 

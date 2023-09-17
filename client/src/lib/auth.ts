@@ -61,8 +61,8 @@ export const authOptions: NextAuthOptions = {
           const hashedPassword = await hashPassword(credentials.password)
 
           if (!hashedPassword) {
-            // throw new Error("Failed to hash password")
-            return null
+            throw new Error("Failed to hash password")
+            // return null
           }
 
           await UsersModel.create({
@@ -76,17 +76,14 @@ export const authOptions: NextAuthOptions = {
           dbUser = results[0]
         }
 
-        if (dbUser && dbUser.password) {
+        if (dbUser?.password) {
           if (await validateUserPassword(credentials.password, dbUser.password)) {
             return dbUser
           }
           else {
             return null
-
           }
-
         }
-        // console.log("credentials", credentials)
 
         return null
       },
@@ -141,7 +138,7 @@ export const authOptions: NextAuthOptions = {
         session.user.name = token.name
         session.user.email = token.email
         session.user.image = token.image
-        session.user.roleId = token.roleId
+        session.user.role = token.role
       }
 
       return session
@@ -156,7 +153,7 @@ export const authOptions: NextAuthOptions = {
           token.name = user?.name
           token.email = user?.email
           token.image = user?.image
-          token.roleId = user?.roleId
+          token.role = user?.role
         }
         return token
       }
@@ -166,7 +163,7 @@ export const authOptions: NextAuthOptions = {
         name: dbUser.name,
         email: dbUser.email,
         image: dbUser.image,
-        roleId: dbUser.roleId,
+        role: dbUser.role,
       }
 
     },

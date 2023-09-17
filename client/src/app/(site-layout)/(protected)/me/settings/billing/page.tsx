@@ -26,7 +26,7 @@ export default async function BillingPage() {
   const user = await getCurrentUser()
 
   if (!user) {
-    redirect(authOptions?.pages?.signIn || "/login")
+    return null
   }
 
   const subscriptionPlan = await getUserSubscriptionPlan(user.id)
