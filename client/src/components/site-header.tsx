@@ -18,7 +18,9 @@ import { UserAccountNav } from "@/components/user-account-nav"
 export async function SiteHeader() {
   const user = await getCurrentUser()
 
-  const mainNavItems = user?.role === 'user' ? siteLayoutConfig.mainNav.filter(item => item.label !== 'admin') : siteLayoutConfig.mainNav
+  const mainNavItems =
+    user?.role === 'user' || !user?.role
+      ? siteLayoutConfig.mainNav.filter(item => item.label !== 'admin') : siteLayoutConfig.mainNav
 
   return (
     <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
