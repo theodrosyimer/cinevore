@@ -1,24 +1,36 @@
-import { DashboardConfig } from "@/types"
+import { AdminDashboardConfig } from "@/types"
 
-export const dashboardConfig: DashboardConfig = {
+export const adminDashboardConfig: AdminDashboardConfig = {
   mainNav: [],
   sidebarNav: [
     {
       title: "Users",
       href: "/admin/dashboard",
-      icon: "media",
+      icon: "user",
+      items: [],
+    },
+    {
+      title: "Films",
+      href: "/admin/dashboard/films",
+      icon: "logo",
+      items: [],
+    },
+    {
+      title: "Lists",
+      href: "/admin/dashboard/lists",
+      icon: "logo",
       items: [],
     },
     {
       title: "Reviews",
       href: "/admin/dashboard/reviews",
-      icon: "media",
+      icon: "post",
       items: [],
     },
     {
       title: "Comments",
       href: "/admin/dashboard/comments",
-      icon: "media",
+      icon: "post",
       items: [],
     },
     {

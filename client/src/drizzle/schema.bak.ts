@@ -10,24 +10,24 @@ import {
   text,
   timestamp,
   uniqueIndex,
-  varchar
+  varchar,
 } from "drizzle-orm/mysql-core"
 
 export const user = mysqlTable("user", {
-  id: varchar("id", { length: 255 }).$default(() => sql`UUID()`).notNull().primaryKey(),
+  id: int("id").autoincrement().primaryKey().notNull(),
   role: mysqlEnum('role', ['user', 'admin', 'superadmin']).notNull().default('user'),
   lastname: varchar("lastname", { length: 60 }),
   firstname: varchar("firstname", { length: 50 }),
   name: varchar("name", { length: 255 }).unique(),
-  // username: varchar("username", { length: 50 }),
-  email: varchar("email", { length: 255 }).notNull().unique(),
+  // username: varchar("username", { length: 50 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("emailVerified", {
     mode: "date",
     // fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
   avatarFilename: varchar("avatar_filename", { length: 255 }),
-  password: char("password", { length: 60 }),
+  password: char("password", { length: 60 }).notNull(),
   bio: text("bio"),
   createdAt: timestamp('created_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at', { mode: 'date' }).default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
@@ -37,12 +37,13 @@ export const user = mysqlTable("user", {
       email: uniqueIndex("email").on(table.email),
       name: uniqueIndex("username").on(table.name),
       id: uniqueIndex("id").on(table.id),
+      role: uniqueIndex("role").on(table.role),
     }
   })
 
 export const film = mysqlTable("film", {
   id: int("id").autoincrement().primaryKey().notNull(),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  userId: int("user_id").notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
   content: text("content").notNull(),
@@ -54,10 +55,9 @@ export const film = mysqlTable("film", {
     }
   })
 
-
 export const filmList = mysqlTable("film_list", {
   id: int("id").autoincrement().primaryKey().notNull(),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  userId: int("user_id").notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
 },
   (table) => {
     return {
@@ -65,11 +65,10 @@ export const filmList = mysqlTable("film_list", {
     }
   })
 
-
 export const filmLike = mysqlTable("film_like", {
   id: int("id").autoincrement().primaryKey().notNull(),
   filmId: int("film_id").notNull().references(() => film.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  userId: int("user_id").notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
 },
@@ -81,11 +80,10 @@ export const filmLike = mysqlTable("film_like", {
     }
   })
 
-
 export const comment = mysqlTable("comment", {
   id: int("id").autoincrement().primaryKey().notNull(),
   listId: int("list_id").notNull().references(() => filmList.id, { onDelete: "restrict", onUpdate: "cascade" }),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id),
+  userId: int("user_id").notNull().references(() => user.id),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
   content: text("content").notNull(),
@@ -98,11 +96,10 @@ export const comment = mysqlTable("comment", {
     }
   })
 
-
 export const reviewLike = mysqlTable("review_like", {
   id: int("id").autoincrement().primaryKey().notNull(),
   reviewId: int("review_id").notNull().references(() => review.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  userId: int("user_id").notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
 },
@@ -114,11 +111,10 @@ export const reviewLike = mysqlTable("review_like", {
     }
   })
 
-
 export const review = mysqlTable("review", {
   id: int("id").autoincrement().primaryKey().notNull(),
   filmId: int("film_id").notNull().references(() => film.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  userId: int("user_id").notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
   content: text("content").notNull(),
@@ -131,15 +127,14 @@ export const review = mysqlTable("review", {
     }
   })
 
-
 // export const role = mysqlTable("role", {
-//   id: int("id").primaryKey().notNull(),
-//   // role: mysqlEnum('role', ['user', 'admin', 'superadmin']).notNull(),
-//   role: mysqlEnum('role', ['user', 'admin', 'superadmin']).notNull().primaryKey().default('user'),
+//   id: int("id").primaryKey(),
+//   // role: varchar("role", { length: 30 }).notNull(),
+//   role: mysqlEnum('role', ['user', 'admin', 'superadmin'])
 // },
 //   (table) => {
 //     return {
-//       // id: uniqueIndex("id").on(table.id),
+//       id: uniqueIndex("id").on(table.id),
 //       role: uniqueIndex("role").on(table.role),
 //     }
 //   })
@@ -147,7 +142,7 @@ export const review = mysqlTable("review", {
 export const accounts = mysqlTable(
   "account",
   {
-    userId: varchar("userId", { length: 255 })
+    userId: int("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     type: varchar("type", { length: 255 })
@@ -168,10 +163,9 @@ export const accounts = mysqlTable(
   })
 )
 
-
 export const sessions = mysqlTable("session", {
   sessionToken: varchar("sessionToken", { length: 255 }).notNull().primaryKey(),
-  userId: varchar("user_id", { length: 255 })
+  userId: int("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
@@ -188,4 +182,3 @@ export const verificationTokens = mysqlTable(
     compoundKey: primaryKey(vt.identifier, vt.token),
   })
 )
-

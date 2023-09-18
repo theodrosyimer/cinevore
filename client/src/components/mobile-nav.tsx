@@ -12,8 +12,15 @@ import { Icons } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { MainNavItem, SiteLayoutConfig } from "@/types"
 
-export function MobileNav() {
+type MobileNavProps = {
+  items?: SiteLayoutConfig
+  children?: React.ReactNode
+}
+
+
+export function MobileNav({ items, children }: MobileNavProps) {
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -38,7 +45,7 @@ export function MobileNav() {
         </MobileLink>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="flex flex-col space-y-3">
-            {siteLayoutConfig.mainNav?.map(
+            {items ? items.mainNav.map(
               (item) =>
                 item.href && (
                   <MobileLink
@@ -49,7 +56,7 @@ export function MobileNav() {
                     {item.title}
                   </MobileLink>
                 )
-            )}
+            ) : null}
           </div>
           <div className="flex flex-col space-y-2">
             {siteLayoutConfig.sidebarNav.map((item, index) => (

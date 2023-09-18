@@ -1,16 +1,16 @@
 import { notFound } from "next/navigation"
 
-import { dashboardConfig } from "@/config/dashboard"
+import { adminDashboardConfig } from "@/config/admin-dashboard"
 import { getCurrentUser } from "@/lib/session"
 import { DashboardNav } from "@/components/nav"
 
-interface DashboardLayoutProps {
+interface AdminDashboardLayoutProps {
   children?: React.ReactNode
 }
 
-export default async function DashboardLayout({
+export default async function AdminDashboardLayout({
   children,
-}: DashboardLayoutProps) {
+}: AdminDashboardLayoutProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -31,13 +31,13 @@ export default async function DashboardLayout({
     //       />
     //     </div>
     //   </header>
-    <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr] ">
-      <aside className=" w-[200px] flex-col md:flex">
-        <DashboardNav items={dashboardConfig.sidebarNav} />
+    <div className="container flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0">
+      <aside className=" md:w-1/5">
+        <DashboardNav items={adminDashboardConfig.sidebarNav} />
       </aside>
-      <main className="flex w-full flex-1 flex-col overflow-hidden">
+      <section className="flex w-full flex-1 flex-col overflow-hidden">
         {children}
-      </main>
+      </section>
     </div>
     // </div>
   )

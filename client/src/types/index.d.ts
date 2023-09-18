@@ -64,7 +64,7 @@ export type SiteLayoutConfig = {
   sidebarNav: SidebarNavItem[]
 }
 
-export type DashboardConfig = {
+export type AdminDashboardConfig = {
   mainNav: MainNavItem[]
   sidebarNav: SidebarNavItem[]
 }

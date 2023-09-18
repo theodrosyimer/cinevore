@@ -8,7 +8,7 @@ export default withAuth(
     const isAuth = !!token
     const isAdminSegment = req.nextUrl.pathname.startsWith("/admin")
     const isAuthPage = req.nextUrl.pathname.startsWith("/login") || req.nextUrl.pathname.startsWith("/register")
-    console.log(req.nextUrl)
+    // console.log(req.nextUrl)
 
     if (isAuthPage) {
       if (isAuth) {
@@ -38,7 +38,7 @@ export default withAuth(
     callbacks: {
       async authorized() {
         // This is a work-around for handling redirect on auth pages.
-        // We return true here so that the middleware function above
+        // returning true here so that the middleware function above
         // is always called.
         return true
       },

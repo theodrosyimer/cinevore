@@ -19,7 +19,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
   }
 
   return (
-    <nav className="grid items-start gap-2">
+    <nav className="flex space-x-2 md:flex-col md:space-x-0 md:space-y-1 xs:overflow-scroll sm:overflow-scroll">
       {items.map((item, index) => {
         const Icon = Icons[item.icon || "arrowRight"]
         return (

@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "eb60b148-8d0a-49c9-b61c-00243416bfa5",
+  "id": "77ee94f0-764b-4580-b478-08471f35c7c0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -845,13 +845,6 @@
             "id"
           ],
           "isUnique": true
-        },
-        "FK_role_user": {
-          "name": "FK_role_user",
-          "columns": [
-            "role"
-          ],
-          "isUnique": false
         }
       },
       "foreignKeys": {},
@@ -860,12 +853,6 @@
           "name": "user_id",
           "columns": [
             "id"
-          ]
-        },
-        "user_role": {
-          "name": "user_role",
-          "columns": [
-            "role"
           ]
         }
       },
