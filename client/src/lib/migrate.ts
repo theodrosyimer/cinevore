@@ -22,8 +22,6 @@ const dbMigrationOnly = drizzle(connection)
 async function main() {
   await migrate(dbMigrationOnly, { migrationsFolder: './src/drizzle' })
 
-  // await dbMigrationOnly.insert(role).values([{ role: 'user', id: 0 }, { role: 'admin', id: 1 }, { role: 'superadmin', id: 2 }])
-
   const adminPassword = await hashPassword('!#tHeodros1') as string
 
   await dbMigrationOnly.insert(user).values({
