@@ -20,7 +20,7 @@ class UsersModel {
 
   getAll = async () => db.select().from(user)
 
-  getById = async (id: string, selectedColumns: SelectedFields = {}) => db.select(selectedColumns).from(user).where(eq(user.id, id))
+  getById = async (id: string) => db.select().from(user).where(eq(user.id, id))
 
   getByEmail = async (email: string) => db.select().from(user).where(eq(user.email, email))
 
