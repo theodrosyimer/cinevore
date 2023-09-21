@@ -130,6 +130,10 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ token, session }) {
+      // console.log('token.role', token.role)
+
+      // console.log('session.user', session.user)
+
       if (token && session.user) {
         session.user.id = token.id
         session.user.name = token.name
@@ -137,6 +141,7 @@ export const authOptions: NextAuthOptions = {
         session.user.image = token.image
         session.user.role = token.role
       }
+      // console.log('session.user', session.user)
 
       return session
     },
@@ -146,6 +151,7 @@ export const authOptions: NextAuthOptions = {
 
       if (!dbUser) {
         if (user) {
+          // console.log('USER:', user)
           token.id = user?.id
           token.name = user?.name
           token.email = user?.email
@@ -154,6 +160,13 @@ export const authOptions: NextAuthOptions = {
         }
         return token
       }
+      // console.log('TOKEN:', {
+      //   id: dbUser.id,
+      //   name: dbUser.name,
+      //   email: dbUser.email,
+      //   image: dbUser.image,
+      //   role: dbUser.role,
+      // })
 
       return {
         id: dbUser.id,
