@@ -18,3 +18,19 @@ export function formatDate(input: string | number): string {
 export function absoluteUrl(path: string) {
   return `${env.NEXT_PUBLIC_APP_URL}${path}`
 }
+
+export function convertMinutesToHoursAndMinutes(minutes: number) {
+  // if (typeof minutes !== 'number') {
+  //   throw new Error('The movie duration time must be a number')
+  // }
+
+  // if (minutes <= 0) {
+  //   throw new Error('The movie duration time must be a positive number greater than 0')
+  // }
+
+  function format(cb: (() => number)) {
+    return cb() < 10 ? `0${cb()}` : cb()
+  }
+  return `${format(() => Math.trunc(minutes / 60))}h${format(() => minutes % 60)}`
+}
+
