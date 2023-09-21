@@ -42,7 +42,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/lib/tmdb/themoviedb.js",
     "src/env.mjs"
   ],
   "exclude": [
