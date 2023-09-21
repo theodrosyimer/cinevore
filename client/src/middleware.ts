@@ -7,6 +7,7 @@ export default withAuth(
     const token = await getToken({ req })
     const isAuth = !!token
     const isAdminSegment = req.nextUrl.pathname.startsWith("/admin")
+    // const isMePage = req.nextUrl.pathname.startsWith("/me")
     const isAuthPage = req.nextUrl.pathname.startsWith("/login") || req.nextUrl.pathname.startsWith("/register")
     // console.log(req.nextUrl)
 
@@ -17,9 +18,13 @@ export default withAuth(
       return null
     }
 
-    if (isAdminSegment && token?.role !== "admin") {
+    if (isAdminSegment && !(token?.role === "admin" || token?.role === "superadmin")) {
       return NextResponse.redirect(new URL("/", req.url))
     }
+
+    // if (isMePage && (token?.role === "admin" || token?.role === "superadmin")) {
+    //   return NextResponse.redirect(new URL("/admin/dashboard", req.url))
+    // }
 
     if (!isAuth) {
       let from = req.nextUrl.pathname
