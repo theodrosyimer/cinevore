@@ -1,20 +1,22 @@
 // import { PermissionFlag } from "@/core/middlewares/permissionflag-enum"
 import { InferInsertModel, InferSelectModel, getTableColumns } from "drizzle-orm"
-import { accounts, comment, film, filmLike, filmList, review, reviewLike, user, verificationTokens } from "@/drizzle/schema"
+import { accounts, comment, movie, movieLike, movieList, follower, review, reviewLike, user, verificationTokens } from "@/drizzle/schema"
 
 
 export type NewUser = InferInsertModel<typeof user>
 export type SelectUser = InferSelectModel<typeof user>
 export type Role = Pick<SelectUser, "role">
 
-export type NewFilm = InferInsertModel<typeof film>
-export type SelectFilm = InferSelectModel<typeof film>
+export type NewFollower = InferInsertModel<typeof follower>
+export type SelectFollower = InferSelectModel<typeof follower>
 
-export type NewFilmList = InferInsertModel<typeof filmList>
-export type SelectFilmList = InferSelectModel<typeof filmList>
+export type NewMovie = InferInsertModel<typeof movie>
+export type SelectMovie = InferSelectModel<typeof movie>
+export type NewMovieList = InferInsertModel<typeof movieList>
+export type SelectMovieList = InferSelectModel<typeof movieList>
 
-export type NewFilmLike = InferInsertModel<typeof filmLike>
-export type SelectFilmLike = InferSelectModel<typeof filmLike>
+export type NewFilmLike = InferInsertModel<typeof movieLike>
+export type SelectFilmLike = InferSelectModel<typeof movieLike>
 
 export type NewComment = InferInsertModel<typeof comment>
 export type SelectComment = InferSelectModel<typeof comment>
