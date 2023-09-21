@@ -2,7 +2,7 @@
 import { z } from 'zod'
 import { env } from "@/env.mjs"
 
-import { LANGUAGES } from '@/lib/tmdb/api-data/languages'
+import { LANGUAGES } from '@/lib/tmdb/constants/languages'
 import { TMDBMovieResponse } from '@/lib/tmdb/types/types'
 
 /*
@@ -52,7 +52,7 @@ export function setQuery<
   | URLSearchParams
   | undefined
 >(options = {} as T) {
-  const query = new URLSearchParams(
+  const baseQuery = new URLSearchParams(
     `?api_key=${configOptions.API_KEY}&language=${configOptions.language}`
   )
 
@@ -62,23 +62,35 @@ export function setQuery<
       (typeof options === 'object' && Object.keys(options).length)
     )
   )
-    return query
+    return baseQuery
 
   if (
     !Array.isArray(options) &&
     typeof options === 'object' &&
     Object.keys(options).length > 0
   ) {
+    if (options instanceof URLSearchParams) {
+      return options
+    }
+    if (Array.isArray(options.body)) {
+      return baseQuery
+    }
+    if (typeof options.body === 'object') {
+      for (const [key, value] of Object.entries(options.body)) {
+        baseQuery.append(key, value as string)
+      }
+    }
+
     const { id, body, ...rest } = options as Record<string, any> & {
       id: string
       body: Record<any, string>
     }
 
     for (const [key, value] of Object.entries(rest)) {
-      query.append(key, value as string)
+      baseQuery.append(key, value as string)
     }
   }
-  return query
+  return baseQuery
 }
 
 const q = setQuery({
