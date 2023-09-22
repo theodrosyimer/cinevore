@@ -90,7 +90,7 @@ export const movieListRelations = relations(movieList, ({ one, many }) => ({
 export const movieInfosToUser = mysqlTable("movie_infos_to_user", {
   movieId: int("movie_id").notNull().references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  rating: int("rating").notNull().references(() => rating.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  rating: int("rating").notNull().references(() => ratingToMovie.id, { onDelete: "cascade", onUpdate: "cascade" }),
   watchlist: int("watchlist").notNull().references(() => watchlist.id, { onDelete: "cascade", onUpdate: "cascade" }),
   liked: tinyint("like").notNull().default(0),
   watched: tinyint("watched").notNull().default(0),
@@ -113,23 +113,42 @@ export const movieInfosToUser = mysqlTable("movie_infos_to_user", {
 
 export const watchlist = mysqlTable('watchlist', {
   id: int("id").autoincrement().primaryKey().notNull(),
-  authorId: varchar("author_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  movieId: int('movie_id').references(() => movie.tmdbId).notNull(),
-  title: varchar("title", { length: 255 }).notNull(),
+  userId: varchar("author_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  // movieId: int('movie_id').references(() => movie.tmdbId).notNull(),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   publishedAt: timestamp('published_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull()
 
 },
   (table) => ({
-    id: uniqueIndex("id").on(table.id),
-    // compoundKeyIndex: uniqueIndex("compound_key_index").on(table.authorId, table.movieId),
-    // compoundKey: primaryKey(table.authorId, table.movieId),
-    fkAuthorId: index("FK_author_id").on(table.authorId),
-    fkMovieId: index("FK_movie_id").on(table.movieId),
+    compoundKeyIndex: uniqueIndex("compound_key_index").on(table.id, table.userId),
+    compoundKey: primaryKey(table.id, table.userId),
+    // id: uniqueIndex("id").on(table.id),
+    // fkAuthorId: index("FK_author_id").on(table.userId),
+    // fkMovieId: index("FK_movie_id").on(table.movieId),
   }))
 
-export const rating = mysqlTable("rating", {
+export const watchlistToUser = mysqlTable('watchlist_to_user', {
+  id: int("id").autoincrement().primaryKey().notNull(),
+  userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  watchlistId: int('watchlist_id').references(() => watchlist.id).notNull(),
+  movieId: int('movie_id').references(() => movie.tmdbId).notNull(),
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+  publishedAt: timestamp('published_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+  updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull()
+
+},
+  (table) => ({
+    // compoundKeyIndex: uniqueIndex("compound_key_index").on(table.id, table.userId),
+    // compoundKey: primaryKey(table.id, table.userId),
+    id: uniqueIndex("id").on(table.id),
+    fkAuthorId: index("FK_author_id").on(table.userId),
+    fkMovieId: index("FK_movie_id").on(table.movieId),
+    fkWatchlistId: index("FK_movie_id").on(table.watchlistId),
+  }))
+
+
+export const ratingToMovie = mysqlTable("rating_to_movie", {
   id: int("id").autoincrement().primaryKey().notNull(),
   movieId: int("movie_id").notNull().references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
@@ -154,8 +173,6 @@ export const commentToMovieList = mysqlTable('comment_to_movie_list', {
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
 }, (table) => {
   return {
-    // compoundKey: primaryKey(table.authorId, table.movieId),
-    // compoundKeyIndex: uniqueIndex("compound_key_index").on(table.authorId, table.movieId),
     id: uniqueIndex("id").on(table.id),
     fkAuthorId: index("FK_author_id").on(table.authorId),
     fkMovieId: index("FK_movie_id").on(table.movieId),
@@ -189,7 +206,7 @@ export const likeToMovieList = mysqlTable("like_to_movie_list", {
 // }))
 
 export const movieReview = mysqlTable("movie_review", {
-  id: int("id").autoincrement().primaryKey().notNull(),
+  // id: int("id").autoincrement().primaryKey().notNull(),
   movieId: int("movie_id").notNull().references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
@@ -198,15 +215,14 @@ export const movieReview = mysqlTable("movie_review", {
 },
   (table) => {
     return {
-      id: uniqueIndex("id").on(table.id),
-      fkFilmReview: index("FK_film_review").on(table.movieId),
-      fkUserReview: index("FK_user_review").on(table.userId),
+      compoundKey: primaryKey(table.userId, table.movieId),
+      compoundKeyIndex: uniqueIndex("compound_key_index").on(table.userId, table.movieId),
     }
   })
 
 export const likeToMovieReview = mysqlTable("like_to_movie_review", {
   id: int("id").autoincrement().primaryKey().notNull(),
-  reviewId: int("review_id").notNull().references(() => movieReview.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  movieId: int("review_id").notNull().references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
@@ -214,8 +230,8 @@ export const likeToMovieReview = mysqlTable("like_to_movie_review", {
   (table) => {
     return {
       id: uniqueIndex("id").on(table.id),
-      fkReviewLikeReview: index("FK_review_like_review").on(table.reviewId),
-      fkUserLikeReview: index("FK_user_like_review").on(table.userId),
+      fkLikeToMovieReview: index("FK_like_to_movie_review").on(table.movieId),
+      fkUserLikeToMovieReview: index("FK_user_like_to_movie_review").on(table.userId),
     }
   })
 
@@ -228,17 +244,15 @@ export const likeToMovieReview = mysqlTable("like_to_movie_review", {
 export const commentToMovieReview = mysqlTable('comment_to_movie_review', {
   id: int("id").autoincrement().primaryKey().notNull(),
   authorId: varchar("author_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  reviewId: int('review_id').references(() => movieReview.id),
+  movieId: int('review_id').references(() => movie.tmdbId),
   content: text('content').notNull(),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
 }, (table) => {
   return {
-    // compoundKey: primaryKey(table.authorId, table.reviewId),
-    // compoundKeyIndex: uniqueIndex("compound_key_index").on(table.authorId, table.reviewId),
     id: uniqueIndex("id").on(table.id),
     fkAuthorId: index("FK_author_id").on(table.authorId),
-    fkReviewId: index("FK_review_id").on(table.reviewId),
+    fkReviewId: index("FK_review_id").on(table.movieId),
 
   }
 })

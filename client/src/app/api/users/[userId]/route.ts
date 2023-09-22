@@ -63,7 +63,7 @@ export async function PATCH(
       console.log("ERROR", error)
     })
 
-    return new Response(null, { status: 200 })
+    return new Response('User updated successfully!', { status: 200 })
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })

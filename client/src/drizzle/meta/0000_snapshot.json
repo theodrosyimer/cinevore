@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "4b36bdb7-f244-4573-ba33-aa1f782ef10b",
+  "id": "721c1315-2422-44ba-92f4-c62edb681557",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -308,15 +308,15 @@
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
-        "comment_to_movie_review_review_id_movie_review_id_fk": {
-          "name": "comment_to_movie_review_review_id_movie_review_id_fk",
+        "comment_to_movie_review_review_id_movie_tmdb_id_fk": {
+          "name": "comment_to_movie_review_review_id_movie_tmdb_id_fk",
           "tableFrom": "comment_to_movie_review",
-          "tableTo": "movie_review",
+          "tableTo": "movie",
           "columnsFrom": [
             "review_id"
           ],
           "columnsTo": [
-            "id"
+            "tmdb_id"
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -574,15 +574,15 @@
           ],
           "isUnique": true
         },
-        "FK_review_like_review": {
-          "name": "FK_review_like_review",
+        "FK_like_to_movie_review": {
+          "name": "FK_like_to_movie_review",
           "columns": [
             "review_id"
           ],
           "isUnique": false
         },
-        "FK_user_like_review": {
-          "name": "FK_user_like_review",
+        "FK_user_like_to_movie_review": {
+          "name": "FK_user_like_to_movie_review",
           "columns": [
             "user_id"
           ],
@@ -590,15 +590,15 @@
         }
       },
       "foreignKeys": {
-        "like_to_movie_review_review_id_movie_review_id_fk": {
-          "name": "like_to_movie_review_review_id_movie_review_id_fk",
+        "like_to_movie_review_review_id_movie_tmdb_id_fk": {
+          "name": "like_to_movie_review_review_id_movie_tmdb_id_fk",
           "tableFrom": "like_to_movie_review",
-          "tableTo": "movie_review",
+          "tableTo": "movie",
           "columnsFrom": [
             "review_id"
           ],
           "columnsTo": [
-            "id"
+            "tmdb_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "cascade"
@@ -879,10 +879,10 @@
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
-        "movie_infos_to_user_rating_rating_id_fk": {
-          "name": "movie_infos_to_user_rating_rating_id_fk",
+        "movie_infos_to_user_rating_rating_to_movie_id_fk": {
+          "name": "movie_infos_to_user_rating_rating_to_movie_id_fk",
           "tableFrom": "movie_infos_to_user",
-          "tableTo": "rating",
+          "tableTo": "rating_to_movie",
           "columnsFrom": [
             "rating"
           ],
@@ -1033,13 +1033,6 @@
     "movie_review": {
       "name": "movie_review",
       "columns": {
-        "id": {
-          "name": "id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": true
-        },
         "movie_id": {
           "name": "movie_id",
           "type": "int",
@@ -1080,26 +1073,13 @@
         }
       },
       "indexes": {
-        "id": {
-          "name": "id",
+        "compound_key_index": {
+          "name": "compound_key_index",
           "columns": [
-            "id"
-          ],
-          "isUnique": true
-        },
-        "FK_film_review": {
-          "name": "FK_film_review",
-          "columns": [
+            "user_id",
             "movie_id"
           ],
-          "isUnique": false
-        },
-        "FK_user_review": {
-          "name": "FK_user_review",
-          "columns": [
-            "user_id"
-          ],
-          "isUnique": false
+          "isUnique": true
         }
       },
       "foreignKeys": {
@@ -1131,17 +1111,18 @@
         }
       },
       "compositePrimaryKeys": {
-        "movie_review_id": {
-          "name": "movie_review_id",
+        "movie_review_movie_id_user_id": {
+          "name": "movie_review_movie_id_user_id",
           "columns": [
-            "id"
+            "movie_id",
+            "user_id"
           ]
         }
       },
       "uniqueConstraints": {}
     },
-    "rating": {
-      "name": "rating",
+    "rating_to_movie": {
+      "name": "rating_to_movie",
       "columns": {
         "id": {
           "name": "id",
@@ -1214,9 +1195,9 @@
         }
       },
       "foreignKeys": {
-        "rating_movie_id_movie_tmdb_id_fk": {
-          "name": "rating_movie_id_movie_tmdb_id_fk",
-          "tableFrom": "rating",
+        "rating_to_movie_movie_id_movie_tmdb_id_fk": {
+          "name": "rating_to_movie_movie_id_movie_tmdb_id_fk",
+          "tableFrom": "rating_to_movie",
           "tableTo": "movie",
           "columnsFrom": [
             "movie_id"
@@ -1227,9 +1208,9 @@
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
-        "rating_user_id_user_id_fk": {
-          "name": "rating_user_id_user_id_fk",
-          "tableFrom": "rating",
+        "rating_to_movie_user_id_user_id_fk": {
+          "name": "rating_to_movie_user_id_user_id_fk",
+          "tableFrom": "rating_to_movie",
           "tableTo": "user",
           "columnsFrom": [
             "user_id"
@@ -1242,8 +1223,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "rating_id": {
-          "name": "rating_id",
+        "rating_to_movie_id": {
+          "name": "rating_to_movie_id",
           "columns": [
             "id"
           ]
@@ -1504,16 +1485,101 @@
           "notNull": true,
           "autoincrement": false
         },
-        "movie_id": {
-          "name": "movie_id",
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "published_at": {
+          "name": "published_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "CURRENT_TIMESTAMP"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "CURRENT_TIMESTAMP"
+        }
+      },
+      "indexes": {
+        "compound_key_index": {
+          "name": "compound_key_index",
+          "columns": [
+            "id",
+            "author_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "watchlist_author_id_user_id_fk": {
+          "name": "watchlist_author_id_user_id_fk",
+          "tableFrom": "watchlist",
+          "tableTo": "user",
+          "columnsFrom": [
+            "author_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {
+        "watchlist_id": {
+          "name": "watchlist_id",
+          "columns": [
+            "id"
+          ]
+        },
+        "watchlist_author_id_id": {
+          "name": "watchlist_author_id_id",
+          "columns": [
+            "author_id",
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "watchlist_to_user": {
+      "name": "watchlist_to_user",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "watchlist_id": {
+          "name": "watchlist_id",
           "type": "int",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "title": {
-          "name": "title",
-          "type": "varchar(255)",
+        "movie_id": {
+          "name": "movie_id",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -1555,25 +1621,25 @@
         "FK_author_id": {
           "name": "FK_author_id",
           "columns": [
-            "author_id"
+            "user_id"
           ],
           "isUnique": false
         },
         "FK_movie_id": {
           "name": "FK_movie_id",
           "columns": [
-            "movie_id"
+            "watchlist_id"
           ],
           "isUnique": false
         }
       },
       "foreignKeys": {
-        "watchlist_author_id_user_id_fk": {
-          "name": "watchlist_author_id_user_id_fk",
-          "tableFrom": "watchlist",
+        "watchlist_to_user_user_id_user_id_fk": {
+          "name": "watchlist_to_user_user_id_user_id_fk",
+          "tableFrom": "watchlist_to_user",
           "tableTo": "user",
           "columnsFrom": [
-            "author_id"
+            "user_id"
           ],
           "columnsTo": [
             "id"
@@ -1581,9 +1647,22 @@
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
-        "watchlist_movie_id_movie_tmdb_id_fk": {
-          "name": "watchlist_movie_id_movie_tmdb_id_fk",
-          "tableFrom": "watchlist",
+        "watchlist_to_user_watchlist_id_watchlist_id_fk": {
+          "name": "watchlist_to_user_watchlist_id_watchlist_id_fk",
+          "tableFrom": "watchlist_to_user",
+          "tableTo": "watchlist",
+          "columnsFrom": [
+            "watchlist_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "watchlist_to_user_movie_id_movie_tmdb_id_fk": {
+          "name": "watchlist_to_user_movie_id_movie_tmdb_id_fk",
+          "tableFrom": "watchlist_to_user",
           "tableTo": "movie",
           "columnsFrom": [
             "movie_id"
@@ -1596,8 +1675,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "watchlist_id": {
-          "name": "watchlist_id",
+        "watchlist_to_user_id": {
+          "name": "watchlist_to_user_id",
           "columns": [
             "id"
           ]
