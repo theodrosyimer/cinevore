@@ -1,7 +1,27 @@
 // import { PermissionFlag } from "@/core/middlewares/permissionflag-enum"
 import { InferInsertModel, InferSelectModel, getTableColumns } from "drizzle-orm"
-import { accounts, comment, movie, movieLike, movieList, follower, review, reviewLike, user, verificationTokens } from "@/drizzle/schema"
+import { accounts, commentToMovieList, movie, likeToMovieList, movieList, follower, movieReview, likeToMovieReview, user, verificationTokens } from "@/drizzle/schema"
 
+export type TableStatus = {
+  Name: string
+  Engine: 'InnoDB' | (string & {})
+  Version: number
+  Row_format: 'Dynamic' | (string & {})
+  Rows: number
+  Avg_row_length: number
+  Data_length: number
+  Max_data_length: number
+  Index_length: number
+  Data_free: number
+  Auto_increment: null
+  Create_time: string
+  Update_time: string
+  Check_time: null
+  Collation: 'utf8_general_ci' | (string & {})
+  Checksum: null
+  Create_options: string
+  Comment: string
+}
 
 export type NewUser = InferInsertModel<typeof user>
 export type SelectUser = InferSelectModel<typeof user>
@@ -15,17 +35,17 @@ export type SelectMovie = InferSelectModel<typeof movie>
 export type NewMovieList = InferInsertModel<typeof movieList>
 export type SelectMovieList = InferSelectModel<typeof movieList>
 
-export type NewFilmLike = InferInsertModel<typeof movieLike>
-export type SelectFilmLike = InferSelectModel<typeof movieLike>
+export type NewMovieLike = InferInsertModel<typeof likeToMovieList>
+export type SelectMovieLike = InferSelectModel<typeof likeToMovieList>
 
-export type NewComment = InferInsertModel<typeof comment>
-export type SelectComment = InferSelectModel<typeof comment>
+export type NewComment = InferInsertModel<typeof commentToMovieList>
+export type SelectComment = InferSelectModel<typeof commentToMovieList>
 
-export type NewReviewLike = InferInsertModel<typeof reviewLike>
-export type SelectReviewLike = InferSelectModel<typeof reviewLike>
+export type NewReviewLike = InferInsertModel<typeof likeToMovieReview>
+export type SelectReviewLike = InferSelectModel<typeof likeToMovieReview>
 
-export type NewReview = InferInsertModel<typeof review>
-export type SelectReview = InferSelectModel<typeof review>
+export type NewReview = InferInsertModel<typeof movieReview>
+export type SelectReview = InferSelectModel<typeof movieReview>
 
 // NextAuth
 export type NewAccount = InferInsertModel<typeof accounts>

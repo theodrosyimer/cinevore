@@ -1,6 +1,9 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { env } from "@/env.mjs"
+// import { TableStatus } from "@/types/db"
+import { db } from "@/lib/db"
+import { sql } from "drizzle-orm"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -34,3 +37,7 @@ export function convertMinutesToHoursAndMinutes(minutes: number) {
   return `${format(() => Math.trunc(minutes / 60))}h${format(() => minutes % 60)}`
 }
 
+// export async function getTableStatus(table: string): Promise<TableStatus> {
+//   const [results] = await db.execute(sql`show table status like ${table}`) as any
+//   return results[0] as TableStatus
+// }

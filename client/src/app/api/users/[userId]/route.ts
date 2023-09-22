@@ -1,18 +1,44 @@
-import { getServerSession } from "next-auth/next"
 import { z } from "zod"
+import { eq } from "drizzle-orm"
 
-import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
-import { userNameSchema } from "@/lib/validations/user"
 import UsersModel from "@/drizzle/users"
 import { user } from "@/drizzle/schema"
-import { eq } from "drizzle-orm"
+import { getCurrentUser } from "@/lib/session"
+import { userNameSchema } from "@/lib/validations/user"
 
 const routeContextSchema = z.object({
   params: z.object({
     userId: z.string(),
   }),
 })
+
+export async function GET(
+  req: Request,
+  context: z.infer<typeof routeContextSchema>) {
+  try {
+    const { params } = routeContextSchema.parse(context)
+    console.log("params", params)
+
+    const currentUser = await getCurrentUser()
+
+    if (!currentUser || params.userId !== currentUser?.id) {
+      return new Response("Unauthorized", { status: 403 })
+    }
+
+    const dbUser = await UsersModel.getById(params.userId).catch((error) => {
+      console.log("ERROR", error)
+    })
+
+    if (!dbUser) {
+      return new Response('User not found', { status: 404 })
+    }
+
+    return new Response(JSON.stringify(dbUser[0]))
+  } catch (error) {
+    return new Response(null, { status: 500 })
+  }
+}
 
 export async function PATCH(
   req: Request,
@@ -23,8 +49,8 @@ export async function PATCH(
     const { params } = routeContextSchema.parse(context)
 
     // Ensure user is authentication and has access to this user.
-    const session = await getServerSession(authOptions)
-    if (!session?.user || params.userId !== session?.user.id) {
+    const currentUser = await getCurrentUser()
+    if (!currentUser || params.userId !== currentUser?.id) {
       return new Response(null, { status: 403 })
     }
 
@@ -33,15 +59,9 @@ export async function PATCH(
     const payload = userNameSchema.parse(body)
 
     // Update the user.
-    await db.update(user).set(payload).where(eq(user.id, params.userId))
-    // await db.update({
-    //   where: {
-    //     id: session.user.id,
-    //   },
-    //   data: {
-    //     name: payload.name,
-    //   },
-    // })
+    await db.update(user).set(payload).where(eq(user.id, params.userId)).catch((error) => {
+      console.log("ERROR", error)
+    })
 
     return new Response(null, { status: 200 })
   } catch (error) {
