@@ -17,22 +17,10 @@ export async function GET() {
   try {
     const user = await getCurrentUser()
 
-    if (!user) {
+    if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
       return new Response("Unauthorized", { status: 403 })
     }
 
-    const movies = await db.query.movieList.findMany({
-      columns: {
-        title: true,
-        publishedAt: true,
-        createdAt: true,
-      },
-      where: eq(movieList.authorId, user.id),
-    }).catch((error) => {
-      console.log("ERROR", error)
-    })
-
-    return new Response(JSON.stringify(movies))
   } catch (error) {
     return new Response(null, { status: 500 })
   }
@@ -42,7 +30,7 @@ export async function POST(req: Request) {
   try {
     const user = await getCurrentUser()
 
-    if (!user) {
+    if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
       return new Response("Unauthorized", { status: 403 })
     }
 

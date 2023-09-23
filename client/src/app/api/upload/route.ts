@@ -32,18 +32,18 @@ export const uploadFiles = async (req: NextRequest, res: NextResponse) => {
 
   const [user] = userData
 
-  if (user?.avatarFilename) {
+  if (user?.image) {
     // console.log('Delete file')
-    await deleteFile(`${UPLOADS_DIRECTORY}${user.avatarFilename}`)
+    await deleteFile(`${UPLOADS_DIRECTORY}${user.image}`)
       .catch((error) => {
         console.log(error)
       })
   }
 
   UsersModel.updateById(userId, {
-    avatarFilename: req.file.filename,
+    image: req.file.filename,
   }).then(() => {
-    return res.status(200).json({ message: 'Avatar successfully uploaded', user: { ...user, avatar_filename: req.file?.filename } })
+    return res.status(200).json({ message: 'Avatar successfully uploaded', user: { ...user, image: req.file?.filename } })
   }).catch((error) => {
     console.log(error)
     return res.status(400).json({
