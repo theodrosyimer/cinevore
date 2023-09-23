@@ -88,10 +88,10 @@ export const movieRelations = relations(movie, ({ one, many }) => ({
   movieLists: many(movieList),
   movieReviews: many(movieReview),
   watchlist: many(watchlist),
-  // commentsToReviews: many(commentToMovieReview),
-  // commentsToMovieLists: many(commentToMovieList),
-  // likesToReviews: many(likeToMovieReview),
-  // likesToMovieLists: many(likeToMovieList),
+  commentsToReviews: many(commentToMovieReview),
+  commentsToMovieLists: many(commentToMovieList),
+  likesToReviews: many(likeToMovieReview),
+  likesToMovieLists: many(likeToMovieList),
 }))
 
 export const movieList = mysqlTable('movie_list', {

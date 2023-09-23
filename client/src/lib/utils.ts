@@ -1,9 +1,6 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { env } from "@/env.mjs"
-import { TableStatus } from "@/types/db"
-import { db } from "@/lib/db"
-import { sql } from "drizzle-orm"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

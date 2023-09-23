@@ -1,18 +1,16 @@
 import * as z from "zod"
 
-import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
-import { getUserSubscriptionPlan } from "@/lib/subscription"
 import UsersModel from "@/drizzle/users"
 import { getCurrentUser } from "@/lib/session"
-import { hashPassword } from "@/lib/bcrypt"
-import { getTableStatus } from "@/lib/db"
+import { insertUserSchema } from "@/lib/validations/user"
 
 const userCreateSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).max(25),
   name: z.string().min(2).max(50),
 })
+
 export async function GET() {
   try {
     const user = await getCurrentUser()
@@ -36,6 +34,9 @@ export async function POST(req: Request) {
     if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
       return new Response("Unauthorized", { status: 403 })
     }
+
+    const json = await req.json()
+    const body = insertUserSchema.parse(json)
 
   } catch (error) {
     if (error instanceof z.ZodError) {
