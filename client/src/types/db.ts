@@ -1,6 +1,7 @@
 // import { PermissionFlag } from "@/core/middlewares/permissionflag-enum"
 import { InferInsertModel, InferSelectModel, getTableColumns } from "drizzle-orm"
 import { accounts, commentToMovieList, movie, likeToMovieList, movieList, follower, movieReview, likeToMovieReview, user, verificationTokens } from "@/drizzle/schema"
+import * as schema from '@/drizzle/schema'
 
 export type TableStatus = {
   Name: string
@@ -22,6 +23,7 @@ export type TableStatus = {
   Create_options: string
   Comment: string
 }
+type TableName = keyof typeof schema
 
 export type NewUser = InferInsertModel<typeof user>
 export type SelectUser = InferSelectModel<typeof user>
@@ -44,8 +46,8 @@ export type SelectComment = InferSelectModel<typeof commentToMovieList>
 export type NewReviewLike = InferInsertModel<typeof likeToMovieReview>
 export type SelectReviewLike = InferSelectModel<typeof likeToMovieReview>
 
-export type NewReview = InferInsertModel<typeof movieReview>
-export type SelectReview = InferSelectModel<typeof movieReview>
+export type NewMovieReview = InferInsertModel<typeof movieReview>
+export type SelectMovieReview = InferSelectModel<typeof movieReview>
 
 // NextAuth
 export type NewAccount = InferInsertModel<typeof accounts>

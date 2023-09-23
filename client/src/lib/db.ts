@@ -23,6 +23,7 @@ export async function clearDb() {
   if ((await isDbEmpty(process.env.DB_NAME as string))) { return }
 
   const tableSchema = db._.schema
+
   if (!tableSchema) {
     throw new Error("No table schema found")
   }
@@ -36,10 +37,6 @@ export async function clearDb() {
     console.log(`🧨 Preparing delete query for table: ${table.dbName}`)
     return sql.raw(`DROP TABLE \`${table.dbName}\`;`)
   })
-
-  if (!queries || !queries.length) {
-    return
-  }
 
   queries.push(sql.raw(`DROP TABLE \`__drizzle_migrations\`;`))
 
