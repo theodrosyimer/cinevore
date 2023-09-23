@@ -47,6 +47,7 @@
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.5",
+    "drizzle-zod": "^0.5.1",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "fuse.js": "^6.6.2",

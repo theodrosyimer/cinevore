@@ -1,7 +1,17 @@
 // import { PermissionFlag } from "@/core/middlewares/permissionflag-enum"
 import { InferInsertModel, InferSelectModel, getTableColumns } from "drizzle-orm"
-import { accounts, commentToMovieList, movie, likeToMovieList, movieList, follower, movieReview, likeToMovieReview, user, verificationTokens } from "@/drizzle/schema"
+import { accounts, commentToMovieList, movie, likeToMovieList, movieList, follower, movieReview, likeToMovieReview, user, verificationTokens, commentToMovieReview, watchlist } from "@/drizzle/schema"
 import * as schema from '@/drizzle/schema'
+
+export type DbSchema = typeof schema
+export type TableName = keyof DbSchema
+
+// export type TableColumns = DbSchema[keyof DbSchema]
+
+// export type NewDbEntry = `New${Capitalize<TableName>}`
+// export type SelectDbEntry = `Select${Capitalize<TableName>}`
+
+// let t: SelectDbEntry = 'SelectAccounts'
 
 export type TableStatus = {
   Name: string
@@ -23,7 +33,6 @@ export type TableStatus = {
   Create_options: string
   Comment: string
 }
-type TableName = keyof typeof schema
 
 export type NewUser = InferInsertModel<typeof user>
 export type SelectUser = InferSelectModel<typeof user>
