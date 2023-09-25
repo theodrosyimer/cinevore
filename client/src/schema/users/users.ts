@@ -56,7 +56,6 @@ export const user = mysqlTable("user", {
 export const userRelations = relations(user, ({ one, many }) => ({
   watchlist: one(watchlist, { fields: [user.id], references: [watchlist.userId] }),
   lists: many(list),
-  movieLists: many(movieList),
   movieReviews: many(movieReview),
   comments: many(comment),
   likes: many(like),
