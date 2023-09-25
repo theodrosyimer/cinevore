@@ -11,6 +11,13 @@ import {
 } from "drizzle-orm/mysql-core"
 import { list } from "../lists/lists"
 import { movieList } from "../movie-lists/movie-lists"
+import { rating } from "../ratings/ratings"
+import { watchlist } from "../watchlist/watchlist"
+import { like } from "../likes/likes"
+import { comment } from "../comments/comments"
+import { movieReview } from "../movie-reviews/movie-reviews"
+import { movieInfosToUser } from "../movie-infos-to-users/movie-infos-to-users"
+import { follower } from "../followers/followers"
 
 export const user = mysqlTable("user", {
   id: varchar("id", { length: 255 }).$default(() => sql`UUID()`).notNull().primaryKey(),
@@ -47,17 +54,15 @@ export const user = mysqlTable("user", {
   })
 
 export const userRelations = relations(user, ({ one, many }) => ({
+  watchlist: one(watchlist, { fields: [user.id], references: [watchlist.userId] }),
   lists: many(list),
   movieLists: many(movieList),
-  // movieInfosToUser: many(movieInfosToUser,),
-  // watchlist: one(watchlist, { fields: [user.id], references: [watchlist.userId] }),
-  // followers: many(follower),
-  // following: many(follower),
-  // movieReviews: many(movieReview),
-  // commentsToReviews: many(commentToMovieReview),
-  // commentsToMovieLists: many(commentToMovieList),
-  // likesToReviews: many(likeToMovieReview),
-  // likesToMovieLists: many(likeToMovieList),
+  movieReviews: many(movieReview),
+  comments: many(comment),
+  likes: many(like),
+  ratings: many(rating),
+  movieInfosToUser: many(movieInfosToUser),
+  followers: many(follower),
 }))
 
 // Auth

@@ -1,4 +1,6 @@
-import { sql } from "drizzle-orm"
+import { likeToMovieList } from "../movie-lists/movie-lists"
+import { likeToMovieReview } from "../movie-reviews/movie-reviews"
+import { relations, sql } from "drizzle-orm"
 import {
   index,
   int,
@@ -20,8 +22,11 @@ export const like = mysqlTable('like', {
   return {
     id: uniqueIndex("id").on(table.id),
     fkAuthorId: index("FK_author_id").on(table.authorId),
-    // fkMovieId: index("FK_movie_id").on(table.movieListId),
-    // compoundKeyIndex: uniqueIndex("FK_movie_list").on(table.authorId, table.movieListId),
   }
 })
 
+export const likeRelations = relations(like, ({ one, many }) => ({
+  user: one(user, { fields: [like.authorId], references: [user.id] }),
+  likesToMovieList: many(likeToMovieList),
+  likesToMovieReview: many(likeToMovieReview,),
+}))

@@ -16,12 +16,12 @@ export const list = mysqlTable('list', {
 
 },
   (table) => ({
-    id: index("compound_key_index").on(table.id, table.userId),
-    // compoundKeyIndex: uniqueIndex("compound_key_index").on(table.id, table.userId),
-    // compoundKey: primaryKey(table.id, table.userId),
+    id: index("id").on(table.id),
+    userId: index("user_id").on(table.userId),
+    title: index("title").on(table.title),
   }))
 
 export const listRelations = relations(list, ({ one, many }) => ({
-  // movies: many(movie),
+  user: one(user, { fields: [list.userId], references: [user.id] }),
   movieLists: many(movieList),
 }))

@@ -5,6 +5,9 @@ import {
   varchar
 } from "drizzle-orm/mysql-core"
 import { movieList } from "../movie-lists/movie-lists"
+import { movieInfosToUser } from "../movie-infos-to-users/movie-infos-to-users"
+import { watchlistToMovies } from "../watchlist/watchlist"
+import { movieReview } from "../movie-reviews/movie-reviews"
 
 
 export const movie = mysqlTable("movie", {
@@ -30,12 +33,8 @@ export const movie = mysqlTable("movie", {
   })
 
 export const movieRelations = relations(movie, ({ one, many }) => ({
-  // movieInfosToUser: many(movieInfosToUser),
   movieLists: many(movieList),
-  // movieReviews: many(movieReview),
-  // watchlist: many(watchlist),
-  // commentsToReviews: many(commentToMovieReview),
-  // commentsToMovieLists: many(commentToMovieList),
-  // likesToReviews: many(likeToMovieReview),
-  // likesToMovieLists: many(likeToMovieList),
+  movieInfosToUsers: many(movieInfosToUser),
+  watchlistToMovies: many(watchlistToMovies),
+  movieReviews: many(movieReview),
 }))

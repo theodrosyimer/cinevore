@@ -1,89 +1,71 @@
-import { sql } from "drizzle-orm"
+import { relations, sql } from "drizzle-orm"
 import {
-  foreignKey,
   index,
-  int, mysqlTable,
-  primaryKey,
-  text,
+  int, mysqlTable, text,
   timestamp, uniqueIndex,
   varchar
 } from "drizzle-orm/mysql-core"
 import { comment } from "../comments/comments"
-import { movieList } from "../movie-lists/movie-lists"
+import { like } from "../likes/likes"
 import { movie } from "../movies/movies"
 import { user } from "../users/users"
 
 export const movieReview = mysqlTable("movie_review", {
-  // id: int("id").autoincrement().primaryKey().notNull(),
-  movieId: int("movie_id").notNull().references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
-  updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
-  content: text("content").notNull(),
-},
-  (table) => {
-    return {
-      compoundKey: primaryKey(table.userId, table.movieId),
-      compoundKeyIndex: uniqueIndex("compound_key_index").on(table.userId, table.movieId),
-    }
-  })
-
-export const likeToMovieReview = mysqlTable("like_to_movie_review", {
   id: int("id").autoincrement().primaryKey().notNull(),
-  movieId: int("review_id").notNull().references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  movieId: int("movie_id").notNull().references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }),
+  content: text("content").notNull(),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
 },
   (table) => {
     return {
       id: uniqueIndex("id").on(table.id),
-      fkLikeToMovieReview: index("FK_like_to_movie_review").on(table.movieId),
-      fkUserLikeToMovieReview: index("FK_user_like_to_movie_review").on(table.userId),
+      fkUserId: index("FK_user_id").on(table.userId),
+      fkMovieId: index("FK_movie_id").on(table.movieId),
     }
   })
 
-// export const likeToMovieReviewRelations = relations(review, ({ one, many }) => ({
-//   list: one(movieList, { fields: [review.listId], references: [movieList.id] }),
-//   author: one(user, { fields: [review.creator], references: [user.id] }),
-//   likes: many(commentLike),
-// }))
+export const movieReviewRelations = relations(movieReview, ({ one, many }) => ({
+  user: one(user, { fields: [movieReview.userId], references: [user.id] }),
+  movie: one(movie, { fields: [movieReview.movieId], references: [movie.tmdbId] }),
+  commentsToMovieReview: many(commentToMovieReview),
+  likesToMovieReview: many(likeToMovieReview),
+}))
 
-export const commentToMovieReview1 = mysqlTable('comment_to_movie_review', {
-  id: int("id").autoincrement().primaryKey().notNull(),
-  authorId: varchar("author_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  movieId: int('review_id').references(() => movie.tmdbId),
-  content: text('content').notNull(),
-  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
-  updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
-}, (table) => {
-  return {
-    id: uniqueIndex("id").on(table.id),
-    fkAuthorId: index("FK_author_id").on(table.authorId),
-    fkReviewId: index("FK_review_id").on(table.movieId),
-  }
-})
+
 export const commentToMovieReview = mysqlTable('comment_to_movie_review', {
   commentId: int('comment_id').notNull().references(() => comment.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  authorId: varchar("author_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  movieId: int('movie_id').notNull(),
+  movieReviewId: int('movie_review_id').notNull().references(() => movieReview.id, { onDelete: "cascade", onUpdate: "cascade" }),
   content: text('content').notNull(),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
 }, (table) => {
   return {
-    id: uniqueIndex("id").on(table.commentId, table.authorId, table.movieId),
-    fkAuthorId: index("FK_author_id").on(table.authorId),
-    // fkMovieId: index("FK_movie_id").on(table.movieListId),
-    // compoundKeyIndex: uniqueIndex("FK_movie_list").on(table.authorId, table.movieListId),
-    movieListReference: foreignKey({
-      columns: [table.movieId, table.authorId, table.commentId],
-      foreignColumns: [movieList.movieId, user.id, comment.id]
-    }),
+    compoundKeyIndex: index("compoundKeyIndex").on(table.commentId, table.movieReviewId,),
   }
 })
 
-// export const commentToMovieReviewRelations = relations(commentToMovieReview, ({ one, many }) => ({
-//   list: one(movieList, { fields: [commentToMovieReview.reviewId], references: [movieList.id] }),
-//   author: one(user, { fields: [commentToMovieReview.creator], references: [user.id] }),
-// }))
+export const commentToMovieReviewRelations = relations(commentToMovieReview, ({ many }) => ({
+  movieReviews: many(movieReview),
+  comments: many(comment),
+}))
+
+export const likeToMovieReview = mysqlTable("like_to_movie_review", {
+  movieReviewId: int("movie_review_id").notNull().references(() => movieReview.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  likeId: int('like_id').notNull().references(() => like.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
+  updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
+},
+  (table) => {
+    return {
+      compoundKeyIndex: index("id").on(table.movieReviewId, table.likeId,),
+    }
+  })
+
+export const likeToMovieReviewRelations = relations(likeToMovieReview, ({ many }) => ({
+  likes: many(like),
+  movieReviews: many(movieReview),
+}))
+
+

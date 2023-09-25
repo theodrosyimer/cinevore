@@ -5,7 +5,7 @@ import {
   mysqlEnum,
   mysqlTable,
   primaryKey, timestamp,
-  tinyint, varchar
+  tinyint, uniqueIndex, varchar
 } from "drizzle-orm/mysql-core"
 import { movie } from "../movies/movies"
 import { user } from "../users/users"
@@ -22,18 +22,12 @@ export const movieInfosToUser = mysqlTable("movie_infos_to_user", {
 },
   (table) => {
     return {
-      compoundKeyIndex: index("tmdb_id").on(table.userId, table.movieId),
       compoundKey: primaryKey(table.userId, table.movieId),
-      // movieListReference: foreignKey({
-      //   columns: [table.movieId, table.userId],
-      //   foreignColumns: [movie.tmdbId, user.id]
-      // }),
-      // fkUserId: index("FK_user_id").on(table.userId),
-      // fkMovieId: index("FK_movie_id").on(table.movieId),
-      fkRating: index("FK_rating").on(table.rating),
-      liked: index("FK_liked").on(table.liked),
-      watched: index("FK_watched").on(table.watched),
-      reviewed: index("FK_reviewed").on(table.reviewed),
+      compoundKeyIndex: uniqueIndex("tmdb_id").on(table.userId, table.movieId),
+      rating: index("rating").on(table.rating),
+      liked: index("liked").on(table.liked),
+      watched: index("watched").on(table.watched),
+      reviewed: index("reviewed").on(table.reviewed),
     }
   })
 

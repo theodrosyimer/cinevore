@@ -6,6 +6,8 @@ import {
   varchar
 } from "drizzle-orm/mysql-core"
 import { user } from "../users/users"
+import { commentToMovieList } from "../movie-lists/movie-lists"
+import { commentToMovieReview } from "../movie-reviews/movie-reviews"
 
 export const comment = mysqlTable('comment', {
   id: int("id").autoincrement().primaryKey().notNull(),
@@ -23,6 +25,7 @@ export const comment = mysqlTable('comment', {
 })
 
 export const commentRelations = relations(comment, ({ one, many }) => ({
-  // movies: many(movie),
-  // movieLists: many(movieList),
+  user: one(user, { fields: [comment.authorId], references: [user.id] }),
+  commentsToMovieList: many(commentToMovieList),
+  commentsToMovieReview: many(commentToMovieReview,),
 }))

@@ -1,12 +1,12 @@
 import * as z from "zod"
 
+import { hashPassword } from "@/lib/bcrypt"
+import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
-import UsersModel from "@/models/users"
 import { getCurrentUser } from "@/lib/session"
 import { userPostSchema } from "@/lib/validations/user"
-import { db } from "@/lib/db"
-import { user, list, movieList } from "@/schema"
-import { hashPassword } from "@/lib/bcrypt"
+import UsersModel from "@/models/users"
+import { user } from "@/schema"
 
 export async function GET() {
   try {
@@ -16,20 +16,25 @@ export async function GET() {
       return new Response("Unauthorized", { status: 403 })
     }
 
-    // const users = await UsersModel.getAll()
-    const users = await db.query.movieList.findMany({
-      where: (movieList, { eq }) => eq(movieList.movieId, 87101),
-      // with: {
-      //   movieLists: true,
-      // },
-    }).catch((error) => {
-      if (error instanceof Error) {
-        console.log('Failed to get user list\n', error)
-      } else {
-        console.log(`Error getting all users from the database.`)
-      }
-    })
+    console.log('Before DB query')
+    /* const users = await db.query.user.findMany({
+      columns: {},
+      with: {
+        list: true,
+      },
+       })
+    */
 
+    const users = await UsersModel.getAll()
+      .catch((error) => {
+        if (error instanceof Error) {
+          console.log('Failed to get user list\n', error)
+        } else {
+          console.log(`Error getting all users from the database.`)
+        }
+      })
+
+    console.log(users)
     if (!users || !users[0]) {
       return new Response('User with list not found', { status: 404 })
     }

@@ -1,20 +1,15 @@
 
-import { accounts as accountsSchema, sessions as sessionsSchema, user as userSchema, verificationTokens as verificationTokensSchema } from "./users/users"
-import { movie as movieSchema } from "./movies/movies"
-import { list as listSchema } from "./lists/lists"
 import { comment as commentSchema } from "./comments/comments"
-import { like as likeSchema } from "./likes/likes"
-import { movieList as movieListSchema } from "./movie-lists/movie-lists"
-import { commentToMovieList as commentToMovieListSchema } from "./movie-lists/movie-lists"
-import { likeToMovieList as likeToMovieListSchema } from "./movie-lists/movie-lists"
-import { ratingToMovieList as ratingToMovieListSchema } from "./movie-lists/movie-lists"
-import { movieReview as movieReviewSchema } from "./movie-reviews/movie-reviews"
-import { commentToMovieReview as commentToMovieReviewSchema } from "./movie-reviews/movie-reviews"
-import { likeToMovieReview as likeToMovieReviewSchema } from "./movie-reviews/movie-reviews"
-import { movieInfosToUser as movieInfosToUserSchema } from "./movie-infos-to-users/movie-infos-to-users"
 import { follower as followerSchema } from "./followers/followers"
-import { watchlist as watchlistSchema } from "./watchlist/watchlist"
-import { watchlistToMovies as watchlistToMoviesSchema } from "./watchlist-movies/watchlist-movies"
+import { like as likeSchema } from "./likes/likes"
+import { list as listSchema } from "./lists/lists"
+import { movieInfosToUser as movieInfosToUserSchema } from "./movie-infos-to-users/movie-infos-to-users"
+import { commentToMovieList as commentToMovieListSchema, likeToMovieList as likeToMovieListSchema, movieList as movieListSchema } from "./movie-lists/movie-lists"
+import { commentToMovieReview as commentToMovieReviewSchema, likeToMovieReview as likeToMovieReviewSchema, movieReview as movieReviewSchema } from "./movie-reviews/movie-reviews"
+import { movie as movieSchema } from "./movies/movies"
+import { rating as ratingSchema, ratingToMovieList as ratingToMovieListSchema, ratingToMovieReview as ratingToMovieReviewSchema } from "./ratings/ratings"
+import { accounts as accountsSchema, sessions as sessionsSchema, user as userSchema, verificationTokens as verificationTokensSchema } from "./users/users"
+import { watchlist as watchlistSchema, watchlistToMovies as watchlistToMoviesSchema } from "./watchlist/watchlist"
 
 export const user = userSchema
 export const accounts = accountsSchema
@@ -25,6 +20,7 @@ export const movieList = movieListSchema
 export const list = listSchema
 export const comment = commentSchema
 export const like = likeSchema
+export const rating = ratingSchema
 export const commentToMovieList = commentToMovieListSchema
 export const commentToMovieReview = commentToMovieReviewSchema
 export const follower = followerSchema
@@ -33,5 +29,6 @@ export const likeToMovieReview = likeToMovieReviewSchema
 export const movieInfosToUser = movieInfosToUserSchema
 export const movieReview = movieReviewSchema
 export const ratingToMovieList = ratingToMovieListSchema
+export const ratingToMovieReview = ratingToMovieReviewSchema
 export const watchlist = watchlistSchema
 export const watchlistToMovies = watchlistToMoviesSchema
