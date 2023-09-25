@@ -1,23 +1,17 @@
+import { sql } from "drizzle-orm"
+import {
+  foreignKey,
+  index,
+  int, mysqlTable,
+  primaryKey,
+  text,
+  timestamp, uniqueIndex,
+  varchar
+} from "drizzle-orm/mysql-core"
 import { comment } from "../comments/comments"
 import { movieList } from "../movie-lists/movie-lists"
 import { movie } from "../movies/movies"
 import { user } from "../users/users"
-import type { AdapterAccount } from "@auth/core/adapters"
-import { sql, relations } from "drizzle-orm"
-import {
-  char,
-  foreignKey,
-  index,
-  int,
-  mysqlEnum,
-  mysqlTable,
-  primaryKey,
-  text,
-  timestamp,
-  tinyint,
-  uniqueIndex,
-  varchar,
-} from "drizzle-orm/mysql-core"
 
 export const movieReview = mysqlTable("movie_review", {
   // id: int("id").autoincrement().primaryKey().notNull(),

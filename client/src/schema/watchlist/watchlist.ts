@@ -1,21 +1,11 @@
+import { sql } from "drizzle-orm"
+import {
+  int, mysqlTable,
+  primaryKey, timestamp, uniqueIndex,
+  varchar
+} from "drizzle-orm/mysql-core"
 import { movie } from "../movies/movies"
 import { user } from "../users/users"
-import type { AdapterAccount } from "@auth/core/adapters"
-import { sql, relations } from "drizzle-orm"
-import {
-  char,
-  foreignKey,
-  index,
-  int,
-  mysqlEnum,
-  mysqlTable,
-  primaryKey,
-  text,
-  timestamp,
-  tinyint,
-  uniqueIndex,
-  varchar,
-} from "drizzle-orm/mysql-core"
 
 export const watchlist = mysqlTable('watchlist', {
   // id: int("id").autoincrement().primaryKey().notNull(),

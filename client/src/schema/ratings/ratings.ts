@@ -1,21 +1,13 @@
-import { movie } from "../movies/movies"
-import { user } from "../users/users"
-import type { AdapterAccount } from "@auth/core/adapters"
-import { sql, relations } from "drizzle-orm"
+import { sql } from "drizzle-orm"
 import {
-  char,
-  foreignKey,
   index,
   int,
   mysqlEnum,
-  mysqlTable,
-  primaryKey,
-  text,
-  timestamp,
-  tinyint,
-  uniqueIndex,
-  varchar,
+  mysqlTable, timestamp, uniqueIndex,
+  varchar
 } from "drizzle-orm/mysql-core"
+import { movie } from "../movies/movies"
+import { user } from "../users/users"
 
 
 export const ratingToMovieList = mysqlTable("rating_to_movie_list", {

@@ -1,24 +1,16 @@
-import { like } from "../likes/likes"
-import { comment } from "../comments/comments"
-import { list } from "../lists/lists"
-import { movie } from "../movies/movies"
-import { user } from "../users/users"
-import type { AdapterAccount } from "@auth/core/adapters"
-import { sql, relations } from "drizzle-orm"
+import { relations, sql } from "drizzle-orm"
 import {
-  char,
-  foreignKey,
   index,
   int,
   mysqlEnum,
-  mysqlTable,
-  primaryKey,
-  text,
-  timestamp,
-  tinyint,
-  uniqueIndex,
-  varchar,
+  mysqlTable, timestamp, uniqueIndex,
+  varchar
 } from "drizzle-orm/mysql-core"
+import { comment } from "../comments/comments"
+import { like } from "../likes/likes"
+import { list } from "../lists/lists"
+import { movie } from "../movies/movies"
+import { user } from "../users/users"
 
 export const movieList = mysqlTable('movie_list', {
   listId: int('list_id').references(() => list.id).notNull(),

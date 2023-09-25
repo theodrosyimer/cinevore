@@ -1,6 +1,6 @@
-import { user } from "../users/users"
 import { sql } from "drizzle-orm"
-import { mysqlTable, varchar, timestamp, primaryKey, index } from "drizzle-orm/mysql-core"
+import { index, mysqlTable, primaryKey, timestamp, varchar } from "drizzle-orm/mysql-core"
+import { user } from "../users/users"
 
 export const follower = mysqlTable("follower", {
   userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),

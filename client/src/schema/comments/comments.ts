@@ -1,20 +1,11 @@
-import { user } from "../users/users"
-import type { AdapterAccount } from "@auth/core/adapters"
-import { sql, relations } from "drizzle-orm"
+import { relations, sql } from "drizzle-orm"
 import {
-  char,
-  foreignKey,
   index,
-  int,
-  mysqlEnum,
-  mysqlTable,
-  primaryKey,
-  text,
-  timestamp,
-  tinyint,
-  uniqueIndex,
-  varchar,
+  int, mysqlTable, text,
+  timestamp, uniqueIndex,
+  varchar
 } from "drizzle-orm/mysql-core"
+import { user } from "../users/users"
 
 export const comment = mysqlTable('comment', {
   id: int("id").autoincrement().primaryKey().notNull(),

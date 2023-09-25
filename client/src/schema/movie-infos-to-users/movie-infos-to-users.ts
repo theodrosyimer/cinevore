@@ -1,21 +1,14 @@
-import { movie } from "../movies/movies"
-import { user } from "../users/users"
-import type { AdapterAccount } from "@auth/core/adapters"
-import { sql, relations } from "drizzle-orm"
+import { sql } from "drizzle-orm"
 import {
-  char,
-  foreignKey,
   index,
   int,
   mysqlEnum,
   mysqlTable,
-  primaryKey,
-  text,
-  timestamp,
-  tinyint,
-  uniqueIndex,
-  varchar,
+  primaryKey, timestamp,
+  tinyint, varchar
 } from "drizzle-orm/mysql-core"
+import { movie } from "../movies/movies"
+import { user } from "../users/users"
 
 export const movieInfosToUser = mysqlTable("movie_infos_to_user", {
   movieId: int("movie_id").notNull().references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }),

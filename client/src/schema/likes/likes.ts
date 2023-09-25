@@ -1,20 +1,14 @@
-import { user } from "../users/users"
-import type { AdapterAccount } from "@auth/core/adapters"
-import { sql, relations } from "drizzle-orm"
+import { sql } from "drizzle-orm"
 import {
-  char,
-  foreignKey,
   index,
   int,
-  mysqlEnum,
   mysqlTable,
-  primaryKey,
   text,
   timestamp,
-  tinyint,
   uniqueIndex,
-  varchar,
+  varchar
 } from "drizzle-orm/mysql-core"
+import { user } from "../users/users"
 
 export const like = mysqlTable('like', {
   id: int("id").autoincrement().primaryKey().notNull(),

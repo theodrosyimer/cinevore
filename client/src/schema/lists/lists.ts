@@ -1,21 +1,10 @@
+import { relations, sql } from "drizzle-orm"
+import {
+  index,
+  int, mysqlTable, timestamp, varchar
+} from "drizzle-orm/mysql-core"
 import { movieList } from "../movie-lists/movie-lists"
 import { user } from "../users/users"
-import type { AdapterAccount } from "@auth/core/adapters"
-import { sql, relations } from "drizzle-orm"
-import {
-  char,
-  foreignKey,
-  index,
-  int,
-  mysqlEnum,
-  mysqlTable,
-  primaryKey,
-  text,
-  timestamp,
-  tinyint,
-  uniqueIndex,
-  varchar,
-} from "drizzle-orm/mysql-core"
 
 export const list = mysqlTable('list', {
   id: int("id").autoincrement().primaryKey().notNull(),

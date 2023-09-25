@@ -1,5 +1,5 @@
-import { list, movieList } from "@/schema"
-import { createInsertSchema, createSelectSchema } from "drizzle-zod"
+import { movieList } from "@/schema"
+import { createInsertSchema } from "drizzle-zod"
 import * as z from "zod"
 
 // export const insertListSchema = createInsertSchema(list)

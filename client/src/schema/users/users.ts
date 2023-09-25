@@ -1,21 +1,16 @@
-import { list } from "../lists/lists"
-import { movieList } from "../movie-lists/movie-lists"
 import type { AdapterAccount } from "@auth/core/adapters"
-import { sql, relations } from "drizzle-orm"
+import { relations, sql } from "drizzle-orm"
 import {
-  char,
-  foreignKey,
-  index,
-  int,
+  char, int,
   mysqlEnum,
   mysqlTable,
   primaryKey,
   text,
-  timestamp,
-  tinyint,
-  uniqueIndex,
-  varchar,
+  timestamp, uniqueIndex,
+  varchar
 } from "drizzle-orm/mysql-core"
+import { list } from "../lists/lists"
+import { movieList } from "../movie-lists/movie-lists"
 
 export const user = mysqlTable("user", {
   id: varchar("id", { length: 255 }).$default(() => sql`UUID()`).notNull().primaryKey(),
