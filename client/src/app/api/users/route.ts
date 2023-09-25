@@ -1,42 +1,77 @@
 import * as z from "zod"
 
 import { RequiresProPlanError } from "@/lib/exceptions"
-import UsersModel from "@/drizzle/users"
+import UsersModel from "@/models/users"
 import { getCurrentUser } from "@/lib/session"
-import { insertUserSchema } from "@/lib/validations/user"
-
-const userCreateSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8).max(25),
-  name: z.string().min(2).max(50),
-})
+import { userPostSchema } from "@/lib/validations/user"
+import { db } from "@/lib/db"
+import { user, list, movieList } from "@/schema"
+import { hashPassword } from "@/lib/bcrypt"
 
 export async function GET() {
   try {
-    const user = await getCurrentUser()
+    const currentUser = await getCurrentUser()
 
-    if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
+    if (!currentUser || !(currentUser?.role === "admin" || currentUser?.role === "superadmin")) {
       return new Response("Unauthorized", { status: 403 })
     }
 
-    const users = await UsersModel.getAll()
+    // const users = await UsersModel.getAll()
+    const users = await db.query.movieList.findMany({
+      where: (movieList, { eq }) => eq(movieList.movieId, 87101),
+      // with: {
+      //   movieLists: true,
+      // },
+    }).catch((error) => {
+      if (error instanceof Error) {
+        console.log('Failed to get user list\n', error)
+      } else {
+        console.log(`Error getting all users from the database.`)
+      }
+    })
+
+    if (!users || !users[0]) {
+      return new Response('User with list not found', { status: 404 })
+    }
 
     return new Response(JSON.stringify(users))
   } catch (error) {
-    return new Response(null, { status: 500 })
+    return new Response('OOOOH', { status: 500 })
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const user = await getCurrentUser()
+    const currentUser = await getCurrentUser()
 
-    if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
+    if (!currentUser || !(currentUser?.role === "admin" || currentUser?.role === "superadmin")) {
       return new Response("Unauthorized", { status: 403 })
     }
 
     const json = await req.json()
-    const body = insertUserSchema.parse(json)
+    const body = userPostSchema.parse(json)
+    let hashedPassword = null
+
+    if (body?.password) {
+      hashedPassword = await hashPassword(body?.password)
+    }
+
+    await db.insert(user).values({
+      ...body,
+      password: !hashedPassword ? null : hashedPassword,
+    }).catch((error) => {
+      if (error instanceof Error) {
+        console.log(error)
+        return new Response(null, { status: 500 })
+
+      } else {
+        console.log(`Error creating a new list with "userIdId: ${currentUser.id}" from the database.`)
+        return new Response(null, { status: 500 })
+
+      }
+    })
+
+    return new Response('User created successfully', { status: 201 })
 
   } catch (error) {
     if (error instanceof z.ZodError) {

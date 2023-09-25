@@ -1,5 +1,5 @@
-import { user } from "@/drizzle/schema"
-import { createInsertSchema } from "drizzle-zod"
+import { user } from "@/schema"
+import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 import * as z from "zod"
 
 export const userNameSchema = z.object({
@@ -8,23 +8,21 @@ export const userNameSchema = z.object({
 
 // For admin actions
 export const insertUserSchema = createInsertSchema(user, {
-  name: z.string().min(3).max(32),
+  name: z.string().min(2).max(50),
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z.string().min(8).max(25).regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g),
 })
 
-// export const requestSchemaWithoutRole = insertUserSchema.omit({ role: true })
+export const userPostSchema = insertUserSchema.pick({ name: true, email: true, password: true })
 
-// const userWithoutRole = requestSchemaWithoutRole.parse({
+export const selectUserSchema = createSelectSchema(user)
+
+// Example usage:
+//
+// export const userPostWithoutRoleSchema = insertUserSchema.omit({ role: true })
+
+// const userWithoutRole = userPostWithoutRoleSchema.parse({
 //   name: 'John Doe',
 //   email: 'johndoe@test.com',
 //   role: 'admin',
 // })
-
-export const requestSchema = insertUserSchema.pick({ name: true, email: true, password: true })
-
-const userFromRequest = requestSchema.parse({
-  name: 'John Doe',
-  email: 'johndoe@test.com',
-  password: 'admin',
-})

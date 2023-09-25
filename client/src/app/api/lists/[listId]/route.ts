@@ -1,8 +1,8 @@
 import * as z from "zod"
 
 import { db } from "@/lib/db"
-import { movieListPatchSchema } from "@/lib/validations/movie-list"
-import { movieList, user } from "@/drizzle/schema"
+import { movieListPostSchema } from "@/lib/validations/movie-list"
+import { movieList, user } from "@/schema"
 import { and, eq } from "drizzle-orm"
 import { getCurrentUser } from "@/lib/session"
 
@@ -26,7 +26,13 @@ export async function DELETE(
     }
 
     // Delete the list.
-    await db.delete(movieList).where(and(eq(movieList.movieId, params.listId), eq(movieList.authorId, user.id)))
+    await db.delete(movieList).where(and(eq(movieList.listId, params.listId), eq(movieList.userId, user.id))).catch((error) => {
+      if (error instanceof Error) {
+        console.log(error)
+      } else {
+        console.log(`Error deleting movie list with id: ${params.listId} and userId: ${user.id} from the database.`)
+      }
+    })
 
     return new Response(null, { status: 204 })
   } catch (error) {
@@ -53,16 +59,15 @@ export async function PATCH(
 
     // Get the request body and validate it.
     const json = await req.json()
-    const body = movieListPatchSchema.parse(json)
+    const body = movieListPostSchema.parse(json)
 
     // Update the list.
-    // TODO: Implement sanitization for content.
-    await db.update(movieList).set({
-      title: body.title,
-      authorId: body.authorId,
-      movieId: body.movieId,
-    }).where(and(eq(movieList.movieId, params.listId), eq(movieList.authorId, user.id))).catch((error) => {
-      console.log("ERROR", error)
+    await db.update(movieList).set(body).where(and(eq(movieList.movieId, params.listId), eq(movieList.userId, user.id))).catch((error) => {
+      if (error instanceof Error) {
+        console.log(error)
+      } else {
+        console.log(`Error updating movie list with id: ${params.listId} and userId: ${user.id} from the database.`)
+      }
     })
 
     return new Response(null, { status: 200 })
@@ -83,11 +88,11 @@ async function verifyCurrentUserHasAccessToMovieList(listId: number) {
   }
 
   const result = await db.query.movieList.findMany({
-    where: and(eq(movieList.movieId, listId), eq(movieList.authorId, user.id)),
+    where: and(eq(movieList.userId, user.id), eq(movieList.movieId, listId)),
   })
 
   //  or (not sure if this is correct):
-  // const count = await db.select({ count: sql<number>`count(*)` }).from(list).where(and(eq(list.id, listId), eq(list.authorId, session.user.id)))
+  // const count = await db.select({ count: sql<number>`count(*)` }).from(list).where(and(eq(list.id, listId), eq(list.userId, session.user.id)))
 
   return result.length > 0
 }

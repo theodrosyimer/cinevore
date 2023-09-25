@@ -1,7 +1,11 @@
+import { list, movieList } from "@/schema"
+import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 import * as z from "zod"
 
-export const movieListPatchSchema = z.object({
-  title: z.string().min(3).max(128),
-  authorId: z.string(),
-  movieId: z.number(),
+// export const insertListSchema = createInsertSchema(list)
+
+export const insertMovieListSchema = createInsertSchema(movieList, {
+  movieId: z.number().optional(),
 })
+
+export const movieListPostSchema = insertMovieListSchema.pick({ movieId: true })

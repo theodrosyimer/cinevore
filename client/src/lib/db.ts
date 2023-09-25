@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/mysql2"
 import { sql } from "drizzle-orm"
-import * as schema from '@/drizzle/schema'
+import * as schema from '@/schema'
 import mysql from "mysql2/promise"
 
 import * as dotenv from "dotenv"
@@ -16,7 +16,6 @@ const poolConnection = mysql.createPool({
 })
 
 export const db = drizzle(poolConnection, { schema, mode: 'default' })
-
 
 export async function clearDb() {
   if ((await isDbEmpty(process.env.DB_NAME as string))) { return }
@@ -50,14 +49,15 @@ export async function clearDb() {
       queries.map(async (query) => {
         if (query) await tx.execute(query)
       })
-    ).catch(() => {
-      throw new Error("Failed to empty the database")
+    ).catch((e) => {
+      console.error(e)
+      throw new Error("Failed to empty the database ❌")
     }).finally(() => {
       console.log("\nSetting foreign key checks back to 1\n")
 
       tx.execute(sql.raw("SET FOREIGN_KEY_CHECKS = 1;"))
     })
-    console.log("🗑️   Database emptied")
+    console.log("🗑️   Database emptied  ✅")
   })
 }
 
@@ -65,7 +65,7 @@ async function getTablesCountFromDb(databaseName?: string): Promise<number> {
   let [total] = await db.execute(sql`SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = ${!databaseName ? process.env.DB_NAME : databaseName} and TABLE_TYPE='BASE TABLE';`) as any
 
   if (!total || !total[0] || !total[0]['COUNT(*)']) {
-    total = 0
+    return total = 0
   }
 
   total = total[0]['COUNT(*)']

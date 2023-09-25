@@ -1,11 +1,9 @@
 import { migrate } from 'drizzle-orm/mysql2/migrator'
 import mysql from "mysql2/promise"
-import { user } from '@/drizzle/schema'
 import { drizzle } from 'drizzle-orm/mysql2'
-import { env } from '@/env.mjs'
 import * as dotenv from "dotenv"
 import { clearDb } from '@/lib/db'
-import { defaultUsers } from '@/lib/migrate-data'
+import { addLists, addMovieLists, addMovies, addUsers } from '@/lib/migrate-data'
 dotenv.config({ path: '.env.local' })
 
 console.log(process.env.DB_HOST, process.env.DB_ADMIN, process.env.DB_NAME, process.env.DB_PORT)
@@ -25,24 +23,20 @@ async function main() {
     process.exit(1)
   })
 
-  console.log("🗄️   Migrating the database...")
+  console.log("\n🗄️   Migrating the database...\n")
 
-  await migrate(dbMigrationOnly, { migrationsFolder: './src/drizzle' })
+  await migrate(dbMigrationOnly, { migrationsFolder: './drizzle' })
 
 
   await dbMigrationOnly.transaction(async (tx) => {
-    await Promise.all(
-      defaultUsers.map(async (defaultUser) => {
-        if (defaultUser) await tx.insert(user).values(defaultUser)
-      })
-    ).catch(() => {
-      throw new Error("Failed to add data to the database")
-    }).finally(() => {
-    })
-    console.log("👤  Created 6 new users:\n\t1 superadmin\n\t1 admin\n\t4 users")
+    await Promise.allSettled([addUsers(tx), addMovies(tx), addLists(tx), addMovieLists(tx)])
     console.log("🎉  Migration Done!")
   })
   process.exit(0)
 }
 
-main()
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})
+

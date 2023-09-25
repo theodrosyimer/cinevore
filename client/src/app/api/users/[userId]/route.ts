@@ -2,10 +2,10 @@ import { z } from "zod"
 import { eq } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import UsersModel from "@/drizzle/users"
-import { user } from "@/drizzle/schema"
+import UsersModel from "@/models/users"
+import { user } from "@/schema"
 import { getCurrentUser } from "@/lib/session"
-import { userNameSchema } from "@/lib/validations/user"
+import { insertUserSchema } from "@/lib/validations/user"
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -18,7 +18,6 @@ export async function GET(
   context: z.infer<typeof routeContextSchema>) {
   try {
     const { params } = routeContextSchema.parse(context)
-    console.log("params", params)
 
     const currentUser = await getCurrentUser()
 
@@ -27,10 +26,14 @@ export async function GET(
     }
 
     const dbUser = await UsersModel.getById(params.userId).catch((error) => {
-      console.log("ERROR", error)
+      if (error instanceof Error) {
+        console.log(error)
+      } else {
+        console.log(`Error user with "id: ${params.userId}" not found from the database.`)
+      }
     })
 
-    if (!dbUser) {
+    if (!dbUser || !dbUser[0]) {
       return new Response('User not found', { status: 404 })
     }
 
@@ -51,16 +54,20 @@ export async function PATCH(
     // Ensure user is authentication and has access to this user.
     const currentUser = await getCurrentUser()
     if (!currentUser || params.userId !== currentUser?.id) {
-      return new Response(null, { status: 403 })
+      return new Response("Unauthorized", { status: 403 })
     }
 
     // Get the request body and validate it.
-    const body = await req.json()
-    const payload = userNameSchema.parse(body)
+    const json = await req.json()
+    const body = insertUserSchema.parse(json)
 
     // Update the user.
-    await db.update(user).set(payload).where(eq(user.id, params.userId)).catch((error) => {
-      console.log("ERROR", error)
+    await db.update(user).set(body).where(eq(user.id, params.userId)).catch((error) => {
+      if (error instanceof Error) {
+        console.log(error)
+      } else {
+        console.log(`Error updating user with "id: ${params.userId}" from the database.`)
+      }
     })
 
     return new Response('User updated successfully!', { status: 200 })
