@@ -12,5 +12,6 @@ export default {
     user: process.env.DB_ADMIN ?? '',
     database: process.env.DRIZZLE_DB_NAME ?? '',
     port: Number(process.env.DB_PORT),
+    // password: process.env.DB_PASSWORD,
   }
 } satisfies Config
