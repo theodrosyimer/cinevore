@@ -9,7 +9,7 @@ import { user } from "../users/users"
 export const list = mysqlTable('list', {
   id: int("id").autoincrement().primaryKey().notNull(),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  title: varchar("title", { length: 255 }).notNull(),
+  title: varchar("title", { length: 2000 }).notNull(),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   publishedAt: timestamp('published_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull()
@@ -18,7 +18,6 @@ export const list = mysqlTable('list', {
   (table) => ({
     id: index("id").on(table.id),
     userId: index("user_id").on(table.userId),
-    title: index("title").on(table.title),
   }))
 
 export const listRelations = relations(list, ({ one, many }) => ({

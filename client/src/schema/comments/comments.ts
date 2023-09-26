@@ -19,8 +19,6 @@ export const comment = mysqlTable('comment', {
   return {
     id: uniqueIndex("id").on(table.id),
     fkAuthorId: index("FK_author_id").on(table.authorId),
-    // fkMovieId: index("FK_movie_id").on(table.movieListId),
-    // compoundKeyIndex: uniqueIndex("FK_movie_list").on(table.authorId, table.movieListId),
   }
 })
 

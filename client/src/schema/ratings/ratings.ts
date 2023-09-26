@@ -12,7 +12,7 @@ import { user } from "../users/users"
 export const rating = mysqlTable('rating', {
   id: int("id").autoincrement().primaryKey().notNull(),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  value: mysqlEnum('value', ['0', '0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']).notNull().default('0'),
+  value: mysqlEnum('value', ['0', '0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']).notNull(),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull()
 
@@ -20,7 +20,6 @@ export const rating = mysqlTable('rating', {
   (table) => ({
     id: index("id").on(table.id),
     userId: index("user_id").on(table.userId),
-    title: index("title").on(table.value),
   }))
 
 export const ratingRelations = relations(rating, ({ one, many }) => ({

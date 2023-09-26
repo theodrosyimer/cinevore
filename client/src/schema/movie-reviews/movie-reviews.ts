@@ -35,9 +35,8 @@ export const movieReviewRelations = relations(movieReview, ({ one, many }) => ({
 
 
 export const commentToMovieReview = mysqlTable('comment_to_movie_review', {
-  commentId: int('comment_id').notNull().references(() => comment.id, { onDelete: "cascade", onUpdate: "cascade" }),
   movieReviewId: int('movie_review_id').notNull().references(() => movieReview.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  content: text('content').notNull(),
+  commentId: int('comment_id').notNull().references(() => comment.id, { onDelete: "cascade", onUpdate: "cascade" }),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow().notNull(),
 }, (table) => {

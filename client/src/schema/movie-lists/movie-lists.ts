@@ -1,7 +1,7 @@
 import { relations, sql } from "drizzle-orm"
 import {
   index,
-  int, mysqlTable, timestamp
+  int, mysqlTable, primaryKey, timestamp
 } from "drizzle-orm/mysql-core"
 import { comment } from "../comments/comments"
 import { like } from "../likes/likes"
@@ -14,13 +14,22 @@ export const movieList = mysqlTable('movie_list', {
   addedAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
 },
   (table) => ({
+    // pk: primaryKey(table.listId, table.movieId),
     fkListId: index("FK_movie_id").on(table.listId),
     fkMovieId: index("FK_movie_id").on(table.movieId),
   }))
 
 export const movieListRelations = relations(movieList, ({ one, many }) => ({
-  lists: many(list),
-  movie: many(movie),
+  list: one(list, {
+    fields: [movieList.listId],
+    references: [list.id]
+  }),
+  movie: one(movie, {
+    fields: [movieList.movieId],
+    references: [movie.tmdbId]
+  }),
+  commentsToMovieList: many(commentToMovieList),
+  likesToMovieList: many(likeToMovieList),
 }))
 
 export const commentToMovieList = mysqlTable('comment_to_movie_list', {
@@ -34,9 +43,15 @@ export const commentToMovieList = mysqlTable('comment_to_movie_list', {
   }
 })
 
-export const commentToMovieListRelations = relations(commentToMovieList, ({ many }) => ({
-  comments: many(comment),
-  lists: many(list),
+export const commentToMovieListRelations = relations(commentToMovieList, ({ one, many }) => ({
+  comment: one(comment, {
+    fields: [commentToMovieList.commentId],
+    references: [comment.id],
+  }),
+  list: one(list, {
+    fields: [commentToMovieList.listId],
+    references: [list.id],
+  }),
 }))
 
 export const likeToMovieList = mysqlTable("like_to_movie_list", {
@@ -51,8 +66,14 @@ export const likeToMovieList = mysqlTable("like_to_movie_list", {
     }
   })
 
-export const likeToMovieListRelations = relations(likeToMovieList, ({ many }) => ({
-  likes: many(like),
-  lists: many(list),
+export const likeToMovieListRelations = relations(likeToMovieList, ({ one, many }) => ({
+  like: one(like, {
+    fields: [likeToMovieList.likeId],
+    references: [like.id],
+  }),
+  list: one(list, {
+    fields: [likeToMovieList.listId],
+    references: [list.id],
+  }),
 }))
 

@@ -4,7 +4,7 @@ import { user } from "../users/users"
 
 export const follower = mysqlTable("follower", {
   userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  following: varchar("followedBy", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  following: varchar("following", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
   followedDate: timestamp('followed_date').default(sql`CURRENT_TIMESTAMP`).notNull(),
   unfollowedDate: timestamp('unfollowed_date').default(sql`CURRENT_TIMESTAMP`)
 }, (table) => ({
