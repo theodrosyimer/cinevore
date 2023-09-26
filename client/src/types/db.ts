@@ -1,36 +1,14 @@
 import * as schema from '@/schema'
-import { InferInsertModel, InferSelectModel } from "drizzle-orm"
+import { Inspect } from '@/types/utility'
+import { InferInsertModel, InferSelectModel, getTableColumns } from "drizzle-orm"
 
 export type DbSchema = typeof schema
-export type TableName = keyof DbSchema
-
-// export type TableColumns = DbSchema[keyof DbSchema]
-
+type K = Inspect<DbSchema>
+export type TableName = (keyof DbSchema)
+export type TableColumns<T extends TableName> = keyof (typeof schema[T] & { $columns: unknown })['$columns']
+type T = TableColumns<"user">
 // export type NewDbEntry = `New${Capitalize<TableName>}`
 // export type SelectDbEntry = `Select${Capitalize<TableName>}`
-
-// let t: SelectDbEntry = 'SelectAccounts'
-
-export type TableStatus = {
-  Name: string
-  Engine: 'InnoDB' | (string & {})
-  Version: number
-  Row_format: 'Dynamic' | (string & {})
-  Rows: number
-  Avg_row_length: number
-  Data_length: number
-  Max_data_length: number
-  Index_length: number
-  Data_free: number
-  Auto_increment: null
-  Create_time: string
-  Update_time: string
-  Check_time: null
-  Collation: 'utf8_general_ci' | (string & {})
-  Checksum: null
-  Create_options: string
-  Comment: string
-}
 
 export type NewUser = InferInsertModel<typeof schema.user>
 export type SelectUser = InferSelectModel<typeof schema.user>
@@ -53,8 +31,8 @@ export type NewLike = InferInsertModel<typeof schema.like>
 export type SelectLike = InferSelectModel<typeof schema.like>
 export type NewCommentToMovieList = InferInsertModel<typeof schema.commentToMovieList>
 export type SelectCommentToMovieList = InferSelectModel<typeof schema.commentToMovieList>
-export type NewMovieLike = InferInsertModel<typeof schema.likeToMovieList>
-export type SelectMovieLike = InferSelectModel<typeof schema.likeToMovieList>
+export type NewLikeToMovieList = InferInsertModel<typeof schema.likeToMovieList>
+export type SelectLikeToMovieList = InferSelectModel<typeof schema.likeToMovieList>
 export type NewMovieReview = InferInsertModel<typeof schema.movieReview>
 export type SelectMovieReview = InferSelectModel<typeof schema.movieReview>
 export type NewCommentToMovieReview = InferInsertModel<typeof schema.commentToMovieReview>
