@@ -1,11 +1,6 @@
 import { movieList } from "@/schema"
-import { createInsertSchema } from "drizzle-zod"
-import * as z from "zod"
+import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 
-// export const insertListSchema = createInsertSchema(list)
+export const insertMovieListSchema = createInsertSchema(movieList)
 
-export const insertMovieListSchema = createInsertSchema(movieList, {
-  movieId: z.number().optional(),
-})
-
-export const movieListPostSchema = insertMovieListSchema.pick({ movieId: true })
+export const selectListSchema = createSelectSchema(movieList)
