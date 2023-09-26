@@ -1,4 +1,4 @@
-import { env } from "@/env.mjs"
+import { env } from "@env.mjs"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
 import { redirect } from "next/navigation"
