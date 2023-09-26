@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { z } from 'zod'
-import { env } from "@/env.mjs"
+import { env } from "@env.mjs"
 
 import { LANGUAGES } from '@/lib/tmdb/constants/languages'
 import { TMDBMovieResponse } from '@/lib/tmdb/types/types'
