@@ -1,12 +1,9 @@
 import * as z from "zod"
 
-import { list, movieList, user } from "@/schema"
+import { list, movieList } from "@/schema"
 import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
 import { getCurrentUser } from "@/lib/session"
-// import { movieListPostSchema } from "@/lib/validations/movie-list"
-import { eq } from "drizzle-orm"
-import { formatSimpleErrorMessage } from "@/lib/utils"
 
 export async function GET() {
   try {
@@ -16,29 +13,19 @@ export async function GET() {
       return new Response("Unauthorized", { status: 403 })
     }
 
-    console.log("currentUser:", currentUser)
-
-    const lists = await db.query.list.findMany({
-      // where: eq(list.userId, currentUser.id),
-      // with: {
-      //   movieList: true,
-      //   with: {
-      //     comments: true,
-      //   }
-      // },
-    }).catch((error) => {
-      throw error
+    const lists = await db.query.movieList.findMany(/* {
+      where: eq(user.id, movieList.userId),
+    } */).catch((error) => {
+      if (error instanceof Error) {
+        console.log('Failed to get movie list\n', error)
+      } else {
+        console.log(`Error getting user with "userId: ${currentUser.id}" from the database.`)
+      }
     })
 
     return new Response(JSON.stringify(lists))
 
   } catch (error) {
-    if (error instanceof Error) {
-      const message = formatSimpleErrorMessage(error)
-      console.log(error)
-      return new Response(message, { status: 500 })
-    }
-
     return new Response(null, { status: 500 })
   }
 }
@@ -84,9 +71,14 @@ export async function POST(req: Request) {
 
     if (body?.movieId) {
       await db.insert(movieList).values({ ...body, listId: results[0].insertId, movieId: body.movieId, userId: user.id }).catch((error) => {
-        throw error
+        if (error instanceof Error) {
+          console.log('Failed to insert movies to list\n', error)
+          return new Response(null, { status: 500 })
+        } else {
+          console.log(`Error creating a new movie list with "userIdId: ${user.id}" from the database.`)
+          return new Response(null, { status: 500 })
+        }
       })
-
       return new Response("List created", { status: 201 })
     }
 
@@ -100,12 +92,6 @@ export async function POST(req: Request) {
       return new Response("Requires Pro Plan", { status: 402 })
     }
 
-    if (error instanceof Error) {
-      const message = formatSimpleErrorMessage(error)
-      console.log(error)
-      return new Response(message, { status: 500 })
-    }
-
-    return new Response(`Error creating a list from the database.`, { status: 500 })
+    return new Response(null, { status: 500 })
   }
 }

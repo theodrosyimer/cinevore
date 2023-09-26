@@ -7,6 +7,7 @@ import { getCurrentUser } from "@/lib/session"
 import { userPostSchema } from "@/lib/validations/user"
 import UsersModel from "@/models/users"
 import { user } from "@/schema"
+import { formatSimpleErrorMessage } from "@/lib/utils"
 
 export async function GET() {
   try {
@@ -27,11 +28,7 @@ export async function GET() {
 
     const users = await UsersModel.getAll()
       .catch((error) => {
-        if (error instanceof Error) {
-          console.log('Failed to get user list\n', error)
-        } else {
-          console.log(`Error getting all users from the database.`)
-        }
+        throw error
       })
 
     console.log(users)
@@ -41,7 +38,13 @@ export async function GET() {
 
     return new Response(JSON.stringify(users))
   } catch (error) {
-    return new Response('OOOOH', { status: 500 })
+    if (error instanceof Error) {
+      const message = formatSimpleErrorMessage(error)
+      console.log(error)
+      return new Response(message, { status: 500 })
+    }
+
+    return new Response(null, { status: 500 })
   }
 }
 
@@ -63,17 +66,10 @@ export async function POST(req: Request) {
 
     await db.insert(user).values({
       ...body,
-      password: !hashedPassword ? null : hashedPassword,
+      // have to cast out `void` type returned from `hashPassword`
+      password: hashedPassword ?? null,
     }).catch((error) => {
-      if (error instanceof Error) {
-        console.log(error)
-        return new Response(null, { status: 500 })
-
-      } else {
-        console.log(`Error creating a new list with "userIdId: ${currentUser.id}" from the database.`)
-        return new Response(null, { status: 500 })
-
-      }
+      throw error
     })
 
     return new Response('User created successfully', { status: 201 })
@@ -87,6 +83,12 @@ export async function POST(req: Request) {
       return new Response("Requires Pro Plan", { status: 402 })
     }
 
-    return new Response(null, { status: 500 })
+    if (error instanceof Error) {
+      const message = formatSimpleErrorMessage(error)
+      console.log(error)
+      return new Response(message, { status: 500 })
+    }
+
+    return new Response(`Error creating a user from the database.`, { status: 500 })
   }
 }
