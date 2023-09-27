@@ -27,11 +27,8 @@ export async function GET() {
     */
 
     const users = await UsersModel.getAll()
-      .catch((error) => {
-        throw error
-      })
 
-    console.log(users)
+    // console.log(users)
     if (!users || !users[0]) {
       return new Response('User with list not found', { status: 404 })
     }
@@ -39,9 +36,8 @@ export async function GET() {
     return new Response(JSON.stringify(users))
   } catch (error) {
     if (error instanceof Error) {
-      const message = formatSimpleErrorMessage(error)
       console.log(error)
-      return new Response(message, { status: 500 })
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
     return new Response(null, { status: 500 })
@@ -68,8 +64,6 @@ export async function POST(req: Request) {
       ...body,
       // have to cast out `void` type returned from `hashPassword`
       password: hashedPassword ?? null,
-    }).catch((error) => {
-      throw error
     })
 
     return new Response('User created successfully', { status: 201 })
@@ -84,9 +78,8 @@ export async function POST(req: Request) {
     }
 
     if (error instanceof Error) {
-      const message = formatSimpleErrorMessage(error)
       console.log(error)
-      return new Response(message, { status: 500 })
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
     return new Response(`Error creating a user from the database.`, { status: 500 })

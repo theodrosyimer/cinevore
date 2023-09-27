@@ -26,17 +26,14 @@ export async function GET() {
       //     comments: true,
       //   }
       // },
-    }).catch((error) => {
-      throw error
     })
 
     return new Response(JSON.stringify(lists))
 
   } catch (error) {
     if (error instanceof Error) {
-      const message = formatSimpleErrorMessage(error)
       console.log(error)
-      return new Response(message, { status: 500 })
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
     return new Response(null, { status: 500 })
@@ -68,13 +65,7 @@ export async function POST(req: Request) {
     const json = await req.json()
     const body = movieListPostSchema.parse(json)
 
-    const results = await db.insert(list).values({}).catch((error) => {
-      if (error instanceof Error) {
-        console.log('Failed to create a list\n', error)
-      } else {
-        console.log(`Error creating a new list with "userId: ${user.id}" from the database.`)
-      }
-    })
+    const results = await db.insert(list).values({})
 
     if (!results) {
       return new Response(null, { status: 500 })
@@ -83,9 +74,7 @@ export async function POST(req: Request) {
     console.log("insert id:", results[0].insertId)
 
     if (body?.movieId) {
-      await db.insert(movieList).values({ ...body, listId: results[0].insertId, movieId: body.movieId, userId: user.id }).catch((error) => {
-        throw error
-      })
+      await db.insert(movieList).values({ ...body, listId: results[0].insertId, movieId: body.movieId, userId: user.id })
 
       return new Response("List created", { status: 201 })
     }
@@ -101,9 +90,8 @@ export async function POST(req: Request) {
     }
 
     if (error instanceof Error) {
-      const message = formatSimpleErrorMessage(error)
       console.log(error)
-      return new Response(message, { status: 500 })
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
     return new Response(`Error creating a list from the database.`, { status: 500 })

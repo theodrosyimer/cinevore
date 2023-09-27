@@ -6,6 +6,7 @@ import UsersModel from "@/models/users"
 import { user } from "@/schema"
 import { getCurrentUser } from "@/lib/session"
 import { insertUserSchema } from "@/lib/validations/user"
+import { formatSimpleErrorMessage } from "@/lib/utils"
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -25,13 +26,7 @@ export async function GET(
       return new Response("Unauthorized", { status: 403 })
     }
 
-    const dbUser = await UsersModel.getById(params.userId).catch((error) => {
-      if (error instanceof Error) {
-        console.log(error)
-      } else {
-        console.log(`Error user with "id: ${params.userId}" not found from the database.`)
-      }
-    })
+    const dbUser = await UsersModel.getById(params.userId)
 
     if (!dbUser || !dbUser[0]) {
       return new Response('User not found', { status: 404 })
@@ -39,6 +34,11 @@ export async function GET(
 
     return new Response(JSON.stringify(dbUser[0]))
   } catch (error) {
+    if (error instanceof Error) {
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
+    }
+
     return new Response(null, { status: 500 })
   }
 }
@@ -53,6 +53,7 @@ export async function PATCH(
 
     // Ensure user is authentication and has access to this user.
     const currentUser = await getCurrentUser()
+
     if (!currentUser || params.userId !== currentUser?.id) {
       return new Response("Unauthorized", { status: 403 })
     }
@@ -62,18 +63,17 @@ export async function PATCH(
     const body = insertUserSchema.parse(json)
 
     // Update the user.
-    await db.update(user).set(body).where(eq(user.id, params.userId)).catch((error) => {
-      if (error instanceof Error) {
-        console.log(error)
-      } else {
-        console.log(`Error updating user with "id: ${params.userId}" from the database.`)
-      }
-    })
+    await db.update(user).set(body).where(eq(user.id, params.userId))
 
     return new Response('User updated successfully!', { status: 200 })
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
+    }
+
+    if (error instanceof Error) {
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
     return new Response(null, { status: 500 })

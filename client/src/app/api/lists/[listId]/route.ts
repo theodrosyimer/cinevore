@@ -5,6 +5,7 @@ import { movieListPostSchema } from "@/lib/validations/movie-list"
 import { movieList, user } from "@/schema"
 import { and, eq } from "drizzle-orm"
 import { getCurrentUser } from "@/lib/session"
+import { formatSimpleErrorMessage } from "@/lib/utils"
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -26,13 +27,7 @@ export async function DELETE(
     }
 
     // Delete the list.
-    await db.delete(movieList).where(and(eq(movieList.listId, params.listId), eq(movieList.userId, user.id))).catch((error) => {
-      if (error instanceof Error) {
-        console.log(error)
-      } else {
-        console.log(`Error deleting movie list with id: ${params.listId} and userId: ${user.id} from the database.`)
-      }
-    })
+    await db.delete(movieList).where(and(eq(movieList.listId, params.listId), eq(movieList.userId, user.id)))
 
     return new Response(null, { status: 204 })
   } catch (error) {
@@ -40,7 +35,12 @@ export async function DELETE(
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    return new Response(null, { status: 500 })
+    if (error instanceof Error) {
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
+    }
+
+    return new Response(`Error deleting movie list from the database.`, { status: 500 })
   }
 }
 
@@ -62,13 +62,7 @@ export async function PATCH(
     const body = movieListPostSchema.parse(json)
 
     // Update the list.
-    await db.update(movieList).set(body).where(and(eq(movieList.movieId, params.listId), eq(movieList.userId, user.id))).catch((error) => {
-      if (error instanceof Error) {
-        console.log(error)
-      } else {
-        console.log(`Error updating movie list with id: ${params.listId} and userId: ${user.id} from the database.`)
-      }
-    })
+    await db.update(movieList).set(body).where(and(eq(movieList.movieId, params.listId), eq(movieList.userId, user.id)))
 
     return new Response(null, { status: 200 })
   } catch (error) {
@@ -76,7 +70,12 @@ export async function PATCH(
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    return new Response(null, { status: 500 })
+    if (error instanceof Error) {
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
+    }
+
+    return new Response(`Error updating movie list from the database.`, { status: 500 })
   }
 }
 

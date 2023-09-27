@@ -59,6 +59,12 @@ export function randomFromArraySecondHalve(arr: any[]) {
   return arr[randomMinMax(Math.ceil(arr.length / 2), arr.length)]
 }
 
+/**
+ * ```ts
+ * // output format:
+ * [error.name]: error.message
+ * ```
+ */
 export function formatSimpleErrorMessage(error: Error) {
   return `[${error.name.toLocaleUpperCase()}]: ${error.message}`
 }
