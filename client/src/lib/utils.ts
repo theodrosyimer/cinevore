@@ -19,18 +19,20 @@ export function absoluteUrl(path: string) {
 }
 
 export function convertMinutesToHoursAndMinutes(minutes: number) {
-  // if (typeof minutes !== 'number') {
-  //   throw new Error('The movie duration time must be a number')
-  // }
-
-  // if (minutes <= 0) {
-  //   throw new Error('The movie duration time must be a positive number greater than 0')
-  // }
-
   function format(cb: (() => number)) {
     return cb() < 10 ? `0${cb()}` : cb()
   }
   return `${format(() => Math.trunc(minutes / 60))}h${format(() => minutes % 60)}`
+}
+
+/**
+ * ```ts
+ * // output format:
+ * [error.name]: error.message
+ * ```
+ */
+export function formatSimpleErrorMessage(error: Error) {
+  return `[${error.name.toLocaleUpperCase()}]: ${error.message}`
 }
 
 export const randomMinMax = (min = 0, max = 0) =>
@@ -57,14 +59,4 @@ export function randomFromArrayFirstHalve(arr: any[]) {
 
 export function randomFromArraySecondHalve(arr: any[]) {
   return arr[randomMinMax(Math.ceil(arr.length / 2), arr.length)]
-}
-
-/**
- * ```ts
- * // output format:
- * [error.name]: error.message
- * ```
- */
-export function formatSimpleErrorMessage(error: Error) {
-  return `[${error.name.toLocaleUpperCase()}]: ${error.message}`
 }

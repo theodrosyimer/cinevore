@@ -9,8 +9,8 @@ import { list } from "../lists/lists"
 import { movie } from "../movies/movies"
 
 export const movieList = mysqlTable('movie_list', {
-  listId: int('list_id').references(() => list.id).notNull(),
-  movieId: int('movie_id').references(() => movie.tmdbId).notNull(),
+  listId: int('list_id').references(() => list.id, { onDelete: "cascade", onUpdate: "cascade" }).notNull(),
+  movieId: int('movie_id').references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }).notNull(),
   addedAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
 },
   (table) => ({

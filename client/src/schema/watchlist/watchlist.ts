@@ -24,8 +24,8 @@ export const watchlistRelations = relations(watchlist, ({ one, many }) => ({
 }))
 
 export const watchlistToMovies = mysqlTable('watchlist_to_movies', {
-  watchlistId: int('watchlist_id').references(() => watchlist.id).notNull(),
-  movieId: int('movie_id').references(() => movie.tmdbId).notNull(),
+  watchlistId: int('watchlist_id').references(() => watchlist.id, { onDelete: "cascade", onUpdate: "cascade" }).notNull(),
+  movieId: int('movie_id').references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }).notNull(),
   addedAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`).notNull(),
 },
   (table) => ({

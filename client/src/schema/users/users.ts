@@ -9,15 +9,14 @@ import {
   timestamp, uniqueIndex,
   varchar
 } from "drizzle-orm/mysql-core"
+import { comment } from "../comments/comments"
+import { follower } from "../followers/followers"
+import { like } from "../likes/likes"
 import { list } from "../lists/lists"
-import { movieList } from "../movie-lists/movie-lists"
+import { movieInfosToUser } from "../movie-infos-to-users/movie-infos-to-users"
+import { movieReview } from "../movie-reviews/movie-reviews"
 import { rating } from "../ratings/ratings"
 import { watchlist } from "../watchlist/watchlist"
-import { like } from "../likes/likes"
-import { comment } from "../comments/comments"
-import { movieReview } from "../movie-reviews/movie-reviews"
-import { movieInfosToUser } from "../movie-infos-to-users/movie-infos-to-users"
-import { follower } from "../followers/followers"
 
 export const user = mysqlTable("user", {
   id: varchar("id", { length: 255 }).$default(() => sql`UUID()`).notNull().primaryKey(),

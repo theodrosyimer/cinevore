@@ -13,7 +13,7 @@ import { user } from "../users/users"
 export const movieInfosToUser = mysqlTable("movie_infos_to_user", {
   movieId: int("movie_id").notNull().references(() => movie.tmdbId, { onDelete: "cascade", onUpdate: "cascade" }),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => user.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  rating: mysqlEnum('value', ['', '0', '0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']).notNull().default(''),
+  rating: mysqlEnum('rating', ['', '0', '0.5', '1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']).notNull().default(''),
   liked: tinyint("like").notNull().default(1),
   watched: tinyint("watched").notNull().default(1),
   reviewed: tinyint("reviewed").notNull().default(1),
