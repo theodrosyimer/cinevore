@@ -10,7 +10,22 @@ export const userNameSchema = z.object({
 export const insertUserSchema = createInsertSchema(user, {
   name: z.string().min(2).max(50),
   email: z.string().email(),
-  password: z.string().min(8).max(25).regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g),
+  password: z.string().min(8).max(25).regex(
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g,
+    {
+      message: 'Password must contain at least 8 characters, one uppercase, one lowercase, one number and one of these special characters: #?!@$ %^&*-',
+    }
+  )
+})
+
+export const userPatchSchema = createInsertSchema(user, {
+  name: z.string().min(2).max(50).optional(),
+  email: z.string().email().optional(),
+  password: z.string().min(8).max(25).regex(
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g,
+    {
+      message: 'Password must contain at least 8 characters, one uppercase, one lowercase, one number and one of these special characters: #?!@$ %^&*-',
+    }),
 })
 
 export const userPostSchema = insertUserSchema.pick({ name: true, email: true, password: true })
