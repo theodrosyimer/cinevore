@@ -9,7 +9,7 @@ export const metadata = {
 }
 
 export default async function UploadPage({ params }: { params: { username: string } }) {
-  const user = await getCurrentUser()
+  const { user, isAdmin } = await getCurrentUser()
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")

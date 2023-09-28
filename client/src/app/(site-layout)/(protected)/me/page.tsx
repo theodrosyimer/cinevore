@@ -8,7 +8,7 @@ export const metadata = {
 }
 
 export default async function UserProfilePage({ params }: { params: { username: string } }) {
-  const user = await getCurrentUser()
+  const { user, isAdmin } = await getCurrentUser()
 
   if (!user) {
     return null

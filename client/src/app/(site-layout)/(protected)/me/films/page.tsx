@@ -15,7 +15,7 @@ export default async function UserFilmsPage({ params }: {
   }
 }) {
 
-  // const user = await getCurrentUser()
+  // const { user, isAdmin } = await getCurrentUser()
 
   // if (!user) {
   //   redirect(authOptions?.pages?.signIn || "/login")

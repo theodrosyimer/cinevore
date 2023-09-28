@@ -11,7 +11,7 @@ interface AdminDashboardLayoutProps {
 export default async function AdminDashboardLayout({
   children,
 }: AdminDashboardLayoutProps) {
-  const user = await getCurrentUser()
+  const { user, isAdmin } = await getCurrentUser()
 
   if (!user) {
     return notFound()

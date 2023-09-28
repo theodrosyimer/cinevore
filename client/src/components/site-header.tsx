@@ -16,7 +16,7 @@ import { UserAccountNav } from "@/components/user-account-nav"
 
 
 export async function SiteHeader() {
-  const user = await getCurrentUser()
+  const { user, isAdmin } = await getCurrentUser()
 
   siteLayoutConfig.mainNav =
     user?.role === 'user' || !user?.role
