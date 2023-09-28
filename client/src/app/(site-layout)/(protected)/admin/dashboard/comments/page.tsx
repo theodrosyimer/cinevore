@@ -8,7 +8,7 @@ import { DashboardHeader } from "@/components/dashboard-header"
 import { UserCreateButton } from "@/components/user-create-button"
 import { DashboardShell } from "@/components/shell"
 import { desc, eq } from "drizzle-orm"
-import { user } from "@/drizzle/schema"
+import { user } from "@/schema"
 import { UserItem } from "@/components/user-item"
 
 export const metadata = {
@@ -16,7 +16,7 @@ export const metadata = {
 }
 
 export default async function DashboardPage() {
-  const currentUser = await getCurrentUser()
+  const { user: currentUser } = await getCurrentUser()
 
   if (!currentUser) {
     redirect(authOptions?.pages?.signIn || "/login")

@@ -1,48 +1,70 @@
 import { migrate } from 'drizzle-orm/mysql2/migrator'
 import mysql from "mysql2/promise"
-import { user } from '@/drizzle/schema'
 import { drizzle } from 'drizzle-orm/mysql2'
-import { env } from '@/env.mjs'
 import * as dotenv from "dotenv"
-import { clearDb } from '@/lib/db'
-import { defaultUsers } from '@/lib/migrate-data'
+import { clearDbTables, makeColumnEmojiFriendly } from '@/lib/db'
+import { addComments, addCommentsToMovieLists, addCommentsToMovieReviews, addFollowers, addLikes, addLikesToMovieLists, addLikesToMovieReviews, addLists, addMovieInfosToUsers, addMovieLists, addMovieReviews, addMovies, addRatings, addRatingsToMovieLists, addRatingsToMovieReviews, addUsers, addWatchlistToMovies, addWatchlists } from '@/lib/migrate-data'
 dotenv.config({ path: '.env.local' })
 
 console.log(process.env.DB_HOST, process.env.DB_ADMIN, process.env.DB_NAME, process.env.DB_PORT)
 
-const connection = await mysql.createConnection({
+const client = await mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_ADMIN,
   database: process.env.DB_NAME,
   port: Number(process.env.DB_PORT),
+  // password: process.env.DB_PASSWORD,
 })
 
-const dbMigrationOnly = drizzle(connection)
+const dbMigrationOnly = drizzle(client)
 
 async function main() {
-  await clearDb().catch((e) => {
+  await clearDbTables().catch((e) => {
     console.error(e)
     process.exit(1)
   })
 
-  console.log("🗄️   Migrating the database...")
+  console.log("\n🗄️   Migrating the database...\n")
 
-  await migrate(dbMigrationOnly, { migrationsFolder: './src/drizzle' })
+  await migrate(dbMigrationOnly, { migrationsFolder: './drizzle' })
 
+  await makeColumnEmojiFriendly('comment', 'content')
+  // @ts-ignore
+  await makeColumnEmojiFriendly('movie_review', 'content')
+  await makeColumnEmojiFriendly('list', 'title')
+  await makeColumnEmojiFriendly('list', 'description')
 
   await dbMigrationOnly.transaction(async (tx) => {
-    await Promise.all(
-      defaultUsers.map(async (defaultUser) => {
-        if (defaultUser) await tx.insert(user).values(defaultUser)
-      })
-    ).catch(() => {
-      throw new Error("Failed to add data to the database")
-    }).finally(() => {
+    await Promise.all([
+      addUsers(tx),
+      addMovies(tx),
+      addLists(tx),
+      addMovieLists(tx),
+      addMovieReviews(tx),
+      addLikes(tx),
+      addLikesToMovieLists(tx),
+      addLikesToMovieReviews(tx),
+      addComments(tx),
+      addCommentsToMovieLists(tx),
+      addCommentsToMovieReviews(tx),
+      addFollowers(tx),
+      addWatchlists(tx),
+      addWatchlistToMovies(tx),
+      addRatings(tx),
+      addRatingsToMovieLists(tx),
+      addRatingsToMovieReviews(tx),
+      addMovieInfosToUsers(tx),
+    ]).catch((e) => {
+      console.error(e)
+      throw new Error("Failed to add default data the database ❌")
     })
-    console.log("👤  Created 6 new users:\n\t1 superadmin\n\t1 admin\n\t4 users")
     console.log("🎉  Migration Done!")
   })
   process.exit(0)
 }
 
-main()
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})
+

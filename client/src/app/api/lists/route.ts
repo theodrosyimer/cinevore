@@ -1,71 +1,69 @@
 import * as z from "zod"
 
+import { list, movieList, user } from "@/schema"
 import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
-import { getUserSubscriptionPlan } from "@/lib/subscription"
-import { movieList } from "@/drizzle/schema"
-import { and, eq } from "drizzle-orm"
 import { getCurrentUser } from "@/lib/session"
-import { NewMovieList } from "@/types/db"
-
-const listCreateSchema = z.object({
-  title: z.string(),
-  content: z.string().optional(),
-})
+// import { movieListPostSchema } from "@/lib/validations/movie-list"
+import { eq } from "drizzle-orm"
+import { formatSimpleErrorMessage } from "@/lib/utils"
 
 export async function GET() {
   try {
-    const user = await getCurrentUser()
+    const { user, isAdmin } = await getCurrentUser()
 
-    if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
-      return new Response("Unauthorized", { status: 403 })
-    }
+    // if (!user || !isAdmin) {
+    //   return new Response("Unauthorized", { status: 403 })
+    // }
+
+    // console.log("currentUser:", user)
+
+    const lists = await db.query.list.findMany({
+      // where: eq(list.userId, currentUser.id),
+      // with: {
+      //   movieList: true,
+      //   with: {
+      //     comments: true,
+      //   }
+      // },
+    })
+
+    return new Response(JSON.stringify(lists))
 
   } catch (error) {
+    if (error instanceof Error) {
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
+    }
+
     return new Response(null, { status: 500 })
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const user = await getCurrentUser()
+    const { user: currentUser, isAdmin } = await getCurrentUser()
 
-    if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
+    if (!currentUser || !isAdmin) {
       return new Response("Unauthorized", { status: 403 })
     }
 
-    // const subscriptionPlan = await getUserSubscriptionPlan(user.id)
-
-    // If user is on a free plan.
-    // Check if user has reached limit of 3 posts.
-    // if (!subscriptionPlan?.isPro) {
-    //   const result = await db.query.list.findMany({
-    //     where: eq(list.authorId, user.id),
-    //   })
-
-    //   if (result.length >= 3) {
-    //     throw new RequiresProPlanError()
-    //   }
-    // }
-
     const json = await req.json()
-    const body = listCreateSchema.parse(json)
+    const body = movieListPostSchema.parse(json)
 
-    console.log("BODY", {
-      title: body.title,
-      content: body.content,
-      authorId: user.id,
-    })
+    const results = await db.insert(list).values({})
 
-    // const data: NewList
-    await db.insert(movieList).values({
-      title: body.title,
-      content: body.content,
-      authorId: user.id,
-      movieId: 87101,
-    } as NewMovieList).catch((error) => {
-      console.log("ERROR", error)
-    })
+    if (!results) {
+      return new Response(null, { status: 500 })
+    }
+
+    console.log("insert id:", results[0].insertId)
+
+    if (body?.movieId) {
+      await db.insert(movieList).values({ ...body, listId: results[0].insertId, movieId: body.movieId, userId: currentUser.id })
+
+      return new Response("List created", { status: 201 })
+    }
 
     return new Response("List created", { status: 201 })
   } catch (error) {
@@ -77,6 +75,11 @@ export async function POST(req: Request) {
       return new Response("Requires Pro Plan", { status: 402 })
     }
 
-    return new Response(null, { status: 500 })
+    if (error instanceof Error) {
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
+    }
+
+    return new Response(`Error creating a list from the database.`, { status: 500 })
   }
 }

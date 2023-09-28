@@ -1,9 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { z } from 'zod'
-import { env } from "@/env.mjs"
+// import { env } from "@env.mjs"
+import * as dotenv from 'dotenv'
+dotenv.config()
 
-import { LANGUAGES } from '@/lib/tmdb/constants/languages'
-import { TMDBMovieResponse } from '@/lib/tmdb/types/types'
+import { LANGUAGES } from './constants/languages'
+import { TMDBMovieResponse, tMDBMovieResponseSchema } from './types/types'
+import { mergeSearchParamsToUrl } from './utils'
 
 /*
 - movies
@@ -19,19 +22,19 @@ import { TMDBMovieResponse } from '@/lib/tmdb/types/types'
 
 /* eslint-disable camelcase */
 // eslint-disable-next-line no-use-before-define
-const configOptions: ConfigOptions = {
-  API_KEY: env.TMDB_API_KEY ?? '',
-  BASE_URI: env.TMDB_BASE_URI ?? '',
-  IMAGE_BASE_URI: env.TMDB_IMAGE_BASE_URI ?? '',
+export const configOptions = {
+  API_KEY: process.env.TMDB_API_KEY ?? '10473fa5b39f51105676dd9fd05a9af0',
+  BASE_URI: process.env.TMDB_BASE_URI ?? 'https://api.themoviedb.org/3',
+  IMAGE_BASE_URI: process.env.TMDB_IMAGE_BASE_URI ?? 'https://image.tmdb.org/t/p',
   language: 'en-US',
   timeout: 5000,
-}
+} satisfies ConfigOptions
 
 export type ConfigOptions = {
   API_KEY: string
   BASE_URI: string
   IMAGE_BASE_URI: string
-  language: LANGUAGES
+  language?: LANGUAGES
   timeout?: number
 }
 
@@ -40,7 +43,7 @@ export type QueryOptions = {
   id?: string
   page?: number
   body?: Record<string, any>
-  category?: string
+  category: 'movie' | 'tv'
   language?: LANGUAGES
 }
 
@@ -98,8 +101,9 @@ const q = setQuery({
   id: '2',
   body: { name: 'test' },
 })
-console.log(q.toString())
 
+const url = mergeSearchParamsToUrl(new URL(`/movie/popular`, `${configOptions.BASE_URI}`), q)
+url
 export function isCallback(
   callback: unknown
 ): asserts callback is (...args: any) => any {
@@ -115,7 +119,7 @@ export function validateRequired() {
 export async function searchByID({
   id,
   category,
-  language = 'en-US',
+  language = configOptions.language,
 }: QueryOptions) {
   const response = await fetch(
     `${configOptions.BASE_URI}/${category}/${id}?api_key=${configOptions.API_KEY
@@ -137,7 +141,7 @@ export async function searchByID({
 export async function searchByTitle({
   query,
   category,
-  language,
+  language = configOptions.language,
 }: QueryOptions) {
   const response = await fetch(
     `${configOptions.BASE_URI}/search/${category}?api_key=${configOptions.API_KEY}&query=${query}&language=${language}`
@@ -159,7 +163,7 @@ export async function searchByTitle({
 
 export async function getTopRated({
   category,
-  language,
+  language = configOptions.language,
   page = 1,
 }: QueryOptions) {
   const response = await fetch(
@@ -187,25 +191,37 @@ export async function getTopRated({
 
 export async function getPopular({
   category,
-  language,
+  language = configOptions.language,
   page = 1,
 }: QueryOptions) {
-  const response = await fetch(
-    `${configOptions.BASE_URI}/${category}/popular?api_key=${configOptions.API_KEY}&language=${language}&page=${page}`
-  )
+  console.log(configOptions.BASE_URI)
+  const url = new URL(`/${category}/popular`, `${configOptions.BASE_URI}`)
+
+  const queries = {
+    api_key: configOptions.API_KEY,
+    language: !language ? configOptions.language : language,
+    page: page.toString(),
+  }
+  const u = mergeSearchParamsToUrl(url, new URLSearchParams(queries))
+
+  console.log(u.href)
+
+  const response = await fetch(u.href)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
   }
 
   const data = await response.json() as TMDBMovieResponse
+  console.log(data)
 
-  return data.results[0].
+  // return tMDBMovieResponseSchema.parse(data)
+  return data
 }
 
 export async function getUpcoming({
   category,
-  language,
+  language = configOptions.language,
   page = 1,
 }: QueryOptions) {
   const response = await fetch(
@@ -235,7 +251,7 @@ export async function getUpcoming({
 
 export async function getGenresList({
   category = 'movie',
-  language = 'en-US',
+  language = configOptions.language,
 }: QueryOptions) {
   const response = await fetch(
     `${configOptions.BASE_URI}/genre/${category}/list?api_key=${configOptions.API_KEY}&language=${language}`
@@ -249,10 +265,9 @@ export async function getGenresList({
 
   return genres
 }
-
 export async function getTvAndMovieGenresList({ language }: QueryOptions) {
   const [movieGenresList, tvGenresList] = await Promise.all([
-    getGenresList({ language }),
+    getGenresList({ category: 'movie', language }),
     getGenresList({
       category: 'tv',
       language,

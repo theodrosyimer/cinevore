@@ -1,10 +1,8 @@
 // import debug from 'debug'
 import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
-import { user } from '@/drizzle/schema'
+import { user } from '@/schema'
 import { NewUser, SelectUser } from '@/types/db'
-// import { PermissionFlag } from '@/core/middlewares/permissionflag-enum'
-import { SelectedFields } from 'drizzle-orm/mysql-core'
 
 // const log: debug.IDebugger = debug('app:users-model')
 
@@ -15,10 +13,12 @@ class UsersModel {
   }
 
   create = async (newUser: NewUser) => {
-    return db.insert(user).values({ ...newUser })
+    return db.insert(user).values(newUser)
   }
 
   getAll = async () => db.select().from(user)
+
+  getAllByPage = async (page: number, limit = 3) => db.select().from(user).limit(limit).offset((page - 1) * limit)
 
   getById = async (id: string) => db.select().from(user).where(eq(user.id, id))
 
