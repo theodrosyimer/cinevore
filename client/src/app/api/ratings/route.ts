@@ -7,7 +7,7 @@ import { getCurrentUser } from "@/lib/session"
 
 export async function GET() {
   try {
-    const currentUser = await getCurrentUser()
+    const { user: currentUser } = await getCurrentUser()
 
     if (!currentUser || !(currentUser?.role === "admin" || currentUser?.role === "superadmin")) {
       return new Response("Unauthorized", { status: 403 })
@@ -32,7 +32,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const user = await getCurrentUser()
+    const { user, isAdmin } = await getCurrentUser()
 
     if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
       return new Response("Unauthorized", { status: 403 })

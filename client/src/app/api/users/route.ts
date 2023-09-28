@@ -11,14 +11,16 @@ import { formatSimpleErrorMessage } from "@/lib/utils"
 
 export async function GET() {
   try {
-    const currentUser = await getCurrentUser()
+    const { user, isAdmin } = await getCurrentUser()
 
-    if (!currentUser || !(currentUser?.role === "admin" || currentUser?.role === "superadmin")) {
-      return new Response("Unauthorized", { status: 403 })
-    }
+    // if (!user || !isAdmin) {
+    //   return new Response("Unauthorized", { status: 403 })
+    // }
 
-    console.log('Before DB query')
-    /* const users = await db.query.user.findMany({
+    // console.log('Before DB query')
+
+    /*
+    const users = await db.query.user.findMany({
       columns: {},
       with: {
         list: true,
@@ -28,10 +30,10 @@ export async function GET() {
 
     const users = await UsersModel.getAll()
 
-    // console.log(users)
     if (!users || !users[0]) {
       return new Response('User with list not found', { status: 404 })
     }
+    console.log(users)
 
     return new Response(JSON.stringify(users))
   } catch (error) {
@@ -46,9 +48,9 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const currentUser = await getCurrentUser()
+    const { isAdmin } = await getCurrentUser()
 
-    if (!currentUser || !(currentUser?.role === "admin" || currentUser?.role === "superadmin")) {
+    if (!isAdmin) {
       return new Response("Unauthorized", { status: 403 })
     }
 

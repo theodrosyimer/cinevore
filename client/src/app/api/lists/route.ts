@@ -10,13 +10,13 @@ import { formatSimpleErrorMessage } from "@/lib/utils"
 
 export async function GET() {
   try {
-    const currentUser = await getCurrentUser()
+    const { user, isAdmin } = await getCurrentUser()
 
-    if (!currentUser || !(currentUser?.role === "admin" || currentUser?.role === "superadmin")) {
-      return new Response("Unauthorized", { status: 403 })
-    }
+    // if (!user || !isAdmin) {
+    //   return new Response("Unauthorized", { status: 403 })
+    // }
 
-    console.log("currentUser:", currentUser)
+    // console.log("currentUser:", user)
 
     const lists = await db.query.list.findMany({
       // where: eq(list.userId, currentUser.id),
@@ -42,25 +42,11 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const user = await getCurrentUser()
+    const { user: currentUser, isAdmin } = await getCurrentUser()
 
-    if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
+    if (!currentUser || !isAdmin) {
       return new Response("Unauthorized", { status: 403 })
     }
-
-    // const subscriptionPlan = await getUserSubscriptionPlan(user.id)
-
-    // If user is on a free plan.
-    // Check if user has reached limit of 3 posts.
-    // if (!subscriptionPlan?.isPro) {
-    //   const result = await db.query.list.findMany({
-    //     where: eq(list.authorId, user.id),
-    //   })
-
-    //   if (result.length >= 3) {
-    //     throw new RequiresProPlanError()
-    //   }
-    // }
 
     const json = await req.json()
     const body = movieListPostSchema.parse(json)
@@ -74,7 +60,7 @@ export async function POST(req: Request) {
     console.log("insert id:", results[0].insertId)
 
     if (body?.movieId) {
-      await db.insert(movieList).values({ ...body, listId: results[0].insertId, movieId: body.movieId, userId: user.id })
+      await db.insert(movieList).values({ ...body, listId: results[0].insertId, movieId: body.movieId, userId: currentUser.id })
 
       return new Response("List created", { status: 201 })
     }
