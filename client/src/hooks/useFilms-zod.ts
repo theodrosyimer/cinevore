@@ -1,14 +1,10 @@
+import { getPopular } from "@/lib/tmdb/tmdb"
 import { useQuery } from "@tanstack/react-query"
-import { z } from "zod"
-import { filmSchema } from "./useFilm-zod"
-
-export const filmsSchema = filmSchema.array()
-
-export type Films = z.infer<typeof filmsSchema>
 
 async function getFilms() {
-  const data = await fetch(`https://swapi.dev/api/films`).then((res) => res.json())
-  return filmsSchema.parse(data.results)
+  const data = await getPopular({ category: 'movie' })
+
+  return data
 }
 
 export function useFilms() {
