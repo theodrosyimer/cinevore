@@ -234,7 +234,7 @@ export async function addWatchlistToMovies(tx: DrizzleTransaction) {
 }
 
 export const defaultUsers = [{
-  id: crypto.randomUUID(),
+  id: "02b399c4-34ef-4efb-a997-bd958d8e7d74",
   lastname: 'Yimer',
   firstname: 'Theodros',
   name: 'theo',
@@ -243,7 +243,7 @@ export const defaultUsers = [{
   password: adminPassword,
   role: 'admin',
 }, {
-  id: crypto.randomUUID(),
+  id: "f6ebd336-966a-413a-b9ca-f876af96ed33",
   lastname: 'Yimer',
   firstname: 'Theodros',
   name: 'theosuper',
@@ -253,7 +253,7 @@ export const defaultUsers = [{
   role: 'superadmin',
 },
 {
-  id: crypto.randomUUID(),
+  id: "08f23385-ee88-451d-9626-a41bda446600",
   lastname: 'Yimer',
   firstname: 'Yetenayet',
   name: 'yetu',
@@ -263,7 +263,7 @@ export const defaultUsers = [{
   role: 'user',
 },
 {
-  id: crypto.randomUUID(),
+  id: "189f0a45-2a1b-4453-b21e-78ce6244c4be",
   lastname: 'Zélé',
   firstname: 'Antoine',
   name: 'antoine',
@@ -273,7 +273,7 @@ export const defaultUsers = [{
   role: 'user',
 },
 {
-  id: crypto.randomUUID(),
+  id: "f1188128-aa88-413d-a3bb-69932c3e3026",
   lastname: 'Geremew',
   firstname: 'Eden',
   name: 'eden',
@@ -283,7 +283,7 @@ export const defaultUsers = [{
   role: 'user',
 },
 {
-  id: crypto.randomUUID(),
+  id: "42a1a955-8d3d-4f94-bcc1-6427cc1cc648",
   lastname: 'Geremew',
   firstname: 'Mathias',
   name: 'mathias',

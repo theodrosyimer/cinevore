@@ -81,11 +81,13 @@ async function isDbEmpty(databaseName?: string): Promise<boolean> {
     console.log(`"${dbName}" database is empty!\n`)
     return true
   }
+
   return false
 }
 
 export async function getTableStatus(tableName: TableName): Promise<TableStatus> {
   const [results] = await db.execute(sql`show table status like ${tableName}`) as any
+
   return results[0] as TableStatus
 }
 
@@ -98,6 +100,7 @@ export async function getTablesInfos(databaseName?: string) {
   const dbName = getDbName(databaseName)
 
   const [results] = await db.execute(sql`SELECT * FROM information_schema.tables WHERE table_schema = ${dbName} and TABLE_TYPE='BASE TABLE';`) as any as [InformationSchemaTables[], FieldPacket[]]
+
   return results
 }
 
@@ -112,6 +115,7 @@ export async function getTablesName(databaseName?: string) {
 
   return results.map((result) => result.TABLE_NAME)
 }
+
 export async function makeColumnEmojiFriendly<T extends TableName, K extends TableColumns<T>>(tableName: T, columnName: K) {
   await db.execute(sql.raw(`ALTER TABLE ${tableName} MODIFY ${columnName as string} VARCHAR(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`))
 }
@@ -137,14 +141,13 @@ export function getDbName(databaseName?: string) {
 //   return results[0]
 // }
 
-export async function createDb(databaseName?: string) {
-  const dbName = getDbName(databaseName)
-  await db.execute(sql.raw(`CREATE DATABASE IF NOT EXISTS \`${dbName}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`)).catch((e) => {
-    console.error(e)
-    throw new Error("Failed to create the database ❌")
-  })
-
-}
+// export async function createDb(databaseName?: string) {
+//   const dbName = getDbName(databaseName)
+//   await db.execute(sql.raw(`CREATE DATABASE IF NOT EXISTS \`${dbName}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`)).catch((e) => {
+//     console.error(e)
+//     throw new Error("Failed to create the database ❌")
+//   })
+// }
 
 // export async function clearDbTablesFromSchema() {
 //   if ((await isDbEmpty(process.env.DB_NAME as string))) { return }

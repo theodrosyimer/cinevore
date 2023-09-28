@@ -32,6 +32,7 @@ async function main() {
   // @ts-ignore
   await makeColumnEmojiFriendly('movie_review', 'content')
   await makeColumnEmojiFriendly('list', 'title')
+  await makeColumnEmojiFriendly('list', 'description')
 
   await dbMigrationOnly.transaction(async (tx) => {
     await Promise.all([

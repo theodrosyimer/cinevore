@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "d2932d90-1a54-48a4-9f74-69fd5524463a",
+  "id": "b40f2420-795f-4272-b22b-5db8e887d887",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -688,6 +688,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -872,8 +879,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "value": {
-          "name": "value",
+        "rating": {
+          "name": "rating",
           "type": "enum('','0','0.5','1','1.5','2','2.5','3','3.5','4','4.5','5')",
           "primaryKey": false,
           "notNull": true,
@@ -934,7 +941,7 @@
         "rating": {
           "name": "rating",
           "columns": [
-            "value"
+            "rating"
           ],
           "isUnique": false
         },
@@ -1025,7 +1032,15 @@
           "default": "CURRENT_TIMESTAMP"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "FK_movie_id": {
+          "name": "FK_movie_id",
+          "columns": [
+            "movie_id"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "movie_list_list_id_list_id_fk": {
           "name": "movie_list_list_id_list_id_fk",
@@ -1037,8 +1052,8 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
         },
         "movie_list_movie_id_movie_tmdb_id_fk": {
           "name": "movie_list_movie_id_movie_tmdb_id_fk",
@@ -1050,19 +1065,11 @@
           "columnsTo": [
             "tmdb_id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
         }
       },
-      "compositePrimaryKeys": {
-        "movie_list_list_id_movie_id": {
-          "name": "movie_list_list_id_movie_id",
-          "columns": [
-            "list_id",
-            "movie_id"
-          ]
-        }
-      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
     "movie_review": {
@@ -1768,8 +1775,8 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
         },
         "watchlist_to_movies_movie_id_movie_tmdb_id_fk": {
           "name": "watchlist_to_movies_movie_id_movie_tmdb_id_fk",
@@ -1781,8 +1788,8 @@
           "columnsTo": [
             "tmdb_id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},

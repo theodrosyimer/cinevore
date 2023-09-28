@@ -1,12 +1,35 @@
 import * as schema from '@/schema'
 import { Inspect } from '@/types/utility'
-import { InferInsertModel, InferSelectModel, getTableColumns } from "drizzle-orm"
+import { InferInsertModel, InferSelectModel } from "drizzle-orm"
 
-export type DbSchema = typeof schema
-type K = Inspect<DbSchema>
+export type DbSchema = Inspect<typeof schema>
 export type TableName = (keyof DbSchema)
 export type TableColumns<T extends TableName> = keyof (typeof schema[T] & { $columns: unknown })['$columns']
-type T = TableColumns<"user">
+type ColumnInfos<T extends TableName> = DbSchema[T][TableColumns<T>]
+export type ColumnInfosKeys<T extends TableName> = keyof ColumnInfos<T>
+export type ColumnType<T extends TableName, C extends TableColumns<T>, K extends ColumnInfosKeys<T>> = DbSchema[T][C][K]
+
+// TODO: it works but i may do a better job at typing this!
+export type ColumnDataType<T extends TableName, C extends
+  TableColumns<T>,/*  K extends ColumnInfosKeys<T>['dataType'] */> =
+  // @ts-ignore
+  ColumnType<T, C, 'dataType'> extends 'string'
+  ? string
+  // @ts-ignore
+  : ColumnType<T, C, 'dataType'> extends 'number'
+  ? number
+  // @ts-ignore
+  : ColumnType<T, C, 'dataType'> extends 'boolean'
+  ? boolean
+  // @ts-ignore
+  : ColumnType<T, C, 'dataType'> extends 'Date'
+  ? Date
+  : object
+
+type R = ColumnInfos<'user'>['dataType']
+type Test = ColumnInfosKeys<"user">
+type Test2 = ColumnDataType<"user", "createdAt">
+
 // export type NewDbEntry = `New${Capitalize<TableName>}`
 // export type SelectDbEntry = `Select${Capitalize<TableName>}`
 
