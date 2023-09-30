@@ -1,7 +1,7 @@
 // import debug from 'debug'
 import { and, eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
-import { list } from '@/schema'
+import { list } from '@/db'
 import { NewList, SelectList } from '@/types/db'
 import { CRUD } from '@/types/crud'
 

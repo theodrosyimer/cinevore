@@ -9,7 +9,7 @@ export const filmSchema = z.object({
 
 export type Film = z.infer<typeof filmSchema>
 
-async function getFilm(id: number) {
+async function getFilmById(id: number) {
   const data = await fetch(`https://swapi.dev/api/films/${id}`).then((res) => res.json())
   return filmSchema.parse(data.results)
 }
@@ -17,7 +17,7 @@ async function getFilm(id: number) {
 export function useFilm(id: number) {
   const filmData = useQuery({
     queryKey: ['film', id],
-    queryFn: () => getFilm(id),
+    queryFn: () => getFilmById(id),
   })
   return filmData
 }

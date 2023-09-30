@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "b40f2420-795f-4272-b22b-5db8e887d887",
+  "id": "a60a85f2-c780-44f3-b239-0c7f3590bc4c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -148,10 +148,9 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
@@ -224,15 +223,14 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
-        "compoundKeyIndex": {
-          "name": "compoundKeyIndex",
+        "compositeKeyIndex": {
+          "name": "compositeKeyIndex",
           "columns": [
             "comment_id",
             "list_id"
@@ -300,15 +298,14 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
-        "compoundKeyIndex": {
-          "name": "compoundKeyIndex",
+        "compositeKeyIndex": {
+          "name": "compositeKeyIndex",
           "columns": [
             "comment_id",
             "movie_review_id"
@@ -350,15 +347,15 @@
     "follower": {
       "name": "follower",
       "columns": {
-        "user_id": {
-          "name": "user_id",
+        "followee": {
+          "name": "followee",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
-        "following": {
-          "name": "following",
+        "follower": {
+          "name": "follower",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
@@ -371,39 +368,39 @@
           "notNull": true,
           "autoincrement": false,
           "default": "CURRENT_TIMESTAMP"
-        },
-        "unfollowed_date": {
-          "name": "unfollowed_date",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "CURRENT_TIMESTAMP"
         }
       },
       "indexes": {
+        "composite_key": {
+          "name": "composite_key",
+          "columns": [
+            "follower",
+            "followee"
+          ],
+          "isUnique": true
+        },
         "FK_user": {
           "name": "FK_user",
           "columns": [
-            "user_id"
+            "followee"
           ],
           "isUnique": false
         },
-        "FK_user_followed_by": {
-          "name": "FK_user_followed_by",
+        "FK_user_follower": {
+          "name": "FK_user_follower",
           "columns": [
-            "following"
+            "follower"
           ],
           "isUnique": false
         }
       },
       "foreignKeys": {
-        "follower_user_id_user_id_fk": {
-          "name": "follower_user_id_user_id_fk",
+        "follower_followee_user_id_fk": {
+          "name": "follower_followee_user_id_fk",
           "tableFrom": "follower",
           "tableTo": "user",
           "columnsFrom": [
-            "user_id"
+            "followee"
           ],
           "columnsTo": [
             "id"
@@ -411,12 +408,12 @@
           "onDelete": "cascade",
           "onUpdate": "cascade"
         },
-        "follower_following_user_id_fk": {
-          "name": "follower_following_user_id_fk",
+        "follower_follower_user_id_fk": {
+          "name": "follower_follower_user_id_fk",
           "tableFrom": "follower",
           "tableTo": "user",
           "columnsFrom": [
-            "following"
+            "follower"
           ],
           "columnsTo": [
             "id"
@@ -426,11 +423,11 @@
         }
       },
       "compositePrimaryKeys": {
-        "follower_following_user_id": {
-          "name": "follower_following_user_id",
+        "follower_followee_follower": {
+          "name": "follower_followee_follower",
           "columns": [
-            "following",
-            "user_id"
+            "followee",
+            "follower"
           ]
         }
       },
@@ -465,10 +462,9 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
@@ -541,15 +537,14 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
-        "compoundKeyIndex": {
-          "name": "compoundKeyIndex",
+        "compositeKeyIndex": {
+          "name": "compositeKeyIndex",
           "columns": [
             "list_id",
             "like_id"
@@ -617,10 +612,9 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
@@ -695,6 +689,14 @@
           "notNull": false,
           "autoincrement": false
         },
+        "is_private": {
+          "name": "is_private",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -715,10 +717,9 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
@@ -817,8 +818,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
@@ -889,27 +889,27 @@
         },
         "like": {
           "name": "like",
-          "type": "tinyint",
+          "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "default": 1
+          "default": false
         },
         "watched": {
           "name": "watched",
-          "type": "tinyint",
+          "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "default": 1
+          "default": false
         },
         "reviewed": {
           "name": "reviewed",
-          "type": "tinyint",
+          "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "default": 1
+          "default": false
         },
         "created_at": {
           "name": "created_at",
@@ -925,16 +925,15 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
-        "tmdb_id": {
-          "name": "tmdb_id",
+        "composite_key": {
+          "name": "composite_key",
           "columns": [
-            "user_id",
-            "movie_id"
+            "movie_id",
+            "user_id"
           ],
           "isUnique": true
         },
@@ -1033,6 +1032,14 @@
         }
       },
       "indexes": {
+        "composite_key": {
+          "name": "composite_key",
+          "columns": [
+            "movie_id",
+            "list_id"
+          ],
+          "isUnique": true
+        },
         "FK_movie_id": {
           "name": "FK_movie_id",
           "columns": [
@@ -1069,7 +1076,15 @@
           "onUpdate": "cascade"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "movie_list_list_id_movie_id": {
+          "name": "movie_list_list_id_movie_id",
+          "columns": [
+            "list_id",
+            "movie_id"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "movie_review": {
@@ -1115,10 +1130,9 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
@@ -1218,10 +1232,9 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
@@ -1460,7 +1473,7 @@
           "name": "role",
           "type": "enum('user','admin','superadmin')",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
           "default": "'user'"
         },
@@ -1497,8 +1510,7 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "CURRENT_TIMESTAMP"
+          "autoincrement": false
         },
         "password": {
           "name": "password",
@@ -1547,8 +1559,14 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false,
-          "default": "CURRENT_TIMESTAMP"
+          "autoincrement": false
+        },
+        "stripeSessionId": {
+          "name": "stripeSessionId",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         },
         "created_at": {
           "name": "created_at",
@@ -1564,8 +1582,7 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
@@ -1663,8 +1680,8 @@
           "notNull": true,
           "autoincrement": true
         },
-        "author_id": {
-          "name": "author_id",
+        "user_id": {
+          "name": "user_id",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,
@@ -1682,28 +1699,28 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false,
-          "onUpdate": true,
-          "default": "CURRENT_TIMESTAMP"
+          "onUpdate": true
         }
       },
       "indexes": {
         "id": {
           "name": "id",
           "columns": [
-            "id"
+            "id",
+            "user_id"
           ],
           "isUnique": true
         }
       },
       "foreignKeys": {
-        "watchlist_author_id_user_id_fk": {
-          "name": "watchlist_author_id_user_id_fk",
+        "watchlist_user_id_user_id_fk": {
+          "name": "watchlist_user_id_user_id_fk",
           "tableFrom": "watchlist",
           "tableTo": "user",
           "columnsFrom": [
-            "author_id"
+            "user_id"
           ],
           "columnsTo": [
             "id"

@@ -29,7 +29,7 @@ export function BillingForm({
 }: BillingFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
-  async function onSubmit(event) {
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setIsLoading(!isLoading)
 
@@ -75,14 +75,14 @@ export function BillingForm({
             )}
             {subscriptionPlan.isPro ? "Manage Subscription" : "Upgrade to PRO"}
           </button>
-          {subscriptionPlan.isPro ? (
+          {!!subscriptionPlan.isPro ?? (
             <p className="rounded-full text-xs font-medium">
               {subscriptionPlan.isCanceled
                 ? "Your plan will be canceled on "
                 : "Your plan renews on "}
               {formatDate(subscriptionPlan.stripeCurrentPeriodEnd)}.
             </p>
-          ) : null}
+          )}
         </CardFooter>
       </Card>
     </form>

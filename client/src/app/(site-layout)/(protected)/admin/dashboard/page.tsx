@@ -8,7 +8,7 @@ import { DashboardHeader } from "@/components/dashboard-header"
 import { UserCreateButton } from "@/components/user-create-button"
 import { DashboardShell } from "@/components/shell"
 import { desc, eq } from "drizzle-orm"
-import { user } from "@/schema"
+import { user } from "@/db"
 import { UserItem } from "@/components/user-item"
 
 export const metadata = {

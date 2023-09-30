@@ -1,7 +1,7 @@
 // import debug from 'debug'
 import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
-import { user } from '@/schema'
+import { user } from '@/db'
 import { NewUser, SelectUser } from '@/types/db'
 
 // const log: debug.IDebugger = debug('app:users-model')

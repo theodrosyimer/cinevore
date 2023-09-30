@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Movie } from "@/lib/tmdb/types/types"
+import { Movie } from "@/lib/tmdb/types/tmdb-api"
 
 export function FilmCard({ film }: { film: Movie }) {
   return (
