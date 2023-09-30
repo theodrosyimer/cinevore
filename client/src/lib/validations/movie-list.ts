@@ -1,4 +1,4 @@
-import { movieList } from "@/schema"
+import { movieList } from "@/db"
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 
 export const insertMovieListSchema = createInsertSchema(movieList)

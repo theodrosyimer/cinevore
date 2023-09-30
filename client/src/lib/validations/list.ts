@@ -1,4 +1,4 @@
-import { list } from "@/schema"
+import { list } from "@/db"
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 
 export const insertListSchema = createInsertSchema(list)

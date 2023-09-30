@@ -1,4 +1,4 @@
-import { user } from "@/schema"
+import { user } from "@/db"
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 import * as z from "zod"
 
