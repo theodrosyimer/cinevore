@@ -2,9 +2,9 @@
   "extends": [
     // "@thyi/eslint-config/typescript",
     "plugin:@tanstack/eslint-plugin-query/recommended",
-    "plugin:@next/next/recommended",
+    "plugin:@next/next/recommended"
     // "next",
     // "next/core-web-vitals",
-    "prettier"
+    // "prettier"
   ]
 }
