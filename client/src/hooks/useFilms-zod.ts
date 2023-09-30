@@ -1,8 +1,8 @@
-import { getPopular } from "@/lib/tmdb/tmdb"
+import { getPopular } from "@/lib/tmdb/src/tmdb"
 import { useQuery } from "@tanstack/react-query"
 
 async function getFilms() {
-  const data = await getPopular({ category: 'movie' })
+  const data = await getPopular({ category: 'movie', page: '2' })
 
   return data
 }
