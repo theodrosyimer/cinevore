@@ -1,10 +1,11 @@
-import * as schema from '@/schema'
+import * as schema from '@/db'
 import { sql } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/mysql2"
 import mysql, { FieldPacket } from "mysql2/promise"
 
 import * as dotenv from "dotenv"
 dotenv.config({ path: '.env.local' })
+import { env } from '@env'
 
 import { TableColumns, TableName } from "@/types/db"
 import { InformationSchemaTables, TableStatus } from "@/types/sql"
@@ -36,9 +37,9 @@ export async function clearDbTables(databaseName?: string) {
 
   await db.transaction(async (tx) => {
     console.log("\nSetting foreign key checks to 0 before sending queries...")
-    console.log("\n📨 Sending delete queries...")
-
     tx.execute(sql.raw("SET FOREIGN_KEY_CHECKS = 0;"))
+
+    console.log("\n📨 Sending delete queries...")
 
     await Promise.all(
       queries.map(async (query) => {

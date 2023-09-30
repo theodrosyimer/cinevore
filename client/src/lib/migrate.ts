@@ -1,10 +1,10 @@
 import { migrate } from 'drizzle-orm/mysql2/migrator'
 import mysql from "mysql2/promise"
 import { drizzle } from 'drizzle-orm/mysql2'
-import * as dotenv from "dotenv"
+// import * as dotenv from "dotenv"
+// dotenv.config({ path: '.env.local' })
 import { clearDbTables, makeColumnEmojiFriendly } from '@/lib/db'
 import { addComments, addCommentsToMovieLists, addCommentsToMovieReviews, addFollowers, addLikes, addLikesToMovieLists, addLikesToMovieReviews, addLists, addMovieInfosToUsers, addMovieLists, addMovieReviews, addMovies, addRatings, addRatingsToMovieLists, addRatingsToMovieReviews, addUsers, addWatchlistToMovies, addWatchlists } from '@/lib/migrate-data'
-dotenv.config({ path: '.env.local' })
 
 console.log(process.env.DB_HOST, process.env.DB_ADMIN, process.env.DB_NAME, process.env.DB_PORT)
 
