@@ -124,7 +124,6 @@ export const movieDetailsSchema = z.object({
   credits: movieCreditsSchema.optional()
 })
 
-// inferred types:
 export type MovieCast = z.infer<typeof movieCastSchema>
 
 export type MovieCrew = z.infer<typeof movieCrewSchema>

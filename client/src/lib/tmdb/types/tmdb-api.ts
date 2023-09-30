@@ -7,23 +7,23 @@ import type {
   ValuesOf
 } from './utility-types'
 
-import { backdropSizes, changeKeys, logoSizes, poster_sizes, profile_sizes, still_sizes } from '@/lib/tmdb/constants/configuration-details'
-import { movieCertifications } from '@/lib/tmdb/constants/movie-certifications'
-import { movieCreditsSchema, movieDetailsSchema } from '@/lib/tmdb/types/movie-details'
 import { z } from 'zod'
-
+import * as constants from '../constants/configuration-details'
+import { movieCertifications } from '../constants/movie-certifications'
+import { movieCreditsSchema, movieDetailsSchema } from './tmdb-api-movie-details'
 
 /* ************************************************
                  CONFIGURATION
 ************************************************ */
-const TMDBBackdropSizesSchema = z.enum(backdropSizes)
-const TMDBLogoSizesSchema = z.enum(logoSizes)
 
-const TMDBPosterSizesSchema = z.enum(poster_sizes)
-const TMDBProfileSizesSchema = z.enum(profile_sizes)
-const TMDBStillSizesSchema = z.enum(still_sizes)
+const TMDBBackdropSizesSchema = z.enum(constants.backdropSizes)
+const TMDBLogoSizesSchema = z.enum(constants.logoSizes)
 
-const TMDBChangeKeysSchema = z.enum(changeKeys)
+const TMDBPosterSizesSchema = z.enum(constants.poster_sizes)
+const TMDBProfileSizesSchema = z.enum(constants.profile_sizes)
+const TMDBStillSizesSchema = z.enum(constants.still_sizes)
+
+const TMDBChangeKeysSchema = z.enum(constants.changeKeys)
 
 export const TMDBConfigurationSchema = z.object({
   images: z.object({
@@ -57,7 +57,7 @@ export type TMDBImageSizesCategoryKey = KeysOf<TMDBImageSizesCategory>
 
 export type TMDBImageSizesCategoryValues = ValuesOf<TMDBImageSizesCategory>
 
-function name<TKey extends TMDBImageSizesCategoryKey, TValue extends TMDBImageSizesCategory[TKey]>(sizeCategory: TKey, value: TValue) {
+function example<TKey extends TMDBImageSizesCategoryKey, TValue extends TMDBImageSizesCategory[TKey]>(sizeCategory: TKey, value: TValue) {
   return ({
     [sizeCategory]: value,
 
