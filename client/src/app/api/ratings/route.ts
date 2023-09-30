@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-import { list, movieList } from "@/schema"
+import { list, movieList } from "@/db"
 import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
 import { getCurrentUser } from "@/lib/session"

@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm"
 
 import { db } from "@/lib/db"
 import UsersModel from "@/models/users"
-import { user } from "@/schema"
+import { user } from "@/db"
 import { getCurrentUser } from "@/lib/session"
 import { userPatchSchema } from "@/lib/validations/user"
 import { formatSimpleErrorMessage } from "@/lib/utils"

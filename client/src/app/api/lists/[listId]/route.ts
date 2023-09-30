@@ -2,7 +2,7 @@ import * as z from "zod"
 
 import { db } from "@/lib/db"
 import { movieListPostSchema } from "@/lib/validations/movie-list"
-import * as schema from "@/schema"
+import * as schema from "@/db"
 import { and, eq } from "drizzle-orm"
 import { getCurrentUser } from "@/lib/session"
 import { formatSimpleErrorMessage } from "@/lib/utils"

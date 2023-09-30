@@ -6,36 +6,85 @@ import { RequiresProPlanError } from "@/lib/exceptions"
 import { getCurrentUser } from "@/lib/session"
 import { userPostSchema } from "@/lib/validations/user"
 import UsersModel from "@/models/users"
-import { user } from "@/schema"
+import { user } from "@/db"
 import { formatSimpleErrorMessage } from "@/lib/utils"
 
 export async function GET() {
   try {
-    const { user, isAdmin } = await getCurrentUser()
+    const { user: currentUser, isAdmin } = await getCurrentUser()
 
-    // if (!user || !isAdmin) {
+    // if (!currentUser || !isAdmin) {
     //   return new Response("Unauthorized", { status: 403 })
     // }
 
     // console.log('Before DB query')
 
-    /*
+
     const users = await db.query.user.findMany({
-      columns: {},
+      where: (user, { eq }) => eq(user.id, currentUser.id),
       with: {
-        list: true,
+        likes: true,
+        comments: true,
+        ratings: true,
+        movieReviews: {
+          with: {
+            movie: {
+              columns: {
+                tmdbId: false,
+                imdbId: false,
+              },
+            },
+            // commentsToMovieReview: true,
+          },
+        },
+        watchlist: {
+          with: {
+            watchlistToMovies: true
+          },
+        },
+        lists: {
+          with: {
+            movieLists: true,
+          },
+          // with: {
+          //   movieLists: {
+          //     with: {
+          //       commentsToMovieList: true,
+          //     }
+          //   }
+          // },
+        },
+        followers: {
+          columns: {
+            followedDate: true,
+          },
+          with: {
+            follower: {
+              columns: {
+                name: true,
+              },
+            },
+          },
+        },
+        movieInfosToUser: true,
       },
-       })
-    */
+    },
+    )
 
-    const users = await UsersModel.getAll()
+    // const movies = await db.query.movie.findMany({
+    //   with: {
+    //     movieInfosToUsers: true,
+    //   }
+    // })
+    console.log(users?.[0])
 
-    if (!users || !users[0]) {
+    // const users = await UsersModel.getAll()
+
+    if (!users /* || !users[0] */) {
       return new Response('User with list not found', { status: 404 })
     }
-    console.log(users)
 
-    return new Response(JSON.stringify(users))
+    return new Response(JSON.stringify({ users/* , movies */ }), { status: 200 })
   } catch (error) {
     if (error instanceof Error) {
       console.log(error)
