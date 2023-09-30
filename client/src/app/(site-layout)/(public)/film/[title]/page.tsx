@@ -5,6 +5,15 @@ export const metadata = {
   description: "All the details of the film you searched for.",
 }
 
+type Params = { infos: string }
+export function generateStaticParams() {
+  return [
+    { category: 'a', product: '1' },
+    { category: 'b', product: '2' },
+    { category: 'c', product: '3' },
+  ]
+}
+
 export default function FilmPage({ params }: { params: { title: string } }) {
   return (
     <>
