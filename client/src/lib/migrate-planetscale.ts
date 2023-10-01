@@ -1,4 +1,4 @@
-import * as schema from '@/db'
+import * as schema from '@/db-planetscale'
 // import { migrate } from 'drizzle-orm/mysql2/migrator'
 import { migrate } from 'drizzle-orm/planetscale-serverless/migrator'
 import { connect } from '@planetscale/database'

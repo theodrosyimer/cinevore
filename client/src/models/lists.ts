@@ -1,8 +1,8 @@
 // import debug from 'debug'
 import { and, eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
-import { list } from '@/db'
-import { NewList, SelectList } from '@/types/db'
+import { list } from '@/db-planetscale'
+import { NewList, SelectList } from '@/types/db"'
 
 // const log: debug.IDebugger = debug('app:lists-model')
 

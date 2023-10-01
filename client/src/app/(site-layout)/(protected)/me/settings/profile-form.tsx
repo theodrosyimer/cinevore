@@ -55,7 +55,8 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
-  username: "",
+  username: "theo",
+  email: "theo@example.com",
   bio: "I own a computer.",
   urls: [
     { value: "https://shadcn.com" },
@@ -76,6 +77,7 @@ export function ProfileForm() {
   })
 
   function onSubmit(data: ProfileFormValues) {
+    // console.log(data)
     toast({
       title: "You submitted the following values:",
       description: (

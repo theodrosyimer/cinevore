@@ -1,13 +1,12 @@
 import * as z from "zod"
 
+import { user } from "@/db-planetscale"
 import { hashPassword } from "@/lib/bcrypt"
 import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
 import { getCurrentUser } from "@/lib/session"
-import { userPostSchema } from "@/lib/validations/user"
-import UsersModel from "@/models/users"
-import { user } from "@/db"
 import { formatSimpleErrorMessage } from "@/lib/utils"
+import { userPostSchema } from "@/lib/validations/user"
 
 export async function GET() {
   try {

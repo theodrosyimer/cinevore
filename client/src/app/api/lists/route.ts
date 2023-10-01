@@ -1,7 +1,7 @@
 import * as z from "zod"
 
-import { list, movieList, user } from "@/db"
-import { db } from "@/lib/db"
+import { list, movieList, user } from "@/db-planetscale"
+import { db } from "@/lib/db
 import { RequiresProPlanError } from "@/lib/exceptions"
 import { getCurrentUser } from "@/lib/session"
 // import { movieListPostSchema } from "@/lib/validations/movie-list"

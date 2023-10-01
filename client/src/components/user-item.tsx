@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { movieReview } from "@/db"
+import { movieReview } from "@/db-planetscale"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"

@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
-import { SelectReview } from "@/db"
+import { SelectReview } from "@/db-planetscale"
 
 async function deleteReview(postId: string) {
   const response = await fetch(`/api/reviews/${postId}`, {

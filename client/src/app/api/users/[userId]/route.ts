@@ -1,9 +1,9 @@
 import { z } from "zod"
 import { eq } from "drizzle-orm"
 
-import { db } from "@/lib/db"
+import { db } from "@/lib/db
 import UsersModel from "@/models/users"
-import { user } from "@/db"
+import { user } from "@/db-planetscale"
 import { getCurrentUser } from "@/lib/session"
 import { userPatchSchema } from "@/lib/validations/user"
 import { formatSimpleErrorMessage } from "@/lib/utils"

@@ -2,7 +2,7 @@ import { headers } from "next/headers"
 import Stripe from "stripe"
 
 import { env } from "@env.mjs"
-import { db } from "@/lib/db"
+import { db } from "@/lib/db
 import { stripe } from "@/lib/stripe"
 
 export async function POST(req: Request) {

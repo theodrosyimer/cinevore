@@ -1,13 +1,13 @@
 import Link from "next/link"
-import { SelectReview } from "@/types/db"
-import { movieReview } from "@/db"
+import { SelectMovieReview } from "@/types/db"
+import { movieReview } from "@/db-planetscale"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ReviewOperations } from "@/components/review-operations"
 
 interface ReviewItemProps {
-  review: Pick<SelectReview, "id" | "content" | "updatedAt" | "createdAt">
+  review: Pick<SelectMovieReview, "id" | "content" | "updatedAt" | "createdAt">
 }
 
 export function ReviewItem({ review }: ReviewItemProps) {

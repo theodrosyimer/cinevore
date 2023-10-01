@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv"
 dotenv.config({ path: '.env.local' })
 
-import * as schema from '@/db'
+import * as schema from '@/db-planetscale'
 import { sql } from "drizzle-orm"
 import { drizzle } from "drizzle-orm/mysql2"
 import mysql, { FieldPacket } from "mysql2/promise"

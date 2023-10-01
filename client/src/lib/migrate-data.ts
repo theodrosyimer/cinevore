@@ -1,4 +1,4 @@
-import * as schema from "@/db/index"
+import * as schema from "@/db-planetscale/index"
 import { hashPassword } from "@/lib/bcrypt"
 import type { NewComment, NewCommentToMovieList, NewCommentToMovieReview, NewFollower, NewLike, NewLikeToMovieList, NewLikeToMovieReview, NewList, NewMovie, NewMovieInfosToUser, NewMovieList, NewMovieReview, NewRating, NewRatingToMovieList, NewRatingToMovieReview, NewUser, NewWatchlist, NewWatchlistToMovies } from "@/types/db"
 import { type ExtractTablesWithRelations } from "drizzle-orm"
