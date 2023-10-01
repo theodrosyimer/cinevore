@@ -1,20 +1,12 @@
+import { searchByID } from "@/lib/tmdb/src/tmdb"
 import { useQuery } from "@tanstack/react-query"
-import { z } from "zod"
 
-export const filmSchema = z.object({
-  episode_id: z.number(),
-  title: z.string(),
-  opening_crawl: z.string(),
-})
-
-export type Film = z.infer<typeof filmSchema>
-
-async function getFilmById(id: number) {
-  const data = await fetch(`https://swapi.dev/api/films/${id}`).then((res) => res.json())
-  return filmSchema.parse(data.results)
+async function getFilmById(id: string) {
+  const data = await searchByID({ id, category: 'movie' })
+  return data
 }
 
-export function useFilm(id: number) {
+export function useFilm(id: string) {
   const filmData = useQuery({
     queryKey: ['film', id],
     queryFn: () => getFilmById(id),
