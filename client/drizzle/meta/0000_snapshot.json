@@ -1,117 +1,9 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "a60a85f2-c780-44f3-b239-0c7f3590bc4c",
+  "id": "da328652-9907-4194-8105-ad6eeb6e7cf0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "account": {
-      "name": "account",
-      "columns": {
-        "userId": {
-          "name": "userId",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "type": {
-          "name": "type",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "provider": {
-          "name": "provider",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "providerAccountId": {
-          "name": "providerAccountId",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "refresh_token": {
-          "name": "refresh_token",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "access_token": {
-          "name": "access_token",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "expires_at": {
-          "name": "expires_at",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "token_type": {
-          "name": "token_type",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "scope": {
-          "name": "scope",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "id_token": {
-          "name": "id_token",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "session_state": {
-          "name": "session_state",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "account_userId_user_id_fk": {
-          "name": "account_userId_user_id_fk",
-          "tableFrom": "account",
-          "tableTo": "user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "account_provider_providerAccountId": {
-          "name": "account_provider_providerAccountId",
-          "columns": [
-            "provider",
-            "providerAccountId"
-          ]
-        }
-      },
-      "uniqueConstraints": {}
-    },
     "comment": {
       "name": "comment",
       "columns": {
@@ -169,21 +61,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "comment_author_id_user_id_fk": {
-          "name": "comment_author_id_user_id_fk",
-          "tableFrom": "comment",
-          "tableTo": "user",
-          "columnsFrom": [
-            "author_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "comment_id": {
           "name": "comment_id",
@@ -238,34 +116,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "comment_to_movie_list_list_id_list_id_fk": {
-          "name": "comment_to_movie_list_list_id_list_id_fk",
-          "tableFrom": "comment_to_movie_list",
-          "tableTo": "list",
-          "columnsFrom": [
-            "list_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "comment_to_movie_list_comment_id_comment_id_fk": {
-          "name": "comment_to_movie_list_comment_id_comment_id_fk",
-          "tableFrom": "comment_to_movie_list",
-          "tableTo": "comment",
-          "columnsFrom": [
-            "comment_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -313,34 +164,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "comment_to_movie_review_movie_review_id_movie_review_id_fk": {
-          "name": "comment_to_movie_review_movie_review_id_movie_review_id_fk",
-          "tableFrom": "comment_to_movie_review",
-          "tableTo": "movie_review",
-          "columnsFrom": [
-            "movie_review_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "comment_to_movie_review_comment_id_comment_id_fk": {
-          "name": "comment_to_movie_review_comment_id_comment_id_fk",
-          "tableFrom": "comment_to_movie_review",
-          "tableTo": "comment",
-          "columnsFrom": [
-            "comment_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -394,34 +218,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "follower_followee_user_id_fk": {
-          "name": "follower_followee_user_id_fk",
-          "tableFrom": "follower",
-          "tableTo": "user",
-          "columnsFrom": [
-            "followee"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "follower_follower_user_id_fk": {
-          "name": "follower_follower_user_id_fk",
-          "tableFrom": "follower",
-          "tableTo": "user",
-          "columnsFrom": [
-            "follower"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "follower_followee_follower": {
           "name": "follower_followee_follower",
@@ -483,21 +280,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "like_author_id_user_id_fk": {
-          "name": "like_author_id_user_id_fk",
-          "tableFrom": "like",
-          "tableTo": "user",
-          "columnsFrom": [
-            "author_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "like_id": {
           "name": "like_id",
@@ -552,34 +335,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "like_to_movie_list_list_id_list_id_fk": {
-          "name": "like_to_movie_list_list_id_list_id_fk",
-          "tableFrom": "like_to_movie_list",
-          "tableTo": "list",
-          "columnsFrom": [
-            "list_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "like_to_movie_list_like_id_like_id_fk": {
-          "name": "like_to_movie_list_like_id_like_id_fk",
-          "tableFrom": "like_to_movie_list",
-          "tableTo": "like",
-          "columnsFrom": [
-            "like_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -627,34 +383,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "like_to_movie_review_movie_review_id_movie_review_id_fk": {
-          "name": "like_to_movie_review_movie_review_id_movie_review_id_fk",
-          "tableFrom": "like_to_movie_review",
-          "tableTo": "movie_review",
-          "columnsFrom": [
-            "movie_review_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "like_to_movie_review_like_id_like_id_fk": {
-          "name": "like_to_movie_review_like_id_like_id_fk",
-          "tableFrom": "like_to_movie_review",
-          "tableTo": "like",
-          "columnsFrom": [
-            "like_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -738,21 +467,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "list_user_id_user_id_fk": {
-          "name": "list_user_id_user_id_fk",
-          "tableFrom": "list",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "list_id": {
           "name": "list_id",
@@ -966,34 +681,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "movie_infos_to_user_movie_id_movie_tmdb_id_fk": {
-          "name": "movie_infos_to_user_movie_id_movie_tmdb_id_fk",
-          "tableFrom": "movie_infos_to_user",
-          "tableTo": "movie",
-          "columnsFrom": [
-            "movie_id"
-          ],
-          "columnsTo": [
-            "tmdb_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "movie_infos_to_user_user_id_user_id_fk": {
-          "name": "movie_infos_to_user_user_id_user_id_fk",
-          "tableFrom": "movie_infos_to_user",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "movie_infos_to_user_movie_id_user_id": {
           "name": "movie_infos_to_user_movie_id_user_id",
@@ -1048,34 +736,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "movie_list_list_id_list_id_fk": {
-          "name": "movie_list_list_id_list_id_fk",
-          "tableFrom": "movie_list",
-          "tableTo": "list",
-          "columnsFrom": [
-            "list_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "movie_list_movie_id_movie_tmdb_id_fk": {
-          "name": "movie_list_movie_id_movie_tmdb_id_fk",
-          "tableFrom": "movie_list",
-          "tableTo": "movie",
-          "columnsFrom": [
-            "movie_id"
-          ],
-          "columnsTo": [
-            "tmdb_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "movie_list_list_id_movie_id": {
           "name": "movie_list_list_id_movie_id",
@@ -1158,34 +819,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "movie_review_user_id_user_id_fk": {
-          "name": "movie_review_user_id_user_id_fk",
-          "tableFrom": "movie_review",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "movie_review_movie_id_movie_tmdb_id_fk": {
-          "name": "movie_review_movie_id_movie_tmdb_id_fk",
-          "tableFrom": "movie_review",
-          "tableTo": "movie",
-          "columnsFrom": [
-            "movie_id"
-          ],
-          "columnsTo": [
-            "tmdb_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "movie_review_id": {
           "name": "movie_review_id",
@@ -1253,21 +887,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "rating_user_id_user_id_fk": {
-          "name": "rating_user_id_user_id_fk",
-          "tableFrom": "rating",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "rating_id": {
           "name": "rating_id",
@@ -1312,34 +932,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "rating_to_movie_list_list_id_list_id_fk": {
-          "name": "rating_to_movie_list_list_id_list_id_fk",
-          "tableFrom": "rating_to_movie_list",
-          "tableTo": "list",
-          "columnsFrom": [
-            "list_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "rating_to_movie_list_rating_id_rating_id_fk": {
-          "name": "rating_to_movie_list_rating_id_rating_id_fk",
-          "tableFrom": "rating_to_movie_list",
-          "tableTo": "rating",
-          "columnsFrom": [
-            "rating_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -1377,86 +970,8 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "rating_to_movie_review_movie_review_movie_review_id_fk": {
-          "name": "rating_to_movie_review_movie_review_movie_review_id_fk",
-          "tableFrom": "rating_to_movie_review",
-          "tableTo": "movie_review",
-          "columnsFrom": [
-            "movie_review"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "rating_to_movie_review_rating_id_rating_id_fk": {
-          "name": "rating_to_movie_review_rating_id_rating_id_fk",
-          "tableFrom": "rating_to_movie_review",
-          "tableTo": "rating",
-          "columnsFrom": [
-            "rating_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "session": {
-      "name": "session",
-      "columns": {
-        "sessionToken": {
-          "name": "sessionToken",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "expires": {
-          "name": "expires",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "session_user_id_user_id_fk": {
-          "name": "session_user_id_user_id_fk",
-          "tableFrom": "session",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "session_sessionToken": {
-          "name": "session_sessionToken",
-          "columns": [
-            "sessionToken"
-          ]
-        }
-      },
       "uniqueConstraints": {}
     },
     "user": {
@@ -1507,7 +1022,7 @@
         },
         "emailVerified": {
           "name": "emailVerified",
-          "type": "timestamp",
+          "type": "timestamp(3)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -1632,44 +1147,6 @@
         }
       }
     },
-    "verificationToken": {
-      "name": "verificationToken",
-      "columns": {
-        "identifier": {
-          "name": "identifier",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "token": {
-          "name": "token",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "expires": {
-          "name": "expires",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "verificationToken_identifier_token": {
-          "name": "verificationToken_identifier_token",
-          "columns": [
-            "identifier",
-            "token"
-          ]
-        }
-      },
-      "uniqueConstraints": {}
-    },
     "watchlist": {
       "name": "watchlist",
       "columns": {
@@ -1714,21 +1191,7 @@
           "isUnique": true
         }
       },
-      "foreignKeys": {
-        "watchlist_user_id_user_id_fk": {
-          "name": "watchlist_user_id_user_id_fk",
-          "tableFrom": "watchlist",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {
         "watchlist_id": {
           "name": "watchlist_id",
@@ -1781,34 +1244,7 @@
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "watchlist_to_movies_watchlist_id_watchlist_id_fk": {
-          "name": "watchlist_to_movies_watchlist_id_watchlist_id_fk",
-          "tableFrom": "watchlist_to_movies",
-          "tableTo": "watchlist",
-          "columnsFrom": [
-            "watchlist_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        },
-        "watchlist_to_movies_movie_id_movie_tmdb_id_fk": {
-          "name": "watchlist_to_movies_movie_id_movie_tmdb_id_fk",
-          "tableFrom": "watchlist_to_movies",
-          "tableTo": "movie",
-          "columnsFrom": [
-            "movie_id"
-          ],
-          "columnsTo": [
-            "tmdb_id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }

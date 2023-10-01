@@ -6,6 +6,7 @@ import { type MySqlTransaction } from "drizzle-orm/mysql-core"
 import type { MySql2QueryResultHKT, MySql2PreparedQueryHKT } from "drizzle-orm/mysql2"
 import { makeColumnEmojiFriendly } from "@/lib/db"
 import { firstHalve, firstHalveIndex, randomFromArrayFirstHalve, randomFromArraySecondHalve, secondHalveIndex } from "@/lib/utils"
+import type { PlanetscaleQueryResultHKT, PlanetScalePreparedQueryHKT, PlanetScaleDatabase } from "drizzle-orm/planetscale-serverless"
 
 const adminPassword = await hashPassword('theotheo') as string
 const superAdminPassword = await hashPassword('!#tHeodros1') as string
@@ -14,9 +15,11 @@ const mathiasP = await hashPassword('mathiasmathias') as string
 const edenP = await hashPassword('edeneden') as string
 const antoineP = await hashPassword('antoineantoine') as string
 
-type DrizzleTransaction = MySqlTransaction<MySql2QueryResultHKT, MySql2PreparedQueryHKT, Record<string, never>, ExtractTablesWithRelations<Record<string, never>>>
+// type MySql2DrizzleTransaction = MySqlTransaction<MySql2QueryResultHKT, MySql2PreparedQueryHKT, Record<string, never>, ExtractTablesWithRelations<Record<string, never>>>
 
-export async function addUsers(tx: DrizzleTransaction) {
+type PlanetScaleDrizzleTransaction = MySqlTransaction<PlanetscaleQueryResultHKT, PlanetScalePreparedQueryHKT, typeof schema, ExtractTablesWithRelations<typeof schema>>
+
+export async function addUsers(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultUsers.map(async (defaultUser) => {
       if (defaultUser) await tx.insert(schema.user).values(defaultUser)
@@ -28,7 +31,7 @@ export async function addUsers(tx: DrizzleTransaction) {
   console.log("\t👤  Created 6 new users:\n\t\t1 superadmin\n\t\t1 admin\n\t\t4 users\n")
 }
 
-export async function addMovies(tx: DrizzleTransaction) {
+export async function addMovies(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultMovies.map(async (defaultMovie) => {
       if (defaultMovie) await tx.insert(schema.movie).values(defaultMovie)
@@ -40,7 +43,7 @@ export async function addMovies(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultMovies.length} movies\n`)
 }
 
-export async function addLists(tx: DrizzleTransaction) {
+export async function addLists(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultLists.map(async (defaultList) => {
       if (defaultList) await tx.insert(schema.list).values(defaultList)
@@ -52,7 +55,7 @@ export async function addLists(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultLists.length} list\n`)
 }
 
-export async function addMovieLists(tx: DrizzleTransaction) {
+export async function addMovieLists(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultMovieLists.map(async (defaultMovieList) => {
       if (defaultMovieList) await tx.insert(schema.movieList).values(defaultMovieList)
@@ -64,7 +67,7 @@ export async function addMovieLists(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultMovieLists.length} movies to lists\n`)
 }
 
-export async function addMovieReviews(tx: DrizzleTransaction) {
+export async function addMovieReviews(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultMovieReviews.map(async (defaultMovieReview) => {
       if (defaultMovieReview) await tx.insert(schema.movieReview).values(defaultMovieReview)
@@ -76,7 +79,7 @@ export async function addMovieReviews(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultMovieReviews.length} movie reviews\n`)
 }
 
-export async function addComments(tx: DrizzleTransaction) {
+export async function addComments(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultComments.map(async (defaultComment) => {
       if (defaultComment) await tx.insert(schema.comment).values(defaultComment)
@@ -89,7 +92,7 @@ export async function addComments(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultComments.length} comments\n`)
 }
 
-export async function addCommentsToMovieLists(tx: DrizzleTransaction) {
+export async function addCommentsToMovieLists(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultCommentsToMovieLists.map(async (defaultCommentsToMovieList) => {
       if (defaultCommentsToMovieList) await tx.insert(schema.commentToMovieList).values(defaultCommentsToMovieList)
@@ -101,7 +104,7 @@ export async function addCommentsToMovieLists(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultCommentsToMovieLists.length} comments to movie list\n`)
 }
 
-export async function addCommentsToMovieReviews(tx: DrizzleTransaction) {
+export async function addCommentsToMovieReviews(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultCommentsToMovieReviews.map(async (defaultCommentsToMovieReview) => {
       if (defaultCommentsToMovieReview) await tx.insert(schema.commentToMovieReview).values(defaultCommentsToMovieReview)
@@ -113,7 +116,7 @@ export async function addCommentsToMovieReviews(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultCommentsToMovieReviews.length} comments to movie reviews\n`)
 }
 
-export async function addLikes(tx: DrizzleTransaction) {
+export async function addLikes(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultLikes.map(async (defaultLike) => {
       if (defaultLike) await tx.insert(schema.like).values(defaultLike)
@@ -125,7 +128,7 @@ export async function addLikes(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultLikes.length} likes to movies\n`)
 }
 
-export async function addLikesToMovieLists(tx: DrizzleTransaction) {
+export async function addLikesToMovieLists(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultLikesToMovieLists.map(async (defaultLikesToMovieList) => {
       if (defaultLikesToMovieList) await tx.insert(schema.likeToMovieList).values(defaultLikesToMovieList)
@@ -137,7 +140,7 @@ export async function addLikesToMovieLists(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultLikesToMovieLists.length} likes to movies lists\n`)
 }
 
-export async function addLikesToMovieReviews(tx: DrizzleTransaction) {
+export async function addLikesToMovieReviews(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultLikesToMovieReviews.map(async (defaultLikesToMovieReview) => {
       if (defaultLikesToMovieReview) await tx.insert(schema.likeToMovieReview).values(defaultLikesToMovieReview)
@@ -149,7 +152,7 @@ export async function addLikesToMovieReviews(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultLikesToMovieReviews.length} likes to movies reviews\n`)
 }
 
-export async function addRatings(tx: DrizzleTransaction) {
+export async function addRatings(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultRatings.map(async (defaultRating) => {
       if (defaultRating) await tx.insert(schema.rating).values(defaultRating)
@@ -161,7 +164,7 @@ export async function addRatings(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultRatings.length} ratings\n`)
 }
 
-export async function addRatingsToMovieLists(tx: DrizzleTransaction) {
+export async function addRatingsToMovieLists(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultRatingsToMovieLists.map(async (defaultRatingsToMovieList) => {
       if (defaultRatingsToMovieList) await tx.insert(schema.ratingToMovieList).values(defaultRatingsToMovieList)
@@ -173,7 +176,7 @@ export async function addRatingsToMovieLists(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultRatingsToMovieLists.length} ratings to movies lists\n`)
 }
 
-export async function addRatingsToMovieReviews(tx: DrizzleTransaction) {
+export async function addRatingsToMovieReviews(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultRatingsToMovieReviews.map(async (defaultRatingsToMovieReview) => {
       if (defaultRatingsToMovieReview) await tx.insert(schema.ratingToMovieReview).values(defaultRatingsToMovieReview)
@@ -185,7 +188,7 @@ export async function addRatingsToMovieReviews(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultRatingsToMovieReviews.length} ratings to movies reviews\n`)
 }
 
-export async function addFollowers(tx: DrizzleTransaction) {
+export async function addFollowers(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultFollowers.map(async (defaultFollower) => {
       if (defaultFollower) await tx.insert(schema.follower).values(defaultFollower)
@@ -197,7 +200,7 @@ export async function addFollowers(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultFollowers.length} followers\n`)
 }
 
-export async function addMovieInfosToUsers(tx: DrizzleTransaction) {
+export async function addMovieInfosToUsers(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultMovieInfosToUsers.map(async (defaultMovieInfosToUser) => {
       if (defaultMovieInfosToUser) await tx.insert(schema.movieInfosToUser).values(defaultMovieInfosToUser)
@@ -209,7 +212,7 @@ export async function addMovieInfosToUsers(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultMovieInfosToUsers.length} movies infos from users\n`)
 }
 
-export async function addWatchlists(tx: DrizzleTransaction) {
+export async function addWatchlists(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultWatchlists.map(async (defaultWatchlist) => {
       if (defaultWatchlist) await tx.insert(schema.watchlist).values(defaultWatchlist)
@@ -221,7 +224,7 @@ export async function addWatchlists(tx: DrizzleTransaction) {
   console.log(`\t🎬  Added ${defaultWatchlists.length} watchlists\n`)
 }
 
-export async function addWatchlistToMovies(tx: DrizzleTransaction) {
+export async function addWatchlistToMovies(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultWatchlistToMovies.map(async (defaultWatchlistToMovie) => {
       if (defaultWatchlistToMovie) await tx.insert(schema.watchlistToMovies).values(defaultWatchlistToMovie)

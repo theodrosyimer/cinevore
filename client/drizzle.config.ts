@@ -1,10 +1,10 @@
 import type { Config } from "drizzle-kit"
 // import { env } from "./src/env.mjs"
-import * as dotenv from "dotenv"
-dotenv.config({ path: '.env.local' })
+// import * as dotenv from "dotenv"
+// dotenv.config({ path: '.env.local' })
 
 export default {
-  schema: "./src/db/index.ts",
+  schema: "./src/db-planetscale/index.ts",
   out: "./drizzle",
   driver: 'mysql2',
   dbCredentials: {
