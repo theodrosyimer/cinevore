@@ -1,4 +1,4 @@
-export type TableStatus = {
+export type MySql2TableStatus = {
   Name: string
   Engine: 'InnoDB' | (string & {})
   Version: number
@@ -19,7 +19,7 @@ export type TableStatus = {
   Comment: string
 }
 
-export type InformationSchemaTables = {
+export type MySql2InformationSchemaTables = {
   TABLE_CATALOG: string
   TABLE_SCHEMA: string
   TABLE_NAME: string

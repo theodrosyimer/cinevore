@@ -3,7 +3,6 @@ import { and, eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
 import { list } from '@/db'
 import { NewList, SelectList } from '@/types/db'
-import { CRUD } from '@/types/crud'
 
 // const log: debug.IDebugger = debug('app:lists-model')
 
