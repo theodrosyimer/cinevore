@@ -24,11 +24,10 @@ export const user = mysqlTable("user", {
   name: varchar("name", { length: 255 }).unique().notNull(),
   lastname: varchar("lastname", { length: 60 }),
   firstname: varchar("firstname", { length: 50 }),
-  // username: varchar("username", { length: 50 }),
   email: varchar("email", { length: 255 }).notNull().unique(),
   emailVerified: timestamp("emailVerified", {
     mode: "date",
-    // fsp: 3,
+    fsp: 3,
   }),
   password: char("password", { length: 60 }),
   image: varchar("image", { length: 255 }),
@@ -53,18 +52,18 @@ export const user = mysqlTable("user", {
   })
 
 export const userRelations = relations(user, ({ one, many }) => ({
-  watchlist: one(watchlist, {
-    fields: [user.id],
-    references: [watchlist.userId]
-  }),
+  // watchlist: one(watchlist, {
+  //   fields: [user.id],
+  //   references: [watchlist.userId]
+  // }),
   lists: many(list),
-  movieReviews: many(movieReview),
-  comments: many(comment),
-  likes: many(like),
-  ratings: many(rating),
-  movieInfosToUser: many(movieInfosToUser, { relationName: 'user' }),
-  followee: many(follower, { relationName: 'follower' }),
-  followers: many(follower, { relationName: 'followee' }),
+  // movieReviews: many(movieReview),
+  // comments: many(comment),
+  // likes: many(like),
+  // ratings: many(rating),
+  // movieInfosToUser: many(movieInfosToUser, { relationName: 'user' }),
+  // followee: many(follower, { relationName: 'follower' }),
+  // followers: many(follower, { relationName: 'followee' }),
 }))
 
 // Auth
