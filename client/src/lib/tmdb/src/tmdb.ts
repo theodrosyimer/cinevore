@@ -2,9 +2,10 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-import { LANGUAGES } from '../constants/languages'
-import { tMDBMovieResponseSchema } from '../types/tmdb-api'
-import { generateTMDBUrl } from './utils'
+import { MovieDetails, TMDBMovieResponse, tMDBMovieResponseSchema, tMDBMovieResponseSchemaWithDateInterval } from '../types/tmdb-api'
+import { extractLanguageFromLanguageCode, generateTMDBUrl } from './utils'
+import { GlobalConfig, QueryOptions } from '../types'
+import { movieDetailsSchema } from '../types/tmdb-api-movie-details'
 
 export const globalConfig = {
   API_KEY: process.env.TMDB_API_KEY ?? '10473fa5b39f51105676dd9fd05a9af0',
@@ -14,35 +15,6 @@ export const globalConfig = {
   language: 'en-US',
   timeout: 5000,
 } satisfies GlobalConfig
-
-export type GlobalConfig = {
-  API_KEY: string
-  API_VERSION: '3' | '4'
-  BASE_URI: string
-  IMAGE_BASE_URI: string
-  language: LANGUAGES
-  timeout?: number
-}
-export type GlobalConfigKey = keyof GlobalConfig
-export type MovieCategory = 'movie'
-export type TvShowCategory = 'tv'
-export type OtherCategory = | 'person' | 'company' | 'search'
-export type CommonSubCategory = 'popular' | 'top_rated' | 'upcoming' | 'latest'
-
-export type MovieSubCategory = CommonSubCategory | 'now_playing'
-export type TvSubCategory = CommonSubCategory | 'airing_today' | 'on_the_air'
-export type RouteSegment = `${MovieCategory}/${CommonSubCategory}` | `${MovieCategory}/${MovieSubCategory}` | `${TvShowCategory}/${TvSubCategory}`
-export type RouteSegmentWithoutSubCategory = `${MovieCategory}` | `${TvShowCategory}` | `${OtherCategory}`
-
-export type QueryOptions = {
-  query?: string
-  id?: string
-  page?: string
-  body?: Record<string, string>
-  category: 'movie' | 'tv'
-  language?: LANGUAGES
-}
-export type QueryOptionsWithoutBodyAndCategory = Omit<QueryOptions, 'body' | 'category'>
 
 export function setQuery<
   T extends
@@ -116,21 +88,50 @@ export async function searchByID({
   category,
   language = globalConfig.language,
 }: QueryOptions) {
-  const response = await fetch(
-    `${globalConfig.BASE_URI}/${category}/${id}?api_key=${globalConfig.API_KEY
-    }&append_to_response=videos,images,credits&include_image_language=${language.replace(
-      /-(\w+)/g,
-      ''
-    )}&include_video_language=${language.slice(0, 2)}&language=${language}`
-  )
+  const url = generateTMDBUrl(`${category}/${id}`, {
+    language,
+    append_to_response: 'videos,images,credits',
+    include_image_language: extractLanguageFromLanguageCode(language),
+    include_video_language: extractLanguageFromLanguageCode(language),
+  })
+
+  const response = await fetch(url.href)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
   }
 
-  // const data = await response.json()
+  const data = await response.json() as MovieDetails
 
-  return { data: await response.json() }
+  // TODO: need to parse the data
+  // return movieDetailsSchema.parse(data)
+  return data
+}
+
+// ! this function is not working properly
+export async function searchMulti({
+  query,
+  // category,
+  language = globalConfig.language,
+}: QueryOptions) {
+
+  console.log('QUERY', query)
+  const url = generateTMDBUrl(`search/multi`, {
+    query,
+    language,
+  })
+
+  const response = await fetch(url)
+
+  if (!response.ok) {
+    throw new Error(`Returned with a ${response.status} code`)
+  }
+
+  // TODO: need to get each type of response (movies, tv shows, and persons) and parse it
+  const data = await response.json()/*  as TMDBMovieResponse */
+
+  // console.log(data)
+  return data
 }
 
 export async function searchByTitle({
@@ -138,50 +139,40 @@ export async function searchByTitle({
   category,
   language = globalConfig.language,
 }: QueryOptions) {
-  const response = await fetch(
-    `${globalConfig.BASE_URI}/search/${category}?api_key=${globalConfig.API_KEY}&query=${query}&language=${language}`
-  )
+  const url = generateTMDBUrl(`search/${category}`, {
+    query,
+    language,
+  })
+
+  const response = await fetch(url)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
   }
 
-  const { page, results, total_pages, total_results } = await response.json()
+  const data = await response.json() as MovieDetails
 
-  return {
-    page,
-    results,
-    total_pages,
-    total_results,
-  }
+  return data
 }
-
 export async function getTopRated({
   category,
   language = globalConfig.language,
   page = '1',
 }: QueryOptions) {
-  const response = await fetch(
-    `${globalConfig.BASE_URI}/${category}/top_rated?api_key=${globalConfig.API_KEY}&language=${language}&page=${page}`
-  )
+  const url = generateTMDBUrl(`${category}/top_rated`, {
+    page,
+    language
+  })
+
+  const response = await fetch(url.href)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
   }
 
-  const {
-    page: currentPage,
-    results,
-    total_pages,
-    total_results,
-  } = await response.json()
+  const data = await response.json()
 
-  return {
-    page: currentPage,
-    results,
-    total_pages,
-    total_results,
-  }
+  return tMDBMovieResponseSchema.parse(data)
 }
 
 export async function getPopular({
@@ -211,29 +202,20 @@ export async function getUpcoming({
   language = globalConfig.language,
   page = '1',
 }: QueryOptions) {
-  const response = await fetch(
-    `${globalConfig.BASE_URI}/${category}/upcoming?api_key=${globalConfig.API_KEY}&language=${language}&page=${page}`
-  )
+  const url = generateTMDBUrl(`${category}/upcoming`, {
+    page,
+    language
+  })
+
+  const response = await fetch(url.href)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
   }
 
-  const {
-    dates,
-    page: currentPage,
-    results,
-    total_pages,
-    total_results,
-  } = await response.json()
+  const data = await response.json()
 
-  return {
-    dates,
-    page: currentPage,
-    results,
-    total_pages,
-    total_results,
-  }
+  return tMDBMovieResponseSchemaWithDateInterval.parse(data)
 }
 
 export async function getGenresList({

@@ -81,4 +81,4 @@ export const languages = [
   'zu-ZA',
 ] as const
 
-export type LANGUAGES = (typeof languages)[number]
+export type LANGUAGE = (typeof languages)[number]

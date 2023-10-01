@@ -94,6 +94,19 @@ export const tMDBMovieResponseSchema = z.object({
 
 export type TMDBMovieResponse = z.infer<typeof tMDBMovieResponseSchema>
 
+export const dateIntervalSchema = z.object({
+  dates: z.object({
+    maximum: z.string(),
+    minimum: z.string()
+  })
+})
+
+export type DateInterval = z.infer<typeof dateIntervalSchema>
+export const tMDBMovieResponseSchemaWithDateInterval = dateIntervalSchema.merge(tMDBMovieResponseSchema)
+
+export type TMDBMovieResponseWithDateInterval = z.infer<typeof tMDBMovieResponseSchemaWithDateInterval>
+
+
 export type MovieCertifications = typeof movieCertifications.certifications
 
 export type CountryListForMovieCertification = KeysOf<MovieCertifications>
