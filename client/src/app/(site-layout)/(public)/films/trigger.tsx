@@ -21,7 +21,7 @@ const Trigger = ({ limit }: { limit: number }) => {
 
       observer.observe(node)
     },
-    [limit]
+    [limit, router]
   )
 
   return <div ref={TriggerRef} className='h-1 w-1 bg-red-400'></div>

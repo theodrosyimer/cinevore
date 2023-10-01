@@ -1,7 +1,10 @@
+import * as dotenv from "dotenv"
+dotenv.config()
+
 import { SelectUser } from "@/types/db"
 
 export async function getUsers() {
-  const data = await fetch(`${process.env.NEXTAUTH_URL}/api/users`, {
+  const data = await fetch(`${process.env.SERVER_URL}/api/users`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"

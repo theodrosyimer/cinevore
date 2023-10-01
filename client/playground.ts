@@ -125,50 +125,50 @@ export const defaultRatings = [{}
 
 ]
 
-const ratingsCountToCreate = 40
+// const ratingsCountToCreate = 40
 
-for (let i = 0; i < ratingsCountToCreate; i++) {
-  defaultRatings.push({
-    id: defaultRatings.length + 1,
-    userId: defaultUsers?.[Math.round(Math.random() * defaultUsers.length)]?.id,
-    value: (ratingsAvailable[Math.round(Math.random() * ratingsAvailable.length)])!,
-  } as NewRating)
-}
+// for (let i = 0; i < ratingsCountToCreate; i++) {
+//   defaultRatings.push({
+//     id: defaultRatings.length + 1,
+//     userId: defaultUsers?.[Math.round(Math.random() * defaultUsers.length)]?.id,
+//     value: (ratingsAvailable[Math.round(Math.random() * ratingsAvailable.length)])!,
+//   } as NewRating)
+// }
 
-let [start, end] = firstHalveIndex(defaultRatings)
+// let [start, end] = firstHalveIndex(defaultRatings)
 
-console.log(start, end)
-export const defaultRatingsToMovieLists = [
-  // {
-  //   ratingId: 1,
-  //   listId: 1,
-  // },
-  {}
-]
+// console.log(start, end)
+// export const defaultRatingsToMovieLists = [
+//   // {
+//   //   ratingId: 1,
+//   //   listId: 1,
+//   // },
+//   {}
+// ]
 
-for (let i = start; i < end; i++) {
-  defaultRatingsToMovieLists.push({
-    listId: Math.round(Math.random() * defaultLists.length),
-    ratingId: randomFromArrayFirstHalve(defaultRatings).id ?? 1,
-  } as NewRatingToMovieList)
-}
+// for (let i = start; i < end; i++) {
+//   defaultRatingsToMovieLists.push({
+//     listId: Math.round(Math.random() * defaultLists.length),
+//     ratingId: randomFromArrayFirstHalve(defaultRatings).id ?? 1,
+//   } as NewRatingToMovieList)
+// }
 
-[start, end] = secondHalveIndex(defaultRatings)
+// [start, end] = secondHalveIndex(defaultRatings)
 
-console.log(start, end)
+// console.log(start, end)
 
-export const defaultRatingsToMovieReviews = [
-  {
-    ratingId: 1,
-    movieReviewId: 1,
-  },
-]
+// export const defaultRatingsToMovieReviews = [
+//   {
+//     ratingId: 1,
+//     movieReviewId: 1,
+//   },
+// ]
 
-for (let i = start; i < end; i++) {
-  defaultRatingsToMovieReviews.push({
-    ratingId: randomFromArraySecondHalve(defaultRatings).id ?? 1,
-    movieReviewId: Math.round(Math.random() * defaultMoviesReviews.length)
-  } as NewRatingToMovieReview)
-}
+// for (let i = start; i < end; i++) {
+//   defaultRatingsToMovieReviews.push({
+//     ratingId: randomFromArraySecondHalve(defaultRatings).id ?? 1,
+//     movieReviewId: Math.round(Math.random() * defaultMoviesReviews.length)
+//   } as NewRatingToMovieReview)
+// }
 
-defaultLists[Math.round(Math.random() * defaultLists.length)]!.id
+// defaultLists[Math.round(Math.random() * defaultLists.length)]!.id

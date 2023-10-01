@@ -6,7 +6,7 @@ import {
   varchar
 } from "drizzle-orm/mysql-core"
 import { user } from "../users"
-import { commentToMovieList } from "../movie-lists"
+import { commentToMovieList } from "../lists"
 import { commentToMovieReview } from "../movie-reviews"
 
 export const comment = mysqlTable('comment', {

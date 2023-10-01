@@ -2,11 +2,13 @@ import * as schema from '@/db-planetscale'
 import { Inspect } from '@/types/utility'
 import { InferInsertModel, InferSelectModel } from "drizzle-orm"
 
-export type DbSchema = Inspect<typeof schema>
+export type DbSchema = typeof schema
 export type TableName = (keyof DbSchema)
 export type TableColumns<T extends TableName> = keyof (typeof schema[T] & { $columns: unknown })['$columns']
+// @ts-ignore
 type ColumnInfos<T extends TableName> = DbSchema[T][TableColumns<T>]
 export type ColumnInfosKeys<T extends TableName> = keyof ColumnInfos<T>
+// @ts-ignore
 export type ColumnType<T extends TableName, C extends TableColumns<T>, K extends ColumnInfosKeys<T>> = DbSchema[T][C][K]
 
 // TODO: it works but i may do a better job at typing this!

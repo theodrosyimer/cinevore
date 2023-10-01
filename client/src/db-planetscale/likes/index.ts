@@ -1,4 +1,4 @@
-import { likeToMovieList } from "../movie-lists"
+import { likeToMovieList } from "../lists"
 import { likeToMovieReview } from "../movie-reviews"
 import { relations, sql } from "drizzle-orm"
 import {

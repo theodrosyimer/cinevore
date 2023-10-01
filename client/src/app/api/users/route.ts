@@ -16,11 +16,11 @@ export async function GET() {
     //   return new Response("Unauthorized", { status: 403 })
     // }
 
-    // console.log('Before DB query')
-
-
     const users = await db.query.user.findMany({
-      where: (user, { eq }) => eq(user.id, currentUser.id),
+      // where: (user, { eq }) => eq(user.id, currentUser.id),
+      columns: {
+        password: false
+      },
       with: {
         likes: true,
         comments: true,
@@ -60,6 +60,7 @@ export async function GET() {
           with: {
             follower: {
               columns: {
+                id: true,
                 name: true,
               },
             },
@@ -70,20 +71,18 @@ export async function GET() {
     },
     )
 
-    // const movies = await db.query.movie.findMany({
-    //   with: {
-    //     movieInfosToUsers: true,
-    //   }
-    // })
+    const movies = await db.query.movie.findMany({
+      with: {
+        movieInfosToUsers: true,
+      }
+    })
     console.log(users?.[0])
-
-    // const users = await UsersModel.getAll()
 
     if (!users /* || !users[0] */) {
       return new Response('User with list not found', { status: 404 })
     }
 
-    return new Response(JSON.stringify({ users/* , movies */ }), { status: 200 })
+    return new Response(JSON.stringify({ users, movies }), { status: 200 })
   } catch (error) {
     if (error instanceof Error) {
       console.log(error)

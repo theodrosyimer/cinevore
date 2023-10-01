@@ -1,10 +1,14 @@
 {
   "extends": [
-    // "@thyi/eslint-config/typescript",
-    "plugin:@tanstack/eslint-plugin-query/recommended",
-    "plugin:@next/next/recommended"
+    // "plugin:@tanstack/eslint-plugin-query/recommended",
+    // "plugin:@next/next/recommended",
     // "next",
-    // "next/core-web-vitals",
-    // "prettier"
-  ]
+    // "next/babel",
+    "next/core-web-vitals",
+    "prettier"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2023
+  }
 }

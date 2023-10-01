@@ -2,7 +2,7 @@
 import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
 import { user } from '@/db-planetscale'
-import { NewUser, SelectUser } from '@/types/db"'
+import { NewUser, SelectUser } from '@/types/db'
 
 // const log: debug.IDebugger = debug('app:users-model')
 
@@ -36,4 +36,5 @@ class UsersModel {
     .where(eq(user.id, id))
 }
 
-export default new UsersModel()
+const usersModel = new UsersModel()
+export default usersModel

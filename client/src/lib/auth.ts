@@ -5,12 +5,14 @@ import CredentialsProvider from "next-auth/providers/credentials"
 // import EmailProvider from "next-auth/providers/email"
 // import { Client } from "postmark"
 
-import { env } from "@env.mjs"
+// import { env } from "@env.mjs"
+import * as dotenv from "dotenv"
+dotenv.config()
 import { db } from "@/lib/db"
 import UsersModel from "@/models/users"
 import { hashPassword, validateUserPassword } from "@/lib/bcrypt"
 
-// const postmarkClient = new Client(env.POSTMARK_API_TOKEN)
+// const postmarkClient = new Client(process.env.POSTMARK_API_TOKEN)
 
 export const authOptions: NextAuthOptions = {
   adapter: DrizzleAdapter(db),
@@ -23,8 +25,8 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     GitHubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
     CredentialsProvider({
       name: "Credentials",

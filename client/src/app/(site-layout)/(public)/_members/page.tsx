@@ -11,7 +11,7 @@ export default async function UsersPage({ params }: { params: { username: string
     <>
       <h1 className="text-4xl font-bold text-center">Members</h1>
       <pre>
-        {JSON.stringify(users, null, 2)}
+        {users ? JSON.stringify(users, null, 2) : null}
       </pre>
     </>)
 

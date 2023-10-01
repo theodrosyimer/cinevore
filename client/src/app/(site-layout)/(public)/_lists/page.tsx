@@ -1,4 +1,4 @@
-import { getLists } from "@/app/(site-layout)/(public)/lists/getLists"
+import { getLists } from "@/app/(site-layout)/(public)/_lists/getLists"
 
 export const metadata = {
   title: "Lists Page",
@@ -13,7 +13,7 @@ export default async function ListsPage({ params }: { params: { username: string
       <h1 className="text-4xl font-bold text-center">Search for Lists of Films</h1>
 
       <pre>
-        {JSON.stringify(lists, null, 2)}
+        {lists ? JSON.stringify(lists, null, 2) : null}
       </pre>
     </>
   )

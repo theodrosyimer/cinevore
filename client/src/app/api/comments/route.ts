@@ -1,7 +1,7 @@
 import * as z from "zod"
 
 import { list, movieList } from "@/db-planetscale"
-import { db } from "@/lib/db
+import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
 import { getCurrentUser } from "@/lib/session"
 
@@ -52,35 +52,35 @@ export async function POST(req: Request) {
     //   }
     // }
 
-    const json = await req.json()
-    const body = movieListPostSchema.parse(json)
+    // const json = await req.json()
+    // const body = movieListPostSchema.parse(json)
 
-    const results = await db.insert(list).values({}).catch((error) => {
-      if (error instanceof Error) {
-        console.log('Failed to create a list\n', error)
-      } else {
-        console.log(`Error creating a new list with "userId: ${user.id}" from the database.`)
-      }
-    })
+    // const results = await db.insert(list).values({}).catch((error) => {
+    //   if (error instanceof Error) {
+    //     console.log('Failed to create a list\n', error)
+    //   } else {
+    //     console.log(`Error creating a new list with "userId: ${user.id}" from the database.`)
+    //   }
+    // })
 
-    if (!results) {
-      return new Response(null, { status: 500 })
-    }
+    // if (!results) {
+    //   return new Response(null, { status: 500 })
+    // }
 
-    console.log("insert id:", results[0].insertId)
+    // console.log("insert id:", results[0].insertId)
 
-    if (body?.movieId) {
-      await db.insert(movieList).values({ ...body, listId: results[0].insertId, movieId: body.movieId, userId: user.id }).catch((error) => {
-        if (error instanceof Error) {
-          console.log('Failed to insert movies to list\n', error)
-          return new Response(null, { status: 500 })
-        } else {
-          console.log(`Error creating a new movie list with "userIdId: ${user.id}" from the database.`)
-          return new Response(null, { status: 500 })
-        }
-      })
-      return new Response("List created", { status: 201 })
-    }
+    // if (body?.movieId) {
+    //   await db.insert(movieList).values({ ...body, listId: results[0].insertId, movieId: body.movieId, userId: user.id }).catch((error) => {
+    //     if (error instanceof Error) {
+    //       console.log('Failed to insert movies to list\n', error)
+    //       return new Response(null, { status: 500 })
+    //     } else {
+    //       console.log(`Error creating a new movie list with "userIdId: ${user.id}" from the database.`)
+    //       return new Response(null, { status: 500 })
+    //     }
+    //   })
+    //   return new Response("List created", { status: 201 })
+    // }
 
     return new Response("List created", { status: 201 })
   } catch (error) {

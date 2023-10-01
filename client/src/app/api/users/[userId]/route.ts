@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { eq } from "drizzle-orm"
 
-import { db } from "@/lib/db
+import { db } from "@/lib/db"
 import UsersModel from "@/models/users"
 import { user } from "@/db-planetscale"
 import { getCurrentUser } from "@/lib/session"
@@ -93,10 +93,10 @@ export async function DELETE(
 
     if (currentUser && params.userId === currentUser.id || isAdmin) {
       // Delete the list.
-      const [resultHeader] = await db.delete(user).where(eq(user.id, params.userId))
+      const resultHeader = await db.delete(user).where(eq(user.id, params.userId))
 
-      if (!resultHeader.affectedRows) {
-        console.log('Deleted rows:', resultHeader.affectedRows)
+      if (!resultHeader.rowsAffected) {
+        console.log('Deleted rows:', resultHeader.rowsAffected)
         return new Response('User already deleted!', { status: 404 })
       }
 

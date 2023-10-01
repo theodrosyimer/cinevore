@@ -2,7 +2,7 @@
 import { and, eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
 import { list } from '@/db-planetscale'
-import { NewList, SelectList } from '@/types/db"'
+import { NewList, SelectList } from '@/types/db'
 
 // const log: debug.IDebugger = debug('app:lists-model')
 
@@ -30,4 +30,5 @@ class ListsModel {
     .where(and(eq(list.id, listId), eq(list.userId, userId)))
 }
 
-export default new ListsModel()
+const listsModel = new ListsModel()
+export default listsModel

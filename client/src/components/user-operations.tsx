@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
-import { SelectUser, SelectReview } from "@/types/db"
+import { SelectUser, SelectMovieReview } from "@/types/db"
 
 async function deleteUser(userId: string) {
   const response = await fetch(`/api/users/${userId}`, {

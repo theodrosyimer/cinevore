@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
-import { SelectReview } from "@/db-planetscale"
+import { SelectMovieReview } from "@/types/db"
 
 async function deleteReview(postId: string) {
   const response = await fetch(`/api/reviews/${postId}`, {
@@ -42,7 +42,7 @@ async function deleteReview(postId: string) {
 }
 
 interface ReviewOperationsProps {
-  review: Pick<SelectReview, "id" | "content">
+  review: Pick<SelectMovieReview, "id" | "content">
 }
 
 export function ReviewOperations({ review }: ReviewOperationsProps) {

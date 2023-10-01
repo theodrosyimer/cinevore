@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { Suspense } from 'react'
-import { v4 as uuid } from 'uuid'
+// import { v4 as uuid } from 'uuid'
 
-import { getMovies } from '@/lib/mongo/movies'
+// import { getMovies } from '@/lib/mongo/movies'
 
 import Search from './search'
 import Movies from './movies'
@@ -23,10 +23,10 @@ const Page = async ({
   const search =
     typeof searchParams.search === 'string' ? searchParams.search : undefined
 
-  const promise = getMovies({ page, limit, query: search })
+  // const promise = getMovies({ page, limit, query: search })
 
   return (
-    <section className='py-24' key={uuid()}>
+    <section className='py-24' /* key={uuid()} */>
       <div className='container'>
         <div className='mb-12 flex items-center justify-between gap-x-16'>
           <h1 className='text-3xl font-bold'>Movies</h1>
@@ -67,9 +67,9 @@ const Page = async ({
         </div>
 
         <Suspense fallback={<Skeleton />}>
-          <Await promise={promise}>
+          {/* <Await promise={promise}>
             {({ movies }) => <Movies movies={movies} />}
-          </Await>
+          </Await> */}
         </Suspense>
       </div>
     </section>

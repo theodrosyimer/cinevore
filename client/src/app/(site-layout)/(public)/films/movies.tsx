@@ -7,7 +7,7 @@ export default function Movies({ movies }: { movies: Document[] | undefined }) {
       role='list'
       className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8'
     >
-      {movies?.map(movie => (
+      {/* {movies?.map(movie => (
         <li key={movie._id.toString()} className='relative'>
           <div className='group block aspect-square w-full overflow-hidden rounded-lg bg-gray-100'>
             <Image
@@ -26,7 +26,7 @@ export default function Movies({ movies }: { movies: Document[] | undefined }) {
             {movie.year}
           </p>
         </li>
-      ))}
+      ))} */}
     </ul>
   )
 }

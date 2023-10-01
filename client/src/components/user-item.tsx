@@ -4,7 +4,7 @@ import { movieReview } from "@/db-planetscale"
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { UserOperations } from "@/components/user-operations"
-import { SelectUser, SelectReview } from "@/types/db"
+import { SelectUser, SelectMovieReview } from "@/types/db"
 
 interface UserItemProps {
   user: Pick<SelectUser, "id" | "name" | "updatedAt" | "createdAt">

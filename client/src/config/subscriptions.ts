@@ -1,5 +1,7 @@
 import { SubscriptionPlan } from "@/types"
-import { env } from "@env.mjs"
+// import { env } from "@env.mjs"
+import * as dotenv from "dotenv"
+dotenv.config()
 
 export const freePlan: SubscriptionPlan = {
   name: "Free",
@@ -11,5 +13,5 @@ export const freePlan: SubscriptionPlan = {
 export const proPlan: SubscriptionPlan = {
   name: "PRO",
   description: "The PRO plan has unlimited films.",
-  stripePriceId: env.STRIPE_PRO_MONTHLY_PLAN_ID || "",
+  stripePriceId: process.env.STRIPE_PRO_MONTHLY_PLAN_ID || "",
 }

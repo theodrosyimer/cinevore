@@ -14,6 +14,7 @@ export const docsConfig: DocsConfig = {
   sidebarNav: [
     {
       title: "Getting Started",
+      href: '',
       items: [
         {
           title: "Introduction",
@@ -24,6 +25,7 @@ export const docsConfig: DocsConfig = {
     },
     {
       title: "Documentation",
+      href: '',
       items: [
         {
           title: "Introduction",
@@ -61,6 +63,7 @@ export const docsConfig: DocsConfig = {
     },
     {
       title: "Blog",
+      href: '',
       items: [
         {
           title: "Introduction",
@@ -84,6 +87,7 @@ export const docsConfig: DocsConfig = {
     },
     {
       title: "Dashboard",
+      href: '',
       items: [
         {
           title: "Introduction",
@@ -125,6 +129,7 @@ export const docsConfig: DocsConfig = {
     },
     {
       title: "Marketing Site",
+      href: '',
       items: [
         {
           title: "Introduction",

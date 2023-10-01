@@ -2,15 +2,18 @@
 import { comment as commentSchema, commentRelations as commentRelationsSchema } from "./comments"
 import { follower as followerSchema, followerRelations as followerRelationsSchema } from "./followers"
 import { like as likeSchema, likeRelations as likeRelationsSchema } from "./likes"
-import { list as listSchema, listRelations as listRelationsSchema } from "./lists"
-import { movieInfosToUser as movieInfosToUserSchema, movieInfosToUserRelations as movieInfosToUserRelationsSchema } from "./movie-infos-to-users"
 import {
-  movieList as movieListSchema,
-  movieListRelations as movieListRelationsSchema,
+  list as listSchema,
+  listRelations as listRelationsSchema,
   commentToMovieList as commentToMovieListSchema,
   commentToMovieListRelations as commentToMovieListRelationsSchema,
   likeToMovieList as likeToMovieListSchema,
   likeToMovieListRelations as likeToMovieListRelationsSchema
+} from "./lists"
+import { movieInfosToUser as movieInfosToUserSchema, movieInfosToUserRelations as movieInfosToUserRelationsSchema } from "./movie-infos-to-users"
+import {
+  movieList as movieListSchema,
+  movieListRelations as movieListRelationsSchema
 } from "./movie-lists"
 import { commentToMovieReview as commentToMovieReviewSchema, commentToMovieReviewRelations as commentToMovieReviewRelationsSchema, likeToMovieReview as likeToMovieReviewSchema, likeToMovieReviewRelations as likeToMovieReviewRelationsSchema, movieReview as movieReviewSchema, movieReviewRelations as movieReviewRelationsSchema } from "./movie-reviews"
 import { movie as movieSchema, movieRelations as movieRelationsSchema } from "./movies"
