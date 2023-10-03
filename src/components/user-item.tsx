@@ -5,6 +5,7 @@ import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { UserOperations } from "@/components/user-operations"
 import { SelectUser, SelectMovieReview } from "@/types/db"
+import { EditDialog } from "@/components/settings-dialog-form"
 
 interface UserItemProps {
   user: Pick<SelectUser, "id" | "name" | "updatedAt" | "createdAt">
@@ -26,7 +27,9 @@ export function UserItem({ user }: UserItemProps) {
           </p>
         </div>
       </div>
-      <UserOperations user={{ id: user.id, name: user.name }} />
+      {/* <UserOperations user={{ id: user.id, name: user.name }}> */}
+      <EditDialog user={{ id: user.id, name: user.name }} />
+      {/* </UserOperations> */}
     </div>
   )
 }

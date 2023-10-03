@@ -142,11 +142,11 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Bio</FormLabel>
               <FormControl>
-                <Textarea
+                {/* <Textarea
                   placeholder="Tell us a little bit about yourself"
                   className="resize-none"
                   {...field}
-                />
+                /> */}
               </FormControl>
               <FormDescription>
                 You can <span>@mention</span> other users and organizations to

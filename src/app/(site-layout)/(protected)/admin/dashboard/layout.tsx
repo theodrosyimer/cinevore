@@ -31,7 +31,7 @@ export default async function AdminDashboardLayout({
     //       />
     //     </div>
     //   </header>
-    <div className="container flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0">
+    <div className="flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0">
       <aside className=" md:w-1/5">
         <DashboardNav items={adminDashboardConfig.sidebarNav} />
       </aside>

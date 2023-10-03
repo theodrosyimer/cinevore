@@ -34,7 +34,7 @@ export default async function DashboardPage() {
       </DashboardHeader>
       <div>
         {users?.length ? (
-          <div className="divide-y divide-border rounded-md border w-auto">
+          <div className="divide-y divide-border rounded-md border ">
             {users.map((user) => (
               <UserItem key={user.id} user={user} />
             ))}
