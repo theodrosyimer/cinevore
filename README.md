@@ -10,30 +10,28 @@ Formation Assofac DWWM 2022-2023
 **Install**
 
 ```sh
-git clone https://github.com/theodrosyimer/groupomania
+git clone https://github.com/theodrosyimer/cinevore
 ```
 
 **Start**
 
-To start the client and server:
+To start the app:
 
 ```sh
 npm start
 ```
 
-## Google Meet
-
-<https://meet.google.com/tpp-hirq-cqg>
-
 ## Technologies used
 
 - [TypeScript](https://www.typescriptlang.org/)
+- [[zod](](https://zod.dev/)
 - [Next.js](https://nextjs.org/)
 - [React](https://reactjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Node.js](https://nodejs.org/en/)
-- [Express](https://expressjs.com/)
 - [MySQL](https://www.mysql.com/)
+- [Drizzle ORM](https://orm.drizzle.team/docs)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [RadixUI](https://www.radix-ui.com/)
+- [shadcn.com/](https://ui.shadcn.com/)
 
 ### Dependencies
 
