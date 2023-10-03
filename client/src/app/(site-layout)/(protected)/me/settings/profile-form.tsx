@@ -26,9 +26,10 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
+import { selectSettingsUserSchema } from "@/lib/validations/user"
 
 const profileFormSchema = z.object({
-  username: z
+  name: z
     .string()
     .min(2, {
       message: "Username must be at least 2 characters.",
@@ -51,11 +52,11 @@ const profileFormSchema = z.object({
     .optional(),
 })
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+type ProfileFormValues = z.infer<typeof selectSettingsUserSchema>
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
-  username: "theo",
+  name: "theo",
   email: "theo@example.com",
   bio: "I own a computer.",
   urls: [
@@ -66,7 +67,7 @@ const defaultValues: Partial<ProfileFormValues> = {
 
 export function ProfileForm() {
   const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
+    resolver: zodResolver(selectSettingsUserSchema),
     defaultValues,
     mode: "onChange",
   })
@@ -93,7 +94,7 @@ export function ProfileForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>

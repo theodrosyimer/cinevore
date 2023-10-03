@@ -2,6 +2,7 @@ import type { AdapterAccount } from "@auth/core/adapters"
 import { relations, sql } from "drizzle-orm"
 import {
   char, int,
+  json,
   mysqlEnum,
   mysqlTable,
   primaryKey,
@@ -32,6 +33,7 @@ export const user = mysqlTable("user", {
   password: char("password", { length: 60 }),
   image: varchar("image", { length: 255 }),
   bio: text("bio"),
+  urls: json("urls"),
   stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }),
   stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
   stripePriceId: varchar("stripePriceId", { length: 255 }),

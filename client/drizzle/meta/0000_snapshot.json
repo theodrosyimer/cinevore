@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "ec244552-39e3-4d7b-a1d6-8aa4bf2f574c",
+  "id": "6945f457-cb69-4e28-988d-341f8727f173",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -1175,6 +1175,13 @@
         "bio": {
           "name": "bio",
           "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "urls": {
+          "name": "urls",
+          "type": "json",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false

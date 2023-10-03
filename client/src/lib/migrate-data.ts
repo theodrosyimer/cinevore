@@ -245,6 +245,7 @@ export const defaultUsers = [{
   emailVerified: null,
   password: adminPassword,
   role: 'admin',
+  urls: ['https://www.linkedin.com/in/theodros-yimer/', 'https://instagram.com/theodros-yimer',]
 }, {
   id: "f6ebd336-966a-413a-b9ca-f876af96ed33",
   lastname: 'Yimer',

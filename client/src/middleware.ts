@@ -9,7 +9,6 @@ export default withAuth(
     const isAdminSegment = req.nextUrl.pathname.startsWith("/admin")
     // const isMePage = req.nextUrl.pathname.startsWith("/me")
     const isAuthPage = req.nextUrl.pathname.startsWith("/login") || req.nextUrl.pathname.startsWith("/register")
-    // console.log(req.nextUrl)
 
     if (isAuthPage) {
       console.log('isAuth', isAuth)
@@ -23,13 +22,9 @@ export default withAuth(
       return NextResponse.redirect(new URL("/", req.url))
     }
 
-    // if (isMePage && (token?.role === "admin" || token?.role === "superadmin")) {
-    //   return NextResponse.redirect(new URL("/admin/dashboard", req.url))
-    // }
     if (!isAuth) {
       console.log('NO TOKEN', isAuth)
       let from = req.nextUrl.pathname
-      // console.log('FROM:', from)
 
       if (req.nextUrl.search) {
         from += req.nextUrl.search

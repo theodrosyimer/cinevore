@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { toast } from "@/components/ui/use-toast"
+import { useTheme } from "next-themes"
 
 const appearanceFormSchema = z.object({
   theme: z.enum(["light", "dark"], {
@@ -30,19 +31,27 @@ const appearanceFormSchema = z.object({
 })
 
 type AppearanceFormValues = z.infer<typeof appearanceFormSchema>
-
 // This can come from your database or API.
+
 const defaultValues: Partial<AppearanceFormValues> = {
-  theme: "light",
+  theme: "dark",
+  font: "inter",
 }
 
 export function AppearanceForm() {
+  const { setTheme, resolvedTheme } = useTheme()
+  const defaultValues: Partial<AppearanceFormValues> = {
+    theme: resolvedTheme as AppearanceFormValues["theme"] ?? "dark" as AppearanceFormValues["theme"],
+  }
+
   const form = useForm<AppearanceFormValues>({
     resolver: zodResolver(appearanceFormSchema),
     defaultValues,
   })
 
   function onSubmit(data: AppearanceFormValues) {
+    console.log('DATA:', data)
+    setTheme(data.theme)
     toast({
       title: "You submitted the following values:",
       description: (
@@ -98,6 +107,7 @@ export function AppearanceForm() {
               <RadioGroup
                 onValueChange={field.onChange}
                 defaultValue={field.value}
+                // onClick={() => setTheme(field.value)}
                 className="grid max-w-md grid-cols-2 gap-8 pt-2"
               >
                 <FormItem>
