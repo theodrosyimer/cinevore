@@ -12,6 +12,7 @@ export default withAuth(
     // console.log(req.nextUrl)
 
     if (isAuthPage) {
+      console.log('isAuth', isAuth)
       if (isAuth) {
         return NextResponse.redirect(new URL("/me", req.url))
       }
@@ -25,8 +26,8 @@ export default withAuth(
     // if (isMePage && (token?.role === "admin" || token?.role === "superadmin")) {
     //   return NextResponse.redirect(new URL("/admin/dashboard", req.url))
     // }
-
     if (!isAuth) {
+      console.log('isAuth', isAuth)
       let from = req.nextUrl.pathname
       // console.log('FROM:', from)
 

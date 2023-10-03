@@ -1,4 +1,4 @@
-import { getLists } from "@/app/(site-layout)/(public)/_lists/getLists"
+import { getLists } from "@/app/(site-layout)/(public)/lists/getLists"
 
 export const metadata = {
   title: "Lists Page",

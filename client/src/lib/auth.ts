@@ -1,16 +1,15 @@
-import { NextAuthOptions } from "next-auth"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
-import GitHubProvider from "next-auth/providers/github"
+import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GitHubProvider from "next-auth/providers/github"
 // import EmailProvider from "next-auth/providers/email"
 // import { Client } from "postmark"
-
 // import { env } from "@env.mjs"
-import * as dotenv from "dotenv"
-dotenv.config()
+import { hashPassword, validateUserPassword } from "@/lib/bcrypt"
 import { db } from "@/lib/db"
 import UsersModel from "@/models/users"
-import { hashPassword, validateUserPassword } from "@/lib/bcrypt"
+import * as dotenv from "dotenv"
+dotenv.config()
 
 // const postmarkClient = new Client(process.env.POSTMARK_API_TOKEN)
 
@@ -21,7 +20,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/login",
-    newUser: "/register",
+    newUser: "/pricing",
   },
   providers: [
     GitHubProvider({
@@ -73,14 +72,14 @@ export const authOptions: NextAuthOptions = {
           const results = await UsersModel.getByEmail(credentials.email)
 
           dbUser = results[0]
-        }
 
-        if (dbUser?.password) {
-          if (await validateUserPassword(credentials.password, dbUser.password)) {
-            return dbUser
-          }
-          else {
-            return null
+          if (dbUser?.password) {
+            if (await validateUserPassword(credentials.password, dbUser.password)) {
+              return dbUser
+            }
+            else {
+              return null
+            }
           }
         }
 
@@ -143,7 +142,7 @@ export const authOptions: NextAuthOptions = {
         session.user.image = token.image
         session.user.role = token.role
       }
-      // console.log('session.user', session.user)
+      console.log('session.user', session.user)
 
       return session
     },

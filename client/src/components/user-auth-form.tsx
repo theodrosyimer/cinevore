@@ -38,11 +38,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       email: data.email.toLowerCase(),
       password: data.password,
       name: data.name,
-      redirect: true,
+      redirect: false,
       callbackUrl: searchParams?.get("from") || "/me",
     })
 
     setIsLoading(false)
+
+    console.log("signInResult", signInResult)
+    console.log("searchParams", searchParams.get('from'))
 
     if (!signInResult?.ok) {
       return toast({
