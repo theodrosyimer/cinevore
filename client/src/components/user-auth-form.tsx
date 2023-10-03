@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useSearchParams } from "next/navigation"
+import { redirect, useRouter, useSearchParams } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn } from "next-auth/react"
 import { useForm } from "react-hook-form"
@@ -30,6 +30,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
   const searchParams = useSearchParams()
+  const router = useRouter()
 
   async function onSubmit(data: FormData) {
     setIsLoading(true)
@@ -44,21 +45,20 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     setIsLoading(false)
 
-    console.log("signInResult", signInResult)
-    console.log("searchParams", searchParams.get('from'))
-
     if (!signInResult?.ok) {
-      return toast({
+      toast({
         title: "Something went wrong.",
         description: "Your sign in request failed. Please try again.",
         variant: "destructive",
       })
+      return router.push("/login")
     }
 
-    return toast({
+    toast({
       title: "Account created.",
       description: "Your account has been created.",
     })
+    return router.push(signInResult?.url ?? "/me")
   }
 
   return (

@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/login",
-    newUser: "/pricing",
+    newUser: "/register",
   },
   providers: [
     GitHubProvider({
@@ -59,8 +59,8 @@ export const authOptions: NextAuthOptions = {
           const hashedPassword = await hashPassword(credentials.password)
 
           if (!hashedPassword) {
-            throw new Error("Failed to hash password")
-            // return null
+            // throw new Error("Failed to hash password")
+            return null
           }
 
           await UsersModel.create({
@@ -72,14 +72,17 @@ export const authOptions: NextAuthOptions = {
           const results = await UsersModel.getByEmail(credentials.email)
 
           dbUser = results[0]
-
-          if (dbUser?.password) {
-            if (await validateUserPassword(credentials.password, dbUser.password)) {
-              return dbUser
-            }
-            else {
-              return null
-            }
+        }
+        // console.log('dbUser', dbUser)
+        if (dbUser?.password) {
+          // console.log('credentials.password', (await validateUserPassword(credentials.password, dbUser.password)))
+          if (await validateUserPassword(credentials.password, dbUser.password)) {
+            // console.log('dbUser', dbUser)
+            return dbUser
+          }
+          else {
+            // console.log('not valid password')
+            return null
           }
         }
 
@@ -149,6 +152,8 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
 
       const [dbUser] = await UsersModel.getByEmail(token.email as string)
+
+      // console.log('dbUser', dbUser)
 
       if (!dbUser) {
         if (user) {

@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 
 export default withAuth(
   async function middleware(req) {
-    const token = await getToken({ req })
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
     const isAuth = !!token
     const isAdminSegment = req.nextUrl.pathname.startsWith("/admin")
     // const isMePage = req.nextUrl.pathname.startsWith("/me")
@@ -27,7 +27,7 @@ export default withAuth(
     //   return NextResponse.redirect(new URL("/admin/dashboard", req.url))
     // }
     if (!isAuth) {
-      console.log('isAuth', isAuth)
+      console.log('NO TOKEN', isAuth)
       let from = req.nextUrl.pathname
       // console.log('FROM:', from)
 
