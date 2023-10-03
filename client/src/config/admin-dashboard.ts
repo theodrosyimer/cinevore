@@ -33,12 +33,12 @@ export const adminDashboardConfig: AdminDashboardConfig = {
       icon: "post",
       items: [],
     },
-    {
-      title: "Pricing",
-      href: "/admin/dashboard/pricing",
-      icon: "billing",
-      items: [],
-    },
+    // {
+    //   title: "Pricing",
+    //   href: "/admin/dashboard/pricing",
+    //   icon: "billing",
+    //   items: [],
+    // },
     {
       title: "Settings",
       href: "/admin/dashboard/settings",
