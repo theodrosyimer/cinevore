@@ -8,9 +8,17 @@ type UserId = string
 
 type Role = ValuesOf<Pick<NewUser, 'role'>>
 
-interface UserAuth extends DefaultUser {
+// interface UserAuth extends DefaultUser {
+//   role?: Role
+// }
+
+interface DefaultUserAuth extends DefaultUser {
   role?: Role
 }
+
+type User = Pick<NewUser, 'id' | 'name' | 'email' | 'image'>
+
+type UserAuth = DefaultUserAuth & User
 
 declare module "next-auth/jwt" {
   interface JWT extends UserAuth {

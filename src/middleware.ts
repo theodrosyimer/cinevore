@@ -11,7 +11,7 @@ export default withAuth(
     const isAuthPage = req.nextUrl.pathname.startsWith("/login") || req.nextUrl.pathname.startsWith("/register")
 
     if (isAuthPage) {
-      console.log('isAuth', isAuth)
+      // console.log('isAuth', isAuth)
       if (isAuth) {
         return NextResponse.redirect(new URL("/me", req.url))
       }
@@ -23,7 +23,7 @@ export default withAuth(
     }
 
     if (!isAuth) {
-      console.log('NO TOKEN', isAuth)
+      // console.log('NO TOKEN', isAuth)
       let from = req.nextUrl.pathname
 
       if (req.nextUrl.search) {

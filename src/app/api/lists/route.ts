@@ -16,7 +16,7 @@ export async function GET() {
     //   return new Response("Unauthorized", { status: 403 })
     // }
 
-    // console.log("currentUser:", user)
+    console.log("currentUser:", currentUser)
 
     if (!currentUser) {
       return new Response("Unauthorized", { status: 403 })
