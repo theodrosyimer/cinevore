@@ -145,7 +145,7 @@ export const authOptions: NextAuthOptions = {
         session.user.image = token.image
         session.user.role = token.role
       }
-      console.log('session.user', session.user)
+      // console.log('session.user', session.user)
 
       return session
     },
@@ -153,7 +153,7 @@ export const authOptions: NextAuthOptions = {
 
       const [dbUser] = await UsersModel.getByEmail(token.email as string)
 
-      // console.log('dbUser', dbUser)
+      console.log('dbUser', dbUser)
 
       if (!dbUser) {
         if (user) {

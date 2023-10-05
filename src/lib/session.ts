@@ -10,6 +10,7 @@ export async function getCurrentUserOLD() {
 
 export async function getCurrentUser() {
   const session = await getServerSession(authOptions)
+  console.log('session.user', session?.user)
 
   return {
     user: session?.user,

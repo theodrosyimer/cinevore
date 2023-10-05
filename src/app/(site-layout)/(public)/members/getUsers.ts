@@ -1,15 +1,28 @@
 import * as dotenv from "dotenv"
 dotenv.config()
 
-import { SelectUser } from "@/types/db"
+import { userGETSchema } from "@/lib/validations/user"
+import { z } from "zod"
+
+const usersSchemas = z.array(userGETSchema)
 
 export async function getUsers() {
   const data = await fetch(`${process.env.SERVER_URL}/api/users`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
-    }
+    },
+    // cache: "no-cache",
   })
-  const json = await data.json() as SelectUser[]
-  return json
+  const json = await data.json() as unknown
+  console.log("json", json)
+  const validatedUsers = usersSchemas.safeParse(json)
+
+  if (!validatedUsers.success) {
+    console.error(validatedUsers.error.message)
+    return []
+  }
+
+  console.log("validatedUsers", validatedUsers)
+  return validatedUsers.data
 }

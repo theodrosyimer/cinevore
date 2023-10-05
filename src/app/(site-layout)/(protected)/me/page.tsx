@@ -1,3 +1,4 @@
+import { UserInfos } from "@/components/user-infos"
 import { UserNavigation } from "@/components/user-navigation"
 import { userNavigationConfig } from '@/config/user-navigation'
 import { getCurrentUser } from "@/lib/session"
@@ -19,6 +20,8 @@ export default async function MePage({ params }: { params: { username: string } 
       {/* <h1 className="text-4xl font-bold text-center">Welcome back <br />
         {user.name ? user.name[0]?.toUpperCase() + user.name.slice(1) : user.email}
       </h1> */}
+      {user ? <UserInfos /* user={user} */ /> : null}
+
       <UserNavigation items={userNavigationConfig.mainNav} />
     </>
   )

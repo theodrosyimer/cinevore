@@ -1,3 +1,5 @@
+'use client'
+
 import { getPopular } from "@/lib/tmdb/src/tmdb"
 import { useQuery } from "@tanstack/react-query"
 

@@ -14,10 +14,12 @@ export function FilmCard({ film }: { film: Movie }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">{JSON.stringify(film.title)}</CardTitle>
+        <CardTitle className="text-lg">{JSON.stringify(film.title)}
+        </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
-      <CardContent className="text-sm">{JSON.stringify(film.overview)}</CardContent>
+      <CardContent className="text-sm">{JSON.stringify(film.overview)}
+      </CardContent>
       <CardFooter></CardFooter>
     </Card>
   )

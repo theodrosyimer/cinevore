@@ -6,7 +6,7 @@ import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
 import { getCurrentUser } from "@/lib/session"
 import { formatSimpleErrorMessage } from "@/lib/utils"
-import { userPostSchema } from "@/lib/validations/user"
+import { userPOSTSchema } from "@/lib/validations/user"
 
 export async function GET() {
   try {
@@ -21,68 +21,61 @@ export async function GET() {
       columns: {
         password: false
       },
-      with: {
-        likes: true,
-        comments: true,
-        ratings: true,
-        movieReviews: {
-          with: {
-            movie: {
-              columns: {
-                tmdbId: false,
-                imdbId: false,
-              },
-            },
-            // commentsToMovieReview: true,
-          },
-        },
-        watchlist: {
-          with: {
-            watchlistToMovies: true
-          },
-        },
-        lists: {
-          with: {
-            movieLists: true,
-          },
-          // with: {
-          //   movieLists: {
-          //     with: {
-          //       commentsToMovieList: true,
-          //     }
-          //   }
-          // },
-        },
-        followers: {
-          columns: {
-            followedDate: true,
-          },
-          with: {
-            follower: {
-              columns: {
-                id: true,
-                name: true,
-              },
-            },
-          },
-        },
-        movieInfosToUser: true,
-      },
+      // with: {
+      //   likes: true,
+      //   comments: true,
+      //   ratings: true,
+      //   movieReviews: {
+      //     with: {
+      //       movie: {
+      //         columns: {
+      //           tmdbId: false,
+      //           imdbId: false,
+      //         },
+      //       },
+      //       // commentsToMovieReview: true,
+      //     },
+      //   },
+      //   watchlist: {
+      //     with: {
+      //       watchlistToMovies: true
+      //     },
+      //   },
+      //   lists: {
+      //     with: {
+      //       movieLists: true,
+      //     },
+      //     // with: {
+      //     //   movieLists: {
+      //     //     with: {
+      //     //       commentsToMovieList: true,
+      //     //     }
+      //     //   }
+      //     // },
+      //   },
+      //   followers: {
+      //     columns: {
+      //       followedDate: true,
+      //     },
+      //     with: {
+      //       follower: {
+      //         columns: {
+      //           id: true,
+      //           name: true,
+      //         },
+      //       },
+      //     },
+      //   },
+      //   movieInfosToUser: true,
+      // },
     },
     )
 
-    const movies = await db.query.movie.findMany({
-      with: {
-        movieInfosToUsers: true,
-      }
-    })
-    console.log(users?.[0])
-
     if (!users /* || !users[0] */) {
-      return new Response('User with list not found', { status: 404 })
+      return new Response('Users  not found', { status: 404 })
     }
 
-    return new Response(JSON.stringify({ users, movies }), { status: 200 })
+    return new Response(JSON.stringify(users), { status: 200 })
   } catch (error) {
     if (error instanceof Error) {
       console.log(error)
@@ -102,7 +95,7 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json()
-    const body = userPostSchema.parse(json)
+    const body = userPOSTSchema.parse(json)
     let hashedPassword = null
 
     if (body?.password) {

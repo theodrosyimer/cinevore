@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
-import { selectSettingsUserSchema } from "@/lib/validations/user"
+import { userSettingsFormSchema } from "@/lib/validations/user"
 
 const profileFormSchema = z.object({
   name: z
@@ -52,7 +52,7 @@ const profileFormSchema = z.object({
     .optional(),
 })
 
-type ProfileFormValues = z.infer<typeof selectSettingsUserSchema>
+type ProfileFormValues = z.infer<typeof userSettingsFormSchema>
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
@@ -67,7 +67,7 @@ const defaultValues: Partial<ProfileFormValues> = {
 
 export function ProfileForm() {
   const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(selectSettingsUserSchema),
+    resolver: zodResolver(userSettingsFormSchema),
     defaultValues,
     mode: "onChange",
   })

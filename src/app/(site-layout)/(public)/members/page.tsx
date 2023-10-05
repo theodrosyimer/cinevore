@@ -10,8 +10,15 @@ export default async function UsersPage({ params }: { params: { username: string
   return (
     <>
       <h1 className="text-4xl font-bold text-center">Members</h1>
-      <pre>
-        {users ? JSON.stringify(users, null, 2) : null}
+      <pre className="divide-y-4 w-max">
+        {users.map((user) => {
+          return (
+            <div key={user.id}>
+              <h2>{user.name}</h2>
+              <p>{user.email}</p>
+            </div>
+          )
+        })}
       </pre>
     </>)
 

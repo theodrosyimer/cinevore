@@ -6,7 +6,7 @@ export const userNameSchema = z.object({
   name: z.string().min(3).max(32),
 })
 
-const refineOptions = {
+const insertRefineOptions = {
   name: z.string().min(2).max(50),
   email: z.string().email(),
   password: z.string().min(8).max(25).regex(
@@ -17,14 +17,23 @@ const refineOptions = {
   )
 }
 
+const selectRefineOptions = {
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+}
 // For admin actions
-export const insertUserSchema = createInsertSchema(user, refineOptions)
+export const insertUserSchema = createInsertSchema(user, insertRefineOptions)
 
-export const userPatchSchema = createInsertSchema(user, refineOptions)
+export const userPatchSchema = createInsertSchema(user, insertRefineOptions)
 
-export const userPostSchema = insertUserSchema.pick({ name: true, email: true, password: true })
+export const userPOSTSchema = insertUserSchema.pick({ name: true, email: true, password: true })
 
-export const selectSettingsUserSchema = createSelectSchema(user, {
+export const selectUserSchema = createSelectSchema(user, selectRefineOptions)
+export const userGETSchema = selectUserSchema.omit({
+  password: true,
+})
+
+export const userSettingsFormSchema = createSelectSchema(user, {
   name: z
     .string()
     .min(2, {
@@ -38,7 +47,7 @@ export const selectSettingsUserSchema = createSelectSchema(user, {
       required_error: "Please select an email to display.",
     })
     .email(),
-  bio: z.string().max(160).min(4).nonempty(),
+  bio: z.string().max(160).min(4),
   urls: z
     .array(
       z.object({
