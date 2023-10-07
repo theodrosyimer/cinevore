@@ -70,20 +70,90 @@ function example<TKey extends TMDBImageSizesCategoryKey, TValue extends TMDBImag
 
 export const searchMovieSchema = z.object({
   adult: z.boolean(),
-  backdrop_path: z.string(),
-  genre_ids: z.array(z.number()),
+  backdrop_path: z.union([z.string().optional(), z.null()]),
+  genre_ids: z.array(z.number()).optional(),
   id: z.number(),
-  original_language: z.string(),
-  original_title: z.string(),
-  overview: z.string(),
+  original_language: z.string().optional(),
+  original_title: z.string().optional(),
+  overview: z.string().optional(),
   popularity: z.number(),
-  poster_path: z.string(),
+  poster_path: z.union([z.string().optional(), z.null()]),
   release_date: z.string(),
-  title: z.string(),
+  title: z.string().optional(),
   video: z.boolean(),
-  vote_average: z.number(),
-  vote_count: z.number()
+  vote_average: z.number().optional(),
+  vote_count: z.number().optional(),
 })
+
+export const searchMovieMultiSchema = z.object({
+  adult: z.boolean(),
+  backdrop_path: z.union([z.string().optional(), z.null()]),
+  id: z.number(),
+  title: z.string().optional(),
+  original_language: z.string().optional(),
+  original_title: z.string().optional(),
+  overview: z.string().optional(),
+  poster_path: z.union([z.string().optional(), z.null()]),
+  media_type: z.literal('movie'),
+  genre_ids: z.array(z.number()).optional(),
+  popularity: z.number(),
+  release_date: z.string().optional(),
+  video: z.boolean().optional(),
+  vote_average: z.number().optional(),
+  vote_count: z.number().optional(),
+})
+
+export const searchTvShowMultiSchema = z.object({
+  adult: z.boolean(),
+  backdrop_path: z.union([z.string().optional(), z.null()]),
+  id: z.number(),
+  title: z.string().optional(),
+  original_language: z.string().optional(),
+  original_title: z.string().optional(),
+  overview: z.string().optional(),
+  poster_path: z.union([z.string().optional(), z.null()]),
+  media_type: z.literal('tv'),
+  genre_ids: z.array(z.number()).optional(),
+  popularity: z.number(),
+  release_date: z.string().optional(),
+  video: z.boolean().optional(),
+  vote_average: z.number().optional(),
+  vote_count: z.number().optional(),
+})
+
+export const searchPersonMultiSchema = z.object({
+  adult: z.boolean(),
+  id: z.number(),
+  name: z.string().optional(),
+  original_name: z.string().optional(),
+  media_type: z.literal('person'),
+  popularity: z.number(),
+  gender: z.number().optional(),
+  known_for_department: z.string().optional(),
+  profile_path: z.union([z.string().optional(), z.null()]),
+  known_for: z.array(searchMovieMultiSchema).optional()
+})
+
+export const searchMultiSchema = z.union([
+  searchMovieMultiSchema,
+  searchPersonMultiSchema,
+  searchTvShowMultiSchema,
+])
+
+export const tMDBSearchMultiSchema = z.object({
+  page: z.number(),
+  results: z.array(searchMultiSchema),
+  total_pages: z.number(),
+  total_results: z.number()
+})
+
+
+export type SearchMovie = z.infer<typeof searchMovieSchema>
+export type TMDBSearchMulti = z.infer<typeof tMDBSearchMultiSchema>
+export type TMDBSearchMultiResult = TMDBSearchMulti['results']
+export type SearchMovieMulti = z.infer<typeof searchMovieMultiSchema>
+export type SearchTvShowMulti = z.infer<typeof searchTvShowMultiSchema>
+export type SearchPersonMulti = z.infer<typeof searchPersonMultiSchema>
 
 export const tMDBMovieResponseSchema = z.object({
   page: z.number(),
@@ -114,7 +184,6 @@ export type CountryListForMovieCertification = KeysOf<MovieCertifications>
 export type MovieCertification<T extends CountryListForMovieCertification> =
   MovieCertifications[T]
 
-export type Movie = z.infer<typeof searchMovieSchema>
 
 export type MovieDetails = z.infer<typeof movieDetailsSchema>
 

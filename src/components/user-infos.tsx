@@ -34,7 +34,7 @@ interface UserInfos {
 
 export function UserInfos(/* { user }: UserInfos */) {
   return (
-    <Card className="p-4 xs:w-auto w-60 border-0">
+    <Card className="py-4 xs:w-auto w-60 border-0">
       {/* <CardHeader>
         <CardTitle>Team Members</CardTitle>
         <CardDescription>

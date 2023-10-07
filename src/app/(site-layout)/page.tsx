@@ -19,12 +19,12 @@ export default function IndexPage() {
 
   return (
     <>
-      <Image
+      {/* <Image
         src='https://image.tmdb.org/t/p/w500/nuO8o9ltxhI7AZQxePavEZ4TyHa.jpg'
         alt='training day'
         width={500}
         height={750}
-      />
+      /> */}
       {/* <HeroImage /> */}
     </>
   )

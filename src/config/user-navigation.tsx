@@ -11,8 +11,8 @@ export const userNavigationConfig: SiteLayoutConfig = {
       href: "/me/films",
     },
     {
-      title: "Diary",
-      href: "/me/diary",
+      title: "Lists",
+      href: "/me/lists",
     },
     {
       title: "Reviews",

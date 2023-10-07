@@ -52,9 +52,6 @@ export const authOptions: NextAuthOptions = {
 
         let [dbUser] = await UsersModel.getByEmail(credentials.email)
 
-        // console.log("dbUser", dbUser)
-        // console.log(await validateUserPassword(credentials.password, dbUser?.password))
-
         if (!dbUser) {
           const hashedPassword = await hashPassword(credentials.password)
 
@@ -73,19 +70,15 @@ export const authOptions: NextAuthOptions = {
 
           dbUser = results[0]
         }
-        // console.log('dbUser', dbUser)
+
         if (dbUser?.password) {
-          // console.log('credentials.password', (await validateUserPassword(credentials.password, dbUser.password)))
           if (await validateUserPassword(credentials.password, dbUser.password)) {
-            // console.log('dbUser', dbUser)
             return dbUser
           }
           else {
-            // console.log('not valid password')
             return null
           }
         }
-
         return null
       },
     }),
@@ -134,9 +127,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ token, session }) {
-      // console.log('token.role', token.role)
-
-      // console.log('session.user', session.user)
 
       if (token && session.user) {
         session.user.id = token.id
@@ -145,7 +135,6 @@ export const authOptions: NextAuthOptions = {
         session.user.image = token.image
         session.user.role = token.role
       }
-      // console.log('session.user', session.user)
 
       return session
     },
@@ -153,11 +142,9 @@ export const authOptions: NextAuthOptions = {
 
       const [dbUser] = await UsersModel.getByEmail(token.email as string)
 
-      console.log('dbUser', dbUser)
-
       if (!dbUser) {
         if (user) {
-          // console.log('USER:', user)
+
           token.id = user?.id
           token.name = user?.name
           token.email = user?.email
@@ -166,14 +153,6 @@ export const authOptions: NextAuthOptions = {
         }
         return token
       }
-      // console.log('TOKEN:', {
-      //   id: dbUser.id,
-      //   name: dbUser.name,
-      //   email: dbUser.email,
-      //   image: dbUser.image,
-      //   role: dbUser.role,
-      // })
-
       return {
         id: dbUser.id,
         name: dbUser.name,
@@ -181,7 +160,6 @@ export const authOptions: NextAuthOptions = {
         image: dbUser.image,
         role: dbUser.role,
       }
-
     },
   },
 }

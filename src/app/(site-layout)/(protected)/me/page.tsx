@@ -1,7 +1,10 @@
+import { CardSkeleton } from "@/components/card-skeleton"
+import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { UserInfos } from "@/components/user-infos"
 import { UserNavigation } from "@/components/user-navigation"
 import { userNavigationConfig } from '@/config/user-navigation'
 import { getCurrentUser } from "@/lib/session"
+import { Divide } from "lucide-react"
 
 export const metadata = {
   title: "Profile Page",
@@ -18,11 +21,20 @@ export default async function MePage({ params }: { params: { username: string } 
   return (
     <>
       {/* <h1 className="text-4xl font-bold text-center">Welcome back <br />
-        {user.name ? user.name[0]?.toUpperCase() + user.name.slice(1) : user.email}
-      </h1> */}
-      {user ? <UserInfos /* user={user} */ /> : null}
-
-      <UserNavigation items={userNavigationConfig.mainNav} />
+          {user.name ? user.name[0]?.toUpperCase() + user.name.slice(1) : user.email}
+        </h1> */}
+      <div className="grid gap-4">
+        <h2>Favorite Films</h2>
+        <div className="divide-y divide-border rounded-md border w-80">
+          <CardSkeleton />
+        </div>
+      </div>
+      <div className="grid gap-4">
+        <h2>Recent Reviews</h2>
+        <div className="divide-y divide-border rounded-md border w-80">
+          <CardSkeleton />
+        </div>
+      </div>
     </>
   )
 }

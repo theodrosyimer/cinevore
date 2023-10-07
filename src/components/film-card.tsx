@@ -1,5 +1,4 @@
-'use client'
-
+import { MovieMenubar } from "@/components/film-menubar"
 import {
   Card,
   CardContent,
@@ -8,19 +7,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Movie } from "@/lib/tmdb/types/tmdb-api"
+import { SearchMovie } from "@/lib/tmdb/types/tmdb-api"
 
-export function FilmCard({ film }: { film: Movie }) {
+export function FilmCard({ film }: { film: SearchMovie }) {
   return (
-    <Card>
+    <Card className="grid">
       <CardHeader>
         <CardTitle className="text-lg">{JSON.stringify(film.title)}
         </CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
-      <CardContent className="text-sm">{JSON.stringify(film.overview)}
+      <CardContent className="text-sm">{JSON.stringify(film.overview?.slice(0, 100))}
       </CardContent>
-      <CardFooter></CardFooter>
+      <CardFooter>
+      </CardFooter>
+      <MovieMenubar className="absolute bottom-0" />
     </Card>
   )
 }

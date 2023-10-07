@@ -4,11 +4,11 @@ import { getCurrentUser } from "@/lib/session"
 import { redirect } from "next/navigation"
 
 export const metadata = {
-  title: "Films Page",
-  description: "All your films in one place.",
+  title: "Diary Page",
+  description: "Your diary of films.",
 }
 
-export default async function UserFilmsPage({ params }: {
+export default async function DiaryPage({ params }: {
   params: {
     username: string,
     id: number
@@ -17,13 +17,9 @@ export default async function UserFilmsPage({ params }: {
 
   // const { user, isAdmin } = await getCurrentUser()
 
-  // if (!user) {
-  //   redirect(authOptions?.pages?.signIn || "/login")
-  // }
-
   return (
     <>
-      <h1 className="text-4xl font-bold text-center">Your movies {params.username}</h1>
+      <h1 className="text-4xl font-bold text-center">Reviews</h1>
 
       <section>
         <FilmCardList />

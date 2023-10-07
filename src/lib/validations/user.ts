@@ -9,18 +9,14 @@ export const userNameSchema = z.object({
 const insertRefineOptions = {
   name: z.string().min(2).max(50),
   email: z.string().email(),
-  password: z.string().min(8).max(25).regex(
+  password: z.string().min(12).max(25).regex(
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g,
     {
-      message: 'Password must contain at least 8 characters, one uppercase, one lowercase, one number and one of these special characters: #?!@$ %^&*-',
+      message: 'Password must contain at least 12 characters, one uppercase, one lowercase, one number and one of these special characters: #?!@$ %^&*-',
     }
-  )
+  ),
 }
 
-const selectRefineOptions = {
-  createdAt: z.coerce.date(),
-  updatedAt: z.coerce.date(),
-}
 // For admin actions
 export const insertUserSchema = createInsertSchema(user, insertRefineOptions)
 
@@ -28,7 +24,13 @@ export const userPatchSchema = createInsertSchema(user, insertRefineOptions)
 
 export const userPOSTSchema = insertUserSchema.pick({ name: true, email: true, password: true })
 
+const selectRefineOptions = {
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
+}
+
 export const selectUserSchema = createSelectSchema(user, selectRefineOptions)
+
 export const userGETSchema = selectUserSchema.omit({
   password: true,
 })
@@ -61,6 +63,7 @@ export const userSettingsFormSchema = createSelectSchema(user, {
 //
 // export const userPostWithoutRoleSchema = insertUserSchema.omit({ role: true })
 
+// throws an error
 // const userWithoutRole = userPostWithoutRoleSchema.parse({
 //   name: 'John Doe',
 //   email: 'johndoe@test.com',

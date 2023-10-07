@@ -1,24 +1,71 @@
 "use client"
 
-import * as React from "react"
 import Fuse from 'fuse.js'
 
-import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
+import { searchMulti } from "@/lib/tmdb/src/tmdb"
+import { cn } from "@/lib/utils"
+import { useRouter, useSearchParams } from "next/navigation"
+import { HTMLAttributes, SyntheticEvent, useEffect, useRef, useState } from 'react'
+import { useDebounce } from "use-debounce"
+import { SearchMovieMulti, SearchPersonMulti, SearchTvShowMulti, TMDBSearchMulti, TMDBSearchMultiResult } from '@/lib/tmdb/types/tmdb-api'
 
 export type FuseResult<T> = Fuse.FuseResult<T>
 
 const names = ['Tim', 'Joe', 'Bel', 'Lee']
 
-interface SearchProps extends React.HTMLAttributes<HTMLFormElement> {}
+interface SearchProps extends HTMLAttributes<HTMLFormElement> {}
 
 export function Search({ className, ...props }: SearchProps) {
-  const [results, setResults] = React.useState<FuseResult<string>[]>([])
+  const [results, setResults] = useState<TMDBSearchMultiResult | null>(null)
+  const searchParams = useSearchParams()
+  const search = searchParams.get('search') || ''
+  const router = useRouter()
 
-  function onSubmit(event: React.SyntheticEvent) {
+  const initialRender = useRef(true)
+
+  const [text, setText] = useState(search)
+  const [query] = useDebounce(text, 500)
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false
+      return
+    }
+
+    if (!query) {
+      router.push(`/search`)
+    } else {
+      // router.push(`/search?search=${query}`)
+      searchMulti({ query }).then(res => {
+        // console.log('res', res)
+        // TODO: do better handling of results
+        if (!res?.results) return
+
+        const movies = res.results
+          .filter(result => result.media_type !== 'tv')
+          .map(result => {
+            if (!result) return
+            const { id, media_type } = result
+            if (media_type === 'movie') {
+              // return { id, title: result.title, media_type }
+              return result
+            }
+            if (media_type === 'person') {
+              // return { id, name: result.name, media_type }
+              return result
+            }
+          })
+        console.log(movies)
+        setResults(movies as TMDBSearchMultiResult)
+      })
+    }
+  }, [query, router])
+
+  function onSubmit(event: SyntheticEvent) {
     event.preventDefault()
-
+    console.log('event target', text)
     return toast({
       title: "Not implemented",
       description: "We're still working on the search.",
@@ -33,15 +80,12 @@ export function Search({ className, ...props }: SearchProps) {
     >
       <Input
         type="search"
+        autoFocus
         placeholder="Search for Films, Actors..."
         className="h-8 w-full sm:w-64 sm:pr-12  md:max-w-40"
-        onChange={async (e) => {
+        onChange={(e) => {
           const { value } = e.currentTarget
-          // Dynamically load fuse.js
-          const Fuse = (await import('fuse.js')).default
-          const fuse = new Fuse(names)
-
-          setResults(fuse.search(value))
+          setText(value)
         }}
       />
       {/* <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 sm:flex">
@@ -49,7 +93,7 @@ export function Search({ className, ...props }: SearchProps) {
       </kbd>
       <br /> */}
 
-      {/* <pre>Results: {JSON.stringify(results, null, 2)}</pre> */}
+      <pre>Results: {JSON.stringify(results, null, 2)}</pre>
 
     </form>
   )

@@ -1,8 +1,8 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { signIn } from "next-auth/react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { SignInResponse, signIn } from "next-auth/react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import * as React from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -13,24 +13,26 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { cn } from "@/lib/utils"
-import { userAuthSchema } from "@/lib/validations/auth"
+import { insertLoginUserSchema } from "@/lib/validations/auth"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+type FormData = z.infer<typeof insertLoginUserSchema>
 
-type FormData = z.infer<typeof userAuthSchema>
-
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(userAuthSchema),
+    resolver: zodResolver(insertLoginUserSchema),
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
   const searchParams = useSearchParams()
   const router = useRouter()
+  const pathname = usePathname()
+
+  const isRegisterPage = pathname === '/register'
 
   async function onSubmit(data: FormData) {
     setIsLoading(true)
@@ -38,7 +40,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     const signInResult = await signIn("credentials", {
       email: data.email.toLowerCase(),
       password: data.password,
-      name: data.name,
       redirect: false,
       callbackUrl: searchParams?.get("from") || "/me",
     })
@@ -86,7 +87,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               </p>
             )}
           </div>
-          <div className="grid gap-1">
+          {isRegisterPage ? <div className="grid gap-1">
             <Label className="sr-only" htmlFor="name">
               Name
             </Label>
@@ -105,7 +106,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 {errors.name.message}
               </p>
             )}
-          </div>
+          </div> : null}
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="password">
               Password

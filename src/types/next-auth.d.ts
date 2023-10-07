@@ -16,9 +16,9 @@ interface DefaultUserAuth extends DefaultUser {
   role?: Role
 }
 
-type User = Pick<NewUser, 'id' | 'name' | 'email' | 'image'>
+type UserProps = Pick<NewUser, 'id' | 'name' | 'email' | 'image'>
 
-type UserAuth = DefaultUserAuth & User
+type UserAuth = DefaultUserAuth & UserProps
 
 declare module "next-auth/jwt" {
   interface JWT extends UserAuth {

@@ -2,10 +2,9 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-import { MovieDetails, TMDBMovieResponse, tMDBMovieResponseSchema, tMDBMovieResponseSchemaWithDateInterval } from '../types/tmdb-api'
+import { type MovieDetails, tMDBMovieResponseSchema, tMDBMovieResponseSchemaWithDateInterval, tMDBSearchMultiSchema } from '../types/tmdb-api'
 import { extractLanguageFromLanguageCode, generateTMDBUrl } from './utils'
-import { GlobalConfig, QueryOptions } from '../types'
-import { movieDetailsSchema } from '../types/tmdb-api-movie-details'
+import { type GlobalConfig, type QueryOptions } from '../types'
 
 export const globalConfig = {
   API_KEY: process.env.TMDB_API_KEY ?? '10473fa5b39f51105676dd9fd05a9af0',
@@ -113,7 +112,7 @@ export async function searchMulti({
   query,
   // category,
   language = globalConfig.language,
-}: QueryOptions) {
+}: Omit<QueryOptions, 'category'>) {
 
   console.log('QUERY', query)
   const url = generateTMDBUrl(`search/multi`, {
@@ -131,7 +130,14 @@ export async function searchMulti({
   const data = await response.json()/*  as TMDBMovieResponse */
 
   // console.log(data)
-  return data
+  const parsedSearch = tMDBSearchMultiSchema.safeParse(data)
+
+  if (!parsedSearch.success) {
+    console.error(parsedSearch.error)
+    return null
+  }
+
+  return parsedSearch.data
 }
 
 export async function searchByTitle({

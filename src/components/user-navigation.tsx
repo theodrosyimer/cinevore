@@ -3,7 +3,7 @@
 import { Icons } from '@/components/icons'
 import { cn } from '@/lib/utils'
 import { MainNavItem } from '@/types'
-import { Link } from 'lucide-react'
+import Link from "next/link"
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
@@ -17,10 +17,10 @@ export function UserNavigation({ items, children }: MainNavProps) {
 
   return (
     (
-      <div className="mr-4 hidden md:flex">
-        <nav className="flex items-center space-x-6 text-sm font-medium">
+      <div className=" mr-4 sm:flex items-center ">
+        <nav className="flex items-center space-x-6 text-sm font-medium divide-y divide-border rounded-md border p-3  justify-center w-fit">
           {items?.length ? (
-            <nav className="hidden gap-6 md:flex">
+            <nav className="gap-6 sm:flex">
               {items?.map((item, index) => {
                 return (
                   <Link

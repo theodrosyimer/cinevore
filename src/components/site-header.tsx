@@ -13,6 +13,7 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { buttonVariants } from '@/components/ui/button'
 import { getCurrentUser } from "@/lib/session"
 import { UserAccountNav } from "@/components/user-account-nav"
+import { UserCreateListButton } from "@/components/user-create-list"
 
 
 export async function SiteHeader() {
@@ -29,10 +30,11 @@ export async function SiteHeader() {
         <MobileNav items={siteLayoutConfig} />
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">
-            <CommandMenu />
+            <CommandMenu user={user} />
           </div>
           <nav className="flex place-items-center gap-2">
             {/* <ModeToggle /> */}
+            <UserCreateListButton size={'sm'} />
             {!user ?
               <nav>
                 <Link

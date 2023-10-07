@@ -15,7 +15,6 @@ export async function getUsers() {
     // cache: "no-cache",
   })
   const json = await data.json() as unknown
-  console.log("json", json)
   const validatedUsers = usersSchemas.safeParse(json)
 
   if (!validatedUsers.success) {
@@ -23,6 +22,5 @@ export async function getUsers() {
     return []
   }
 
-  console.log("validatedUsers", validatedUsers)
   return validatedUsers.data
 }

@@ -13,7 +13,8 @@ export default function SearchPage() {
   const [results, setResults] = useState<FuseResult<string>[]>([])
 
   return (
-    <div className='container grid place-items-center mx-auto w-full space-y-6 sm:w-[350px]'>
+    <div className='grid place-items-center mx-auto w-full space-y-6 sm:w-[350px]'>
+      <Search />
     </div>
   )
 }

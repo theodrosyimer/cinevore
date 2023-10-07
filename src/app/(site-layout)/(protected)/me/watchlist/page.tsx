@@ -19,7 +19,7 @@ export default async function DiaryPage({ params }: {
 
   return (
     <>
-      <h1 className="text-4xl font-bold text-center">Diary</h1>
+      <h1 className="text-4xl font-bold text-center">Watchlist</h1>
 
       <section>
         <FilmCardList />

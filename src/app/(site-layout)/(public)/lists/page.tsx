@@ -11,7 +11,7 @@ export default async function ListsPage({ params }: { params: { username: string
   const { user } = await getCurrentUser()
   const lists = await getLists()
 
-  console.log(lists)
+  console.log('LISTS:', lists)
 
   return (
     <>
