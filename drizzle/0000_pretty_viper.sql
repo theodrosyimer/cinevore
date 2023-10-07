@@ -211,7 +211,9 @@ CREATE INDEX `compositeKeyIndex` ON `like_to_movie_list` (`list_id`,`like_id`);-
 CREATE INDEX `id` ON `like_to_movie_review` (`movie_review_id`,`like_id`);--> statement-breakpoint
 CREATE INDEX `id` ON `list` (`id`);--> statement-breakpoint
 CREATE INDEX `user_id` ON `list` (`user_id`);--> statement-breakpoint
-CREATE INDEX `FK_user_film` ON `movie` (`liked_count`);--> statement-breakpoint
+CREATE INDEX `watched_count` ON `movie` (`watched_count`);--> statement-breakpoint
+CREATE INDEX `listed_count` ON `movie` (`listed_count`);--> statement-breakpoint
+CREATE INDEX `liked_count` ON `movie` (`liked_count`);--> statement-breakpoint
 CREATE INDEX `rating` ON `movie_infos_to_user` (`rating`);--> statement-breakpoint
 CREATE INDEX `liked` ON `movie_infos_to_user` (`like`);--> statement-breakpoint
 CREATE INDEX `watched` ON `movie_infos_to_user` (`watched`);--> statement-breakpoint

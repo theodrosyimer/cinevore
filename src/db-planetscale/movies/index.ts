@@ -13,6 +13,7 @@ import { movieReview } from "../movie-reviews"
 export const movie = mysqlTable("movie", {
   tmdbId: int("tmdb_id").notNull().primaryKey(),
   imdbId: varchar("imdb__id", { length: 255 }).notNull().unique(),
+  // slug: varchar("slug", { length: 255 }).notNull().unique(),
   watchedCount: int("watched_count").notNull().default(0),
   listedCount: int("listed_count").notNull().default(0),
   likedCount: int("liked_count").notNull().default(0),
@@ -26,9 +27,10 @@ export const movie = mysqlTable("movie", {
     return {
       tmdbId: uniqueIndex("tmdb_id").on(table.tmdbId),
       imdbId: uniqueIndex("imdb_id").on(table.imdbId),
-      watched_count: index("FK_user_film").on(table.watchedCount),
-      listed_count: index("FK_user_film").on(table.listedCount),
-      liked_count: index("FK_user_film").on(table.likedCount),
+      // slug: index("slug").on(table.slug),
+      watchedCount: index("watched_count").on(table.watchedCount),
+      listedCount: index("listed_count").on(table.listedCount),
+      likedCount: index("liked_count").on(table.likedCount),
     }
   })
 

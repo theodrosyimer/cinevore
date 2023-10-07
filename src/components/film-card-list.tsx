@@ -1,10 +1,14 @@
 'use client'
 
-import { FilmCard } from "@/components/film-card"
-import { MovieArtworkSlider } from "@/components/films-artwork-slider"
+import { MovieArtwork } from "@/components/films-artwork-slider"
+import { toast } from "@/components/ui/use-toast"
+import { movie } from "@/db-planetscale/movies"
 import { useFilms } from "@/hooks/useFilms-zod"
+import { slugify } from "@/lib/utils"
+import { useRouter } from "next/navigation"
 
 export default function FilmCardList() {
+  const router = useRouter()
   const { data: films, isLoading } = useFilms()
 
   if (isLoading) {
@@ -15,19 +19,41 @@ export default function FilmCardList() {
     return <div>No films found</div>
   }
 
+  function handleTitleSlug(title: string) {
+    const result = slugify(title)
+    if ('error' in result) {
+      console.log(result.error)
+      toast({
+        title: result.error.name,
+        description: result.error.message,
+      })
+      return
+    }
+    if (result) {
+      return slugify(title) as { slug: string }
+    }
+  }
   return (
-    <div className="container grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    <>
       {films.results.map((film) => (
         // <FilmCard key={film.id} film={film} />
-        <MovieArtworkSlider
-          key={film.title}
+        <MovieArtwork
+          key={film.id}
+          // movieId={film.id.toString()}
           movie={film}
-          className="w-[250px]"
+          // className="w-[250px]"
           aspectRatio="portrait"
+          // layout="fill"
           width={250}
           height={330}
+          onClick={e => {
+            e.preventDefault()
+            console.log('Image clicked!')
+            router.push(`/film/${handleTitleSlug(film?.title ?? '')?.slug}`)
+          }
+          }
         />
       ))}
-    </div>
+    </>
   )
 }

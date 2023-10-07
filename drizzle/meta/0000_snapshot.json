@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "6945f457-cb69-4e28-988d-341f8727f173",
+  "id": "8a120aa1-c17d-4be7-84aa-2c7de907e404",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -645,8 +645,22 @@
           ],
           "isUnique": true
         },
-        "FK_user_film": {
-          "name": "FK_user_film",
+        "watched_count": {
+          "name": "watched_count",
+          "columns": [
+            "watched_count"
+          ],
+          "isUnique": false
+        },
+        "listed_count": {
+          "name": "listed_count",
+          "columns": [
+            "listed_count"
+          ],
+          "isUnique": false
+        },
+        "liked_count": {
+          "name": "liked_count",
           "columns": [
             "liked_count"
           ],

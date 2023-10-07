@@ -2,7 +2,7 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-import { type MovieDetails, tMDBMovieResponseSchema, tMDBMovieResponseSchemaWithDateInterval, tMDBSearchMultiSchema } from '../types/tmdb-api'
+import { type MovieDetails, tMDBMovieResponseSchema, tMDBMovieResponseSchemaWithDateInterval, tMDBSearchMultiSchema, TMDBMovieResponse } from '../types/tmdb-api'
 import { extractLanguageFromLanguageCode, generateTMDBUrl } from './utils'
 import { type GlobalConfig, type QueryOptions } from '../types'
 
@@ -87,14 +87,17 @@ export async function searchByID({
   id,
   category,
   language = globalConfig.language,
+  page = '1',
 }: QueryOptions) {
   const url = generateTMDBUrl(`${category}/${id}`, {
     language,
+    page,
     append_to_response: 'videos,images,credits',
     include_image_language: extractLanguageFromLanguageCode(language),
     include_video_language: extractLanguageFromLanguageCode(language),
   })
 
+  console.log('URL', url.href)
   const response = await fetch(url.href)
 
   if (!response.ok) {
@@ -145,19 +148,21 @@ export async function searchByTitle({
   query,
   category,
   language = globalConfig.language,
+  page = '1',
 }: QueryOptions) {
   const url = generateTMDBUrl(`search/${category}`, {
     query,
     language,
+    page,
   })
-
+  console.log('SEARCH URL', url.href)
   const response = await fetch(url)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
   }
 
-  const data = await response.json() as MovieDetails
+  const data = await response.json() as TMDBMovieResponse
 
   return data
 }

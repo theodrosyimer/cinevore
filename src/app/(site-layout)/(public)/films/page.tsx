@@ -1,5 +1,5 @@
 import FilmCardList from "@/components/film-card-list"
-import { MovieArtworkSlider } from "@/components/films-artwork-slider"
+import { MovieArtwork } from "@/components/films-artwork-slider"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import * as dotenv from "dotenv"
 dotenv.config()

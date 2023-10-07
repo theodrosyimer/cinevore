@@ -37,7 +37,7 @@ export function generateTMDBImageUrl<TImageFormat extends TMDBImageSizesCategory
   if (!secure) {
     return `${globalConfig.IMAGE_BASE_URI_HTTP}/${size}${path}`
   }
-  return `${globalConfig.IMAGE_BASE_URI}/${size}${path}`
+  return `${globalConfig.IMAGE_BASE_URI}/${size}${path}` as const
 }
 
 export function extractCategoryFromSegment(segment: RouteSegment) {
