@@ -33,7 +33,10 @@ export function generateTMDBUrl(segment: RouteSegment, params: QueryOptionsWitho
   return mergeSearchParamsToUrl(url, new URLSearchParams(queries))
 }
 
-export function generateTMDBImageUrl<TKey extends TMDBImageSizesCategoryKey, TValue extends TMDBImageSizesCategory[TKey]>(type: TKey, size: TValue, path: string) {
+export function generateTMDBImageUrl<TImageFormat extends TMDBImageSizesCategoryKey, TValue extends TMDBImageSizesCategory[TImageFormat]>(format: TImageFormat, size: TValue, path: string, secure = true) {
+  if (!secure) {
+    return `${globalConfig.IMAGE_BASE_URI_HTTP}/${size}${path}`
+  }
   return `${globalConfig.IMAGE_BASE_URI}/${size}${path}`
 }
 
