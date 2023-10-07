@@ -49,7 +49,7 @@ export const userSettingsFormSchema = createSelectSchema(user, {
       required_error: "Please select an email to display.",
     })
     .email(),
-  bio: z.string().max(160).min(4),
+  bio: z.string().max(160).min(4).optional(),
   urls: z
     .array(
       z.object({

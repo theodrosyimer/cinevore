@@ -146,6 +146,7 @@ export function ProfileForm() {
                   placeholder="Tell us a little bit about yourself"
                   className="resize-none"
                   {...field}
+                  value={field.value || ''}
                 />
               </FormControl>
               <FormDescription>
