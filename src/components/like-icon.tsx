@@ -11,10 +11,10 @@ interface IconProps extends LucideProps {
 }
 
 export default function LikeIcon(
-  { name, ...props }: IconProps
+  /* { name, ...props }: IconProps */
 ) {
   const [liked, setLiked] = useState(false)
-  const LucideIcon = dynamic(dynamicIconImports[name])
+  // const LucideIcon = dynamic(dynamicIconImports[name])
 
 
   // return <LucideIcon {...props} />
