@@ -1,5 +1,6 @@
 import { LANGUAGE } from "../constants/languages"
 import type { CommonFilterCategory, MovieCategory, MovieFilterCategory, OptionalQueryOptions, QueryOptionsWithoutBodyAndCategory, RouteSegment, SearchFilterCategory, TvFilterCategory, TvShowCategory } from "../types"
+import { TMDBImageSizesCategoryKey, TMDBImageSizesCategory } from "../types/tmdb-api"
 import { globalConfig } from "./tmdb"
 
 export function mergeSearchParamsToUrl(url: (string | URL), searchParamsObject: Record<string, string> | URLSearchParams | QueryOptionsWithoutBodyAndCategory) {
@@ -30,6 +31,10 @@ export function generateTMDBUrl(segment: RouteSegment, params: QueryOptionsWitho
   }
 
   return mergeSearchParamsToUrl(url, new URLSearchParams(queries))
+}
+
+export function generateTMDBImageUrl<TKey extends TMDBImageSizesCategoryKey, TValue extends TMDBImageSizesCategory[TKey]>(type: TKey, size: TValue, path: string) {
+  return `${globalConfig.IMAGE_BASE_URI}/${size}${path}`
 }
 
 export function extractCategoryFromSegment(segment: RouteSegment) {

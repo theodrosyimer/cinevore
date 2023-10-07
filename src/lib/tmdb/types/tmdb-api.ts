@@ -40,6 +40,8 @@ export const TMDBConfigurationSchema = z.object({
 export const TMDBImagesConfigurationSchema = TMDBConfigurationSchema.shape.images
 
 export type TMDBConfiguration = z.infer<typeof TMDBConfigurationSchema>
+
+// Images
 export type TMDBBackdropSizes = z.infer<typeof TMDBBackdropSizesSchema>
 export type TMDBLogoSizes = z.infer<typeof TMDBLogoSizesSchema>
 export type TMDBPosterSizes = z.infer<typeof TMDBPosterSizesSchema>

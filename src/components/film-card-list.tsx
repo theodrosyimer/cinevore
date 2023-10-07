@@ -1,6 +1,7 @@
 'use client'
 
 import { FilmCard } from "@/components/film-card"
+import { MovieArtworkSlider } from "@/components/films-artwork-slider"
 import { useFilms } from "@/hooks/useFilms-zod"
 
 export default function FilmCardList() {
@@ -17,7 +18,15 @@ export default function FilmCardList() {
   return (
     <div className="container grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {films.results.map((film) => (
-        <FilmCard key={film.id} film={film} />
+        // <FilmCard key={film.id} film={film} />
+        <MovieArtworkSlider
+          key={film.title}
+          movie={film}
+          className="w-[250px]"
+          aspectRatio="portrait"
+          width={250}
+          height={330}
+        />
       ))}
     </div>
   )
