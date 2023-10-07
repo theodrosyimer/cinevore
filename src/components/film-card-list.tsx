@@ -39,17 +39,16 @@ export default function FilmCardList() {
         // <FilmCard key={film.id} film={film} />
         <MovieArtwork
           key={film.id}
-          // movieId={film.id.toString()}
+          movieId={film.id.toString()}
           movie={film}
-          // className="w-[250px]"
+          className=""
           aspectRatio="portrait"
           // layout="fill"
           width={250}
           height={330}
           onClick={e => {
             e.preventDefault()
-            console.log('Image clicked!')
-            router.push(`/film/${handleTitleSlug(film?.title ?? '')?.slug}`)
+            router.push(`/film/${handleTitleSlug(film?.title ?? '')?.slug}/?id=${film.id}`)
           }
           }
         />

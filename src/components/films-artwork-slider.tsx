@@ -18,12 +18,12 @@ import {
 
 import { Album } from "../data/albums"
 import { playlists } from "../data/playlists"
-import { SearchMovie } from "@/lib/tmdb/types/tmdb-api"
+import { SearchMovie, TMDBImageSizesCategory, TMDBImageSizesCategoryKey } from "@/lib/tmdb/types/tmdb-api"
 import { generateTMDBImageUrl } from "@/lib/tmdb/src/utils"
 
 interface MovieArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
   movie: SearchMovie
-  // movieId: string
+  movieId: string
   aspectRatio?: "portrait" | "square"
   width?: number
   height?: number
@@ -32,7 +32,7 @@ interface MovieArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function MovieArtwork({
   movie,
-  // movieId,
+  movieId,
   aspectRatio = "portrait",
   width,
   height,
@@ -42,15 +42,23 @@ export function MovieArtwork({
 }: MovieArtworkProps) {
   let imageUrl
 
+  let kind: TMDBImageSizesCategoryKey
+  let size: TMDBImageSizesCategory[typeof kind] = 'w300'
+
   if (aspectRatio === "portrait") {
-    imageUrl = generateTMDBImageUrl('poster_sizes', 'w154', movie.poster_path!)
+    kind = 'poster_sizes'
+    size = 'w154'
+    imageUrl = generateTMDBImageUrl(kind, size, movie.poster_path!)
     // console.log('Image URL:', imageUrl)
   }
 
   if (aspectRatio === "square") {
-    imageUrl = generateTMDBImageUrl('backdrop_sizes', 'w300', movie.backdrop_path!)
+    kind = 'backdrop_sizes'
+    size = 'w300'
+    imageUrl = generateTMDBImageUrl(kind, size, movie.backdrop_path!)
     // console.log('Image URL:', imageUrl)
   }
+  console.log(size.slice(1))
   return (
     <div className={cn("space-y-3", className)} {...props}>
       <ContextMenu>
@@ -59,12 +67,13 @@ export function MovieArtwork({
             <img
               src={imageUrl!}
               alt={movie.title!}
-              // width={width}
-              // height={height}
+              width={+size.slice(1)}
+              height={height}
               lang="en"
               className={cn(
-                "h-auto w-auto w-min[6rem] object-cover transition-all hover:scale-105",
-                aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
+                "h-auto w-auto object-cover transition-all hover:scale-105",
+                aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square",
+                `w-[${size.slice(1)}px]`,
               )}
 
             />

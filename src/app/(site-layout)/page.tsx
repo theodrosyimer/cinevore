@@ -9,7 +9,6 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { globalConfig, getPopular } from "@/lib/tmdb/src/tmdb"
 import Image from "next/image"
-import HeroImage from "@/components/hero-image"
 
 export default function IndexPage() {
   // const stars = await getGitHubStars()
@@ -19,13 +18,8 @@ export default function IndexPage() {
 
   return (
     <>
-      {/* <Image
-        src='https://image.tmdb.org/t/p/w500/nuO8o9ltxhI7AZQxePavEZ4TyHa.jpg'
-        alt='training day'
-        width={500}
-        height={750}
-      /> */}
-      {/* <HeroImage /> */}
+      <h1 className="text-4xl font-bold text-center">Cinevore</h1>
+      <p className="text-center">Welcome to Cinevore, the only place to be...</p>
     </>
   )
 }

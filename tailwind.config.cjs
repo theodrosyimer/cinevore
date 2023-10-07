@@ -73,6 +73,9 @@ module.exports = {
       gridTemplateRows: {
         // Complex site-specific row configuration
         'layout': 'auto 1fr auto',
+      },
+      backgroundImage: {
+        'not-found': "url('/bg-404.jpg')",
       }
     },
   },
