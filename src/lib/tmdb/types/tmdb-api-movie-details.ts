@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from 'zod';
 
 export const movieCastSchema = z.object({
   adult: z.boolean(),
@@ -12,8 +12,8 @@ export const movieCastSchema = z.object({
   cast_id: z.number(),
   character: z.string(),
   credit_id: z.string(),
-  order: z.number()
-})
+  order: z.number(),
+});
 
 export const movieCrewSchema = z.object({
   adult: z.boolean(),
@@ -26,15 +26,28 @@ export const movieCrewSchema = z.object({
   profile_path: z.string(),
   credit_id: z.string(),
   department: z.string(),
-  job: z.string()
-})
+  job: z.string(),
+});
 
-export const departmentSchema = z.union([z.literal("Acting"), z.literal("Art"), z.literal("Camera"), z.literal("Costume & Make-Up"), z.literal("Crew"), z.literal("Directing"), z.literal("Editing"), z.literal("Lighting"), z.literal("Production"), z.literal("Sound"), z.literal("Visual Effects"), z.literal("Writing")])
+export const departmentSchema = z.union([
+  z.literal('Acting'),
+  z.literal('Art'),
+  z.literal('Camera'),
+  z.literal('Costume & Make-Up'),
+  z.literal('Crew'),
+  z.literal('Directing'),
+  z.literal('Editing'),
+  z.literal('Lighting'),
+  z.literal('Production'),
+  z.literal('Sound'),
+  z.literal('Visual Effects'),
+  z.literal('Writing'),
+]);
 
 export const movieGenreSchema = z.object({
   id: z.number(),
-  name: z.string()
-})
+  name: z.string(),
+});
 
 export const moviePosterSchema = z.object({
   aspect_ratio: z.number(),
@@ -43,26 +56,26 @@ export const moviePosterSchema = z.object({
   file_path: z.string(),
   vote_average: z.number(),
   vote_count: z.number(),
-  width: z.number()
-})
+  width: z.number(),
+});
 
 export const movieProductionCompanySchema = z.object({
   id: z.number(),
   logo_path: z.string().nullable(),
   name: z.string(),
-  origin_country: z.string()
-})
+  origin_country: z.string(),
+});
 
 export const movieProductionCountrySchema = z.object({
   iso_3166_1: z.string(),
-  name: z.string()
-})
+  name: z.string(),
+});
 
 export const movieSpokenLanguageSchema = z.object({
   english_name: z.string(),
   iso_639_1: z.string(),
-  name: z.string()
-})
+  name: z.string(),
+});
 
 export const movieVideoSchema = z.object({
   iso_639_1: z.string(),
@@ -74,24 +87,24 @@ export const movieVideoSchema = z.object({
   size: z.number(),
   type: z.string(),
   official: z.boolean(),
-  id: z.string()
-})
+  id: z.string(),
+});
 
 export const movieCreditsSchema = z.object({
   id: z.number(),
   cast: z.array(movieCastSchema),
-  crew: z.array(movieCrewSchema)
-})
+  crew: z.array(movieCrewSchema),
+});
 
 export const movieImagesSchema = z.object({
   backdrops: z.array(z.any()),
   logos: z.array(z.any()),
-  posters: z.array(moviePosterSchema)
-})
+  posters: z.array(moviePosterSchema),
+});
 
 export const movieVideosSchema = z.object({
-  results: z.array(movieVideoSchema)
-})
+  results: z.array(movieVideoSchema),
+});
 
 export const movieDetailsSchema = z.object({
   adult: z.boolean(),
@@ -121,31 +134,35 @@ export const movieDetailsSchema = z.object({
   vote_count: z.number(),
   videos: movieVideosSchema.optional(),
   images: movieImagesSchema.optional(),
-  credits: movieCreditsSchema.optional()
-})
+  credits: movieCreditsSchema.optional(),
+});
 
-export type MovieCast = z.infer<typeof movieCastSchema>
+export type MovieCast = z.infer<typeof movieCastSchema>;
 
-export type MovieCrew = z.infer<typeof movieCrewSchema>
+export type MovieCrew = z.infer<typeof movieCrewSchema>;
 
-export type Department = z.infer<typeof departmentSchema>
+export type Department = z.infer<typeof departmentSchema>;
 
-export type MovieGenre = z.infer<typeof movieGenreSchema>
+export type MovieGenre = z.infer<typeof movieGenreSchema>;
 
-export type MoviePoster = z.infer<typeof moviePosterSchema>
+export type MoviePoster = z.infer<typeof moviePosterSchema>;
 
-export type MovieProductionCompany = z.infer<typeof movieProductionCompanySchema>
+export type MovieProductionCompany = z.infer<
+  typeof movieProductionCompanySchema
+>;
 
-export type MovieProductionCountry = z.infer<typeof movieProductionCountrySchema>
+export type MovieProductionCountry = z.infer<
+  typeof movieProductionCountrySchema
+>;
 
-export type MovieSpokenLanguage = z.infer<typeof movieSpokenLanguageSchema>
+export type MovieSpokenLanguage = z.infer<typeof movieSpokenLanguageSchema>;
 
-export type MovieVideo = z.infer<typeof movieVideoSchema>
+export type MovieVideo = z.infer<typeof movieVideoSchema>;
 
-export type MovieCredits = z.infer<typeof movieCreditsSchema>
+export type MovieCredits = z.infer<typeof movieCreditsSchema>;
 
-export type MovieImages = z.infer<typeof movieImagesSchema>
+export type MovieImages = z.infer<typeof movieImagesSchema>;
 
-export type MovieVideos = z.infer<typeof movieVideosSchema>
+export type MovieVideos = z.infer<typeof movieVideosSchema>;
 
-export type MovieDetails = z.infer<typeof movieDetailsSchema>
+export type MovieDetails = z.infer<typeof movieDetailsSchema>;

@@ -1,27 +1,26 @@
-"use client"
+'use client';
 
-import * as React from "react"
-import Link, { LinkProps } from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { ViewVerticalIcon } from "@radix-ui/react-icons"
+import * as React from 'react';
+import Link, { LinkProps } from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { ViewVerticalIcon } from '@radix-ui/react-icons';
 
-import { siteLayoutConfig } from "@/config/nav"
-import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
-import { Icons } from "@/components/icons"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { MainNavItem, SiteLayoutConfig } from "@/types"
+import { siteLayoutConfig } from '@/config/nav';
+import { siteConfig } from '@/config/site';
+import { cn } from '@/lib/utils';
+import { Icons } from '@/components/icons';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { MainNavItem, SiteLayoutConfig } from '@/types';
 
 type MobileNavProps = {
-  items?: SiteLayoutConfig
-  children?: React.ReactNode
-}
-
+  items?: SiteLayoutConfig;
+  children?: React.ReactNode;
+};
 
 export function MobileNav({ items, children }: MobileNavProps) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -45,18 +44,20 @@ export function MobileNav({ items, children }: MobileNavProps) {
         </MobileLink>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="flex flex-col space-y-3">
-            {items ? items.mainNav.map(
-              (item) =>
-                item.href && (
-                  <MobileLink
-                    key={item.href}
-                    href={item.href}
-                    onOpenChange={setOpen}
-                  >
-                    {item.title}
-                  </MobileLink>
+            {items
+              ? items.mainNav.map(
+                  (item) =>
+                    item.href && (
+                      <MobileLink
+                        key={item.href}
+                        href={item.href}
+                        onOpenChange={setOpen}
+                      >
+                        {item.title}
+                      </MobileLink>
+                    )
                 )
-            ) : null}
+              : null}
           </div>
           <div className="flex flex-col space-y-2">
             {siteLayoutConfig.sidebarNav.map((item, index) => (
@@ -85,13 +86,13 @@ export function MobileNav({ items, children }: MobileNavProps) {
         </ScrollArea>
       </SheetContent>
     </Sheet>
-  )
+  );
 }
 
 interface MobileLinkProps extends LinkProps {
-  onOpenChange?: (open: boolean) => void
-  children: React.ReactNode
-  className?: string
+  onOpenChange?: (open: boolean) => void;
+  children: React.ReactNode;
+  className?: string;
 }
 
 function MobileLink({
@@ -101,23 +102,23 @@ function MobileLink({
   children,
   ...props
 }: MobileLinkProps) {
-  const router = useRouter()
-  const pathname = usePathname()
+  const router = useRouter();
+  const pathname = usePathname();
   return (
     <Link
       href={href}
       onClick={() => {
-        router.push(href.toString())
-        onOpenChange?.(false)
+        router.push(href.toString());
+        onOpenChange?.(false);
       }}
-      className={cn('hover:text-foreground/100',
-        pathname === href
-          ? "text-foreground"
-          : "text-foreground/60",
-        className)}
+      className={cn(
+        'hover:text-foreground/100',
+        pathname === href ? 'text-foreground' : 'text-foreground/60',
+        className
+      )}
       {...props}
     >
       {children}
     </Link>
-  )
+  );
 }

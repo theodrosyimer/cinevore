@@ -1,17 +1,17 @@
-import { Metadata } from "next"
-import Image from "next/image"
+import { Metadata } from 'next';
+import Image from 'next/image';
 
-import { Separator } from "@/components/ui/separator"
-import { SidebarNav } from "@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/components/sidebar-nav"
-import { settingsConfig } from "@/config/settings"
+import { Separator } from '@/components/ui/separator';
+import { SidebarNav } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/components/sidebar-nav';
+import { settingsConfig } from '@/config/settings';
 
 export const metadata: Metadata = {
-  title: "Settings",
-  description: "User settings and preferences.",
-}
+  title: 'Settings',
+  description: 'User settings and preferences.',
+};
 
 interface SettingsLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
@@ -33,5 +33,5 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
         </div>
       </div>
     </>
-  )
+  );
 }

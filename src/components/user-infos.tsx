@@ -1,18 +1,14 @@
-import { ChevronDownIcon } from "@radix-ui/react-icons"
+import { ChevronDownIcon } from '@radix-ui/react-icons';
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card';
 import {
   Command,
   CommandEmpty,
@@ -20,17 +16,17 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from '@/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { SelectUser } from "@/types/db"
-import { User } from "next-auth"
+} from '@/components/ui/popover';
+import { SelectUser } from '@/types/db';
+import { User } from 'next-auth';
 
 interface UserInfos {
-  user: User
+  user: User;
 }
 
 export function UserInfos({ user }: UserInfos) {
@@ -47,15 +43,21 @@ export function UserInfos({ user }: UserInfos) {
         <div className="flex items-center justify-between space-x-4">
           <Avatar className="lg:h-14 lg:w-14">
             <AvatarImage src={user.image ?? undefined} />
-            <AvatarFallback>{user.name?.slice(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarFallback>
+              {user.name?.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <div>
-            <p className="md:text-md lg:text-md font-medium leading-none">{user.name}</p>
-            <p className="md:text-md lg:text-md text-muted-foreground">{user.email}</p>
+            <p className="md:text-md lg:text-md font-medium leading-none">
+              {user.name}
+            </p>
+            <p className="md:text-md lg:text-md text-muted-foreground">
+              {user.email}
+            </p>
           </div>
         </div>
       </div>
       {/* </CardContent> */}
     </Card>
-  )
+  );
 }

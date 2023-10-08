@@ -1,6 +1,6 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -9,53 +9,69 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
+import { SelectUser } from '@/types/db';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
+import * as React from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
-import { SelectUser } from "@/types/db"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useRouter } from "next/navigation"
-import * as React from "react"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-
-import { Icons } from "@/components/icons"
-import { buttonVariants } from "@/components/ui/button"
-import { toast } from "@/components/ui/use-toast"
-import { cn } from "@/lib/utils"
-import { userNameSchema } from "@/lib/validations/user"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
-import { Link } from "lucide-react"
-import { AlertDialogHeader, AlertDialogFooter } from "@/components/ui/alert-dialog"
-import { AlertDialog, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogCancel, AlertDialogAction, AlertDialogOverlay } from "@radix-ui/react-alert-dialog"
-import { DialogPortal } from "@radix-ui/react-dialog"
+import { Icons } from '@/components/icons';
+import { buttonVariants } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/utils';
+import { userNameSchema } from '@/lib/validations/user';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@radix-ui/react-dropdown-menu';
+import { Link } from 'lucide-react';
+import {
+  AlertDialogHeader,
+  AlertDialogFooter,
+} from '@/components/ui/alert-dialog';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+  AlertDialogOverlay,
+} from '@radix-ui/react-alert-dialog';
+import { DialogPortal } from '@radix-ui/react-dialog';
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
-  user: Pick<SelectUser, "id" | "name">
+  user: Pick<SelectUser, 'id' | 'name'>;
 }
 
-type FormData = z.infer<typeof userNameSchema>
+type FormData = z.infer<typeof userNameSchema>;
 
 async function deleteUser(userId: string) {
   const response = await fetch(`/api/users/${userId}`, {
-    method: "DELETE",
-  })
+    method: 'DELETE',
+  });
 
   if (!response?.ok) {
     toast({
-      title: "Something went wrong.",
-      description: "Your post was not deleted. Please try again.",
-      variant: "destructive",
-    })
+      title: 'Something went wrong.',
+      description: 'Your post was not deleted. Please try again.',
+      variant: 'destructive',
+    });
   }
 
-  return true
+  return true;
 }
 
 export function EditDialog({ user, className, ...props }: UserNameFormProps) {
-  const router = useRouter()
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -63,43 +79,43 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
   } = useForm<FormData>({
     resolver: zodResolver(userNameSchema),
     defaultValues: {
-      name: user?.name || "",
+      name: user?.name || '',
     },
-  })
-  const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
-  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
-  const [isEditLoading, setIsEditLoading] = React.useState<boolean>(false)
-  const [isSaving, setIsSaving] = React.useState<boolean>(false)
+  });
+  const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false);
+  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false);
+  const [isEditLoading, setIsEditLoading] = React.useState<boolean>(false);
+  const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
   async function onSubmit(data: FormData) {
-    setIsSaving(true)
-    setIsEditLoading(false)
+    setIsSaving(true);
+    setIsEditLoading(false);
 
     const response = await fetch(`/api/users/${user.id}`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name: data.name,
       }),
-    })
+    });
 
-    setIsSaving(false)
+    setIsSaving(false);
 
     if (!response?.ok) {
       return toast({
-        title: "Something went wrong.",
-        description: "Your name was not updated. Please try again.",
-        variant: "destructive",
-      })
+        title: 'Something went wrong.',
+        description: 'Your name was not updated. Please try again.',
+        variant: 'destructive',
+      });
     }
 
     toast({
-      description: "Your name has been updated.",
-    })
+      description: 'Your name has been updated.',
+    });
 
-    router.refresh()
+    router.refresh();
   }
 
   return (
@@ -116,9 +132,7 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
               <span className="sr-only">Open</span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                onSelect={() => setIsEditLoading(true)}
-              >
+              <DropdownMenuItem onSelect={() => setIsEditLoading(true)}>
                 {/* <Link href={`/editor/${user.id}`} className="flex w-full">
                   Edit
                 </Link> */}
@@ -141,7 +155,8 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
               <DialogHeader>
                 <DialogTitle>Edit profile</DialogTitle>
                 <DialogDescription>
-                  Make changes to your profile here. Click save when you&apos;re done.
+                  Make changes to your profile here. Click save when you&apos;re
+                  done.
                 </DialogDescription>
               </DialogHeader>
               <div className="grid gap-4 py-4">
@@ -153,27 +168,35 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
                     id="name"
                     value="Pedro Duarte"
                     className="col-span-3"
-                    {...register("name")}
+                    {...register('name')}
                   />
                   {errors?.name && (
-                    <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
+                    <p className="px-1 text-xs text-red-600">
+                      {errors.name.message}
+                    </p>
                   )}
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="username" className="text-right">
                     Username
                   </Label>
-                  <Input id="username" value="@peduarte" className="col-span-3" />
+                  <Input
+                    id="username"
+                    value="@peduarte"
+                    className="col-span-3"
+                  />
                 </div>
               </div>
               <DialogFooter>
                 <Button
                   type="submit"
                   className={cn(buttonVariants(), className)}
-                  disabled={isSaving}>
+                  disabled={isSaving}
+                >
                   {isSaving && (
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                  )}{''}Save changes
+                  )}
+                  {''}Save changes
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -196,15 +219,15 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction
                 onClick={async (event) => {
-                  event.preventDefault()
-                  setIsDeleteLoading(true)
+                  event.preventDefault();
+                  setIsDeleteLoading(true);
 
-                  const deleted = await deleteUser(user.id.toString())
+                  const deleted = await deleteUser(user.id.toString());
 
                   if (deleted) {
-                    setIsDeleteLoading(false)
-                    setShowDeleteAlert(false)
-                    router.refresh()
+                    setIsDeleteLoading(false);
+                    setShowDeleteAlert(false);
+                    router.refresh();
                   }
                 }}
                 className="bg-red-600 focus:ring-red-600"
@@ -221,5 +244,5 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
         </AlertDialogOverlay>
       </AlertDialog>
     </>
-  )
+  );
 }

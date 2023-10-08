@@ -1,29 +1,25 @@
-import FilmRatingStars from "@/components/film-rating-stars"
-import { Icons } from "@/components/icons"
-import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils"
+import FilmRatingStars from '@/components/film-rating-stars';
+import { Icons } from '@/components/icons';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 export function UserMovieActions({ ...className }: { className?: string }) {
   return (
-    <article className={cn("grid bg-secondary rounded-md p-4 h-max", className)}>
+    <article
+      className={cn('grid bg-secondary rounded-md p-4 h-max', className)}
+    >
       <div className="flex justify-evenly">
         <div className="grid  place-items-center">
           <Icons.like className="fill-muted" />
-          <Label className="text-sm text-muted-foreground">
-            Watch
-          </Label >
+          <Label className="text-sm text-muted-foreground">Watch</Label>
         </div>
         <div className="grid  place-items-center">
           <Icons.notWatched className="fill-muted" />
-          <Label className="text-sm text-muted-foreground">
-            Like
-          </Label >
+          <Label className="text-sm text-muted-foreground">Like</Label>
         </div>
         <div className="grid  place-items-center">
           <Icons.listVideo className="fill-muted" />
-          <Label className="text-sm text-muted-foreground">
-            WatchList
-          </Label >
+          <Label className="text-sm text-muted-foreground">WatchList</Label>
         </div>
       </div>
       <div className="divide-y divide-border rounded-md border my-4 bg-primary-foreground"></div>
@@ -40,5 +36,5 @@ export function UserMovieActions({ ...className }: { className?: string }) {
         <FilmRatingStars />
       </div>
     </article>
-  )
+  );
 }

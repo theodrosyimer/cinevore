@@ -1,30 +1,30 @@
-'use client'
+'use client';
 
-import { useCallback } from 'react'
-import { useRouter } from 'next/navigation'
+import { useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Trigger = ({ limit }: { limit: number }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   const TriggerRef = useCallback(
     (node: any) => {
-      if (!node) return
+      if (!node) return;
 
       const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            router.push(`/movies?limit=${limit + 10}`, { scroll: false })
-            observer.disconnect()
+            router.push(`/movies?limit=${limit + 10}`, { scroll: false });
+            observer.disconnect();
           }
-        })
-      })
+        });
+      });
 
-      observer.observe(node)
+      observer.observe(node);
     },
     [limit, router]
-  )
+  );
 
-  return <div ref={TriggerRef} className='h-1 w-1 bg-red-400'></div>
-}
+  return <div ref={TriggerRef} className="h-1 w-1 bg-red-400"></div>;
+};
 
-export default Trigger
+export default Trigger;

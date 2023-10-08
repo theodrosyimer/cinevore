@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 const envSchema = z.object({
   // DATABASE_URL: z.string().nonempty(),
@@ -11,6 +11,6 @@ const envSchema = z.object({
   TMDB_API_VERSION: z.string().nonempty(),
   TMDB_BASE_URI: z.string().url(),
   TMDB_IMAGE_BASE_URI: z.string().url(),
-})
+});
 
-export const env = envSchema.parse(process.env)
+export const env = envSchema.parse(process.env);

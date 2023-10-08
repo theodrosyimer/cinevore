@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ES2017",
     "module": "esnext",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -18,7 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "noUncheckedIndexedAccess": true,
+    "noUncheckedIndexedAccess": true
     // "plugins": [
     //   {
     //     "name": "next"
@@ -33,14 +29,7 @@
     //   ]
     // }
   },
-  "typeRoots": [
-    "./types"
-  ],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "typeRoots": ["./types"],
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

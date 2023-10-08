@@ -1,11 +1,11 @@
-import Image from 'next/image'
+import Image from 'next/image';
 // import { Document } from 'mongodb'
 
 export default function Movies({ movies }: { movies: Document[] | undefined }) {
   return (
     <ul
-      role='list'
-      className='grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8'
+      role="list"
+      className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-8"
     >
       {/* {movies?.map(movie => (
         <li key={movie._id.toString()} className='relative'>
@@ -28,5 +28,5 @@ export default function Movies({ movies }: { movies: Document[] | undefined }) {
         </li>
       ))} */}
     </ul>
-  )
+  );
 }

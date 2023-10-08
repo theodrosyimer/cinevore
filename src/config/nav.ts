@@ -1,33 +1,33 @@
-import { userNavigationConfig } from "@/config/user-navigation"
-import { SiteLayoutConfig } from "@/types"
+import { userNavigationConfig } from '@/config/user-navigation';
+import { SiteLayoutConfig } from '@/types';
 
 export const siteLayoutConfig: SiteLayoutConfig = {
   mainNav: [
     {
-      title: "Films",
-      href: "/films",
+      title: 'Films',
+      href: '/films',
     },
     {
-      title: "Lists",
-      href: "/lists",
+      title: 'Lists',
+      href: '/lists',
     },
     {
-      title: "Members",
-      href: "/members",
+      title: 'Members',
+      href: '/members',
     },
     {
-      title: "Features",
-      href: "/#features",
+      title: 'Features',
+      href: '/#features',
     },
     {
-      title: "Pricing",
-      href: "/pricing",
+      title: 'Pricing',
+      href: '/pricing',
     },
     {
-      title: "Admin Dashboard",
-      href: "/admin/dashboard",
-      label: "admin",
-    }
+      title: 'Admin Dashboard',
+      href: '/admin/dashboard',
+      label: 'admin',
+    },
   ],
   sidebarNav: userNavigationConfig.sidebarNav,
-}
+};

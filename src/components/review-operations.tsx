@@ -1,8 +1,8 @@
-"use client"
+'use client';
 
-import * as React from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import * as React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import {
   AlertDialog,
@@ -13,42 +13,42 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+} from '@/components/ui/alert-dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { toast } from "@/components/ui/use-toast"
-import { Icons } from "@/components/icons"
-import { SelectMovieReview } from "@/types/db"
+} from '@/components/ui/dropdown-menu';
+import { toast } from '@/components/ui/use-toast';
+import { Icons } from '@/components/icons';
+import { SelectMovieReview } from '@/types/db';
 
 async function deleteReview(postId: string) {
   const response = await fetch(`/api/reviews/${postId}`, {
-    method: "DELETE",
-  })
+    method: 'DELETE',
+  });
 
   if (!response?.ok) {
     toast({
-      title: "Something went wrong.",
-      description: "Your post was not deleted. Please try again.",
-      variant: "destructive",
-    })
+      title: 'Something went wrong.',
+      description: 'Your post was not deleted. Please try again.',
+      variant: 'destructive',
+    });
   }
 
-  return true
+  return true;
 }
 
 interface ReviewOperationsProps {
-  review: Pick<SelectMovieReview, "id" | "content">
+  review: Pick<SelectMovieReview, 'id' | 'content'>;
 }
 
 export function ReviewOperations({ review }: ReviewOperationsProps) {
-  const router = useRouter()
-  const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
-  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
+  const router = useRouter();
+  const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false);
+  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false);
 
   return (
     <>
@@ -86,15 +86,15 @@ export function ReviewOperations({ review }: ReviewOperationsProps) {
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={async (event) => {
-                event.preventDefault()
-                setIsDeleteLoading(true)
+                event.preventDefault();
+                setIsDeleteLoading(true);
 
-                const deleted = await deleteReview(review.id.toString())
+                const deleted = await deleteReview(review.id.toString());
 
                 if (deleted) {
-                  setIsDeleteLoading(false)
-                  setShowDeleteAlert(false)
-                  router.refresh()
+                  setIsDeleteLoading(false);
+                  setShowDeleteAlert(false);
+                  router.refresh();
                 }
               }}
               className="bg-red-600 focus:ring-red-600"
@@ -110,5 +110,5 @@ export function ReviewOperations({ review }: ReviewOperationsProps) {
         </AlertDialogContent>
       </AlertDialog>
     </>
-  )
+  );
 }

@@ -5,24 +5,31 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import { MovieCredits } from "@/lib/tmdb/types/tmdb-api"
-import { MovieGenre } from "@/lib/tmdb/types/tmdb-api-movie-details"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { MovieCredits } from '@/lib/tmdb/types/tmdb-api';
+import { MovieGenre } from '@/lib/tmdb/types/tmdb-api-movie-details';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
-export function UserTabs({ className, credits, details, genres, releases }: { className?: string, credits?: MovieCredits, details?: Record<string, unknown>, genres?: MovieGenre[], releases?: Record<string, unknown> }) {
+export function UserTabs({
+  className,
+  credits,
+  details,
+  genres,
+  releases,
+}: {
+  className?: string;
+  credits?: MovieCredits;
+  details?: Record<string, unknown>;
+  genres?: MovieGenre[];
+  releases?: Record<string, unknown>;
+}) {
   return (
     <>
-      <Tabs defaultValue="cast" className={cn("w-full", className)}>
+      <Tabs defaultValue="cast" className={cn('w-full', className)}>
         <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="cast">CAST</TabsTrigger>
           <TabsTrigger value="crew">CREW</TabsTrigger>
@@ -34,8 +41,7 @@ export function UserTabs({ className, credits, details, genres, releases }: { cl
           <Card>
             <CardHeader>
               <CardTitle></CardTitle>
-              <CardDescription>
-              </CardDescription>
+              <CardDescription></CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               {credits?.cast?.map((cast) => (
@@ -49,8 +55,7 @@ export function UserTabs({ className, credits, details, genres, releases }: { cl
                 </span>
               ))}
             </CardContent>
-            <CardFooter>
-            </CardFooter>
+            <CardFooter></CardFooter>
           </Card>
         </TabsContent>
         <TabsContent value="crew">
@@ -80,8 +85,7 @@ export function UserTabs({ className, credits, details, genres, releases }: { cl
                 <Input id="current" type="password" />
               </div>
             </CardContent>
-            <CardFooter>
-            </CardFooter>
+            <CardFooter></CardFooter>
           </Card>
         </TabsContent>
         <TabsContent value="genres">
@@ -96,8 +100,7 @@ export function UserTabs({ className, credits, details, genres, releases }: { cl
                 <Input id="current" type="password" />
               </div>
             </CardContent>
-            <CardFooter>
-            </CardFooter>
+            <CardFooter></CardFooter>
           </Card>
         </TabsContent>
         <TabsContent value="releases">
@@ -112,11 +115,10 @@ export function UserTabs({ className, credits, details, genres, releases }: { cl
                 <Input id="current" type="password" />
               </div>
             </CardContent>
-            <CardFooter>
-            </CardFooter>
+            <CardFooter></CardFooter>
           </Card>
         </TabsContent>
-      </Tabs >
+      </Tabs>
     </>
-  )
+  );
 }

@@ -1,23 +1,23 @@
-"use client"
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { SignInResponse, signIn } from "next-auth/react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import * as React from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SignInResponse, signIn } from 'next-auth/react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import * as React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Icons } from "@/components/icons"
-import { buttonVariants } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "@/components/ui/use-toast"
-import { cn } from "@/lib/utils"
-import { userRegisterAuthSchema } from "@/lib/validations/auth"
+import { Icons } from '@/components/icons';
+import { buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { toast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/utils';
+import { userRegisterAuthSchema } from '@/lib/validations/auth';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-type FormData = z.infer<typeof userRegisterAuthSchema>
+type FormData = z.infer<typeof userRegisterAuthSchema>;
 
 export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
   const {
@@ -26,43 +26,43 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(userRegisterAuthSchema),
-  })
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  });
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   async function onSubmit(data: FormData) {
-    setIsLoading(true)
+    setIsLoading(true);
 
-    const signInResult = await signIn("credentials", {
+    const signInResult = await signIn('credentials', {
       email: data.email.toLowerCase(),
       password: data.password,
       name: data.name,
       redirect: false,
-      callbackUrl: searchParams?.get("from") || "/me",
-    })
+      callbackUrl: searchParams?.get('from') || '/me',
+    });
 
-    setIsLoading(false)
+    setIsLoading(false);
 
     if (!signInResult?.ok) {
       toast({
-        title: "Something went wrong.",
-        description: "Your sign in request failed. Please try again.",
-        variant: "destructive",
-      })
-      return router.push("/login")
+        title: 'Something went wrong.',
+        description: 'Your sign in request failed. Please try again.',
+        variant: 'destructive',
+      });
+      return router.push('/login');
     }
 
     toast({
-      title: "Account created.",
-      description: "Your account has been created.",
-    })
-    return router.push(signInResult?.url ?? "/me")
+      title: 'Account created.',
+      description: 'Your account has been created.',
+    });
+    return router.push(signInResult?.url ?? '/me');
   }
 
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
+    <div className={cn('grid gap-6', className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
@@ -78,7 +78,7 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
               autoCorrect="off"
               autoFocus
               disabled={isLoading || isGitHubLoading}
-              {...register("email")}
+              {...register('email')}
             />
             {errors?.email && (
               <p className="px-1 text-xs text-red-600">
@@ -98,12 +98,10 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="text"
               autoCorrect="off"
               disabled={isLoading || isGitHubLoading}
-              {...register("name")}
+              {...register('name')}
             />
             {errors?.name && (
-              <p className="px-1 text-xs text-red-600">
-                {errors.name.message}
-              </p>
+              <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
             )}
           </div>
           <div className="grid gap-1">
@@ -115,7 +113,7 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
               placeholder="password"
               type="password"
               disabled={isLoading || isGitHubLoading}
-              {...register("password")}
+              {...register('password')}
             />
             {errors?.password && (
               <p className="px-1 text-xs text-red-600">
@@ -132,7 +130,7 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
               placeholder="confirm password"
               type="password"
               disabled={isLoading || isGitHubLoading}
-              {...register("confirmPassword")}
+              {...register('confirmPassword')}
             />
             {errors?.confirmPassword && (
               <p className="px-1 text-xs text-red-600">
@@ -198,12 +196,12 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
       </div>
       <button
         type="button"
-        className={cn(buttonVariants({ variant: "outline" }))}
+        className={cn(buttonVariants({ variant: 'outline' }))}
         onClick={() => {
-          setIsGitHubLoading(true)
-          signIn("github", {
-            callbackUrl: searchParams?.get("from") || "/me",
-          })
+          setIsGitHubLoading(true);
+          signIn('github', {
+            callbackUrl: searchParams?.get('from') || '/me',
+          });
         }}
         disabled={isLoading || isGitHubLoading}
       >
@@ -211,9 +209,9 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <Icons.gitHub className="mr-2 h-4 w-4" />
-        )}{" "}
+        )}{' '}
         Github
       </button>
     </div>
-  )
+  );
 }
