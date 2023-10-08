@@ -10,8 +10,6 @@ export const metadata: Metadata = {
   description: "User settings and preferences.",
 }
 
-
-
 interface SettingsLayoutProps {
   children: React.ReactNode
 }

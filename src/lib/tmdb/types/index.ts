@@ -4,6 +4,7 @@ export type GlobalConfig = {
   API_KEY: string
   API_VERSION: '3' | '4'
   BASE_URI: string
+  IMDB_BASE_URI: string
   IMAGE_BASE_URI_HTTP: string
   IMAGE_BASE_URI: string
   language: LANGUAGE

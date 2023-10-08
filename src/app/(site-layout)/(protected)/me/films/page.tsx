@@ -25,7 +25,7 @@ export default async function UserFilmsPage({ params }: {
     <>
       <h1 className="text-4xl font-bold text-center">Your movies {params.username}</h1>
 
-      <section>
+      <section className="flex space-x-4 pb-4">
         <FilmCardList />
       </section>
 

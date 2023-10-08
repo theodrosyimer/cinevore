@@ -17,6 +17,8 @@ import {
   Image,
   Laptop,
   Loader2,
+  StarHalf,
+  Star,
   LucideProps,
   MessageCircle,
   Moon,
@@ -31,6 +33,7 @@ import {
   User,
   X,
   Film,
+  ListVideo,
   // type Icon as LucideIcon,
   type LucideIcon,
 } from "lucide-react"
@@ -67,6 +70,9 @@ export const Icons = {
   MoreVertical: MoreVertical,
   MoreHorizontal: MoreHorizontal,
   laptop: Laptop,
+  star: Star,
+  starHalf: StarHalf,
+  listVideo: ListVideo,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       aria-hidden="true"

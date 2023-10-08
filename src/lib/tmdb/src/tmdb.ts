@@ -10,6 +10,7 @@ export const globalConfig = {
   API_KEY: process.env.TMDB_API_KEY ?? '10473fa5b39f51105676dd9fd05a9af0',
   API_VERSION: (process.env.TMDB_API_VERSION as GlobalConfig['API_VERSION']) ?? '3',
   BASE_URI: process.env.TMDB_BASE_URI ?? 'https://api.themoviedb.org/3',
+  IMDB_BASE_URI: process.env.IMDB_BASE_URI ?? 'https://imdb.com/title',
   IMAGE_BASE_URI_HTTP: process.env.TMDB_IMAGE_BASE_URI_HTTP ?? 'http://image.tmdb.org/t/p',
   IMAGE_BASE_URI: process.env.TMDB_IMAGE_BASE_URI ?? 'https://image.tmdb.org/t/p',
   language: 'en-US',

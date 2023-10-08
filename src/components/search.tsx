@@ -11,10 +11,6 @@ import { HTMLAttributes, SyntheticEvent, useEffect, useRef, useState } from 'rea
 import { useDebounce } from "use-debounce"
 import { SearchMovieMulti, SearchPersonMulti, SearchTvShowMulti, TMDBSearchMulti, TMDBSearchMultiResult } from '@/lib/tmdb/types/tmdb-api'
 
-export type FuseResult<T> = Fuse.FuseResult<T>
-
-const names = ['Tim', 'Joe', 'Bel', 'Lee']
-
 interface SearchProps extends HTMLAttributes<HTMLFormElement> {}
 
 export function Search({ className, ...props }: SearchProps) {
