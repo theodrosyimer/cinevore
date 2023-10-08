@@ -4,12 +4,15 @@ import { MovieArtwork } from "@/components/films-artwork-slider"
 import { toast } from "@/components/ui/use-toast"
 import { movie } from "@/db-planetscale/movies"
 import { useFilms } from "@/hooks/useFilms-zod"
-import { slugify } from "@/lib/utils"
+import { handleSlug, slugify } from "@/lib/utils"
 import { useRouter } from "next/navigation"
+import { useCallback } from "react"
 
 export default function FilmCardList() {
   const router = useRouter()
   const { data: films, isLoading } = useFilms()
+
+  const handleTitleSlug = useCallback(handleSlug, [])
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -19,20 +22,8 @@ export default function FilmCardList() {
     return <div>No films found</div>
   }
 
-  function handleTitleSlug(title: string) {
-    const result = slugify(title)
-    if ('error' in result) {
-      console.log(result.error)
-      toast({
-        title: result.error.name,
-        description: result.error.message,
-      })
-      return
-    }
-    if (result) {
-      return slugify(title) as { slug: string }
-    }
-  }
+
+
   return (
     <>
       {films.results.map((film) => (

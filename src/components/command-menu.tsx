@@ -10,9 +10,7 @@ import {
 } from "@radix-ui/react-icons"
 import { useTheme } from "next-themes"
 import { useRouter } from "next/navigation"
-import * as React from "react"
 
-import { Button } from "@/components/ui/button"
 import {
   CommandDialog,
   CommandEmpty,
@@ -23,17 +21,19 @@ import {
   CommandSeparator,
 } from "@/components/ui/command"
 import { siteLayoutConfig } from "@/config/nav"
-import { cn } from "@/lib/utils"
-import { SelectUser } from "@/types/db"
 import { User } from "next-auth"
+import { useCallback, useEffect, useState } from "react"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { userNavigationConfig } from "@/config/user-navigation"
 
 export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
   const router = useRouter()
-  const [open, setOpen] = React.useState(false)
-  const [query, setQuery] = React.useState("")
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState("")
   const { setTheme } = useTheme()
 
-  React.useEffect(() => {
+  useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
@@ -45,7 +45,7 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
-  const runCommand = React.useCallback((command: () => unknown) => {
+  const runCommand = useCallback((command: () => unknown) => {
     setOpen(false)
     command()
   }, [])
@@ -56,7 +56,7 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
 
   return (
     <>
-      {/* <Button
+      <Button
         variant="outline"
         className={cn(
           "relative w-full justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64"
@@ -69,7 +69,7 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
         <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
           <span className="text-xs">⌘</span>K
         </kbd>
-      </Button> */}
+      </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
@@ -90,7 +90,7 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
           </CommandGroup>
           <CommandGroup heading="Links">
             {siteLayoutConfig.mainNav
-              .filter((navitem) => !navitem.external)
+              .filter((navitem) => !navitem.external || navitem.disabled)
               .map((navItem) => (
                 <CommandItem
                   key={navItem.href}
@@ -104,24 +104,27 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
                 </CommandItem>
               ))}
           </CommandGroup>
-          {siteLayoutConfig.sidebarNav.map((group) => (
-            <CommandGroup key={group.title} heading={group.title}>
-              {group.items.map((navItem) => (
-                <CommandItem
-                  key={navItem.href}
-                  value={navItem.title}
-                  onSelect={() => {
-                    runCommand(() => router.push(navItem.href as string))
-                  }}
-                >
-                  <div className="mr-2 flex h-4 w-4 items-center justify-center">
-                    <CircleIcon className="h-3 w-3" />
-                  </div>
-                  {navItem.title}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          ))}
+          {userNavigationConfig.sidebarNav
+            .map((group) => (
+              <CommandGroup key={group.title} heading={group.title}>
+                {group.items
+                  .filter((navitem) => !navitem.disabled || !navitem.external)
+                  .map((navItem) => (
+                    <CommandItem
+                      key={navItem.href}
+                      value={navItem.title}
+                      onSelect={() => {
+                        runCommand(() => router.push(navItem.href as string))
+                      }}
+                    >
+                      <div className="mr-2 flex h-4 w-4 items-center justify-center">
+                        <CircleIcon className="h-3 w-3" />
+                      </div>
+                      {navItem.title}
+                    </CommandItem>
+                  ))}
+              </CommandGroup>
+            ))}
           <CommandSeparator />
           <CommandGroup heading="Theme">
             <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>

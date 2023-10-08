@@ -3,8 +3,10 @@ import { MovieBackdrop } from "@/components/film-backdrop"
 import MovieReviewList from "@/components/film-review-list"
 import { MovieInfosTabs } from "@/components/film-tabs"
 import { Badge } from "@/components/ui/badge"
+import { buttonVariants } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
 import { UserMovieActions } from "@/components/user-movie-infos"
+import { getCurrentUser } from "@/lib/session"
 import { globalConfig, searchByID, searchByTitle } from "@/lib/tmdb/src/tmdb"
 import { generateTMDBImageUrl } from "@/lib/tmdb/src/utils"
 import { cn, convertMinutesToHoursAndMinutes } from "@/lib/utils"
@@ -26,7 +28,7 @@ export const metadata = {
 // }
 
 export default async function FilmPage({ params, searchParams }: { params: { title: string }, searchParams: { id: string } }) {
-
+  const { user } = await getCurrentUser()
   const film = await searchByID({ id: `${searchParams.id}`, category: 'movie' }).catch((error) => {
     toast({
       title: error.name,
@@ -60,7 +62,7 @@ export default async function FilmPage({ params, searchParams }: { params: { tit
               "sticky top-20 z-40 h-auto w-auto object-cover aspect-[3/4] rounded-md col-auto",
             )}
           />
-          <div className="grid gap-2 col-span-3 self-center justify-items-start">
+          <div className="grid gap-2 col-span-3 self-center">
             <h1 className="text-2xl font-bold text-start">
               {film?.title}
             </h1>
@@ -73,13 +75,13 @@ export default async function FilmPage({ params, searchParams }: { params: { tit
               <MovieInfosTabs
                 credits={film.credits}
                 genres={film.genres}
-                className="hidden sm:block" />
+                className="hidden sm:block w-full" />
             </section>
-            <span className="text-sm text-muted-foreground">{convertMinutesToHoursAndMinutes(film.runtime)}min. More at <Link href={`${globalConfig.BASE_URI}/movie/${film.id}`}>TMDB</Link > or <Link href={`${globalConfig.IMDB_BASE_URI}/${film.imdb_id}/maindetails`}>iMDB</Link >
+            <span className={cn("text-sm text-muted-foreground")}>{convertMinutesToHoursAndMinutes(film.runtime)}min. More at <Link href={`${globalConfig.BASE_URI}/movie/${film.id}`}>TMDB</Link > or <Link href={`${globalConfig.IMDB_BASE_URI}/${film.imdb_id}/maindetails`}>iMDB</Link >
             </span>
             <MovieReviewList />
           </div>
-          <UserMovieActions className="col-auto" />
+          {user ? <UserMovieActions className="col-auto" /> : null}
         </div>
       </div >
     </>

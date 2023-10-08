@@ -34,7 +34,7 @@ export async function SiteHeader() {
           </div>
           <nav className="flex place-items-center gap-2">
             {/* <ModeToggle /> */}
-            <UserCreateListButton size={'sm'} />
+            {/* <UserCreateListButton size={'sm'} /> */}
             {!user ?
               <nav>
                 <Link
@@ -47,14 +47,15 @@ export async function SiteHeader() {
                   Login
                 </Link>
               </nav>
-              :
-              <UserAccountNav
-                user={{
-                  name: user.name,
-                  image: user.image,
-                  email: user.email,
-                }}
-              />}
+              : null
+            }
+            <UserAccountNav
+              user={{
+                name: user?.name,
+                image: user?.image,
+                email: user?.email,
+              }}
+            />
           </nav>
         </div>
       </div>

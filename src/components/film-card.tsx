@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { MovieInfosPopover } from "@/components/user-movie-infos-popover"
 import { SearchMovie } from "@/lib/tmdb/types/tmdb-api"
 
 export function FilmCard({ film }: { film: SearchMovie }) {
@@ -21,7 +22,8 @@ export function FilmCard({ film }: { film: SearchMovie }) {
       </CardContent>
       <CardFooter>
       </CardFooter>
-      <MovieMenubar className="absolute bottom-0" />
+      {/* <MovieMenubar className="absolute bottom-0" /> */}
+      <MovieInfosPopover />
     </Card>
   )
 }

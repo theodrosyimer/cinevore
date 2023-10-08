@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link, { LinkProps } from "next/link"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { ViewVerticalIcon } from "@radix-ui/react-icons"
 
 import { siteLayoutConfig } from "@/config/nav"
@@ -102,6 +102,7 @@ function MobileLink({
   ...props
 }: MobileLinkProps) {
   const router = useRouter()
+  const pathname = usePathname()
   return (
     <Link
       href={href}
@@ -109,7 +110,11 @@ function MobileLink({
         router.push(href.toString())
         onOpenChange?.(false)
       }}
-      className={cn(className)}
+      className={cn('hover:text-foreground/100',
+        pathname === href
+          ? "text-foreground"
+          : "text-foreground/60",
+        className)}
       {...props}
     >
       {children}

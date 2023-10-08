@@ -20,6 +20,7 @@ import { Album } from "../data/albums"
 import { playlists } from "../data/playlists"
 import { SearchMovie, TMDBImageSizesCategory, TMDBImageSizesCategoryKey } from "@/lib/tmdb/types/tmdb-api"
 import { generateTMDBImageUrl } from "@/lib/tmdb/src/utils"
+import { MovieInfosPopover } from "@/components/user-movie-infos-popover"
 
 interface MovieArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
   movie: SearchMovie

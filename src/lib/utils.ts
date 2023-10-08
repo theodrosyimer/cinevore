@@ -1,3 +1,4 @@
+import { toast } from "@/components/ui/use-toast"
 import { KeysOf } from "@/types/utility"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
@@ -186,4 +187,19 @@ export const slugify = (text: string): { slug: string } | { error: Error } => {
   }
 
   return { slug: sanitizeString(_text) }
+}
+
+export function handleSlug(title: string) {
+  const result = slugify(title)
+  if ('error' in result) {
+    console.log(result.error)
+    toast({
+      title: result.error.name,
+      description: result.error.message,
+    })
+    return
+  }
+  if (result) {
+    return slugify(title) as { slug: string }
+  }
 }

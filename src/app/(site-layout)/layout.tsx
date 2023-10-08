@@ -17,7 +17,7 @@ export default async function SiteLayout({
       {/* <Header /> */}
       <SiteHeader />
       <Suspense fallback={<Loading />}>
-        <main className="container">{children}</main>
+        <main className="container md:py-12 ">{children}</main>
       </Suspense>
       <SiteFooter className="border-t mt-8" />
     </>

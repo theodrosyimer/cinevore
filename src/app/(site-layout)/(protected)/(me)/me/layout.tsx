@@ -1,4 +1,4 @@
-import { SidebarNav } from "@/app/(site-layout)/(protected)/me/settings/components/sidebar-nav"
+import { SidebarNav } from "@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/components/sidebar-nav"
 import Loading from "@/app/(site-layout)/loading"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
@@ -22,23 +22,22 @@ export default async function MeLayout({
   return (
     <>
 
-      <div className="container space-y-6 pb-16">
+      <div className="space-y-6 pb-16">
         {/* <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
           <p className="text-muted-foreground">
             Manage your account settings and set e-mail preferences.
           </p>
         </div> */}
-        {user ? <UserInfos /* user={user} */ /> : null}
-        <div className="grid gap-8">
-          {/* <UserNavigation items={userNavigationConfig.mainNav} /> */}
-        </div>
         {/* <Separator className="my-6" /> */}
-        <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-          <aside className="lg:w-1/5">
+        <div className="flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0">
+          <aside className="hidden md:block md:w-1/5">
             <SidebarNav items={userNavigationConfig.mainNav} />
           </aside>
-          <div className="flex-1 lg:max-w-2xl">{children}</div>
+          <div className="grid flex-1 gap-8 md:max-w-2xl">
+            {user ? <UserInfos user={user} /> : null}
+            {children}
+          </div>
         </div>
       </div>
     </>
