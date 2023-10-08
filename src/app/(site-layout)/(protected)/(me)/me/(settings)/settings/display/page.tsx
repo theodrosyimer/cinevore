@@ -1,8 +1,8 @@
-import { Separator } from "@/components/ui/separator"
-import { DisplayForm } from "@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/display/display-form"
-import { getCurrentUser } from "@/lib/session"
-import { redirect } from "next/navigation"
-import { authOptions } from "@/lib/auth"
+import { Separator } from '@/components/ui/separator';
+import { DisplayForm } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/display/display-form';
+import { getCurrentUser } from '@/lib/session';
+import { redirect } from 'next/navigation';
+import { authOptions } from '@/lib/auth';
 
 export default async function SettingsDisplayPage() {
   // const { user, isAdmin } = await getCurrentUser()
@@ -22,5 +22,5 @@ export default async function SettingsDisplayPage() {
       <Separator />
       <DisplayForm />
     </div>
-  )
+  );
 }

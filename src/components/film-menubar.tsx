@@ -1,19 +1,23 @@
-import { Icons } from "@/components/icons"
-import LikeIcon from "@/components/like-icon"
+import { Icons } from '@/components/icons';
+import LikeIcon from '@/components/like-icon';
 import {
   Menubar,
   MenubarCheckboxItem,
   MenubarContent,
   MenubarItem,
-  MenubarMenu, MenubarSeparator,
-  MenubarShortcut, MenubarTrigger
-} from "@/components/ui/menubar"
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from '@/components/ui/menubar';
 
 export function MovieMenubar({ ...className }: { className?: string }) {
   return (
     <Menubar>
       <MenubarMenu>
-        <MenubarTrigger><Icons.notWatched /></MenubarTrigger>
+        <MenubarTrigger>
+          <Icons.notWatched />
+        </MenubarTrigger>
         {/* <MenubarContent>
           <MenubarItem>
             New Tab <MenubarShortcut>⌘T</MenubarShortcut>
@@ -38,7 +42,9 @@ export function MovieMenubar({ ...className }: { className?: string }) {
         </MenubarContent> */}
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger><LikeIcon /></MenubarTrigger>
+        <MenubarTrigger>
+          <LikeIcon />
+        </MenubarTrigger>
         {/* <MenubarContent>
           <MenubarItem>
             Undo <MenubarShortcut>⌘Z</MenubarShortcut>
@@ -64,7 +70,9 @@ export function MovieMenubar({ ...className }: { className?: string }) {
         </MenubarContent> */}
       </MenubarMenu>
       <MenubarMenu>
-        <MenubarTrigger><Icons.MoreHorizontal /></MenubarTrigger>
+        <MenubarTrigger>
+          <Icons.MoreHorizontal />
+        </MenubarTrigger>
         <MenubarContent>
           <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>
           <MenubarCheckboxItem checked>
@@ -98,5 +106,5 @@ export function MovieMenubar({ ...className }: { className?: string }) {
         </MenubarContent>
       </MenubarMenu> */}
     </Menubar>
-  )
+  );
 }

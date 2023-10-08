@@ -1,27 +1,23 @@
-import { SidebarNav } from "@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/components/sidebar-nav"
-import Loading from "@/app/(site-layout)/loading"
-import { SiteFooter } from "@/components/site-footer"
-import { SiteHeader } from "@/components/site-header"
-import { UserInfos } from "@/components/user-infos"
-import { UserNavigation } from "@/components/user-navigation"
-import { settingsConfig } from "@/config/settings"
-import { userNavigationConfig } from "@/config/user-navigation"
-import { getCurrentUser } from "@/lib/session"
-import { Separator } from "@radix-ui/react-dropdown-menu"
+import { SidebarNav } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/components/sidebar-nav';
+import Loading from '@/app/(site-layout)/loading';
+import { SiteFooter } from '@/components/site-footer';
+import { SiteHeader } from '@/components/site-header';
+import { UserInfos } from '@/components/user-infos';
+import { UserNavigation } from '@/components/user-navigation';
+import { settingsConfig } from '@/config/settings';
+import { userNavigationConfig } from '@/config/user-navigation';
+import { getCurrentUser } from '@/lib/session';
+import { Separator } from '@radix-ui/react-dropdown-menu';
 // import { Footer } from "@/components/footer"
 
 interface MeLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
-export default async function MeLayout({
-  children,
-}: MeLayoutProps) {
-
-  const { user, isAdmin } = await getCurrentUser()
+export default async function MeLayout({ children }: MeLayoutProps) {
+  const { user, isAdmin } = await getCurrentUser();
 
   return (
     <>
-
       <div className="space-y-6 pb-16">
         {/* <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
@@ -41,5 +37,5 @@ export default async function MeLayout({
         </div>
       </div>
     </>
-  )
+  );
 }

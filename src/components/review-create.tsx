@@ -1,25 +1,25 @@
-"use client"
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { signIn } from "next-auth/react"
-import { useRouter, useSearchParams } from "next/navigation"
-import * as React from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import * as React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Icons } from "@/components/icons"
-import { buttonVariants } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "@/components/ui/use-toast"
-import { cn } from "@/lib/utils"
-import { insertListSchema } from "@/lib/validations/list"
-import { getCurrentUser } from "@/lib/session"
-import { Textarea } from "@/components/ui/textarea"
+import { Icons } from '@/components/icons';
+import { buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { toast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/utils';
+import { insertListSchema } from '@/lib/validations/list';
+import { getCurrentUser } from '@/lib/session';
+import { Textarea } from '@/components/ui/textarea';
 
 interface NewListFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-type FormData = z.infer<typeof insertListSchema>
+type FormData = z.infer<typeof insertListSchema>;
 
 export function NewReviewForm({ className, ...props }: NewListFormProps) {
   const {
@@ -28,49 +28,47 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(insertListSchema),
-  })
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  });
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   async function onSubmit(data: FormData) {
-    setIsLoading(true)
+    setIsLoading(true);
 
     const response = await fetch(`${process.env.SERVER_URL}/api/lists`, {
       method: 'POST',
-    }).catch(error => {
+    }).catch((error) => {
       toast({
         title: 'Server error. Please try later.',
         description: `${error.message}`,
-        variant: 'destructive'
-      })
-      return
-    })
+        variant: 'destructive',
+      });
+      return;
+    });
 
-    setIsLoading(false)
+    setIsLoading(false);
 
     if (!response?.ok) {
       toast({
-        title: "Something went wrong.",
-        description: "Your list was not created. Please try again.",
-        variant: "destructive",
-      })
-      return router.push("/list/new")
+        title: 'Something went wrong.',
+        description: 'Your list was not created. Please try again.',
+        variant: 'destructive',
+      });
+      return router.push('/list/new');
     }
 
     toast({
       title: `List "${data.title}" created.`,
-      description: "Your account has been created.",
-    })
-    return router.push(response?.url ?? "/me")
+      description: 'Your account has been created.',
+    });
+    return router.push(response?.url ?? '/me');
   }
 
   return (
-    <div className={cn("", className)} {...props}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="grid gap-2">
+    <div className={cn('', className)} {...props}>
+      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
         <div className="grid gap-2 md:grid-cols-2">
           <div className="grid gap-2 items-start">
             <div className="grid gap-2">
@@ -87,7 +85,7 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
                   autoCorrect="off"
                   autoFocus
                   disabled={isLoading || isGitHubLoading}
-                  {...register("title")}
+                  {...register('title')}
                 />
                 {errors?.title && (
                   <p className="px-1 text-xs text-red-600">
@@ -108,7 +106,7 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
                   autoCorrect="off"
                   autoFocus
                   disabled={isLoading || isGitHubLoading}
-                  {...register("isPrivate")}
+                  {...register('isPrivate')}
                 />
                 {errors?.isPrivate && (
                   <p className="px-1 text-xs text-red-600">
@@ -122,11 +120,12 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
             <Label className="sr-only" htmlFor="description">
               Description
             </Label>
-            <Textarea placeholder="Type your description here."
+            <Textarea
+              placeholder="Type your description here."
               id="description"
               disabled={isLoading || isGitHubLoading}
               className="h-64"
-              {...register("description")}
+              {...register('description')}
             />
             {errors?.description && (
               <p className="px-1 text-xs text-red-600">
@@ -136,7 +135,10 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
           </div>
         </div>
         <div className="flex justify-end gap-4">
-          <button className={cn(buttonVariants({ variant: "secondary" }))} disabled={isLoading}>
+          <button
+            className={cn(buttonVariants({ variant: 'secondary' }))}
+            disabled={isLoading}
+          >
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
@@ -176,5 +178,5 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
         Github
       </button> */}
     </div>
-  )
+  );
 }

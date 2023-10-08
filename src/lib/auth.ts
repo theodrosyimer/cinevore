@@ -1,26 +1,26 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter"
-import { NextAuthOptions } from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import GitHubProvider from "next-auth/providers/github"
+import { DrizzleAdapter } from '@auth/drizzle-adapter';
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import GitHubProvider from 'next-auth/providers/github';
 // import EmailProvider from "next-auth/providers/email"
 // import { Client } from "postmark"
 // import { env } from "@env.mjs"
-import { hashPassword, validateUserPassword } from "@/lib/bcrypt"
-import { db } from "@/lib/db"
-import UsersModel from "@/models/users"
-import * as dotenv from "dotenv"
-dotenv.config()
+import { hashPassword, validateUserPassword } from '@/lib/bcrypt';
+import { db } from '@/lib/db';
+import UsersModel from '@/models/users';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 // const postmarkClient = new Client(process.env.POSTMARK_API_TOKEN)
 
 export const authOptions: NextAuthOptions = {
   adapter: DrizzleAdapter(db),
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
   pages: {
-    signIn: "/login",
-    newUser: "/register",
+    signIn: '/login',
+    newUser: '/register',
   },
   providers: [
     GitHubProvider({
@@ -28,58 +28,59 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
         email: {
-          label: "Email",
-          type: "email",
-          placeholder: "theo@example.com",
+          label: 'Email',
+          type: 'email',
+          placeholder: 'theo@example.com',
         },
         name: {
-          label: "Name",
-          type: "text",
-          placeholder: "Theo",
+          label: 'Name',
+          type: 'text',
+          placeholder: 'Theo',
         },
         password: {
-          label: "Password",
-          type: "password",
+          label: 'Password',
+          type: 'password',
         },
       },
       async authorize(credentials) {
         if (!credentials) {
-          return null
+          return null;
         }
 
-        let [dbUser] = await UsersModel.getByEmail(credentials.email)
+        let [dbUser] = await UsersModel.getByEmail(credentials.email);
 
         if (!dbUser) {
-          const hashedPassword = await hashPassword(credentials.password)
+          const hashedPassword = await hashPassword(credentials.password);
 
           if (!hashedPassword) {
             // throw new Error("Failed to hash password")
-            return null
+            return null;
           }
 
           await UsersModel.create({
             email: credentials.email,
             password: hashedPassword,
             name: credentials.name,
-          })
+          });
 
-          const results = await UsersModel.getByEmail(credentials.email)
+          const results = await UsersModel.getByEmail(credentials.email);
 
-          dbUser = results[0]
+          dbUser = results[0];
         }
 
         if (dbUser?.password) {
-          if (await validateUserPassword(credentials.password, dbUser.password)) {
-            return dbUser
-          }
-          else {
-            return null
+          if (
+            await validateUserPassword(credentials.password, dbUser.password)
+          ) {
+            return dbUser;
+          } else {
+            return null;
           }
         }
-        return null
+        return null;
       },
     }),
     // EmailProvider({
@@ -127,31 +128,28 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ token, session }) {
-
       if (token && session.user) {
-        session.user.id = token.id
-        session.user.name = token.name
-        session.user.email = token.email
-        session.user.image = token.image
-        session.user.role = token.role
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.image = token.image;
+        session.user.role = token.role;
       }
 
-      return session
+      return session;
     },
     async jwt({ token, user }) {
-
-      const [dbUser] = await UsersModel.getByEmail(token.email as string)
+      const [dbUser] = await UsersModel.getByEmail(token.email as string);
 
       if (!dbUser) {
         if (user) {
-
-          token.id = user?.id
-          token.name = user?.name
-          token.email = user?.email
-          token.image = user?.image
-          token.role = user?.role
+          token.id = user?.id;
+          token.name = user?.name;
+          token.email = user?.email;
+          token.image = user?.image;
+          token.role = user?.role;
         }
-        return token
+        return token;
       }
       return {
         id: dbUser.id,
@@ -159,7 +157,7 @@ export const authOptions: NextAuthOptions = {
         email: dbUser.email,
         image: dbUser.image,
         role: dbUser.role,
-      }
+      };
     },
   },
-}
+};

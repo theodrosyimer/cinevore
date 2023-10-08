@@ -1,12 +1,12 @@
-"use client"
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Icons } from "@/components/icons"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Icons } from '@/components/icons';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
-import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from '@/lib/utils';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -15,51 +15,53 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { toast } from "@/components/ui/use-toast"
-import { useTheme } from "next-themes"
+} from '@/components/ui/form';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { toast } from '@/components/ui/use-toast';
+import { useTheme } from 'next-themes';
 
 const appearanceFormSchema = z.object({
-  theme: z.enum(["light", "dark"], {
-    required_error: "Please select a theme.",
+  theme: z.enum(['light', 'dark'], {
+    required_error: 'Please select a theme.',
   }),
-  font: z.enum(["inter", "manrope", "system"], {
-    invalid_type_error: "Select a font",
-    required_error: "Please select a font.",
+  font: z.enum(['inter', 'manrope', 'system'], {
+    invalid_type_error: 'Select a font',
+    required_error: 'Please select a font.',
   }),
-})
+});
 
-type AppearanceFormValues = z.infer<typeof appearanceFormSchema>
+type AppearanceFormValues = z.infer<typeof appearanceFormSchema>;
 // This can come from your database or API.
 
 const defaultValues: Partial<AppearanceFormValues> = {
-  theme: "dark",
-  font: "inter",
-}
+  theme: 'dark',
+  font: 'inter',
+};
 
 export function AppearanceForm() {
-  const { setTheme, resolvedTheme } = useTheme()
+  const { setTheme, resolvedTheme } = useTheme();
   const defaultValues: Partial<AppearanceFormValues> = {
-    theme: resolvedTheme as AppearanceFormValues["theme"] ?? "dark" as AppearanceFormValues["theme"],
-  }
+    theme:
+      (resolvedTheme as AppearanceFormValues['theme']) ??
+      ('dark' as AppearanceFormValues['theme']),
+  };
 
   const form = useForm<AppearanceFormValues>({
     resolver: zodResolver(appearanceFormSchema),
     defaultValues,
-  })
+  });
 
   function onSubmit(data: AppearanceFormValues) {
-    console.log('DATA:', data)
-    setTheme(data.theme)
+    console.log('DATA:', data);
+    setTheme(data.theme);
     toast({
-      title: "You submitted the following values:",
+      title: 'You submitted the following values:',
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
-    })
+    });
   }
 
   return (
@@ -75,8 +77,8 @@ export function AppearanceForm() {
                 <FormControl>
                   <select
                     className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "w-[200px] appearance-none bg-transparent font-normal"
+                      buttonVariants({ variant: 'outline' }),
+                      'w-[200px] appearance-none bg-transparent font-normal'
                     )}
                     {...field}
                   >
@@ -170,5 +172,5 @@ export function AppearanceForm() {
         <Button type="submit">Update preferences</Button>
       </form>
     </Form>
-  )
+  );
 }

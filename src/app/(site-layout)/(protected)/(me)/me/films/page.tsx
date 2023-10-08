@@ -1,20 +1,21 @@
-import FilmCardList from "@/components/film-card-list"
-import { authOptions } from "@/lib/auth"
-import { getCurrentUser } from "@/lib/session"
-import { redirect } from "next/navigation"
+import FilmCardList from '@/components/film-card-list';
+import { authOptions } from '@/lib/auth';
+import { getCurrentUser } from '@/lib/session';
+import { redirect } from 'next/navigation';
 
 export const metadata = {
-  title: "Films Page",
-  description: "All your films in one place.",
-}
+  title: 'Films Page',
+  description: 'All your films in one place.',
+};
 
-export default async function UserFilmsPage({ params }: {
+export default async function UserFilmsPage({
+  params,
+}: {
   params: {
-    username: string,
-    id: number
-  }
+    username: string;
+    id: number;
+  };
 }) {
-
   // const { user, isAdmin } = await getCurrentUser()
 
   // if (!user) {
@@ -23,12 +24,13 @@ export default async function UserFilmsPage({ params }: {
 
   return (
     <>
-      <h1 className="text-4xl font-bold text-center">Your movies {params.username}</h1>
+      <h1 className="text-4xl font-bold text-center">
+        Your movies {params.username}
+      </h1>
 
       <section className="flex space-x-4 pb-4">
         <FilmCardList />
       </section>
-
     </>
-  )
+  );
 }

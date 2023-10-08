@@ -1,40 +1,41 @@
-import { SettingsConfig } from "@/types"
+import { SettingsConfig } from '@/types';
 
 export const settingsConfig: SettingsConfig = {
   sidebarNav: [
     {
-      title: "Profile",
-      href: "/me/settings",
+      title: 'Profile',
+      href: '/me/settings',
       items: [],
     },
     {
-      title: "Password",
-      href: "/me/settings/password",
+      title: 'Password',
+      href: '/me/settings/password',
       items: [],
     },
     {
-      title: "Account",
-      href: "/me/settings/account",
+      title: 'Account',
+      href: '/me/settings/account',
       items: [],
     },
     {
-      title: "Avatar",
-      href: "/me/settings/avatar",
+      title: 'Avatar',
+      href: '/me/settings/avatar',
       items: [],
     },
     {
-      title: "Appearance",
-      href: "/me/settings/appearance",
+      title: 'Appearance',
+      href: '/me/settings/appearance',
       items: [],
     },
     {
-      title: "Notifications",
-      href: "/me/settings/notifications",
+      title: 'Notifications',
+      href: '/me/settings/notifications',
       items: [],
     },
     {
-      title: "Display",
-      href: "/me/settings/display",
+      title: 'Display',
+      href: '/me/settings/display',
       items: [],
-    },]
-}
+    },
+  ],
+};

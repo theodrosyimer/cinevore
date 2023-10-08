@@ -1,13 +1,13 @@
-type IconType = 'app' | 'settings' | 'user' | 'trash' | {} & string
+type IconType = 'app' | 'settings' | 'user' | 'trash' | ({} & string);
 
 type IconProps = {
-  icon: IconType
-}
+  icon: IconType;
+};
 
 const Icon = (props: IconProps) => {
-  return null
-}
+  return null;
+};
 
 <>
-  <Icon icon=''></Icon >
-</>
+  <Icon icon=""></Icon>
+</>;

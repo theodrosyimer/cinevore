@@ -1,9 +1,9 @@
-import { Separator } from "@/components/ui/separator"
-import { AccountForm } from "@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/account/account-form"
+import { Separator } from '@/components/ui/separator';
+import { AccountForm } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/account/account-form';
 
-import { getCurrentUser } from "@/lib/session"
-import { redirect } from "next/navigation"
-import { authOptions } from "@/lib/auth"
+import { getCurrentUser } from '@/lib/session';
+import { redirect } from 'next/navigation';
+import { authOptions } from '@/lib/auth';
 
 export default async function SettingsAccountPage() {
   // const { user, isAdmin } = await getCurrentUser()
@@ -24,5 +24,5 @@ export default async function SettingsAccountPage() {
       <Separator />
       <AccountForm />
     </div>
-  )
+  );
 }
