@@ -1,6 +1,5 @@
 'use client'
 
-import { Film } from "@/hooks/useFilm-zod"
 import {
   Card,
   CardContent,
@@ -9,15 +8,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Movie } from "@/lib/tmdb/types/types"
 
-export function FilmCard({ film }: { film: Film }) {
+export function FilmCard({ film }: { film: Movie }) {
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-lg">{JSON.stringify(film.title)}</CardTitle>
         <CardDescription></CardDescription>
       </CardHeader>
-      <CardContent className="text-sm">{JSON.stringify(film.opening_crawl)}</CardContent>
+      <CardContent className="text-sm">{JSON.stringify(film.overview)}</CardContent>
       <CardFooter></CardFooter>
     </Card>
   )

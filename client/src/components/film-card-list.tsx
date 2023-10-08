@@ -16,8 +16,8 @@ export default function FilmCardList() {
 
   return (
     <div className="container grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-      {films.map((film) => (
-        <FilmCard key={film.episode_id} film={film} />
+      {films.results.map((film) => (
+        <FilmCard key={film.id} film={film} />
       ))}
     </div>
   )

@@ -2,7 +2,7 @@ import type { NextRequest, NextResponse } from 'next/server'
 
 import { deleteFile, sendErrorResponse } from '@/lib/utils.js'
 import { UPLOADS_DIRECTORY } from '@/server.js'
-import UsersModel from '@/drizzle/users'
+import UsersModel from '@/models/users'
 import { useSearchParams } from 'next/navigation'
 
 export const uploadFiles = async (req: NextRequest, res: NextResponse) => {

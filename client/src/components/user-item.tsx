@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { movieReview } from "@/drizzle/schema"
+import { movieReview } from "@/schema"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"

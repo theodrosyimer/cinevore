@@ -12,7 +12,7 @@ export const metadata = {
 }
 
 export default async function SettingsPage() {
-  const user = await getCurrentUser()
+  const { user, isAdmin } = await getCurrentUser()
 
   return (
     <DashboardShell>

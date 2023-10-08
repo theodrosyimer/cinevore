@@ -15,7 +15,7 @@ export default async function DiaryPage({ params }: {
   }
 }) {
 
-  // const user = await getCurrentUser()
+  // const { user, isAdmin } = await getCurrentUser()
 
   return (
     <>

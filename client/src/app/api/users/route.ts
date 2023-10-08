@@ -1,41 +1,74 @@
 import * as z from "zod"
 
+import { hashPassword } from "@/lib/bcrypt"
 import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
-import { getUserSubscriptionPlan } from "@/lib/subscription"
-import UsersModel from "@/drizzle/users"
 import { getCurrentUser } from "@/lib/session"
-import { hashPassword } from "@/lib/bcrypt"
-import { getTableStatus } from "@/lib/db"
+import { userPostSchema } from "@/lib/validations/user"
+import UsersModel from "@/models/users"
+import { user } from "@/schema"
+import { formatSimpleErrorMessage } from "@/lib/utils"
 
-const userCreateSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8).max(25),
-  name: z.string().min(2).max(50),
-})
 export async function GET() {
   try {
-    const user = await getCurrentUser()
+    const { user, isAdmin } = await getCurrentUser()
 
-    if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
-      return new Response("Unauthorized", { status: 403 })
-    }
+    // if (!user || !isAdmin) {
+    //   return new Response("Unauthorized", { status: 403 })
+    // }
+
+    // console.log('Before DB query')
+
+    /*
+    const users = await db.query.user.findMany({
+      columns: {},
+      with: {
+        list: true,
+      },
+       })
+    */
 
     const users = await UsersModel.getAll()
 
+    if (!users || !users[0]) {
+      return new Response('User with list not found', { status: 404 })
+    }
+    console.log(users)
+
     return new Response(JSON.stringify(users))
   } catch (error) {
+    if (error instanceof Error) {
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
+    }
+
     return new Response(null, { status: 500 })
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const user = await getCurrentUser()
+    const { isAdmin } = await getCurrentUser()
 
-    if (!user || !(user?.role === "admin" || user?.role === "superadmin")) {
+    if (!isAdmin) {
       return new Response("Unauthorized", { status: 403 })
     }
+
+    const json = await req.json()
+    const body = userPostSchema.parse(json)
+    let hashedPassword = null
+
+    if (body?.password) {
+      hashedPassword = await hashPassword(body?.password)
+    }
+
+    await db.insert(user).values({
+      ...body,
+      // have to cast out `void` type returned from `hashPassword`
+      password: hashedPassword ?? null,
+    })
+
+    return new Response('User created successfully', { status: 201 })
 
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -46,6 +79,11 @@ export async function POST(req: Request) {
       return new Response("Requires Pro Plan", { status: 402 })
     }
 
-    return new Response(null, { status: 500 })
+    if (error instanceof Error) {
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
+    }
+
+    return new Response(`Error creating a user from the database.`, { status: 500 })
   }
 }

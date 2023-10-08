@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 
 export default async function SettingsAccountPage() {
-  // const user = await getCurrentUser()
+  // const { user, isAdmin } = await getCurrentUser()
 
   // if (!user) {
   //   redirect(authOptions?.pages?.signIn || "/login")

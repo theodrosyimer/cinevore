@@ -12,7 +12,7 @@ import { getCurrentUser } from "@/lib/session"
 import { notFound } from "next/navigation"
 
 export async function Header() {
-  const user = await getCurrentUser()
+  const { user, isAdmin } = await getCurrentUser()
 
   // if (!user) {
   //   return notFound()

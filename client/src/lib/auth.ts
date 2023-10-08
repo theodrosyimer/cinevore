@@ -5,9 +5,9 @@ import CredentialsProvider from "next-auth/providers/credentials"
 // import EmailProvider from "next-auth/providers/email"
 // import { Client } from "postmark"
 
-import { env } from "@/env.mjs"
+import { env } from "@env.mjs"
 import { db } from "@/lib/db"
-import UsersModel from "@/drizzle/users"
+import UsersModel from "@/models/users"
 import { hashPassword, validateUserPassword } from "@/lib/bcrypt"
 
 // const postmarkClient = new Client(env.POSTMARK_API_TOKEN)
