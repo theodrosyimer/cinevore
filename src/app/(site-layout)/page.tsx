@@ -1,15 +1,17 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 // import { env } from "@env.mjs"
-import { siteConfig } from '@/config/site';
-import { cn } from '@/lib/utils';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { getCurrentUser } from '@/lib/session';
-import { redirect } from 'next/navigation';
-import { authOptions } from '@/lib/auth';
-import { globalConfig, getPopular } from '@/lib/tmdb/src/tmdb';
-import Image from 'next/image';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { siteConfig } from '@/config/site'
+import { cn } from '@/lib/utils'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { getCurrentUser } from '@/lib/session'
+import { redirect } from 'next/navigation'
+import { authOptions } from '@/lib/auth'
+import { globalConfig, getPopular } from '@/lib/tmdb/src/tmdb'
+import Image from 'next/image'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { MovieBackdrop } from '@/components/film-backdrop'
+import FilmCardList from '@/components/film-card-list'
 
 export default function IndexPage() {
   // const stars = await getGitHubStars()
@@ -18,9 +20,9 @@ export default function IndexPage() {
 
   return (
     <>
-      <AspectRatio ratio={16 / 9} />
-      <section className="mt-[-24rem] grid w-full justify-center">
-        <div className="w-[36rem] grid gap-4">
+      <MovieBackdrop url={`${globalConfig.IMAGE_BASE_URI}/w1280/huD4cMhHtLkxcdM6PbKBcivBZuE.jpg`} altText='' className='absolute top-0 rounded-b-md brightness-50 blur-[2px]' />
+      <section className="grid relative w-full justify-center">
+        <div className="absolute z-40 w-[36rem] mt-[-24rem] grid gap-6">
           <h1 className="text-4xl font-bold text-center">
             Track films you&apos;ve watched.
             <br />
@@ -30,13 +32,14 @@ export default function IndexPage() {
             <br />
             Tell your friends what you think.
           </h1>
-
-          <div className="flex place-self-end gap-4 pr-16">
+          <p className="text-center text-muted-foreground">
+            Cinevore, the social network for film lovers. Join us today!
+          </p>
+          <div className="flex justify-center gap-4">
             <Link
               href="/register"
               className={cn(
-                'text-primary-background  bg-secondary ',
-                buttonVariants({ variant: 'secondary' })
+                buttonVariants({ variant: 'default' })
               )}
             >
               Get Started
@@ -44,18 +47,20 @@ export default function IndexPage() {
             <Link
               href="/register"
               className={cn(
-                'text-primary-background  bg-secondary ',
                 buttonVariants({ variant: 'secondary' })
               )}
             >
               Get Started
             </Link>
           </div>
-          <p className="text-center text-muted-foreground">
-            Cinevore, the social network for film lovers.
-          </p>
+
+        </div>
+      </section>
+      <section>
+        <div className="grid gap-4 grid-cols-7">
+          <FilmCardList limit={7} />
         </div>
       </section>
     </>
-  );
+  )
 }
