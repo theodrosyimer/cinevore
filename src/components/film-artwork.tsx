@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import * as dotenv from 'dotenv';
-dotenv.config();
-import Image from 'next/image';
-import { PlusCircledIcon } from '@radix-ui/react-icons';
+import * as dotenv from 'dotenv'
+dotenv.config()
+import Image from 'next/image'
+import { PlusCircledIcon } from '@radix-ui/react-icons'
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils'
 import {
   ContextMenu,
   ContextMenuContent,
@@ -14,77 +14,92 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from '@/components/ui/context-menu';
+} from '@/components/ui/context-menu'
 
-import { Album } from '../data/albums';
-import { playlists } from '../data/playlists';
+import { Album } from '../data/albums'
+import { playlists } from '../data/playlists'
 import {
   SearchMovie,
   TMDBImageSizesCategory,
   TMDBImageSizesCategoryKey,
-} from '@/lib/tmdb/types/tmdb-api';
-import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils';
-import { MovieInfosPopover } from '@/components/user-movie-infos-popover';
+} from '@/lib/tmdb/types/tmdb-api'
+import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
+import { MovieInfosPopover } from '@/components/user-movie-infos-popover'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
 
-interface MovieArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
-  movie: SearchMovie;
-  movieId: string;
-  aspectRatio?: 'portrait' | 'square';
-  width?: number;
-  height?: number;
-  layout?: 'fill' | 'fixed' | 'responsive' | 'intrinsic';
+export interface MovieArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
+  movie: SearchMovie
+  movieId: string
+  aspectRatio: 'portrait' | 'video'
+  width: TMDBImageSizesCategory[keyof TMDBImageSizesCategory]
+  // width: LT<T>
+  height?: number
+  layout?: 'fill' | 'fixed' | 'responsive' | 'intrinsic'
 }
 
+type T = TMDBImageSizesCategory[keyof TMDBImageSizesCategory]
+
+type LT<T extends string> = T extends `w${infer Width}` ? Width : never
+
+let a: LT<T> = '154'
+export type MovieArtworkPropsX<TImageFormat extends keyof TMDBImageSizesCategory> = MovieArtworkProps & {
+  aspectRatio: TImageFormat
+  width: TMDBImageSizesCategory[TImageFormat]
+}
 export function MovieArtwork({
   movie,
   movieId,
-  aspectRatio = 'portrait',
+  aspectRatio,
   width,
   height,
   layout,
   className,
   ...props
 }: MovieArtworkProps) {
-  let imageUrl;
+  let imageUrl
 
-  let kind: TMDBImageSizesCategoryKey;
-  let size: TMDBImageSizesCategory[typeof kind] = 'w300';
+  let kind: TMDBImageSizesCategoryKey
+  let size: TMDBImageSizesCategory[typeof kind] = 'w300'
 
+  console.log('WIDTH:', width)
   if (aspectRatio === 'portrait') {
-    kind = 'poster_sizes';
-    size = 'w154';
-    imageUrl = generateTMDBImageUrl(kind, size, movie.poster_path!);
+    kind = 'poster_sizes'
+    // size = 'w154'
+    imageUrl = generateTMDBImageUrl({ format: kind, size: width, defaultImage: movie.poster_path! })
     // console.log('Image URL:', imageUrl)
   }
 
-  if (aspectRatio === 'square') {
-    kind = 'backdrop_sizes';
-    size = 'w300';
-    imageUrl = generateTMDBImageUrl(kind, size, movie.backdrop_path!);
+  if (aspectRatio === 'video') {
+    kind = 'backdrop_sizes'
+    // size = 'w300'
+    imageUrl = generateTMDBImageUrl({ format: kind, size: width, defaultImage: movie.backdrop_path! })
     // console.log('Image URL:', imageUrl)
   }
-  console.log(size.slice(1));
+
   return (
     <div className={cn('space-y-3', className)} {...props}>
       <ContextMenu>
         <ContextMenuTrigger>
           <div className="overflow-hidden rounded-md">
+            {/* <AspectRatio ratio={16 / 9} className={cn('bg-muted', className)}> */}
             <img
               src={imageUrl!}
               alt={movie.title!}
-              width={+size.slice(1)}
+              width={width}
               height={height}
               lang="en"
               className={cn(
                 'h-auto w-auto object-cover transition-all hover:scale-105',
-                aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square',
+                aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-video',
                 `w-[${size.slice(1)}px]`
               )}
             />
+            {/* </AspectRatio> */}
+
           </div>
         </ContextMenuTrigger>
         <ContextMenuContent className="w-40">
-          <ContextMenuItem>Add to Library</ContextMenuItem>
+          <ContextMenuItem>Add to Watchlist</ContextMenuItem>
           <ContextMenuSub>
             <ContextMenuSubTrigger>Add to List</ContextMenuSubTrigger>
             <ContextMenuSubContent className="w-48">
@@ -117,8 +132,8 @@ export function MovieArtwork({
           <ContextMenuItem>Play Later</ContextMenuItem>
           <ContextMenuItem>Create Station</ContextMenuItem>
           <ContextMenuSeparator />
+          <ContextMenuItem>Review</ContextMenuItem>
           <ContextMenuItem>Like</ContextMenuItem>
-          <ContextMenuItem>Share</ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
       {/* <div className="space-y-1 text-sm">
@@ -126,5 +141,5 @@ export function MovieArtwork({
         <p className="text-xs text-muted-foreground">Popularity:{movie.popularity}</p>
       </div> */}
     </div>
-  );
+  )
 }

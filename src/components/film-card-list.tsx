@@ -1,25 +1,39 @@
-'use client';
+'use client'
 
-import { MovieArtwork } from '@/components/films-artwork-slider';
-import { toast } from '@/components/ui/use-toast';
-import { movie } from '@/db-planetscale/movies';
-import { useFilms } from '@/hooks/useFilms-zod';
-import { handleSlug, slugify } from '@/lib/utils';
-import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
+import Loading from '@/app/(site-layout)/loading'
+import { CardSkeleton } from '@/components/card-skeleton'
+import { MovieArtwork, MovieArtworkProps } from '@/components/film-artwork'
+import { toast } from '@/components/ui/use-toast'
+import { movie } from '@/db-planetscale/movies'
+import { useFilms } from '@/hooks/useFilms-zod'
+import { getImageFormatSize } from '@/lib/tmdb/src/utils'
+import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
+import { cn, handleSlug, slugify } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
+import { useCallback } from 'react'
 
-export default function FilmCardList() {
-  const router = useRouter();
-  const { data: films, isLoading } = useFilms();
+export type FilmCardProps = Pick<MovieArtworkProps, 'aspectRatio'> & {
+  limit?: number,
+  className?: string
+  width: TMDBImageSizesCategory[keyof TMDBImageSizesCategory]
+}
 
-  const handleTitleSlug = useCallback(handleSlug, []);
+export function FilmCardList({ limit = 14, className, aspectRatio, width }: FilmCardProps = {} as MovieArtworkProps) {
+  const router = useRouter()
+  const { data: films, isLoading } = useFilms()
+
+  const handleTitleSlug = useCallback(handleSlug, [])
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <CardSkeleton />
   }
 
   if (!films) {
-    return <div>No films found</div>;
+    return <div>No films found</div>
+  }
+
+  if (limit) {
+    films.results = films.results.slice(0, limit)
   }
 
   return (
@@ -30,19 +44,18 @@ export default function FilmCardList() {
           key={film.id}
           movieId={film.id.toString()}
           movie={film}
-          className=""
-          aspectRatio="portrait"
-          // layout="fill"
-          width={250}
-          height={330}
+          className={cn('', className)}
+          aspectRatio={aspectRatio ?? 'portrait'}
+          width={getImageFormatSize('poster_sizes', width)}
+          height={120}
           onClick={(e) => {
-            e.preventDefault();
+            e.preventDefault()
             router.push(
               `/film/${handleTitleSlug(film?.title ?? '')?.slug}/?id=${film.id}`
-            );
+            )
           }}
         />
       ))}
     </>
-  );
+  )
 }

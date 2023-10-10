@@ -1,6 +1,6 @@
 {
   "extends": [
-    // "plugin:@tanstack/eslint-plugin-query/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
     // "plugin:@next/next/recommended",
     // "next",
     // "next/babel",

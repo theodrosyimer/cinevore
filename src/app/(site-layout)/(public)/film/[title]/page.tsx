@@ -1,40 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
-import { MovieBackdrop } from '@/components/film-backdrop';
-import MovieReviewList from '@/components/film-review-list';
-import { MovieInfosTabs } from '@/components/film-tabs';
-import { Badge } from '@/components/ui/badge';
-import { buttonVariants } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-import { UserMovieActions } from '@/components/user-movie-infos';
-import { getCurrentUser } from '@/lib/session';
-import { globalConfig, searchByID, searchByTitle } from '@/lib/tmdb/src/tmdb';
-import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils';
-import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils';
-import Link from 'next/link';
-import { notFound, useSearchParams } from 'next/navigation';
+import { MovieBackdrop } from '@/components/film-backdrop'
+import MovieReviewList from '@/components/film-review-list'
+import { MovieInfosTabs } from '@/components/film-tabs'
+import { Badge } from '@/components/ui/badge'
+import { buttonVariants } from '@/components/ui/button'
+import { toast } from '@/components/ui/use-toast'
+import { UserMovieActions } from '@/components/user-movie-infos'
+import { getCurrentUser } from '@/lib/session'
+import { globalConfig, searchByID, searchByTitle } from '@/lib/tmdb/src/tmdb'
+import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
+import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils'
+import Link from 'next/link'
+import { notFound, useSearchParams } from 'next/navigation'
 
 export const metadata = {
-  title: "Film's Details Page",
+  title: "Film Details ",
   description: 'All the details of the film you searched for.',
-};
-
-// type Params = { infos: string }
-// export function generateStaticParams() {
-//   return [
-//     { category: 'a', product: '1' },
-//     { category: 'b', product: '2' },
-//     { category: 'c', product: '3' },
-//   ]
-// }
+}
 
 export default async function FilmPage({
   params,
   searchParams,
 }: {
-  params: { title: string };
-  searchParams: { id: string };
+  params: { title: string }
+  searchParams: { id: string }
 }) {
-  const { user } = await getCurrentUser();
+  const { user } = await getCurrentUser()
   const film = await searchByID({
     id: `${searchParams.id}`,
     category: 'movie',
@@ -42,25 +33,31 @@ export default async function FilmPage({
     toast({
       title: error.name,
       description: error.message,
-    });
-    return;
-  });
+    })
+    return
+  })
 
   if (!film) {
-    return notFound();
+    return notFound()
   }
 
   // console.log('Film:', film)
   const backdropImageUrl = generateTMDBImageUrl(
-    'backdrop_sizes',
-    'w1280',
-    film.images?.backdrops[0]?.file_path!
-  );
+    {
+      format: 'backdrop_sizes',
+      size: 'w1280',
+      paths: film.images?.backdrops,
+      defaultImage: film.backdrop_path
+    }
+  )
   const posterImageUrl = generateTMDBImageUrl(
-    'poster_sizes',
-    'w185',
-    film.images?.posters[1]?.file_path!
-  );
+    {
+      format: 'poster_sizes',
+      size: 'w185',
+      paths: film.images?.posters,
+      defaultImage: film.poster_path
+    }
+  )
   // console.log('Image URL:', imageUrl)
 
   return (
@@ -103,11 +100,11 @@ export default async function FilmPage({
                 iMDB
               </Link>
             </span>
-            <MovieReviewList />
+            {/* <MovieReviewList /> */}
           </div>
           {user ? <UserMovieActions className="col-auto" /> : null}
         </div>
       </div>
     </>
-  );
+  )
 }

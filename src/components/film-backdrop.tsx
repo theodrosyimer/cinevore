@@ -1,17 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from 'next/image';
+import Image from 'next/image'
 
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { cn } from '@/lib/utils';
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { cn } from '@/lib/utils'
+import FilmCardList from '@/components/film-card-list'
 
 export function MovieBackdrop({
   url,
   altText,
-  ...className
+  className
 }: {
-  className?: string;
-  url: string;
-  altText: string;
+  className?: string
+  url: string
+  altText: string
 }) {
   return (
     <AspectRatio ratio={16 / 9} className={cn('bg-muted', className)}>
@@ -30,5 +31,5 @@ export function MovieBackdrop({
         className={cn('object-cover rounded-md')}
       />
     </AspectRatio>
-  );
+  )
 }
