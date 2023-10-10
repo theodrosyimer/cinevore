@@ -1,21 +1,31 @@
 'use client'
 
-import { MovieArtwork } from '@/components/films-artwork-slider'
+import Loading from '@/app/(site-layout)/loading'
+import { CardSkeleton } from '@/components/card-skeleton'
+import { MovieArtwork, MovieArtworkProps } from '@/components/film-artwork'
 import { toast } from '@/components/ui/use-toast'
 import { movie } from '@/db-planetscale/movies'
 import { useFilms } from '@/hooks/useFilms-zod'
-import { handleSlug, slugify } from '@/lib/utils'
+import { getImageFormatSize } from '@/lib/tmdb/src/utils'
+import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
+import { cn, handleSlug, slugify } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 
-export default function FilmCardList({ limit = 14 }) {
+export type FilmCardProps = Pick<MovieArtworkProps, 'aspectRatio'> & {
+  limit?: number,
+  className?: string
+  width: TMDBImageSizesCategory[keyof TMDBImageSizesCategory]
+}
+
+export function FilmCardList({ limit = 14, className, aspectRatio, width }: FilmCardProps = {} as MovieArtworkProps) {
   const router = useRouter()
   const { data: films, isLoading } = useFilms()
 
   const handleTitleSlug = useCallback(handleSlug, [])
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <CardSkeleton />
   }
 
   if (!films) {
@@ -34,11 +44,10 @@ export default function FilmCardList({ limit = 14 }) {
           key={film.id}
           movieId={film.id.toString()}
           movie={film}
-          className="w-auto"
-          aspectRatio="portrait"
-          // layout="fill"
-          // width={250}
-          // height={330}
+          className={cn('', className)}
+          aspectRatio={aspectRatio ?? 'portrait'}
+          width={getImageFormatSize('poster_sizes', width)}
+          height={120}
           onClick={(e) => {
             e.preventDefault()
             router.push(

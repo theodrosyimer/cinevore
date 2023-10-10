@@ -1,5 +1,5 @@
-import FilmCardList from '@/components/film-card-list'
-import { MovieArtwork } from '@/components/films-artwork-slider'
+import { FilmCardList } from '@/components/film-card-list'
+import { MovieArtwork } from '@/components/film-artwork'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import * as dotenv from 'dotenv'
 dotenv.config()
@@ -19,7 +19,7 @@ export default function FilmsPage({
       <h1 className="text-4xl font-bold text-center">Search for Films</h1>
       <div className="relative">
         <ScrollArea>
-          <FilmCardList />
+          <FilmCardList aspectRatio={'portrait'} width='w154' />
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </div>
