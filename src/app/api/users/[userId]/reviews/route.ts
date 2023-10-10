@@ -2,6 +2,8 @@ import { routeContextSchema } from "@/app/api/users/[userId]/route"
 import { getUserListsAndReviewsWithCommentsAndLikes } from "@/lib/actions/admin/getUserListsAndReviewsWithCommentsAndLikes"
 import { isAdmin } from "@/lib/auth"
 import { db } from "@/lib/db"
+import { getUserIdFromUrl } from "@/lib/getUserIdFromUrl"
+import { log } from "@/lib/utils/log"
 import { formatSimpleErrorMessage } from "@/lib/utils/utils"
 import { getToken } from "next-auth/jwt"
 import type { NextRequest } from "next/server"
@@ -13,13 +15,17 @@ export async function GET(
 ) {
   try {
     const { params } = routeContextSchema.parse(context)
-    const token = await getToken({ req })
-    console.log('token', token)
 
-    if (token?.id && (params.userId === token.id || isAdmin(token))) {
+    const token = await getToken({ req })
+    const userIdFromParams = getUserIdFromUrl(req)
+
+
+    if (token && (userIdFromParams === token.id || isAdmin(token))) {
       const reviews = await db.query.user.findMany({
         where: (user, { eq }) => eq(user.id, token.id),
-
+        columns: {
+          password: false,
+        },
       })
 
       if (!reviews) {
