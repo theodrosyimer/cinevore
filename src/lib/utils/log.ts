@@ -41,9 +41,9 @@ type LogTypeBg = Extract<LogTypeKeys, 'bg'>
 type LogTypeFgKeys = KeysOf<typeof Log.fg>
 type LogTypeBgKeys = KeysOf<typeof Log.bg>
 
-type Color = `${LogTypeFg}.${LogTypeFgKeys} ` | `${LogTypeBg}.${LogTypeBgKeys} `
+type Color = `${LogTypeFg}.${LogTypeFgKeys}` | `${LogTypeBg}.${LogTypeBgKeys}`
 
-export const log = (text: unknown, color: Color = 'fg.black ') => {
+export const log = (text: unknown, color: Color = 'fg.black') => {
   const [fgOrBg, colorName] = color.split('.') as [
     LogTypeFg | LogTypeBg,
     LogTypeFgKeys | LogTypeBgKeys
@@ -52,7 +52,12 @@ export const log = (text: unknown, color: Color = 'fg.black ') => {
   if (!fgOrBg || !colorName || !Log[fgOrBg] || !Log[fgOrBg][colorName]) {
     throw new Error(`Invalid color: ${color} `)
   }
-  console.log(`${Log[fgOrBg][colorName]}% s${Log.reset} `, text)
+  if (typeof text === 'object') {
+    console.log(`${Log[fgOrBg][colorName]}%O${Log.reset}`, text)
+    return
+  }
+
+  console.log(`${Log[fgOrBg][colorName]}%s${Log.reset}`, text)
 }
 
 // usage:
