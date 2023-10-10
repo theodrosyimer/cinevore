@@ -24,7 +24,7 @@ export async function GET(
 
     const token = await getToken({ req })
 
-    if ((token && params.userId === token.id) || isAdmin(token)) {
+    if (token && (params.userId === token.id || isAdmin(token))) {
       const dbUser = await UsersModel.getById(params.userId)
 
       if (!dbUser || !dbUser[0]) {
@@ -56,7 +56,7 @@ export async function PATCH(
     // Ensure user is authenticated and has access to this user.
     const token = await getToken({ req })
 
-    if ((token && params.userId === token.id) || isAdmin(token)) {
+    if (token && (params.userId === token.id || isAdmin(token))) {
       // Get the request body and validate it.
       const json = await req.json()
       const body = userPatchSchema.parse(json)
@@ -93,7 +93,7 @@ export async function DELETE(
     // Ensure user is authentication and has access to this user.
     const token = await getToken({ req })
 
-    if ((token && params.userId === token.id) || isAdmin(token)) {
+    if ((token && (params.userId === token.id || isAdmin(token)))) {
       // Delete the list.
       const resultHeader = await db
         .delete(user)
