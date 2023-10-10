@@ -35,7 +35,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+    const token = await getToken({ req })
 
     if (token && !isAdmin(token)) {
       return new Response('Unauthorized', { status: 403 })

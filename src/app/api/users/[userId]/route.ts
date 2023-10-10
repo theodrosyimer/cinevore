@@ -9,7 +9,7 @@ import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
 import { z } from 'zod'
 
-const routeContextSchema = z.object({
+export const routeContextSchema = z.object({
   params: z.object({
     userId: z.string(),
   }),
@@ -22,7 +22,7 @@ export async function GET(
   try {
     const { params } = routeContextSchema.parse(context)
 
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+    const token = await getToken({ req })
 
     if ((token && params.userId === token.id) || isAdmin(token)) {
       const dbUser = await UsersModel.getById(params.userId)
@@ -54,7 +54,7 @@ export async function PATCH(
     const { params } = routeContextSchema.parse(context)
 
     // Ensure user is authenticated and has access to this user.
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+    const token = await getToken({ req })
 
     if ((token && params.userId === token.id) || isAdmin(token)) {
       // Get the request body and validate it.
@@ -91,7 +91,7 @@ export async function DELETE(
     const { params } = routeContextSchema.parse(context)
 
     // Ensure user is authentication and has access to this user.
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+    const token = await getToken({ req })
 
     if ((token && params.userId === token.id) || isAdmin(token)) {
       // Delete the list.
