@@ -44,6 +44,8 @@ export function FilmCardList({ limit = 14, className, aspectRatio, width }: Film
           movie={film}
           className={cn('', className)}
           aspectRatio={aspectRatio ?? 'portrait'}
+          // TODO: fix `width` type
+          // @ts-ignore
           width={getImageFormatSize('poster_sizes', width)}
           height={120}
           onClick={(e) => {

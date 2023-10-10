@@ -1,11 +1,5 @@
-import FilmCardList from '@/components/film-card-list'
-import { Icons } from '@/components/icons'
 import { NewListForm } from '@/components/list-create'
-import { buttonVariants } from '@/components/ui/button'
-import { UserRegisterForm } from '@/components/user-register-form'
 import { getCurrentUser } from '@/lib/session'
-import { cn } from '@/lib/utils/utils'
-import Link from 'next/link'
 
 export const metadata = {
   title: 'Create List Page',
