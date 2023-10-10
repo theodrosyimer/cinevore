@@ -1,15 +1,15 @@
-import * as dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
+import * as dotenv from 'dotenv'
+dotenv.config({ path: '.env.local' })
 
-import * as schema from '@/db-planetscale';
-import { sql } from 'drizzle-orm';
-import { drizzle } from 'drizzle-orm/mysql2';
-import mysql, { FieldPacket } from 'mysql2/promise';
+import * as schema from '@/db/planetscale'
+import { sql } from 'drizzle-orm'
+import { drizzle } from 'drizzle-orm/mysql2'
+import mysql, { FieldPacket } from 'mysql2/promise'
 
 // import { env } from '@env'
 
-import { TableColumns, TableName } from '@/types/db';
-import { MySql2InformationSchemaTables, MySql2TableStatus } from '@/types/sql';
+import { TableColumns, TableName } from '@/types/db'
+import { MySql2InformationSchemaTables, MySql2TableStatus } from '@/types/sql'
 
 const clientPool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -17,82 +17,82 @@ const clientPool = mysql.createPool({
   database: process.env.DB_NAME,
   port: Number(process.env.DB_PORT),
   // password: process.env.DB_PASSWORD,
-});
+})
 
-export const db = drizzle(clientPool, { schema, mode: 'default' });
+export const db = drizzle(clientPool, { schema, mode: 'default' })
 
 export async function clearDbTables(databaseName?: string) {
-  const dbName = getDbName(databaseName);
+  const dbName = getDbName(databaseName)
 
   if (await isDbEmpty(dbName)) {
-    return;
+    return
   }
 
-  const tableNameList = await getTablesName(dbName);
+  const tableNameList = await getTablesName(dbName)
 
-  console.log('🗑️  Preparing delete queries:');
+  console.log('🗑️  Preparing delete queries:')
 
   const queries = tableNameList.map((tableName) => {
-    console.log(`🧨 Preparing delete query for table: ${tableName}`);
+    console.log(`🧨 Preparing delete query for table: ${tableName}`)
 
-    return sql.raw(`DROP TABLE \`${tableName}\`;`);
-  });
+    return sql.raw(`DROP TABLE \`${tableName}\`;`)
+  })
 
   await db.transaction(async (tx) => {
-    console.log('\nSetting foreign key checks to 0 before sending queries...');
-    tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 0;'));
+    console.log('\nSetting foreign key checks to 0 before sending queries...')
+    tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 0;'))
 
-    console.log('\n📨 Sending delete queries...');
+    console.log('\n📨 Sending delete queries...')
 
     await Promise.all(
       queries.map(async (query) => {
-        if (query) await tx.execute(query);
+        if (query) await tx.execute(query)
       })
     )
       .catch((e) => {
-        console.error(e);
-        throw new Error('Failed to empty the database ❌');
+        console.error(e)
+        throw new Error('Failed to empty the database ❌')
       })
       .finally(() => {
-        console.log('\nSetting foreign key checks back to 1\n');
+        console.log('\nSetting foreign key checks back to 1\n')
 
-        tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 1;'));
-      });
-    console.log('🗑️   Database emptied  ✅');
-  });
+        tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 1;'))
+      })
+    console.log('🗑️   Database emptied  ✅')
+  })
 }
 
 async function getTablesCountFromDb(databaseName?: string): Promise<number> {
-  const dbName = getDbName(databaseName);
+  const dbName = getDbName(databaseName)
 
   let total = (await db.execute(
     sql.raw(
       `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = \'${dbName}\' and TABLE_TYPE='BASE TABLE';`
     )
-  )) as any;
+  )) as any
 
   if (!total[0] || !total[0][0] || !total[0][0]['COUNT(*)']) {
-    return (total = 0);
+    return (total = 0)
   }
 
-  total[0] = total[0][0]['COUNT(*)'];
+  total[0] = total[0][0]['COUNT(*)']
 
-  console.log(`\n📊 Total tables in the database: ${total[0]}\n`);
+  console.log(`\n📊 Total tables in the database: ${total[0]}\n`)
 
-  return total[0] as number;
+  return total[0] as number
 }
 
 async function isDbEmpty(databaseName?: string): Promise<boolean> {
-  const dbName = getDbName(databaseName);
+  const dbName = getDbName(databaseName)
 
-  const total = await getTablesCountFromDb(dbName);
+  const total = await getTablesCountFromDb(dbName)
 
   if (total === 0) {
-    console.log(`"${dbName}" database is empty!\n`);
-    return true;
+    console.log(`"${dbName}" database is empty!\n`)
+    return true
   }
 
-  return false;
+  return false
 }
 
 export async function getTableStatus(
@@ -100,42 +100,42 @@ export async function getTableStatus(
 ): Promise<MySql2TableStatus> {
   const results = (await db.execute(
     sql.raw(`show table status like ${tableName}`)
-  )) as any as [MySql2TableStatus[], FieldPacket[]];
+  )) as any as [MySql2TableStatus[], FieldPacket[]]
 
-  return results[0][0] as MySql2TableStatus;
+  return results[0][0] as MySql2TableStatus
 }
 
 export async function getRowsCount(tableName: TableName) {
-  const tableStatus = await getTableStatus(tableName);
-  return !tableStatus ? 0 : tableStatus.Rows;
+  const tableStatus = await getTableStatus(tableName)
+  return !tableStatus ? 0 : tableStatus.Rows
 }
 
 export async function getTablesInfos(databaseName?: string) {
-  const dbName = getDbName(databaseName);
+  const dbName = getDbName(databaseName)
 
   const [results] = (await db.execute(
     sql.raw(
       `SELECT * FROM information_schema.tables WHERE table_schema = ${dbName} and TABLE_TYPE='BASE TABLE';`
     )
-  )) as any as [MySql2InformationSchemaTables[], FieldPacket[]];
+  )) as any as [MySql2InformationSchemaTables[], FieldPacket[]]
 
-  return results;
+  return results
 }
 
 export async function getTablesName(databaseName?: string) {
-  const dbName = getDbName(databaseName);
+  const dbName = getDbName(databaseName)
 
   const [results] = (await db.execute(
     sql.raw(
       `SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema = ${dbName} and TABLE_TYPE='BASE TABLE';`
     )
-  )) as any as [MySql2InformationSchemaTables[], FieldPacket[]];
+  )) as any as [MySql2InformationSchemaTables[], FieldPacket[]]
 
   if (!results || (results && !results?.length)) {
-    return [];
+    return []
   }
 
-  return results.map((result) => result.TABLE_NAME);
+  return results.map((result) => result.TABLE_NAME)
 }
 
 export async function makeColumnEmojiFriendly<
@@ -144,20 +144,19 @@ export async function makeColumnEmojiFriendly<
 >(tableName: T, columnName: K) {
   await db.execute(
     sql.raw(
-      `ALTER TABLE ${tableName} MODIFY ${
-        columnName as string
+      `ALTER TABLE ${tableName} MODIFY ${columnName as string
       } VARCHAR(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
     )
-  );
+  )
 }
 
 export function getDbName(databaseName?: string) {
   const throwIfNotFound = () => {
-    throw new Error('No database name found');
-  };
+    throw new Error('No database name found')
+  }
   return (
     (!databaseName ? process.env.DB_NAME : databaseName) ?? throwIfNotFound()
-  );
+  )
 }
 
 // export async function clearDb(databaseName?: string) {

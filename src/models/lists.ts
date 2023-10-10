@@ -1,8 +1,8 @@
 // import debug from 'debug'
-import { and, eq } from 'drizzle-orm';
-import { db } from '@/lib/db';
-import { list } from '@/db-planetscale';
-import { NewList, SelectList } from '@/types/db';
+import { and, eq } from 'drizzle-orm'
+import { db } from '@/lib/db'
+import { list } from '@/db/planetscale'
+import { NewList, SelectList } from '@/types/db'
 
 // const log: debug.IDebugger = debug('app:lists-model')
 
@@ -12,7 +12,7 @@ class ListsModel {
   }
 
   create = async (newList: NewList) => {
-    return db.insert(list).values(newList);
+    return db.insert(list).values(newList)
   };
 
   getAll = async () => db.select().from(list);
@@ -44,5 +44,5 @@ class ListsModel {
       .where(and(eq(list.id, listId), eq(list.userId, userId)));
 }
 
-const listsModel = new ListsModel();
-export default listsModel;
+const listsModel = new ListsModel()
+export default listsModel
