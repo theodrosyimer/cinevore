@@ -1,6 +1,6 @@
 import { MovieArtwork } from "@/components/film-artwork"
 import { UserInfos } from "@/components/user-infos"
-import { user } from "@/db-planetscale"
+import { user } from "@/db/planetscale"
 import { db } from "@/lib/db"
 import { searchByID } from "@/lib/tmdb/src/tmdb"
 import { getImageFormatSize } from "@/lib/tmdb/src/utils"

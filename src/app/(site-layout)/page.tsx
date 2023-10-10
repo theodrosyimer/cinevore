@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 // import { env } from "@env.mjs"
 import { MovieBackdrop } from '@/components/film-backdrop'
-import FilmCardList from '@/components/film-card-list'
+import { FilmCardList } from '@/components/film-card-list'
 import { Icons } from '@/components/icons'
 import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardDescription } from '@/components/ui/card'

@@ -1,12 +1,12 @@
-import * as z from 'zod';
+import * as z from 'zod'
 
-import { list, movieList } from '@/db-planetscale';
-import { db } from '@/lib/db';
-import { RequiresProPlanError } from '@/lib/exceptions';
-import { getCurrentUser } from '@/lib/session';
+import { list, movieList } from '@/db/planetscale'
+import { db } from '@/lib/db'
+import { RequiresProPlanError } from '@/lib/exceptions'
+import { getCurrentUser } from '@/lib/session'
 // import { movieListPostSchema } from "@/lib/validations/movie-list"
-import { formatSimpleErrorMessage } from '@/lib/utils';
-import { eq } from 'drizzle-orm';
+import { formatSimpleErrorMessage } from '@/lib/utils'
+import { eq } from 'drizzle-orm'
 
 export async function GET() {
   try {
@@ -50,25 +50,25 @@ export async function GET() {
       //     },
       //   } */,
       // },
-    });
+    })
 
-    return new Response(JSON.stringify(lists));
+    return new Response(JSON.stringify(lists))
   } catch (error) {
     if (error instanceof Error) {
-      console.log(error);
-      return new Response(formatSimpleErrorMessage(error), { status: 500 });
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
-    return new Response(null, { status: 500 });
+    return new Response(null, { status: 500 })
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const { user: currentUser, isAdmin } = await getCurrentUser();
+    const { user: currentUser, isAdmin } = await getCurrentUser()
 
     if (!currentUser || !isAdmin) {
-      return new Response('Unauthorized', { status: 403 });
+      return new Response('Unauthorized', { status: 403 })
     }
 
     // const json = await req.json()
@@ -88,23 +88,23 @@ export async function POST(req: Request) {
     //   return new Response("List created", { status: 201 })
     // }
 
-    return new Response('List created', { status: 201 });
+    return new Response('List created', { status: 201 })
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 });
+      return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
     if (error instanceof RequiresProPlanError) {
-      return new Response('Requires Pro Plan', { status: 402 });
+      return new Response('Requires Pro Plan', { status: 402 })
     }
 
     if (error instanceof Error) {
-      console.log(error);
-      return new Response(formatSimpleErrorMessage(error), { status: 500 });
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
     return new Response(`Error creating a list from the database.`, {
       status: 500,
-    });
+    })
   }
 }

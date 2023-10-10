@@ -1,8 +1,8 @@
 // import debug from 'debug'
-import { eq } from 'drizzle-orm';
-import { db } from '@/lib/db';
-import { user } from '@/db-planetscale';
-import { NewUser, SelectUser } from '@/types/db';
+import { eq } from 'drizzle-orm'
+import { db } from '@/lib/db'
+import { user } from '@/db/planetscale'
+import { NewUser, SelectUser } from '@/types/db'
 
 // const log: debug.IDebugger = debug('app:users-model')
 
@@ -12,7 +12,7 @@ class UsersModel {
   }
 
   create = async (newUser: NewUser) => {
-    return db.insert(user).values(newUser);
+    return db.insert(user).values(newUser)
   };
 
   getAll = async () => db.select().from(user);
@@ -44,5 +44,5 @@ class UsersModel {
     db.update(user).set(data).where(eq(user.id, id));
 }
 
-const usersModel = new UsersModel();
-export default usersModel;
+const usersModel = new UsersModel()
+export default usersModel
