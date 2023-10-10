@@ -9,7 +9,7 @@ import { UserMovieActions } from '@/components/user-movie-infos'
 import { getCurrentUser } from '@/lib/session'
 import { globalConfig, searchByID, searchByTitle } from '@/lib/tmdb/src/tmdb'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
-import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils'
+import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils/utils'
 import Link from 'next/link'
 import { notFound, useSearchParams } from 'next/navigation'
 

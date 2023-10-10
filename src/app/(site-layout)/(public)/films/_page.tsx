@@ -1,27 +1,27 @@
-import Link from 'next/link';
-import { Suspense } from 'react';
+import Link from 'next/link'
+import { Suspense } from 'react'
 // import { v4 as uuid } from 'uuid'
 
 // import { getMovies } from '@/lib/mongo/movies'
 
-import Search from './search';
-import Movies from './movies';
-import Await from './await';
-import Skeleton from './skeleton';
-import { cn } from '@/lib/utils';
+import Search from './search'
+import Movies from './movies'
+import Await from './await'
+import Skeleton from './skeleton'
+import { cn } from '@/lib/utils/utils'
 
 const Page = async ({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: { [key: string]: string | string[] | undefined }
 }) => {
   const page =
-    typeof searchParams.page === 'string' ? Number(searchParams.page) : 1;
+    typeof searchParams.page === 'string' ? Number(searchParams.page) : 1
   const limit =
-    typeof searchParams.limit === 'string' ? Number(searchParams.limit) : 10;
+    typeof searchParams.limit === 'string' ? Number(searchParams.limit) : 10
 
   const search =
-    typeof searchParams.search === 'string' ? searchParams.search : undefined;
+    typeof searchParams.search === 'string' ? searchParams.search : undefined
 
   // const promise = getMovies({ page, limit, query: search })
 
@@ -73,7 +73,7 @@ const Page = async ({
         </Suspense>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Page;
+export default Page

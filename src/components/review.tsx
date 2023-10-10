@@ -20,7 +20,7 @@ export type ReviewAndCommentsProps = SelectMovieReview & {
 export function Review({ review, film }: { review: ReviewAndCommentsProps }) {
   const likesCount = review.likesToMovieReview.length
 
-  console.log('FILM', film, review.user)
+  // console.log('FILM', film, review.user)
 
   return (
     <article className='flex gap-6 mb-8'>

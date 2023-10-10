@@ -45,8 +45,8 @@ export const movieReviewRelations = relations(movieReview, ({ one, many }) => ({
     fields: [movieReview.movieId],
     references: [movie.tmdbId],
   }),
-  commentsToMovieReview: many(commentToMovieReview),
-  likesToMovieReview: many(likeToMovieReview),
+  comments: many(commentToMovieReview),
+  likes: many(likeToMovieReview),
 }))
 
 export const commentToMovieReview = mysqlTable(
@@ -60,10 +60,10 @@ export const commentToMovieReview = mysqlTable(
       int(
         'comment_id'
       ).notNull() /* .references(() => comment.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    createdAt: timestamp('created_at')
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp('updated_at').onUpdateNow(),
+    // createdAt: timestamp('created_at')
+    //   .default(sql`CURRENT_TIMESTAMP`)
+    //   .notNull(),
+    // updatedAt: timestamp('updated_at').onUpdateNow(),
   },
   (table) => {
     return {
@@ -78,11 +78,11 @@ export const commentToMovieReview = mysqlTable(
 export const commentToMovieReviewRelations = relations(
   commentToMovieReview,
   ({ one, many }) => ({
-    movieReviews: one(movieReview, {
+    review: one(movieReview, {
       fields: [commentToMovieReview.movieReviewId],
       references: [movieReview.id],
     }),
-    comments: one(comment, {
+    comment: one(comment, {
       fields: [commentToMovieReview.commentId],
       references: [comment.id],
     }),
@@ -100,10 +100,10 @@ export const likeToMovieReview = mysqlTable(
       int(
         'like_id'
       ).notNull() /* .references(() => like.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    createdAt: timestamp('created_at')
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp('updated_at').onUpdateNow(),
+    // createdAt: timestamp('created_at')
+    //   .default(sql`CURRENT_TIMESTAMP`)
+    //   .notNull(),
+    // updatedAt: timestamp('updated_at').onUpdateNow(),
   },
   (table) => {
     return {

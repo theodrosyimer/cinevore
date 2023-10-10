@@ -81,7 +81,7 @@ export function generateTMDBImageUrl<
     image = ensureImage(paths)
   }
 
-  console.log('image', image)
+  // console.log('image', image)
   if (!image) {
     return `${globalConfig.IMAGE_BASE_URI}/${size}${defaultImage}` as const
   }

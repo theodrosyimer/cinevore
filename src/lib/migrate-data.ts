@@ -33,7 +33,7 @@ import {
   randomFromArrayFirstHalve,
   randomFromArraySecondHalve,
   secondHalveIndex,
-} from '@/lib/utils'
+} from '@/lib/utils/utils'
 import type {
   PlanetscaleQueryResultHKT,
   PlanetScalePreparedQueryHKT,

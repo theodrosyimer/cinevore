@@ -4,7 +4,7 @@ dotenv.config()
 import Image from 'next/image'
 import { PlusCircledIcon } from '@radix-ui/react-icons'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/utils'
 import {
   ContextMenu,
   ContextMenuContent,
@@ -61,19 +61,17 @@ export function MovieArtwork({
   let kind: TMDBImageSizesCategoryKey
   let size: TMDBImageSizesCategory[typeof kind] = 'w300'
 
-  console.log('WIDTH:', width)
+  // console.log('WIDTH:', width)
   if (aspectRatio === 'portrait') {
     kind = 'poster_sizes'
     // size = 'w154'
     imageUrl = generateTMDBImageUrl({ format: kind, size: width, defaultImage: movie.poster_path! })
-    // console.log('Image URL:', imageUrl)
   }
 
   if (aspectRatio === 'video') {
     kind = 'backdrop_sizes'
     // size = 'w300'
     imageUrl = generateTMDBImageUrl({ format: kind, size: width, defaultImage: movie.backdrop_path! })
-    // console.log('Image URL:', imageUrl)
   }
 
   return (
@@ -105,7 +103,7 @@ export function MovieArtwork({
             <ContextMenuSubContent className="w-48">
               <ContextMenuItem>
                 <PlusCircledIcon className="mr-2 h-4 w-4" />
-                New Playlist
+                New List
               </ContextMenuItem>
               <ContextMenuSeparator />
               {playlists.map((playlist) => (
@@ -127,10 +125,6 @@ export function MovieArtwork({
               ))}
             </ContextMenuSubContent>
           </ContextMenuSub>
-          <ContextMenuSeparator />
-          <ContextMenuItem>Play Next</ContextMenuItem>
-          <ContextMenuItem>Play Later</ContextMenuItem>
-          <ContextMenuItem>Create Station</ContextMenuItem>
           <ContextMenuSeparator />
           <ContextMenuItem>Review</ContextMenuItem>
           <ContextMenuItem>Like</ContextMenuItem>

@@ -1,18 +1,18 @@
-import Link from 'next/link';
-import { MainNav } from '@/components/main-nav';
-import { siteLayoutConfig } from '@/config/nav';
-import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
-import { Search } from '@/components/search';
-import { ModeToggle } from '@/components/mode-toggle';
-import { UserAccountNav } from '@/components/user-account-nav';
-import { User } from 'next-auth';
+import Link from 'next/link'
+import { MainNav } from '@/components/main-nav'
+import { siteLayoutConfig } from '@/config/nav'
+import { cn } from '@/lib/utils/utils'
+import { buttonVariants } from '@/components/ui/button'
+import { Search } from '@/components/search'
+import { ModeToggle } from '@/components/mode-toggle'
+import { UserAccountNav } from '@/components/user-account-nav'
+import { User } from 'next-auth'
 
-import { getCurrentUser } from '@/lib/session';
-import { notFound } from 'next/navigation';
+import { getCurrentUser } from '@/lib/session'
+import { notFound } from 'next/navigation'
 
 export async function Header() {
-  const { user, isAdmin } = await getCurrentUser();
+  const { user, isAdmin } = await getCurrentUser()
 
   // if (!user) {
   //   return notFound()
@@ -52,5 +52,5 @@ export async function Header() {
         </div>
       </header>
     </>
-  );
+  )
 }

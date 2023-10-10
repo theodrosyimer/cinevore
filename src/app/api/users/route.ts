@@ -1,76 +1,24 @@
-import * as z from 'zod'
-
 import { user } from '@/db/planetscale'
+import { isAdmin } from '@/lib/auth'
 import { hashPassword } from '@/lib/bcrypt'
 import { db } from '@/lib/db'
 import { RequiresProPlanError } from '@/lib/exceptions'
-import { getCurrentUser } from '@/lib/session'
-import { formatSimpleErrorMessage } from '@/lib/utils'
+import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { userPOSTSchema } from '@/lib/validations/user'
+import { getToken } from 'next-auth/jwt'
+import type { NextRequest } from 'next/server'
+import * as z from 'zod'
 
 export async function GET() {
   try {
-    const { user: currentUser, isAdmin } = await getCurrentUser()
-
-    // if (!currentUser || !isAdmin) {
-    //   return new Response("Unauthorized", { status: 403 })
-    // }
 
     const users = await db.query.user.findMany({
-      // where: (user, { eq }) => eq(user.id, currentUser.id),
       columns: {
         password: false,
       },
-      // with: {
-      //   likes: true,
-      //   comments: true,
-      //   ratings: true,
-      //   movieReviews: {
-      //     with: {
-      //       movie: {
-      //         columns: {
-      //           tmdbId: false,
-      //           imdbId: false,
-      //         },
-      //       },
-      //       // commentsToMovieReview: true,
-      //     },
-      //   },
-      //   watchlist: {
-      //     with: {
-      //       watchlistToMovies: true
-      //     },
-      //   },
-      //   lists: {
-      //     with: {
-      //       movieLists: true,
-      //     },
-      //     // with: {
-      //     //   movieLists: {
-      //     //     with: {
-      //     //       commentsToMovieList: true,
-      //     //     }
-      //     //   }
-      //     // },
-      //   },
-      //   followers: {
-      //     columns: {
-      //       followedDate: true,
-      //     },
-      //     with: {
-      //       follower: {
-      //         columns: {
-      //           id: true,
-      //           name: true,
-      //         },
-      //       },
-      //     },
-      //   },
-      //   movieInfosToUser: true,
-      // },
     })
 
-    if (!users /* || !users[0] */) {
+    if (!users || !users[0]) {
       return new Response('Users  not found', { status: 404 })
     }
 
@@ -85,11 +33,11 @@ export async function GET() {
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const { isAdmin } = await getCurrentUser()
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
 
-    if (!isAdmin) {
+    if (token && !isAdmin(token)) {
       return new Response('Unauthorized', { status: 403 })
     }
 

@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm } from 'react-hook-form';
-import * as z from 'zod';
+import Link from 'next/link'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useFieldArray, useForm } from 'react-hook-form'
+import * as z from 'zod'
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils/utils'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -15,18 +15,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { toast } from '@/components/ui/use-toast';
-import { userSettingsFormSchema } from '@/lib/validations/user';
+} from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
+import { toast } from '@/components/ui/use-toast'
+import { userSettingsFormSchema } from '@/lib/validations/user'
 
 const profileFormSchema = z.object({
   name: z
@@ -50,9 +50,9 @@ const profileFormSchema = z.object({
       })
     )
     .optional(),
-});
+})
 
-type ProfileFormValues = z.infer<typeof userSettingsFormSchema>;
+type ProfileFormValues = z.infer<typeof userSettingsFormSchema>
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
@@ -63,19 +63,19 @@ const defaultValues: Partial<ProfileFormValues> = {
     { value: 'https://shadcn.com' },
     { value: 'http://twitter.com/shadcn' },
   ],
-};
+}
 
 export function ProfileForm() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(userSettingsFormSchema),
     defaultValues,
     mode: 'onChange',
-  });
+  })
 
   const { fields, append } = useFieldArray({
     name: 'urls',
     control: form.control,
-  });
+  })
 
   function onSubmit(data: ProfileFormValues) {
     // console.log(data)
@@ -86,7 +86,7 @@ export function ProfileForm() {
           <code className="text-white">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
-    });
+    })
   }
 
   return (
@@ -192,5 +192,5 @@ export function ProfileForm() {
         <Button type="submit">Update profile</Button>
       </form>
     </Form>
-  );
+  )
 }

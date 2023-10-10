@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { siteConfig } from '@/config/site'
 import { siteLayoutConfig } from '@/config/nav'
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/utils'
 import { CommandMenu } from '@/components/command-menu'
 import { Icons } from '@/components/icons'
 import { MainNav } from '@/components/main-nav'

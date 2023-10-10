@@ -1,14 +1,12 @@
 'use client'
 
-import Loading from '@/app/(site-layout)/loading'
 import { CardSkeleton } from '@/components/card-skeleton'
 import { MovieArtwork, MovieArtworkProps } from '@/components/film-artwork'
-import { toast } from '@/components/ui/use-toast'
-import { movie } from '@/db/planetscale/movies'
 import { useFilms } from '@/hooks/useFilms-zod'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
-import { cn, handleSlug, slugify } from '@/lib/utils'
+import { handleSlug } from '@/lib/utils/slugify'
+import { cn } from '@/lib/utils/utils'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 

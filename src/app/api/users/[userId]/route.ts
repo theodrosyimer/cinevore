@@ -1,12 +1,13 @@
-import { z } from 'zod'
-import { eq } from 'drizzle-orm'
-
-import { db } from '@/lib/db'
-import UsersModel from '@/models/users'
 import { user } from '@/db/planetscale'
-import { getCurrentUser } from '@/lib/session'
+import { isAdmin } from '@/lib/auth'
+import { db } from '@/lib/db'
+import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { userPatchSchema } from '@/lib/validations/user'
-import { formatSimpleErrorMessage } from '@/lib/utils'
+import UsersModel from '@/models/users'
+import { eq } from 'drizzle-orm'
+import { getToken } from 'next-auth/jwt'
+import type { NextRequest } from 'next/server'
+import { z } from 'zod'
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -15,15 +16,15 @@ const routeContextSchema = z.object({
 })
 
 export async function GET(
-  req: Request,
+  req: NextRequest,
   context: z.infer<typeof routeContextSchema>
 ) {
   try {
     const { params } = routeContextSchema.parse(context)
 
-    const { user, isAdmin } = await getCurrentUser()
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
 
-    if ((user && params.userId === user.id) || isAdmin) {
+    if ((token && params.userId === token.id) || isAdmin(token)) {
       const dbUser = await UsersModel.getById(params.userId)
 
       if (!dbUser || !dbUser[0]) {
@@ -45,7 +46,7 @@ export async function GET(
 }
 
 export async function PATCH(
-  req: Request,
+  req: NextRequest,
   context: z.infer<typeof routeContextSchema>
 ) {
   try {
@@ -53,9 +54,9 @@ export async function PATCH(
     const { params } = routeContextSchema.parse(context)
 
     // Ensure user is authenticated and has access to this user.
-    const { user: currentUser, isAdmin } = await getCurrentUser()
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
 
-    if ((currentUser && params.userId === currentUser.id) || isAdmin) {
+    if ((token && params.userId === token.id) || isAdmin(token)) {
       // Get the request body and validate it.
       const json = await req.json()
       const body = userPatchSchema.parse(json)
@@ -82,7 +83,7 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  req: Request,
+  req: NextRequest,
   context: z.infer<typeof routeContextSchema>
 ) {
   try {
@@ -90,21 +91,23 @@ export async function DELETE(
     const { params } = routeContextSchema.parse(context)
 
     // Ensure user is authentication and has access to this user.
-    const { user: currentUser, isAdmin } = await getCurrentUser()
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
 
-    if ((currentUser && params.userId === currentUser.id) || isAdmin) {
+    if ((token && params.userId === token.id) || isAdmin(token)) {
       // Delete the list.
       const resultHeader = await db
         .delete(user)
         .where(eq(user.id, params.userId))
 
+      console.log('Deleted rows:', resultHeader.rowsAffected)
+
       if (!resultHeader.rowsAffected) {
-        console.log('Deleted rows:', resultHeader.rowsAffected)
-        return new Response('User already deleted!', { status: 404 })
+        return new Response('User does not exist or is already deleted!', { status: 404 })
       }
 
-      return new Response(`User ${params.userId} deleted`, { status: 200 })
+      return new Response(`Deleted user with id: ${params.userId}`, { status: 200 })
     }
+
     return new Response('Unauthorized', { status: 403 })
   } catch (error) {
     if (error instanceof z.ZodError) {

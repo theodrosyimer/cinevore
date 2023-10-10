@@ -1,7 +1,7 @@
-import FilmRatingStars from '@/components/film-rating-stars';
-import { Icons } from '@/components/icons';
-import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
+import FilmRatingStars from '@/components/film-rating-stars'
+import { Icons } from '@/components/icons'
+import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils/utils'
 
 export function UserMovieActions({ ...className }: { className?: string }) {
   return (
@@ -36,5 +36,5 @@ export function UserMovieActions({ ...className }: { className?: string }) {
         <FilmRatingStars />
       </div>
     </article>
-  );
+  )
 }

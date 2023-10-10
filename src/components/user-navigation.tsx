@@ -1,19 +1,19 @@
-'use client';
+'use client'
 
-import { Icons } from '@/components/icons';
-import { cn } from '@/lib/utils';
-import { MainNavItem } from '@/types';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React from 'react';
+import { Icons } from '@/components/icons'
+import { cn } from '@/lib/utils/utils'
+import { MainNavItem } from '@/types'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import React from 'react'
 
 type MainNavProps = {
-  items?: MainNavItem[];
-  children?: React.ReactNode;
-};
+  items?: MainNavItem[]
+  children?: React.ReactNode
+}
 
 export function UserNavigation({ items, children }: MainNavProps) {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <div className=" mr-4 sm:flex items-center ">
@@ -35,11 +35,11 @@ export function UserNavigation({ items, children }: MainNavProps) {
                 >
                   {item.title}
                 </Link>
-              );
+              )
             })}
           </nav>
         ) : null}
       </nav>
     </div>
-  );
+  )
 }
