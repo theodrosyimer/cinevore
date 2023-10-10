@@ -45,7 +45,7 @@ export function Search({ className, ...props }: SearchProps) {
     if (!query) {
       router.push(`/search`)
     } else {
-      // router.push(`/search?search=${query}`)
+      router.push(`/search?search=${query}`)
       searchMulti({ query }).then((res) => {
         // console.log('res', res)
         // TODO: do better handling of results
@@ -90,7 +90,7 @@ export function Search({ className, ...props }: SearchProps) {
         type="search"
         autoFocus
         placeholder="Search for Films, Actors..."
-        className="h-8 w-full sm:w-64 sm:pr-12  md:max-w-40"
+        className="h-8 w-auto "
         onChange={(e) => {
           const { value } = e.currentTarget
           setText(value)
@@ -101,7 +101,7 @@ export function Search({ className, ...props }: SearchProps) {
       </kbd>
       <br /> */}
 
-      <pre>Results: {JSON.stringify(results, null, 2)}</pre>
+      {/* <pre>Results: {JSON.stringify(results, null, 2)}</pre> */}
     </form>
   )
 }
