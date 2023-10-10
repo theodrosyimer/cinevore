@@ -11,7 +11,6 @@ import * as z from 'zod'
 
 export async function GET() {
   try {
-
     const users = await db.query.user.findMany({
       columns: {
         password: false,
@@ -59,10 +58,6 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
-    }
-
-    if (error instanceof RequiresProPlanError) {
-      return new Response('Requires Pro Plan', { status: 402 })
     }
 
     if (error instanceof Error) {
