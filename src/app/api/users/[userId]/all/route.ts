@@ -16,7 +16,7 @@ export async function GET(
 ) {
   try {
     const { params } = routeContextSchema.parse(context)
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+    const token = await getToken({ req })
 
     if ((token && params.userId === token.id) || token?.role === 'admin' || token?.role === 'superadmin') {
       const dbUser = await getUserListsAndReviewsWithCommentsAndLikes(params.userId)
