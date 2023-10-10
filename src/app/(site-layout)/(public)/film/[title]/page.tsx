@@ -45,7 +45,7 @@ export default async function FilmPage({
   const backdropImageUrl = generateTMDBImageUrl(
     {
       format: 'backdrop_sizes',
-      size: 'w1280',
+      size: 'original',
       paths: film.images?.backdrops,
       defaultImage: film.backdrop_path
     }
@@ -62,10 +62,10 @@ export default async function FilmPage({
 
   return (
     <>
-      <div className="grid mx-auto max-w-[980px] gap-8">
+      <div className="grid w-full justify-center gap-8">
         <MovieBackdrop url={backdropImageUrl} altText={film.title} />
 
-        <div className="grid grid-cols-5 gap-4 relative">
+        <div className="grid grid-cols-5 gap-4 relative max-w-[1080px]">
           <img
             src={posterImageUrl!}
             alt={film?.title!}
