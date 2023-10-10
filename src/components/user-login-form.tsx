@@ -40,6 +40,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
     const signInResult = await signIn('credentials', {
       email: data.email.toLowerCase(),
       password: data.password,
+      name: data.name,
       redirect: false,
       callbackUrl: searchParams?.get('from') || '/me',
     })
@@ -56,8 +57,8 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
     }
 
     toast({
-      title: 'Account created.',
-      description: 'Your account has been created.',
+      title: 'Logged in.',
+      // description: 'Your account has been created.',
     })
     return router.push(signInResult?.url ?? '/me')
   }
@@ -87,7 +88,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
               </p>
             )}
           </div>
-          {isRegisterPage ? (
+          {/* isRegisterPage ? */ (
             <div className="grid gap-1">
               <Label className="sr-only" htmlFor="name">
                 Name
@@ -108,7 +109,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
                 </p>
               )}
             </div>
-          ) : null}
+          ) /* : null */}
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="password">
               Password

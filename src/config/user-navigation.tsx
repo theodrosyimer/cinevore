@@ -1,4 +1,4 @@
-import { SiteLayoutConfig } from '@/types';
+import { SiteLayoutConfig } from '@/types'
 
 export const userNavigationConfig: SiteLayoutConfig = {
   mainNav: [
@@ -17,7 +17,7 @@ export const userNavigationConfig: SiteLayoutConfig = {
     {
       title: 'Reviews',
       href: '/me/reviews',
-      disabled: true,
+      disabled: false,
     },
     {
       title: 'Watchlist',
@@ -72,4 +72,4 @@ export const userNavigationConfig: SiteLayoutConfig = {
       ],
     },
   ],
-};
+}

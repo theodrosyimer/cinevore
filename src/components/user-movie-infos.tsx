@@ -1,5 +1,6 @@
 import FilmRatingStars from '@/components/film-rating-stars'
 import { Icons } from '@/components/icons'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils/utils'
 
@@ -12,6 +13,7 @@ export function UserMovieActions({ ...className }: { className?: string }) {
         <div className="grid  place-items-center">
           <Icons.like className="fill-muted" />
           <Label className="text-sm text-muted-foreground">Watch</Label>
+          {/* <Checkbox /> */}
         </div>
         <div className="grid  place-items-center">
           <Icons.notWatched className="fill-muted" />
