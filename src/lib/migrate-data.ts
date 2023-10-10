@@ -366,6 +366,7 @@ export const defaultUsers = [
     emailVerified: null,
     password: adminPassword,
     role: 'admin',
+    bio: 'I love movies and I love to share my thoughts about them.',
     urls: [
       'https://www.linkedin.com/in/theodros-yimer/',
       'https://instagram.com/theodros-yimer',
@@ -998,14 +999,21 @@ export const defaultFollowers = [
 export const defaultMovieInfosToUsers = [
   {
     userId: defaultUsers[0]?.id ?? '',
-    movieId: defaultMovies[0]?.tmdbId ?? 1,
+    movieId: defaultMovies[0]?.tmdbId ?? 0,
     liked: true,
     rating: '3.5',
+    reviewed: true,
   },
   {
     userId: defaultUsers[0]?.id ?? '',
     movieId: defaultMovies[1]?.tmdbId ?? 1,
     watched: true,
+    rating: '4.5',
+  },
+  {
+    userId: defaultUsers[0]?.id ?? '',
+    movieId: defaultMovies[2]?.tmdbId ?? 2,
+    liked: true,
     rating: '4.5',
   },
   {
