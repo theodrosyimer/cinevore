@@ -25,13 +25,13 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (params.userId === token.id || isAdmin(token))) {
-      const dbUser = await UsersModel.getById(params.userId)
+      const [dbUser] = await UsersModel.getById(params.userId)
 
-      if (!dbUser || !dbUser[0]) {
+      if (!dbUser) {
         return new Response('User not found', { status: 404 })
       }
 
-      return new Response(JSON.stringify(dbUser[0]))
+      return new Response(JSON.stringify(dbUser))
     }
 
     return new Response('Unauthorized', { status: 403 })

@@ -6,5 +6,8 @@ const insertRefineOptions = {}
 
 export const insertReviewSchema = createInsertSchema(movieReview)
 
-export const reviewPOSTSchema = insertReviewSchema.pick({})
+export const reviewPOSTSchema = insertReviewSchema
+export const reviewPATCHSchema = insertReviewSchema.pick({
+  content: true,
+})
 export const reviewGETSchema = createSelectSchema(movieReview)
