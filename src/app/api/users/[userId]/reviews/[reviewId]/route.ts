@@ -10,7 +10,7 @@ import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
 import { z } from 'zod'
 
-export const routeContextSchema = z.object({
+export const reviewRouteContextSchema = z.object({
   params: z.object({
     reviewId: z.coerce.number(),
   }),
@@ -18,10 +18,10 @@ export const routeContextSchema = z.object({
 
 export async function GET(
   req: NextRequest,
-  context: z.infer<typeof routeContextSchema>
+  context: z.infer<typeof reviewRouteContextSchema>
 ) {
   try {
-    const { params } = routeContextSchema.parse(context)
+    const { params } = reviewRouteContextSchema.parse(context)
 
     const token = await getToken({ req })
     const userIdFromParams = getUserIdFromUrl(req)
@@ -53,11 +53,11 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  context: z.infer<typeof routeContextSchema>
+  context: z.infer<typeof reviewRouteContextSchema>
 ) {
   try {
     // Validate the route context.
-    const { params } = routeContextSchema.parse(context)
+    const { params } = reviewRouteContextSchema.parse(context)
 
     // Ensure user is authenticated and has access to this resource.
     const token = await getToken({ req })
@@ -91,11 +91,11 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  context: z.infer<typeof routeContextSchema>
+  context: z.infer<typeof reviewRouteContextSchema>
 ) {
   try {
     // Validate the route params.
-    const { params } = routeContextSchema.parse(context)
+    const { params } = reviewRouteContextSchema.parse(context)
 
     // Ensure user is authentication and has access to this resource.
     const token = await getToken({ req })
