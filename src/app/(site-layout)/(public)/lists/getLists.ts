@@ -1,16 +1,16 @@
-import { z } from 'zod'
 import { selectListSchema } from '@/lib/validations/list'
+import { z } from 'zod'
 
 const listsSchema = z.array(selectListSchema)
 
 export async function getLists() {
   const data = await fetch(`${process.env.SERVER_URL}/api/lists`, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
     cache: 'no-cache',
   })
+
+  console.log('data', data)
+
   const json = await data.json() as unknown
   console.log('json', json)
   const validatedLists = listsSchema.safeParse(json)
