@@ -68,10 +68,10 @@ export function MovieArtwork({
   if (aspectRatio === 'portrait') {
     kind = 'poster_sizes'
     // size = 'w154'
-    // TODO: fix this type
-    // @ts-ignore
     imageUrl = generateTMDBImageUrl({
       format: kind,
+      // TODO: fix this type
+      // @ts-ignore
       size: width,
       defaultImage: movie.poster_path!,
     })
@@ -80,10 +80,10 @@ export function MovieArtwork({
   if (aspectRatio === 'video') {
     kind = 'backdrop_sizes'
     // size = 'w300'
-    // TODO: fix this type
-    // @ts-ignore
     imageUrl = generateTMDBImageUrl({
       format: kind,
+      // TODO: fix this type
+      // @ts-ignore
       size: width,
       defaultImage: movie.backdrop_path!,
     })
