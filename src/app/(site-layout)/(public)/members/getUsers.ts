@@ -12,7 +12,7 @@ export async function getUsers() {
     headers: {
       'Content-Type': 'application/json',
     },
-    // cache: "no-cache",
+    cache: "no-cache",
   })
   const json = await data.json() as unknown
   const validatedUsers = usersSchemas.safeParse(json)
