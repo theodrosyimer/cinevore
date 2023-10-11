@@ -8,11 +8,12 @@ import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardDescription } from '@/components/ui/card'
 import { featuresConfig } from '@/config/features'
 import { globalConfig } from '@/lib/tmdb/src/tmdb'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils/utils'
 import { Reviews } from '@/components/reviews'
 import { Review } from '@/components/review'
 import { db } from '@/lib/db'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
+import { compare } from 'bcrypt'
 
 export const metadata = {
   title: 'Home Page',

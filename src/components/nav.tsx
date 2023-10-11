@@ -1,27 +1,27 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-import { SidebarNavItem } from '@/types';
-import { cn } from '@/lib/utils';
-import { Icons } from '@/components/icons';
+import { SidebarNavItem } from '@/types'
+import { cn } from '@/lib/utils/utils'
+import { Icons } from '@/components/icons'
 
 interface DashboardNavProps {
-  items: SidebarNavItem[];
+  items: SidebarNavItem[]
 }
 
 export function DashboardNav({ items }: DashboardNavProps) {
-  const path = usePathname();
+  const path = usePathname()
 
   if (!items?.length) {
-    return null;
+    return null
   }
 
   return (
     <nav className="flex space-x-2 md:flex-col md:space-x-0 md:space-y-1 xs:overflow-scroll sm:overflow-scroll">
       {items.map((item, index) => {
-        const Icon = Icons[item.icon || 'arrowRight'];
+        const Icon = Icons[item.icon || 'arrowRight']
         return (
           item.href && (
             <Link key={index} href={item.disabled ? '/' : item.href}>
@@ -37,8 +37,8 @@ export function DashboardNav({ items }: DashboardNavProps) {
               </span>
             </Link>
           )
-        );
+        )
       })}
     </nav>
-  );
+  )
 }

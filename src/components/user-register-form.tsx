@@ -1,23 +1,23 @@
-'use client';
+'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { SignInResponse, signIn } from 'next-auth/react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import * as React from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SignInResponse, signIn } from 'next-auth/react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import * as React from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-import { Icons } from '@/components/icons';
-import { buttonVariants } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { toast } from '@/components/ui/use-toast';
-import { cn } from '@/lib/utils';
-import { userRegisterAuthSchema } from '@/lib/validations/auth';
+import { Icons } from '@/components/icons'
+import { buttonVariants } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { toast } from '@/components/ui/use-toast'
+import { cn } from '@/lib/utils/utils'
+import { userRegisterAuthSchema } from '@/lib/validations/auth'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-type FormData = z.infer<typeof userRegisterAuthSchema>;
+type FormData = z.infer<typeof userRegisterAuthSchema>
 
 export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
   const {
@@ -26,14 +26,14 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(userRegisterAuthSchema),
-  });
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false);
-  const searchParams = useSearchParams();
-  const router = useRouter();
+  })
+  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   async function onSubmit(data: FormData) {
-    setIsLoading(true);
+    setIsLoading(true)
 
     const signInResult = await signIn('credentials', {
       email: data.email.toLowerCase(),
@@ -41,24 +41,24 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
       name: data.name,
       redirect: false,
       callbackUrl: searchParams?.get('from') || '/me',
-    });
+    })
 
-    setIsLoading(false);
+    setIsLoading(false)
 
     if (!signInResult?.ok) {
       toast({
         title: 'Something went wrong.',
         description: 'Your sign in request failed. Please try again.',
         variant: 'destructive',
-      });
-      return router.push('/login');
+      })
+      return router.push('/login')
     }
 
     toast({
       title: 'Account created.',
       description: 'Your account has been created.',
-    });
-    return router.push(signInResult?.url ?? '/me');
+    })
+    return router.push(signInResult?.url ?? '/me')
   }
 
   return (
@@ -198,10 +198,10 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
         type="button"
         className={cn(buttonVariants({ variant: 'outline' }))}
         onClick={() => {
-          setIsGitHubLoading(true);
+          setIsGitHubLoading(true)
           signIn('github', {
             callbackUrl: searchParams?.get('from') || '/me',
-          });
+          })
         }}
         disabled={isLoading || isGitHubLoading}
       >
@@ -213,5 +213,5 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
         Github
       </button>
     </div>
-  );
+  )
 }

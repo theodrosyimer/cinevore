@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,34 +9,34 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
-import { SelectUser } from '@/types/db';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import * as React from 'react';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+import { SelectUser } from '@/types/db'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import * as React from 'react'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 
-import { Icons } from '@/components/icons';
-import { buttonVariants } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
-import { cn } from '@/lib/utils';
-import { userNameSchema } from '@/lib/validations/user';
+import { Icons } from '@/components/icons'
+import { buttonVariants } from '@/components/ui/button'
+import { toast } from '@/components/ui/use-toast'
+import { cn } from '@/lib/utils/utils'
+import { userNameSchema } from '@/lib/validations/user'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@radix-ui/react-dropdown-menu';
-import { Link } from 'lucide-react';
+} from '@radix-ui/react-dropdown-menu'
+import { Link } from 'lucide-react'
 import {
   AlertDialogHeader,
   AlertDialogFooter,
-} from '@/components/ui/alert-dialog';
+} from '@/components/ui/alert-dialog'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -45,33 +45,33 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
   AlertDialogOverlay,
-} from '@radix-ui/react-alert-dialog';
-import { DialogPortal } from '@radix-ui/react-dialog';
+} from '@radix-ui/react-alert-dialog'
+import { DialogPortal } from '@radix-ui/react-dialog'
 
 interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
-  user: Pick<SelectUser, 'id' | 'name'>;
+  user: Pick<SelectUser, 'id' | 'name'>
 }
 
-type FormData = z.infer<typeof userNameSchema>;
+type FormData = z.infer<typeof userNameSchema>
 
 async function deleteUser(userId: string) {
   const response = await fetch(`/api/users/${userId}`, {
     method: 'DELETE',
-  });
+  })
 
   if (!response?.ok) {
     toast({
       title: 'Something went wrong.',
       description: 'Your post was not deleted. Please try again.',
       variant: 'destructive',
-    });
+    })
   }
 
-  return true;
+  return true
 }
 
 export function EditDialog({ user, className, ...props }: UserNameFormProps) {
-  const router = useRouter();
+  const router = useRouter()
   const {
     handleSubmit,
     register,
@@ -81,15 +81,15 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
     defaultValues: {
       name: user?.name || '',
     },
-  });
-  const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false);
-  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false);
-  const [isEditLoading, setIsEditLoading] = React.useState<boolean>(false);
-  const [isSaving, setIsSaving] = React.useState<boolean>(false);
+  })
+  const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
+  const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
+  const [isEditLoading, setIsEditLoading] = React.useState<boolean>(false)
+  const [isSaving, setIsSaving] = React.useState<boolean>(false)
 
   async function onSubmit(data: FormData) {
-    setIsSaving(true);
-    setIsEditLoading(false);
+    setIsSaving(true)
+    setIsEditLoading(false)
 
     const response = await fetch(`/api/users/${user.id}`, {
       method: 'PATCH',
@@ -99,23 +99,23 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
       body: JSON.stringify({
         name: data.name,
       }),
-    });
+    })
 
-    setIsSaving(false);
+    setIsSaving(false)
 
     if (!response?.ok) {
       return toast({
         title: 'Something went wrong.',
         description: 'Your name was not updated. Please try again.',
         variant: 'destructive',
-      });
+      })
     }
 
     toast({
       description: 'Your name has been updated.',
-    });
+    })
 
-    router.refresh();
+    router.refresh()
   }
 
   return (
@@ -219,15 +219,15 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
               <AlertDialogCancel>Cancel</AlertDialogCancel>
               <AlertDialogAction
                 onClick={async (event) => {
-                  event.preventDefault();
-                  setIsDeleteLoading(true);
+                  event.preventDefault()
+                  setIsDeleteLoading(true)
 
-                  const deleted = await deleteUser(user.id.toString());
+                  const deleted = await deleteUser(user.id.toString())
 
                   if (deleted) {
-                    setIsDeleteLoading(false);
-                    setShowDeleteAlert(false);
-                    router.refresh();
+                    setIsDeleteLoading(false)
+                    setShowDeleteAlert(false)
+                    router.refresh()
                   }
                 }}
                 className="bg-red-600 focus:ring-red-600"
@@ -244,5 +244,5 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
         </AlertDialogOverlay>
       </AlertDialog>
     </>
-  );
+  )
 }

@@ -14,7 +14,7 @@ export default async function SiteLayout({ children }: SiteLayoutProps) {
       {/* <Header /> */}
       <SiteHeader />
       <Suspense fallback={<Loading />}>
-        <main className="container">{children}</main>
+        <main className="container mt-14">{children}</main>
       </Suspense>
       <SiteFooter className="border-t mt-8" />
     </>

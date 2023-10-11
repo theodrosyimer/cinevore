@@ -25,16 +25,12 @@ CREATE TABLE `comment` (
 --> statement-breakpoint
 CREATE TABLE `comment_to_movie_list` (
 	`list_id` int NOT NULL,
-	`comment_id` int NOT NULL,
-	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP
+	`comment_id` int NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `comment_to_movie_review` (
 	`movie_review_id` int NOT NULL,
-	`comment_id` int NOT NULL,
-	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP
+	`comment_id` int NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `follower` (
@@ -56,16 +52,12 @@ CREATE TABLE `like` (
 --> statement-breakpoint
 CREATE TABLE `like_to_movie_list` (
 	`list_id` int NOT NULL,
-	`like_id` int NOT NULL,
-	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP
+	`like_id` int NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `like_to_movie_review` (
 	`movie_review_id` int NOT NULL,
-	`like_id` int NOT NULL,
-	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP
+	`like_id` int NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `list` (

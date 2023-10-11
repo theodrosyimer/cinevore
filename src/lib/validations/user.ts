@@ -22,7 +22,9 @@ const insertRefineOptions = {
 // For admin actions
 export const insertUserSchema = createInsertSchema(user, insertRefineOptions)
 
-export const userPatchSchema = createInsertSchema(user, insertRefineOptions)
+export const userPatchSchema = createInsertSchema(user, {
+  email: z.string().email().optional(),
+})
 
 export const userPOSTSchema = insertUserSchema.pick({
   name: true,

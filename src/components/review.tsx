@@ -1,26 +1,23 @@
 import { MovieArtwork } from "@/components/film-artwork"
 import { UserInfos } from "@/components/user-infos"
-import { user } from "@/db/planetscale"
-import { db } from "@/lib/db"
-import { searchByID } from "@/lib/tmdb/src/tmdb"
 import { getImageFormatSize } from "@/lib/tmdb/src/utils"
 import { MovieDetails } from "@/lib/tmdb/types/tmdb-api"
 import { SelectComment, SelectCommentToMovieReview, SelectLike, SelectLikeToMovieReview, SelectMovieReview, SelectUser } from "@/types/db"
-import { useState } from "react"
 
-export type ReviewAndCommentsProps = SelectMovieReview & {
+export interface ReviewAndCommentsProps extends SelectMovieReview {
   user: SelectUser
-  commentsToMovieReview: (SelectCommentToMovieReview & {
+  comments: (SelectCommentToMovieReview & {
     comments: SelectComment[]
   })[]
-  likesToMovieReview: (SelectLikeToMovieReview & {
+  likes: (SelectLikeToMovieReview & {
     likes: SelectLike[]
   })[]
-} & { film: MovieDetails }
-export function Review({ review, film }: { review: ReviewAndCommentsProps }) {
-  const likesCount = review.likesToMovieReview.length
+}/*  & { film: MovieDetails } */
 
-  console.log('FILM', film, review.user)
+export function Review({ review, film }: { review: ReviewAndCommentsProps, film: MovieDetails }) {
+  const likesCount = review.likes.length
+
+  // console.log('FILM', film, review.user)
 
   return (
     <article className='flex gap-6 mb-8'>

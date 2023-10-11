@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm'
 import {
   index,
   int,
@@ -6,9 +6,9 @@ import {
   timestamp,
   uniqueIndex,
   varchar,
-} from 'drizzle-orm/mysql-core';
-import { movie } from '../movies';
-import { user } from '../users';
+} from 'drizzle-orm/mysql-core'
+import { movie } from '../movies'
+import { user } from '../users'
 
 export const watchlist = mysqlTable(
   'watchlist',
@@ -25,12 +25,12 @@ export const watchlist = mysqlTable(
   (table) => ({
     id: uniqueIndex('id').on(table.id, table.userId),
   })
-);
+)
 
 export const watchlistRelations = relations(watchlist, ({ one, many }) => ({
   user: one(user, { fields: [watchlist.userId], references: [user.id] }),
-  watchlistToMovies: many(watchlistToMovies),
-}));
+  movies: many(watchlistToMovies),
+}))
 
 export const watchlistToMovies = mysqlTable(
   'watchlist_to_movies',
@@ -51,7 +51,7 @@ export const watchlistToMovies = mysqlTable(
     watchlistId: index('watchlist_id').on(table.watchlistId),
     movieId: index('movie_id').on(table.movieId),
   })
-);
+)
 
 export const watchlistToMoviesRelations = relations(
   watchlistToMovies,
@@ -65,4 +65,4 @@ export const watchlistToMoviesRelations = relations(
       references: [movie.tmdbId],
     }),
   })
-);
+)

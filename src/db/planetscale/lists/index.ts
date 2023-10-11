@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm'
 import {
   boolean,
   index,
@@ -7,11 +7,11 @@ import {
   text,
   timestamp,
   varchar,
-} from 'drizzle-orm/mysql-core';
-import { movieList } from '../movie-lists';
-import { user } from '../users';
-import { comment } from '../comments';
-import { like } from '../likes';
+} from 'drizzle-orm/mysql-core'
+import { movieList } from '../movie-lists'
+import { user } from '../users'
+import { comment } from '../comments'
+import { like } from '../likes'
 
 export const list = mysqlTable(
   'list',
@@ -35,18 +35,18 @@ export const list = mysqlTable(
     id: index('id').on(table.id),
     userId: index('user_id').on(table.userId),
   })
-);
+)
 
 export const listRelations = relations(list, ({ one, many }) => ({
   user: one(user, { fields: [list.userId], references: [user.id] }),
-  movieLists: many(movieList),
-  commentsToMovieList: many(commentToMovieList, {
+  movies: many(movieList),
+  comments: many(commentToMovieList, {
     relationName: 'comments',
   }),
-  likesToMovieList: many(likeToMovieList, {
+  likes: many(likeToMovieList, {
     relationName: 'likes',
   }),
-}));
+}))
 
 export const commentToMovieList = mysqlTable(
   'comment_to_movie_list',
@@ -59,10 +59,10 @@ export const commentToMovieList = mysqlTable(
       int(
         'comment_id'
       ).notNull() /* .references(() => comment.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    createdAt: timestamp('created_at')
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp('updated_at').onUpdateNow(),
+    // createdAt: timestamp('created_at')
+    //   .default(sql`CURRENT_TIMESTAMP`)
+    //   .notNull(),
+    // updatedAt: timestamp('updated_at').onUpdateNow(),
   },
   (table) => {
     return {
@@ -70,14 +70,14 @@ export const commentToMovieList = mysqlTable(
         table.commentId,
         table.listId
       ),
-    };
+    }
   }
-);
+)
 
 export const commentToMovieListRelations = relations(
   commentToMovieList,
   ({ one, many }) => ({
-    comments: one(comment, {
+    comment: one(comment, {
       fields: [commentToMovieList.commentId],
       references: [comment.id],
       relationName: 'comments',
@@ -88,7 +88,7 @@ export const commentToMovieListRelations = relations(
       relationName: '',
     }),
   })
-);
+)
 
 export const likeToMovieList = mysqlTable(
   'like_to_movie_list',
@@ -101,10 +101,10 @@ export const likeToMovieList = mysqlTable(
       int(
         'like_id'
       ).notNull() /* .references(() => like.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    createdAt: timestamp('created_at')
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp('updated_at').onUpdateNow(),
+    // createdAt: timestamp('created_at')
+    //   .default(sql`CURRENT_TIMESTAMP`)
+    //   .notNull(),
+    // updatedAt: timestamp('updated_at').onUpdateNow(),
   },
   (table) => {
     return {
@@ -112,9 +112,9 @@ export const likeToMovieList = mysqlTable(
         table.listId,
         table.likeId
       ),
-    };
+    }
   }
-);
+)
 
 export const likeToMovieListRelations = relations(
   likeToMovieList,
@@ -129,4 +129,4 @@ export const likeToMovieListRelations = relations(
       references: [list.id],
     }),
   })
-);
+)

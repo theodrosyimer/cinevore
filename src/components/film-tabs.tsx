@@ -1,6 +1,5 @@
-import { CastTooltip } from '@/components/cast-tooltip';
-import { Badge } from '@/components/ui/badge';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { CastTooltip } from '@/components/cast-tooltip'
+import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardContent,
@@ -8,24 +7,23 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { globalConfig } from '@/lib/tmdb/src/tmdb';
-import { MovieCredits } from '@/lib/tmdb/types/tmdb-api';
-import { MovieGenre } from '@/lib/tmdb/types/tmdb-api-movie-details';
-import { cn, handleSlug, slugify } from '@/lib/utils';
-import Link from 'next/link';
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { MovieCredits } from '@/lib/tmdb/types/tmdb-api'
+import { MovieGenre } from '@/lib/tmdb/types/tmdb-api-movie-details'
+import { cn } from '@/lib/utils/utils'
+import Link from 'next/link'
 
 type MovieInfosTabsProps = {
-  className?: string;
-  credits?: MovieCredits;
-  details?: Record<string, unknown>;
-  genres?: MovieGenre[];
-  releases?: Record<string, unknown>;
-};
+  className?: string
+  credits?: MovieCredits
+  details?: Record<string, unknown>
+  genres?: MovieGenre[]
+  releases?: Record<string, unknown>
+}
 export function MovieInfosTabs({
   className,
   credits,
@@ -129,5 +127,5 @@ export function MovieInfosTabs({
         </Card>
       </TabsContent>
     </Tabs>
-  );
+  )
 }

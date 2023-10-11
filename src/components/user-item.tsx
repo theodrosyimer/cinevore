@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { movieReview } from '@/db/planetscale'
 
-import { formatDate } from '@/lib/utils'
+import { formatDate } from '@/lib/utils/utils'
 import { Skeleton } from '@/components/ui/skeleton'
 import { UserOperations } from '@/components/user-operations'
 import { SelectUser, SelectMovieReview } from '@/types/db'

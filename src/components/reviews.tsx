@@ -13,12 +13,12 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
     reviews = await db.query.movieReview.findMany({
       with: {
         user: true,
-        commentsToMovieReview: {
+        comments: {
           with: {
-            comments: true,
+            comment: true,
           }
         },
-        likesToMovieReview: {
+        likes: {
           with: {
             likes: true,
           }
@@ -39,7 +39,11 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
                 console.log(error.message)
               })
 
+              if (!film) return
+
               return (
+                // TODO: fix this type error
+                // @ts-ignore
                 <Review key={review.id} review={review} film={film} />
               )
             })

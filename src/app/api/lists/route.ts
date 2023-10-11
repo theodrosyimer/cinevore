@@ -5,7 +5,7 @@ import { db } from '@/lib/db'
 import { RequiresProPlanError } from '@/lib/exceptions'
 import { getCurrentUser } from '@/lib/session'
 // import { movieListPostSchema } from "@/lib/validations/movie-list"
-import { formatSimpleErrorMessage } from '@/lib/utils'
+import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { eq } from 'drizzle-orm'
 
 export async function GET() {

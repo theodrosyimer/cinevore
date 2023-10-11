@@ -11,6 +11,7 @@ const registerRefineOptions = {
 const loginRefineOptionsd = {
   email: z.string().email(),
   password: z.string(),
+  name: z.string().min(2).max(50),
 }
 
 export const userRegisterConfirmPassword = z.object({

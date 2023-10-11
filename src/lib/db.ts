@@ -7,7 +7,6 @@ import { sql } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/planetscale-serverless'
 // import mysql, { FieldPacket } from "mysql2/promise"
 // import { env } from '@env'
-import { log } from '@/lib/utils'
 import { TableColumns, TableName } from '@/types/db'
 import { MySql2InformationSchemaTables, MySql2TableStatus } from '@/types/sql'
 import { Inspect } from '@/types/utility'
