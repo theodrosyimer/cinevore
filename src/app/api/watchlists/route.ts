@@ -4,6 +4,7 @@ import { list, movieList } from '@/db/planetscale'
 import { db } from '@/lib/db'
 import { RequiresProPlanError } from '@/lib/exceptions'
 import { getCurrentUser } from '@/lib/session'
+import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
