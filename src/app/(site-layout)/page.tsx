@@ -23,15 +23,15 @@ export default async function IndexPage() {
   return (
     <>
       <div className="grid gap-12">
-        <div className="grid -mt-14">
+        <div className="-mt-14 grid">
           <MovieBackdrop
             url={`${globalConfig.IMAGE_BASE_URI}/original/yUa0iCocBPsGJ79BwrshHqz45Qc.jpg`}
             altText=""
-            className="rounded-b-md brightness-50 blur-[2px] w-full "
+            className="w-full rounded-b-md blur-[2px] brightness-50 "
           />
           <section className="grid w-full">
-            <div className="w-[36rem] grid gap-2">
-              <h1 className="text-4xl font-bold text-left">
+            <div className="grid w-[36rem] gap-2">
+              <h1 className="text-left text-4xl font-bold">
                 Track films you&apos;ve watched.
                 <br />
                 Save those you want to see.
@@ -61,7 +61,7 @@ export default async function IndexPage() {
           </section>
         </div>
         <section>
-          <div className="grid gap-4 grid-cols-7">
+          <div className="grid grid-cols-7 gap-4">
             <FilmCardList
               limit={7}
               aspectRatio="portrait"
@@ -72,16 +72,16 @@ export default async function IndexPage() {
         <section>
           <h2
             id="features"
-            className="text-md text-muted-foreground uppercase mb-2 scroll-mt-20"
+            className="text-md mb-2 scroll-mt-20 uppercase text-muted-foreground"
           >
             Cinevore lets you
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 gap-2  md:grid-cols-2 lg:grid-cols-3">
             {featuresConfig.map((feature, index) => {
               return (
                 <Card key={index} className="p-4">
                   <CardContent className="grid grid-cols-2">
-                    <Icons.watched className="h-10 w-10 col-auto" />
+                    <Icons.watched className="col-auto h-10 w-10" />
                     <CardDescription className="text-foreground">
                       {feature.description}
                     </CardDescription>
@@ -92,10 +92,10 @@ export default async function IndexPage() {
           </div>
         </section>
         <section>
-          <h2 className="text-md text-muted-foreground uppercase mb-2">
+          <h2 className="text-md mb-2 uppercase text-muted-foreground">
             Just reviewed...
           </h2>
-          <div className="grid gap-4 grid-cols-12">
+          <div className="grid grid-cols-12 gap-4">
             <FilmCardList
               limit={12}
               aspectRatio="portrait"
@@ -104,7 +104,7 @@ export default async function IndexPage() {
           </div>
         </section>
         <section>
-          <p className="text-2xl text-center">
+          <p className="text-center text-2xl">
             Write and share reviews. Compile your own lists. Share your life in
             film.
           </p>
@@ -116,8 +116,8 @@ export default async function IndexPage() {
 
         <div className="grid gap-20 lg:grid-cols-3">
           <section className="lg:col-span-2 lg:row-span-2">
-            <div className="flex items-center justify-items-center justify-between">
-              <h2 className="text-md text-muted-foreground uppercase mb-2">
+            <div className="flex items-center justify-between justify-items-center">
+              <h2 className="text-md mb-2 uppercase text-muted-foreground">
                 Popular reviews this week
               </h2>
               <Link
@@ -126,7 +126,7 @@ export default async function IndexPage() {
                   'text-sm uppercase',
                   buttonVariants({
                     variant: 'link',
-                    className: 'text-muted-foreground/50 pr-0',
+                    className: 'pr-0 text-muted-foreground/50',
                   }),
                 )}
               >
@@ -138,8 +138,8 @@ export default async function IndexPage() {
           </section>
 
           <section className="">
-            <div className="flex items-end justify-items-center justify-between">
-              <h2 className="text-md text-muted-foreground uppercase mb-2">
+            <div className="flex items-end justify-between justify-items-center">
+              <h2 className="text-md mb-2 uppercase text-muted-foreground">
                 Popular lists
               </h2>
               <Link
@@ -148,7 +148,7 @@ export default async function IndexPage() {
                   'text-sm uppercase',
                   buttonVariants({
                     variant: 'link',
-                    className: 'text-muted-foreground/50 pr-0',
+                    className: 'pr-0 text-muted-foreground/50',
                   }),
                 )}
               >
@@ -159,8 +159,8 @@ export default async function IndexPage() {
           </section>
 
           <section className="">
-            <div className="flex items-center justify-items-center justify-between">
-              <h2 className="text-md text-muted-foreground uppercase mb-2">
+            <div className="flex items-center justify-between justify-items-center">
+              <h2 className="text-md mb-2 uppercase text-muted-foreground">
                 Popular reviewers
               </h2>
               <Link
@@ -169,7 +169,7 @@ export default async function IndexPage() {
                   'text-sm uppercase',
                   buttonVariants({
                     variant: 'link',
-                    className: 'text-muted-foreground/50 pr-0',
+                    className: 'pr-0 text-muted-foreground/50',
                   }),
                 )}
               >

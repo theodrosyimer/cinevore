@@ -4,6 +4,7 @@ import {
   index,
   int,
   mysqlTable,
+  primaryKey,
   text,
   timestamp,
   varchar,
@@ -66,6 +67,7 @@ export const commentToMovieList = mysqlTable(
   },
   (table) => {
     return {
+      compositePK: primaryKey(table.listId, table.commentId),
       compositeKeyIndex: index('compositeKeyIndex').on(
         table.commentId,
         table.listId,
@@ -108,9 +110,10 @@ export const likeToMovieList = mysqlTable(
   },
   (table) => {
     return {
+      compositePK: primaryKey(table.listId, table.likeId),
       compositeKeyIndex: index('compositeKeyIndex').on(
-        table.listId,
         table.likeId,
+        table.listId,
       ),
     }
   },

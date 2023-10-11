@@ -1,32 +1,30 @@
-import { routeContextSchema } from '@/app/api/users/[userId]/route'
-import { isAdmin } from '@/lib/auth'
-import { db } from '@/lib/db'
 import {
   getUserIdFromUrl,
   getUserResourceIdFromUrl,
 } from '@/app/api/users/[userId]/get-user-id-from-url'
+import { comment, commentToMovieReview } from '@/db/planetscale'
+import { isAdmin } from '@/lib/auth'
+import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
+import { commentPOSTSchema } from '@/lib/validations/comment'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
-import { insertReviewSchema } from '@/lib/validations/review'
-import { movieReview } from '@/db/planetscale'
 
 export async function GET(req: NextRequest) {
   try {
-    // const { params } = routeContextSchema.parse(context)
-
     const token = await getToken({ req })
-    const userIdFromParams = getUserIdFromUrl(req)
+    const userId = getUserIdFromUrl(req)
     const userReviewId = getUserResourceIdFromUrl(req)
 
-    if (token && (userIdFromParams === token.id || isAdmin(token))) {
-      const reviewComments = await db.query.movieReview.findMany({
-        where: (movieReview, { eq, and }) =>
-          and(
-            eq(movieReview.id, userReviewId),
-            eq(movieReview.userId, userIdFromParams!),
-          ),
+    if (token && (userId === token.id || isAdmin(token))) {
+      const reviewComments = await db.query.commentToMovieReview.findMany({
+        where: (commentToMovieReview, { eq }) =>
+          eq(commentToMovieReview.movieReviewId, userReviewId),
+        columns: {},
+        with: {
+          comment: true,
+        },
       })
 
       if (!reviewComments) {
@@ -50,17 +48,29 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const token = await getToken({ req })
+    const userId = getUserIdFromUrl(req)
+    const userReviewId = getUserResourceIdFromUrl(req)
 
-    if (token && !isAdmin(token)) {
+    if (!token || (token && !isAdmin(token))) {
       return new Response('Unauthorized', { status: 403 })
     }
 
     const json = await req.json()
-    const body = insertReviewSchema.parse(json)
+    const body = commentPOSTSchema.parse(json)
 
-    await db.insert(movieReview).values(body)
+    await db.transaction(async (tx) => {
+      const resultHeaders = await tx.insert(comment).values(body)
+      await tx.insert(commentToMovieReview).values({
+        commentId: Number(resultHeaders.insertId),
+        movieReviewId: userReviewId,
+      })
+      // console.log('HEADERS:', resultHeaders.insertId, result)
+    })
 
-    return new Response('Review comment created successfully', { status: 201 })
+    return NextResponse.json(
+      { message: 'Review comment created successfully' },
+      { status: 201 },
+    )
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })

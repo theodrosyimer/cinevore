@@ -3,6 +3,7 @@ import {
   index,
   int,
   mysqlTable,
+  primaryKey,
   text,
   timestamp,
   uniqueIndex,
@@ -67,6 +68,7 @@ export const commentToMovieReview = mysqlTable(
   },
   (table) => {
     return {
+      compositePK: primaryKey(table.movieReviewId, table.commentId),
       compositeKeyIndex: index('compositeKeyIndex').on(
         table.commentId,
         table.movieReviewId,
@@ -107,7 +109,8 @@ export const likeToMovieReview = mysqlTable(
   },
   (table) => {
     return {
-      compositeKeyIndex: index('id').on(table.movieReviewId, table.likeId),
+      compositePK: primaryKey(table.movieReviewId, table.likeId),
+      compositeKeyIndex: index('id').on(table.likeId, table.movieReviewId),
     }
   },
 )
@@ -115,11 +118,11 @@ export const likeToMovieReview = mysqlTable(
 export const likeToMovieReviewRelations = relations(
   likeToMovieReview,
   ({ one, many }) => ({
-    movieReviews: one(movieReview, {
+    review: one(movieReview, {
       fields: [likeToMovieReview.movieReviewId],
       references: [movieReview.id],
     }),
-    likes: one(like, {
+    like: one(like, {
       fields: [likeToMovieReview.likeId],
       references: [like.id],
     }),

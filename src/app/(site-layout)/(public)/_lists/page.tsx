@@ -8,7 +8,7 @@ export const metadata = {
 export default function ListsPage() {
   return (
     <>
-      <h1 className="text-4xl font-bold text-center">Lists</h1>
+      <h1 className="text-center text-4xl font-bold">Lists</h1>
 
       <Lists />
     </>

@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "fc77369c-fdb3-407b-8cfb-a3774d4df683",
+  "id": "c0b7b0a5-2fb2-4ee5-a45f-ee1dc46e7b67",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -195,7 +195,15 @@
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "comment_to_movie_list_comment_id_list_id": {
+          "name": "comment_to_movie_list_comment_id_list_id",
+          "columns": [
+            "comment_id",
+            "list_id"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "comment_to_movie_review": {
@@ -227,7 +235,15 @@
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "comment_to_movie_review_comment_id_movie_review_id": {
+          "name": "comment_to_movie_review_comment_id_movie_review_id",
+          "columns": [
+            "comment_id",
+            "movie_review_id"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "follower": {
@@ -375,14 +391,22 @@
         "compositeKeyIndex": {
           "name": "compositeKeyIndex",
           "columns": [
-            "list_id",
-            "like_id"
+            "like_id",
+            "list_id"
           ],
           "isUnique": false
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "like_to_movie_list_like_id_list_id": {
+          "name": "like_to_movie_list_like_id_list_id",
+          "columns": [
+            "like_id",
+            "list_id"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "like_to_movie_review": {
@@ -407,14 +431,22 @@
         "id": {
           "name": "id",
           "columns": [
-            "movie_review_id",
-            "like_id"
+            "like_id",
+            "movie_review_id"
           ],
           "isUnique": false
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "like_to_movie_review_like_id_movie_review_id": {
+          "name": "like_to_movie_review_like_id_movie_review_id",
+          "columns": [
+            "like_id",
+            "movie_review_id"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     },
     "list": {

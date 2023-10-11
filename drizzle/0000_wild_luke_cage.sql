@@ -25,12 +25,14 @@ CREATE TABLE `comment` (
 --> statement-breakpoint
 CREATE TABLE `comment_to_movie_list` (
 	`list_id` int NOT NULL,
-	`comment_id` int NOT NULL
+	`comment_id` int NOT NULL,
+	CONSTRAINT `comment_to_movie_list_comment_id_list_id` PRIMARY KEY(`comment_id`,`list_id`)
 );
 --> statement-breakpoint
 CREATE TABLE `comment_to_movie_review` (
 	`movie_review_id` int NOT NULL,
-	`comment_id` int NOT NULL
+	`comment_id` int NOT NULL,
+	CONSTRAINT `comment_to_movie_review_comment_id_movie_review_id` PRIMARY KEY(`comment_id`,`movie_review_id`)
 );
 --> statement-breakpoint
 CREATE TABLE `follower` (
@@ -52,12 +54,14 @@ CREATE TABLE `like` (
 --> statement-breakpoint
 CREATE TABLE `like_to_movie_list` (
 	`list_id` int NOT NULL,
-	`like_id` int NOT NULL
+	`like_id` int NOT NULL,
+	CONSTRAINT `like_to_movie_list_like_id_list_id` PRIMARY KEY(`like_id`,`list_id`)
 );
 --> statement-breakpoint
 CREATE TABLE `like_to_movie_review` (
 	`movie_review_id` int NOT NULL,
-	`like_id` int NOT NULL
+	`like_id` int NOT NULL,
+	CONSTRAINT `like_to_movie_review_like_id_movie_review_id` PRIMARY KEY(`like_id`,`movie_review_id`)
 );
 --> statement-breakpoint
 CREATE TABLE `list` (
@@ -199,8 +203,8 @@ CREATE INDEX `compositeKeyIndex` ON `comment_to_movie_review` (`comment_id`,`mov
 CREATE INDEX `FK_user` ON `follower` (`followee`);--> statement-breakpoint
 CREATE INDEX `FK_user_follower` ON `follower` (`follower`);--> statement-breakpoint
 CREATE INDEX `FK_author_id` ON `like` (`author_id`);--> statement-breakpoint
-CREATE INDEX `compositeKeyIndex` ON `like_to_movie_list` (`list_id`,`like_id`);--> statement-breakpoint
-CREATE INDEX `id` ON `like_to_movie_review` (`movie_review_id`,`like_id`);--> statement-breakpoint
+CREATE INDEX `compositeKeyIndex` ON `like_to_movie_list` (`like_id`,`list_id`);--> statement-breakpoint
+CREATE INDEX `id` ON `like_to_movie_review` (`like_id`,`movie_review_id`);--> statement-breakpoint
 CREATE INDEX `id` ON `list` (`id`);--> statement-breakpoint
 CREATE INDEX `user_id` ON `list` (`user_id`);--> statement-breakpoint
 CREATE INDEX `watched_count` ON `movie` (`watched_count`);--> statement-breakpoint

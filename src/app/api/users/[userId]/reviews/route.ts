@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
   try {
     const token = await getToken({ req })
 
-    if (token && !isAdmin(token)) {
+    if (!token || (token && !isAdmin(token))) {
       return new Response('Unauthorized', { status: 403 })
     }
 
