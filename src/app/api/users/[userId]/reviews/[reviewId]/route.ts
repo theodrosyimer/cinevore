@@ -1,16 +1,15 @@
 import { getUserIdFromUrl } from '@/app/api/users/[userId]/get-user-id-from-url'
-import { movieReview, user } from '@/db/planetscale'
+import { movieReview } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { reviewPATCHSchema } from '@/lib/validations/review'
-import { userPatchSchema } from '@/lib/validations/user'
 import { eq } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
 import { z } from 'zod'
 
-export const reviewRouteContextSchema = z.object({
+const reviewRouteContextSchema = z.object({
   params: z.object({
     reviewId: z.coerce.number(),
   }),
