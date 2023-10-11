@@ -1,4 +1,4 @@
-import { KeysOf } from "@/types/utility"
+import { KeysOf } from '@/types/utility';
 
 const Log = {
   reset: '\x1b[0m',
@@ -32,33 +32,33 @@ const Log = {
     white: '\x1b[47m',
     crimson: '\x1b[48m',
   },
-} as const
+} as const;
 
-type LogType = typeof Log
-type LogTypeKeys = KeysOf<LogType>
-type LogTypeFg = Extract<LogTypeKeys, 'fg'>
-type LogTypeBg = Extract<LogTypeKeys, 'bg'>
-type LogTypeFgKeys = KeysOf<typeof Log.fg>
-type LogTypeBgKeys = KeysOf<typeof Log.bg>
+type LogType = typeof Log;
+type LogTypeKeys = KeysOf<LogType>;
+type LogTypeFg = Extract<LogTypeKeys, 'fg'>;
+type LogTypeBg = Extract<LogTypeKeys, 'bg'>;
+type LogTypeFgKeys = KeysOf<typeof Log.fg>;
+type LogTypeBgKeys = KeysOf<typeof Log.bg>;
 
-type Color = `${LogTypeFg}.${LogTypeFgKeys}` | `${LogTypeBg}.${LogTypeBgKeys}`
+type Color = `${LogTypeFg}.${LogTypeFgKeys}` | `${LogTypeBg}.${LogTypeBgKeys}`;
 
 export const log = (text: unknown, color: Color = 'fg.black') => {
   const [fgOrBg, colorName] = color.split('.') as [
     LogTypeFg | LogTypeBg,
     LogTypeFgKeys | LogTypeBgKeys
-  ]
+  ];
 
   if (!fgOrBg || !colorName || !Log[fgOrBg] || !Log[fgOrBg][colorName]) {
-    throw new Error(`Invalid color: ${color} `)
+    throw new Error(`Invalid color: ${color} `);
   }
   if (typeof text === 'object') {
-    console.log(`${Log[fgOrBg][colorName]}%O${Log.reset}`, text)
-    return
+    console.log(`${Log[fgOrBg][colorName]}%O${Log.reset}`, text);
+    return;
   }
 
-  console.log(`${Log[fgOrBg][colorName]}%s${Log.reset}`, text)
-}
+  console.log(`${Log[fgOrBg][colorName]}%s${Log.reset}`, text);
+};
 
 // usage:
 // log('fg.red', "My text is red")

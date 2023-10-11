@@ -1,4 +1,4 @@
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icons';
 
 export default function Loading() {
   return (
@@ -8,5 +8,5 @@ export default function Loading() {
         <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
       </div>
     </section>
-  )
+  );
 }

@@ -1,17 +1,17 @@
-import { FilmCardList } from '@/components/film-card-list'
+import { FilmCardList } from '@/components/film-card-list';
 
 export const metadata = {
   title: 'Job Details Page',
   description: 'Job details by name.',
-}
+};
 
 export default function JobDetailsPage({
   params,
 }: {
   params: {
-    username: string
-    id: number
-  }
+    username: string;
+    id: number;
+  };
 }) {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -20,9 +20,8 @@ export default function JobDetailsPage({
       </h1>
 
       <section>
-        <FilmCardList aspectRatio='portrait' width='w92' />
-
+        <FilmCardList aspectRatio="portrait" width="w92" />
       </section>
     </main>
-  )
+  );
 }

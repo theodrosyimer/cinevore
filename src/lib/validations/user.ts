@@ -1,10 +1,10 @@
-import { user } from '@/db/planetscale'
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
-import * as z from 'zod'
+import { user } from '@/db/planetscale';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import * as z from 'zod';
 
 export const userNameSchema = z.object({
   name: z.string().min(3).max(32),
-})
+});
 
 const insertRefineOptions = {
   name: z.string().min(2).max(50),
@@ -17,31 +17,31 @@ const insertRefineOptions = {
       message:
         'Password must contain at least 12 characters, one uppercase, one lowercase, one number and one of these special characters: #?!@$ %^&*-',
     }),
-}
+};
 
 // For admin actions
-export const insertUserSchema = createInsertSchema(user, insertRefineOptions)
+export const insertUserSchema = createInsertSchema(user, insertRefineOptions);
 
 export const userPatchSchema = createInsertSchema(user, {
   email: z.string().email().optional(),
-})
+});
 
 export const userPOSTSchema = insertUserSchema.pick({
   name: true,
   email: true,
   password: true,
-})
+});
 
 const selectRefineOptions = {
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
-}
+};
 
-export const selectUserSchema = createSelectSchema(user, selectRefineOptions)
+export const selectUserSchema = createSelectSchema(user, selectRefineOptions);
 
 export const userGETSchema = selectUserSchema.omit({
   password: true,
-})
+});
 
 export const userSettingsFormSchema = createSelectSchema(user, {
   name: z
@@ -65,7 +65,7 @@ export const userSettingsFormSchema = createSelectSchema(user, {
       })
     )
     .optional(),
-})
+});
 
 // Example usage:
 //

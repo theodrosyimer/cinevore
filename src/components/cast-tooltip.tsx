@@ -1,14 +1,14 @@
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { MovieCast } from '@/lib/tmdb/types/tmdb-api-movie-details'
-import { cn } from '@/lib/utils/utils'
-import Link from 'next/link'
+} from '@/components/ui/tooltip';
+import { MovieCast } from '@/lib/tmdb/types/tmdb-api-movie-details';
+import { cn } from '@/lib/utils/utils';
+import Link from 'next/link';
 
 export function CastTooltip({ cast }: { cast: MovieCast }) {
   return (
@@ -35,5 +35,5 @@ export function CastTooltip({ cast }: { cast: MovieCast }) {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  )
+  );
 }

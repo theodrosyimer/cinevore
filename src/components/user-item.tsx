@@ -1,14 +1,14 @@
-import Link from 'next/link'
-import { movieReview } from '@/db/planetscale'
+import Link from 'next/link';
+import { movieReview } from '@/db/planetscale';
 
-import { formatDate } from '@/lib/utils/utils'
-import { Skeleton } from '@/components/ui/skeleton'
-import { UserOperations } from '@/components/user-operations'
-import { SelectUser, SelectMovieReview } from '@/types/db'
-import { EditDialog } from '@/components/settings-dialog-form'
+import { formatDate } from '@/lib/utils/utils';
+import { Skeleton } from '@/components/ui/skeleton';
+import { UserOperations } from '@/components/user-operations';
+import { SelectUser, SelectMovieReview } from '@/types/db';
+import { EditDialog } from '@/components/settings-dialog-form';
 
 interface UserItemProps {
-  user: Pick<SelectUser, 'id' | 'name' | 'updatedAt' | 'createdAt'>
+  user: Pick<SelectUser, 'id' | 'name' | 'updatedAt' | 'createdAt'>;
 }
 
 export function UserItem({ user }: UserItemProps) {
@@ -31,7 +31,7 @@ export function UserItem({ user }: UserItemProps) {
       <EditDialog user={{ id: user.id, name: user.name }} />
       {/* </UserOperations> */}
     </div>
-  )
+  );
 }
 
 UserItem.Skeleton = function UserItemSkeleton() {
@@ -42,5 +42,5 @@ UserItem.Skeleton = function UserItemSkeleton() {
         <Skeleton className="h-4 w-4/5" />
       </div>
     </div>
-  )
-}
+  );
+};

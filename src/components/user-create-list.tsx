@@ -1,12 +1,12 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import { useRouter } from 'next/navigation'
+import * as React from 'react';
+import { useRouter } from 'next/navigation';
 
-import { cn } from '@/lib/utils/utils'
-import { Button, ButtonProps, buttonVariants } from '@/components/ui/button'
-import { toast } from '@/components/ui/use-toast'
-import { Icons } from '@/components/icons'
+import { cn } from '@/lib/utils/utils';
+import { Button, ButtonProps, buttonVariants } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import { Icons } from '@/components/icons';
 
 interface UserCreateListButtonProps extends ButtonProps {}
 
@@ -15,11 +15,11 @@ export function UserCreateListButton({
   variant,
   ...props
 }: UserCreateListButtonProps) {
-  const router = useRouter()
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   async function onClick() {
-    setIsLoading(true)
+    setIsLoading(true);
 
     const response = await fetch('/api/lists', {
       method: 'POST',
@@ -29,9 +29,9 @@ export function UserCreateListButton({
       body: JSON.stringify({
         title: 'Untitled Post',
       }),
-    })
+    });
 
-    setIsLoading(false)
+    setIsLoading(false);
 
     if (!response?.ok) {
       if (response.status === 402) {
@@ -39,22 +39,22 @@ export function UserCreateListButton({
           title: 'Limit of 3 posts reached.',
           description: 'Please upgrade to the PRO plan.',
           variant: 'destructive',
-        })
+        });
       }
 
       return toast({
         title: 'Something went wrong.',
         description: 'Your list was not created. Please try again.',
         variant: 'destructive',
-      })
+      });
     }
 
-    const post = await response.json()
+    const post = await response.json();
 
     // This forces a cache invalidation.
-    router.refresh()
+    router.refresh();
 
-    router.push(`/list/new`)
+    router.push(`/list/new`);
   }
 
   return (
@@ -77,5 +77,5 @@ export function UserCreateListButton({
       )}
       New list
     </Button>
-  )
+  );
 }

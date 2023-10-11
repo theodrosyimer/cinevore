@@ -1,4 +1,4 @@
-import type { IconName } from "@/components/icons"
+import type { IconName } from '@/components/icons';
 
 export const featuresConfig = [
   {
@@ -10,39 +10,43 @@ export const featuresConfig = [
   {
     name: 'likes',
     icon: 'like',
-    description: 'Show some love for your favorite films, lists and reviews with a “like”',
+    description:
+      'Show some love for your favorite films, lists and reviews with a “like”',
     enabled: true,
   },
   {
     name: 'reviews',
     icon: 'media',
-    description: 'Write and share reviews, and follow friends and other members to read theirs',
+    description:
+      'Write and share reviews, and follow friends and other members to read theirs',
     enabled: true,
   },
   {
     name: 'rate-movies',
     icon: 'star',
-    description: 'Rate each film on a five- star scale(with halves) to record and share your reaction',
+    description:
+      'Rate each film on a five- star scale(with halves) to record and share your reaction',
     enabled: true,
   },
   {
     name: 'diary',
     icon: 'post',
-    description: 'Keep a diary of your film watching (and upgrade to Pro for comprehensive stats)',
+    description:
+      'Keep a diary of your film watching (and upgrade to Pro for comprehensive stats)',
     enabled: true,
   },
   {
     name: 'lists',
     icon: 'trash',
-    description: 'Compile and share lists of films on any topic and keep a watchlist of films to see',
+    description:
+      'Compile and share lists of films on any topic and keep a watchlist of films to see',
     enabled: true,
   },
-] satisfies Feature[]
+] satisfies Feature[];
 
 export type Feature = {
-  name: 'watchlist' | 'likes' | 'reviews' | 'rate-movies' | 'diary' | 'lists'
-  description: string
-  enabled: boolean
-  icon: IconName
-}
-
+  name: 'watchlist' | 'likes' | 'reviews' | 'rate-movies' | 'diary' | 'lists';
+  description: string;
+  enabled: boolean;
+  icon: IconName;
+};

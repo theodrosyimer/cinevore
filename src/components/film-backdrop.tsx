@@ -1,21 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from 'next/image'
+import Image from 'next/image';
 
-import { AspectRatio } from '@/components/ui/aspect-ratio'
-import { cn } from '@/lib/utils/utils'
-import { FilmCardList } from '@/components/film-card-list'
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { cn } from '@/lib/utils/utils';
+import { FilmCardList } from '@/components/film-card-list';
 
 export function MovieBackdrop({
   url,
   altText,
-  className
+  className,
 }: {
-  className?: string
-  url: string
-  altText: string
+  className?: string;
+  url: string;
+  altText: string;
 }) {
   return (
-    <AspectRatio ratio={16 / 9} className={cn('bg-muted object-cover rounded-md', className)}>
+    <AspectRatio
+      ratio={16 / 9}
+      className={cn('bg-muted object-cover rounded-md', className)}
+    >
       {/* <Image
         src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
         alt="Photo by Drew Beamer"
@@ -31,5 +34,5 @@ export function MovieBackdrop({
         className={cn('object-cover rounded-md')}
       />
     </AspectRatio>
-  )
+  );
 }

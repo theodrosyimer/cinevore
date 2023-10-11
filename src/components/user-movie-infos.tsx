@@ -1,8 +1,8 @@
-import FilmRatingStars from '@/components/film-rating-stars'
-import { Icons } from '@/components/icons'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
-import { cn } from '@/lib/utils/utils'
+import FilmRatingStars from '@/components/film-rating-stars';
+import { Icons } from '@/components/icons';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils/utils';
 
 export function UserMovieActions({ ...className }: { className?: string }) {
   return (
@@ -38,5 +38,5 @@ export function UserMovieActions({ ...className }: { className?: string }) {
         <FilmRatingStars />
       </div>
     </article>
-  )
+  );
 }

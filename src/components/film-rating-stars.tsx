@@ -1,5 +1,5 @@
-import { Label } from '@/components/ui/label'
-import React from 'react'
+import { Label } from '@/components/ui/label';
+import React from 'react';
 
 export default function FilmRatingStars() {
   return (
@@ -90,7 +90,7 @@ export default function FilmRatingStars() {
             id="rating2-25"
             value="2.5"
             type="radio"
-          // checked
+            // checked
           />
           <Label
             aria-label="3 stars"
@@ -165,5 +165,5 @@ export default function FilmRatingStars() {
         </div>
       </div>
     </>
-  )
+  );
 }

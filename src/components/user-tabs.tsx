@@ -5,14 +5,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { MovieCredits } from '@/lib/tmdb/types/tmdb-api'
-import { MovieGenre } from '@/lib/tmdb/types/tmdb-api-movie-details'
-import { cn } from '@/lib/utils/utils'
-import Link from 'next/link'
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { MovieCredits } from '@/lib/tmdb/types/tmdb-api';
+import { MovieGenre } from '@/lib/tmdb/types/tmdb-api-movie-details';
+import { cn } from '@/lib/utils/utils';
+import Link from 'next/link';
 
 export function UserTabs({
   className,
@@ -21,11 +21,11 @@ export function UserTabs({
   genres,
   releases,
 }: {
-  className?: string
-  credits?: MovieCredits
-  details?: Record<string, unknown>
-  genres?: MovieGenre[]
-  releases?: Record<string, unknown>
+  className?: string;
+  credits?: MovieCredits;
+  details?: Record<string, unknown>;
+  genres?: MovieGenre[];
+  releases?: Record<string, unknown>;
 }) {
   return (
     <>
@@ -120,5 +120,5 @@ export function UserTabs({
         </TabsContent>
       </Tabs>
     </>
-  )
+  );
 }

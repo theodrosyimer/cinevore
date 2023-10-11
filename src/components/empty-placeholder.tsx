@@ -1,7 +1,7 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import { cn } from '@/lib/utils/utils'
-import { Icons } from '@/components/icons'
+import { cn } from '@/lib/utils/utils';
+import { Icons } from '@/components/icons';
 
 interface EmptyPlaceholderProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -22,12 +22,12 @@ export function EmptyPlaceholder({
         {children}
       </div>
     </div>
-  )
+  );
 }
 
 interface EmptyPlaceholderIconProps
   extends Partial<React.SVGProps<SVGSVGElement>> {
-  name: keyof typeof Icons
+  name: keyof typeof Icons;
 }
 
 EmptyPlaceholder.Icon = function EmptyPlaceHolderIcon({
@@ -35,10 +35,10 @@ EmptyPlaceholder.Icon = function EmptyPlaceHolderIcon({
   className,
   ...props
 }: EmptyPlaceholderIconProps) {
-  const Icon = Icons[name]
+  const Icon = Icons[name];
 
   if (!Icon) {
-    return null
+    return null;
   }
 
   return (
@@ -49,8 +49,8 @@ EmptyPlaceholder.Icon = function EmptyPlaceHolderIcon({
         ref={React.createRef<SVGSVGElement>()}
       />
     </div>
-  )
-}
+  );
+};
 
 interface EmptyPlacholderTitleProps
   extends React.HTMLAttributes<HTMLHeadingElement> {}
@@ -61,8 +61,8 @@ EmptyPlaceholder.Title = function EmptyPlaceholderTitle({
 }: EmptyPlacholderTitleProps) {
   return (
     <h2 className={cn('mt-6 text-xl font-semibold', className)} {...props} />
-  )
-}
+  );
+};
 
 interface EmptyPlacholderDescriptionProps
   extends React.HTMLAttributes<HTMLParagraphElement> {}
@@ -79,5 +79,5 @@ EmptyPlaceholder.Description = function EmptyPlaceholderDescription({
       )}
       {...props}
     />
-  )
-}
+  );
+};

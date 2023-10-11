@@ -1,25 +1,25 @@
-'use client'
+'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { signIn } from 'next-auth/react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import * as React from 'react'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import * as React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Icons } from '@/components/icons'
-import { buttonVariants } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { toast } from '@/components/ui/use-toast'
-import { cn } from '@/lib/utils/utils'
-import { insertListSchema } from '@/lib/validations/list'
-import { getCurrentUser } from '@/lib/session'
-import { Textarea } from '@/components/ui/textarea'
+import { Icons } from '@/components/icons';
+import { buttonVariants } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { toast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/utils/utils';
+import { insertListSchema } from '@/lib/validations/list';
+import { getCurrentUser } from '@/lib/session';
+import { Textarea } from '@/components/ui/textarea';
 
 interface NewListFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-type FormData = z.infer<typeof insertListSchema>
+type FormData = z.infer<typeof insertListSchema>;
 
 export function NewReviewForm({ className, ...props }: NewListFormProps) {
   const {
@@ -28,42 +28,45 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(insertListSchema),
-  })
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  });
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
   async function onSubmit(data: FormData) {
-    setIsLoading(true)
+    setIsLoading(true);
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/lists`, {
-      method: 'POST',
-    }).catch((error) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/lists`,
+      {
+        method: 'POST',
+      }
+    ).catch((error) => {
       toast({
         title: 'Server error. Please try later.',
         description: `${error.message}`,
         variant: 'destructive',
-      })
-      return
-    })
+      });
+      return;
+    });
 
-    setIsLoading(false)
+    setIsLoading(false);
 
     if (!response?.ok) {
       toast({
         title: 'Something went wrong.',
         description: 'Your list was not created. Please try again.',
         variant: 'destructive',
-      })
-      return router.push('/list/new')
+      });
+      return router.push('/list/new');
     }
 
     toast({
       title: `List "${data.title}" created.`,
       description: 'Your account has been created.',
-    })
-    return router.push(response?.url ?? '/me')
+    });
+    return router.push(response?.url ?? '/me');
   }
 
   return (
@@ -178,5 +181,5 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
         Github
       </button> */}
     </div>
-  )
+  );
 }

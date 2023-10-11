@@ -1,4 +1,4 @@
-import { SiteLayoutConfig } from '@/types'
+import { SiteLayoutConfig } from '@/types';
 
 export const userNavigationConfig: SiteLayoutConfig = {
   mainNav: [
@@ -72,4 +72,4 @@ export const userNavigationConfig: SiteLayoutConfig = {
       ],
     },
   ],
-}
+};

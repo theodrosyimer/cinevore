@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function ListPresentation() {
-  return (
-    <div>ListPresentation</div>
-  )
+  return <div>ListPresentation</div>;
 }

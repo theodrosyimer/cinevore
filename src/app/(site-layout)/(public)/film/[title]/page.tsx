@@ -1,31 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
-import { MovieBackdrop } from '@/components/film-backdrop'
-import MovieReviewList from '@/components/film-review-list'
-import { MovieInfosTabs } from '@/components/film-tabs'
-import { Badge } from '@/components/ui/badge'
-import { buttonVariants } from '@/components/ui/button'
-import { toast } from '@/components/ui/use-toast'
-import { UserMovieActions } from '@/components/user-movie-infos'
-import { getCurrentUser } from '@/lib/session'
-import { globalConfig, searchByID, searchByTitle } from '@/lib/tmdb/src/tmdb'
-import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
-import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils/utils'
-import Link from 'next/link'
-import { notFound, useSearchParams } from 'next/navigation'
+import { MovieBackdrop } from '@/components/film-backdrop';
+import MovieReviewList from '@/components/film-review-list';
+import { MovieInfosTabs } from '@/components/film-tabs';
+import { Badge } from '@/components/ui/badge';
+import { buttonVariants } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import { UserMovieActions } from '@/components/user-movie-infos';
+import { getCurrentUser } from '@/lib/session';
+import { globalConfig, searchByID, searchByTitle } from '@/lib/tmdb/src/tmdb';
+import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils';
+import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils/utils';
+import Link from 'next/link';
+import { notFound, useSearchParams } from 'next/navigation';
 
 export const metadata = {
-  title: "Film Details ",
+  title: 'Film Details ',
   description: 'All the details of the film you searched for.',
-}
+};
 
 export default async function FilmPage({
   params,
   searchParams,
 }: {
-  params: { title: string }
-  searchParams: { id: string }
+  params: { title: string };
+  searchParams: { id: string };
 }) {
-  const { user } = await getCurrentUser()
+  const { user } = await getCurrentUser();
   const film = await searchByID({
     id: `${searchParams.id}`,
     category: 'movie',
@@ -33,31 +33,27 @@ export default async function FilmPage({
     toast({
       title: error.name,
       description: error.message,
-    })
-    return
-  })
+    });
+    return;
+  });
 
   if (!film) {
-    return notFound()
+    return notFound();
   }
 
   // console.log('Film:', film)
-  const backdropImageUrl = generateTMDBImageUrl(
-    {
-      format: 'backdrop_sizes',
-      size: 'original',
-      paths: film.images?.backdrops,
-      defaultImage: film.backdrop_path
-    }
-  )
-  const posterImageUrl = generateTMDBImageUrl(
-    {
-      format: 'poster_sizes',
-      size: 'w185',
-      paths: film.images?.posters,
-      defaultImage: film.poster_path
-    }
-  )
+  const backdropImageUrl = generateTMDBImageUrl({
+    format: 'backdrop_sizes',
+    size: 'original',
+    paths: film.images?.backdrops,
+    defaultImage: film.backdrop_path,
+  });
+  const posterImageUrl = generateTMDBImageUrl({
+    format: 'poster_sizes',
+    size: 'w185',
+    paths: film.images?.posters,
+    defaultImage: film.poster_path,
+  });
   // console.log('Image URL:', imageUrl)
 
   return (
@@ -106,5 +102,5 @@ export default async function FilmPage({
         </div>
       </div>
     </>
-  )
+  );
 }

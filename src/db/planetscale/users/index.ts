@@ -1,5 +1,5 @@
-import type { AdapterAccount } from '@auth/core/adapters'
-import { relations, sql } from 'drizzle-orm'
+import type { AdapterAccount } from '@auth/core/adapters';
+import { relations, sql } from 'drizzle-orm';
 import {
   char,
   int,
@@ -11,15 +11,15 @@ import {
   timestamp,
   uniqueIndex,
   varchar,
-} from 'drizzle-orm/mysql-core'
-import { comment } from '../comments'
-import { follower } from '../followers'
-import { like } from '../likes'
-import { list } from '../lists'
-import { movieInfosToUser } from '../movie-infos-to-users'
-import { movieReview } from '../movie-reviews'
-import { rating } from '../ratings'
-import { watchlist } from '../watchlist'
+} from 'drizzle-orm/mysql-core';
+import { comment } from '../comments';
+import { follower } from '../followers';
+import { like } from '../likes';
+import { list } from '../lists';
+import { movieInfosToUser } from '../movie-infos-to-users';
+import { movieReview } from '../movie-reviews';
+import { rating } from '../ratings';
+import { watchlist } from '../watchlist';
 
 export const user = mysqlTable(
   'user',
@@ -59,9 +59,9 @@ export const user = mysqlTable(
       id: uniqueIndex('id').on(table.id),
       email: uniqueIndex('email').on(table.email),
       name: uniqueIndex('username').on(table.name),
-    }
+    };
   }
-)
+);
 
 export const userRelations = relations(user, ({ one, many }) => ({
   accounts: many(accounts),
@@ -78,7 +78,7 @@ export const userRelations = relations(user, ({ one, many }) => ({
   movieInfosToUser: many(movieInfosToUser, { relationName: 'user' }),
   followee: many(follower, { relationName: 'follower' }),
   followers: many(follower, { relationName: 'followee' }),
-}))
+}));
 
 // Auth
 
@@ -105,14 +105,14 @@ export const accounts = mysqlTable(
   (account) => ({
     compositeKey: primaryKey(account.provider, account.providerAccountId),
   })
-)
+);
 
 export const accountsRelations = relations(accounts, ({ one, many }) => ({
   user: one(user, {
     fields: [accounts.userId],
     references: [user.id],
   }),
-}))
+}));
 
 export const sessions = mysqlTable('session', {
   sessionToken: varchar('sessionToken', { length: 255 }).notNull().primaryKey(),
@@ -121,14 +121,14 @@ export const sessions = mysqlTable('session', {
     'expires',
     { mode: 'date' }
   ).notNull(),
-})
+});
 
 export const sessionsRelations = relations(sessions, ({ one, many }) => ({
   user: one(user, {
     fields: [sessions.userId],
     references: [user.id],
   }),
-}))
+}));
 
 export const verificationTokens = mysqlTable(
   'verificationToken',
@@ -140,4 +140,4 @@ export const verificationTokens = mysqlTable(
   (vt) => ({
     compositeKey: primaryKey(vt.identifier, vt.token),
   })
-)
+);

@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import { SelectMovieReview } from '@/types/db'
-import { movieReview } from '@/db/planetscale'
+import Link from 'next/link';
+import { SelectMovieReview } from '@/types/db';
+import { movieReview } from '@/db/planetscale';
 
-import { formatDate } from '@/lib/utils/utils'
-import { Skeleton } from '@/components/ui/skeleton'
-import { ReviewOperations } from '@/components/review-operations'
+import { formatDate } from '@/lib/utils/utils';
+import { Skeleton } from '@/components/ui/skeleton';
+import { ReviewOperations } from '@/components/review-operations';
 
 interface ReviewItemProps {
-  review: Pick<SelectMovieReview, 'id' | 'content' | 'updatedAt' | 'createdAt'>
+  review: Pick<SelectMovieReview, 'id' | 'content' | 'updatedAt' | 'createdAt'>;
 }
 
 export function ReviewItem({ review }: ReviewItemProps) {
@@ -28,7 +28,7 @@ export function ReviewItem({ review }: ReviewItemProps) {
       </div>
       <ReviewOperations review={{ id: review.id, content: review.content }} />
     </div>
-  )
+  );
 }
 
 ReviewItem.Skeleton = function ReviewItemSkeleton() {
@@ -39,5 +39,5 @@ ReviewItem.Skeleton = function ReviewItemSkeleton() {
         <Skeleton className="h-4 w-4/5" />
       </div>
     </div>
-  )
-}
+  );
+};

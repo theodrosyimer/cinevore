@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm'
+import { relations, sql } from 'drizzle-orm';
 import {
   boolean,
   index,
@@ -7,11 +7,11 @@ import {
   text,
   timestamp,
   varchar,
-} from 'drizzle-orm/mysql-core'
-import { movieList } from '../movie-lists'
-import { user } from '../users'
-import { comment } from '../comments'
-import { like } from '../likes'
+} from 'drizzle-orm/mysql-core';
+import { movieList } from '../movie-lists';
+import { user } from '../users';
+import { comment } from '../comments';
+import { like } from '../likes';
 
 export const list = mysqlTable(
   'list',
@@ -35,7 +35,7 @@ export const list = mysqlTable(
     id: index('id').on(table.id),
     userId: index('user_id').on(table.userId),
   })
-)
+);
 
 export const listRelations = relations(list, ({ one, many }) => ({
   user: one(user, { fields: [list.userId], references: [user.id] }),
@@ -46,7 +46,7 @@ export const listRelations = relations(list, ({ one, many }) => ({
   likes: many(likeToMovieList, {
     relationName: 'likes',
   }),
-}))
+}));
 
 export const commentToMovieList = mysqlTable(
   'comment_to_movie_list',
@@ -70,9 +70,9 @@ export const commentToMovieList = mysqlTable(
         table.commentId,
         table.listId
       ),
-    }
+    };
   }
-)
+);
 
 export const commentToMovieListRelations = relations(
   commentToMovieList,
@@ -88,7 +88,7 @@ export const commentToMovieListRelations = relations(
       relationName: '',
     }),
   })
-)
+);
 
 export const likeToMovieList = mysqlTable(
   'like_to_movie_list',
@@ -112,9 +112,9 @@ export const likeToMovieList = mysqlTable(
         table.listId,
         table.likeId
       ),
-    }
+    };
   }
-)
+);
 
 export const likeToMovieListRelations = relations(
   likeToMovieList,
@@ -129,4 +129,4 @@ export const likeToMovieListRelations = relations(
       references: [list.id],
     }),
   })
-)
+);

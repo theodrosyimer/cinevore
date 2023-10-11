@@ -1,20 +1,20 @@
-import { SidebarNav } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/components/sidebar-nav'
-import Loading from '@/app/(site-layout)/loading'
-import { SiteFooter } from '@/components/site-footer'
-import { SiteHeader } from '@/components/site-header'
-import { UserInfos } from '@/components/user-infos'
-import { UserNavigation } from '@/components/user-navigation'
-import { settingsConfig } from '@/config/settings'
-import { userNavigationConfig } from '@/config/user-navigation'
-import { getCurrentUser } from '@/lib/session'
-import { Separator } from '@radix-ui/react-dropdown-menu'
+import { SidebarNav } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/components/sidebar-nav';
+import Loading from '@/app/(site-layout)/loading';
+import { SiteFooter } from '@/components/site-footer';
+import { SiteHeader } from '@/components/site-header';
+import { UserInfos } from '@/components/user-infos';
+import { UserNavigation } from '@/components/user-navigation';
+import { settingsConfig } from '@/config/settings';
+import { userNavigationConfig } from '@/config/user-navigation';
+import { getCurrentUser } from '@/lib/session';
+import { Separator } from '@radix-ui/react-dropdown-menu';
 // import { Footer } from "@/components/footer"
 
 interface MeLayoutProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 export default async function MeLayout({ children }: MeLayoutProps) {
-  const { user, isAdmin } = await getCurrentUser()
+  const { user, isAdmin } = await getCurrentUser();
 
   return (
     <>
@@ -31,14 +31,11 @@ export default async function MeLayout({ children }: MeLayoutProps) {
             <SidebarNav items={userNavigationConfig.mainNav} />
           </aside>
           <div className="grid flex-1 gap-8 md:max-w-2xl">
-            {user
-              ? <UserInfos user={user} />
-              : null
-            }
+            {user ? <UserInfos user={user} /> : null}
             {children}
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
