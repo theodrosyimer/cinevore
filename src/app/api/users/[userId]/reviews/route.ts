@@ -4,7 +4,7 @@ import { db } from "@/lib/db"
 import { getUserIdFromUrl } from "@/app/api/users/[userId]/get-user-id-from-url"
 import { formatSimpleErrorMessage } from "@/lib/utils/utils"
 import { getToken } from "next-auth/jwt"
-import type { NextRequest } from "next/server"
+import { NextResponse, type NextRequest } from "next/server"
 import { z } from "zod"
 import { insertReviewSchema } from "@/lib/validations/review"
 import { movieReview } from "@/db/planetscale"
@@ -29,7 +29,7 @@ export async function GET(
         return new Response(`User's reviews not found`, { status: 404 })
       }
 
-      returnNextResponse.json(reviews)
+      return NextResponse.json(reviews)
     }
 
     return new Response('Unauthorized', { status: 403 })
