@@ -5,7 +5,8 @@ import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
 import { insertReviewSchema } from '@/lib/validations/review'
-import { movieReview } from '@/db/planetscale'
+import { list, movieReview } from '@/db/planetscale'
+import { insertListSchema } from '@/lib/validations/list'
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -24,15 +25,15 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const reviews = await db.query.movieReview.findMany({
-        where: (movieReview, { eq }) => eq(movieReview.userId, token.id),
+      const lists = await db.query.list.findMany({
+        where: (list, { eq }) => eq(list.userId, userId),
       })
 
-      if (!reviews) {
+      if (!lists) {
         return new Response(`User's reviews not found`, { status: 404 })
       }
 
-      return NextResponse.json(reviews)
+      return NextResponse.json(lists)
     }
 
     return new Response('Unauthorized', { status: 403 })
@@ -61,9 +62,9 @@ export async function POST(
     }
 
     const json = await req.json()
-    const body = insertReviewSchema.parse(json)
+    const body = insertListSchema.parse(json)
 
-    await db.insert(movieReview).values(body)
+    await db.insert(list).values(body)
 
     return new Response('Review created successfully', { status: 201 })
   } catch (error) {

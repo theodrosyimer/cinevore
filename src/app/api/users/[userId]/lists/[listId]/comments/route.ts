@@ -11,16 +11,26 @@ import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
 
-export async function GET(req: NextRequest) {
+const routeContextSchema = z.object({
+  params: z.object({
+    listId: z.coerce.number(),
+    userId: z.string(),
+  }),
+})
+export async function GET(
+  req: NextRequest,
+  context: z.infer<typeof routeContextSchema>,
+) {
   try {
+    const { params } = routeContextSchema.parse(context)
+    const { listId, userId } = params
+
     const token = await getToken({ req })
-    const userId = getUserIdFromUrl(req)
-    const userReviewId = getUserResourceIdFromUrl(req)
 
     if (token && (userId === token.id || isAdmin(token))) {
       const reviewComments = await db.query.commentToMovieReview.findMany({
         where: (commentToMovieReview, { eq }) =>
-          eq(commentToMovieReview.movieReviewId, userReviewId),
+          eq(commentToMovieReview.movieReviewId, listId),
         columns: {},
         with: {
           comment: true,
@@ -45,11 +55,15 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function POST(req: NextRequest) {
+export async function POST(
+  req: NextRequest,
+  context: z.infer<typeof routeContextSchema>,
+) {
   try {
+    const { params } = routeContextSchema.parse(context)
+    const { listId, userId } = params
+
     const token = await getToken({ req })
-    const userId = getUserIdFromUrl(req)
-    const userReviewId = getUserResourceIdFromUrl(req)
 
     if (!token || (token && !(userId === token.id || isAdmin(token)))) {
       return new Response('Unauthorized', { status: 403 })
@@ -62,7 +76,7 @@ export async function POST(req: NextRequest) {
       const resultHeaders = await tx.insert(comment).values(body)
       await tx.insert(commentToMovieReview).values({
         commentId: Number(resultHeaders.insertId),
-        movieReviewId: userReviewId,
+        movieReviewId: listId,
       })
       // console.log('HEADERS:', resultHeaders.insertId, result)
     })

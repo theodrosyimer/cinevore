@@ -10,7 +10,7 @@ import { z } from 'zod'
 const routeContextSchema = z.object({
   params: z.object({
     likeId: z.coerce.number(),
-    listId: z.coerce.number(),
+    reviewId: z.coerce.number(),
     userId: z.string(),
   }),
 })
@@ -22,7 +22,7 @@ export async function DELETE(
   try {
     // Validate the route params.
     const { params } = routeContextSchema.parse(context)
-    const { likeId, listId, userId } = params
+    const { likeId, reviewId, userId } = params
     // Ensure user is authentication and has access to this resource.
     const token = await getToken({ req })
 
@@ -41,7 +41,7 @@ export async function DELETE(
           .delete(likeToMovieReview)
           .where(
             and(
-              eq(likeToMovieReview.movieReviewId, listId),
+              eq(likeToMovieReview.movieReviewId, reviewId),
               eq(likeToMovieReview.likeId, likeId!),
             ),
           )
@@ -50,7 +50,7 @@ export async function DELETE(
       })
 
       if (result) {
-        return new Response(`Deleted like to review with id: ${listId}`, {
+        return new Response(`Deleted like to review with id: ${reviewId}`, {
           status: 200,
         })
       }

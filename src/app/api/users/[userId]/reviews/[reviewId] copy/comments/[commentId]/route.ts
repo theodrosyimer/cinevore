@@ -15,7 +15,7 @@ import { z } from 'zod'
 const routeContextSchema = z.object({
   params: z.object({
     commentId: z.coerce.number(),
-    listId: z.coerce.number(),
+    reviewId: z.coerce.number(),
     userId: z.string(),
   }),
 })
@@ -26,7 +26,7 @@ export async function GET(
 ) {
   try {
     const { params } = routeContextSchema.parse(context)
-    const { commentId, listId, userId } = params
+    const { commentId, reviewId, userId } = params
 
     const token = await getToken({ req })
 
@@ -34,7 +34,7 @@ export async function GET(
       const userReviews = await db.query.commentToMovieReview.findMany({
         where: (commentToMovieReview, { eq, and }) =>
           and(
-            eq(commentToMovieReview.movieReviewId, listId),
+            eq(commentToMovieReview.movieReviewId, reviewId),
             eq(commentToMovieReview.commentId, commentId),
           ),
         columns: {},
@@ -68,7 +68,7 @@ export async function PATCH(
   try {
     // Validate the route context.
     const { params } = routeContextSchema.parse(context)
-    const { commentId, listId, userId } = params
+    const { commentId, reviewId, userId } = params
 
     // Ensure user is authenticated and has access to this resource.
     const token = await getToken({ req })
@@ -109,7 +109,7 @@ export async function DELETE(
   try {
     // Validate the route params.
     const { params } = routeContextSchema.parse(context)
-    const { commentId, listId, userId } = params
+    const { commentId, reviewId, userId } = params
 
     // Ensure user is authentication and has access to this resource.
     const token = await getToken({ req })

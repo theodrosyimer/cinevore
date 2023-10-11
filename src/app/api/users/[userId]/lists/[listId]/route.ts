@@ -1,4 +1,3 @@
-import { getUserIdFromUrl } from '@/app/api/users/[userId]/get-user-id-from-url'
 import { movieReview } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
@@ -12,7 +11,7 @@ import { z } from 'zod'
 const reviewRouteContextSchema = z.object({
   params: z.object({
     userId: z.string(),
-    reviewId: z.coerce.number(),
+    listId: z.coerce.number(),
   }),
 })
 
@@ -22,14 +21,14 @@ export async function GET(
 ) {
   try {
     const { params } = reviewRouteContextSchema.parse(context)
-    const { reviewId, userId } = params
+    const { listId, userId } = params
 
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
       const userReviews = await db.query.movieReview.findMany({
         where: (movieReview, { eq, and }) =>
-          and(eq(movieReview.userId, token.id), eq(movieReview.id, reviewId)),
+          and(eq(movieReview.userId, token.id), eq(movieReview.id, listId)),
       })
 
       if (!userReviews) {
@@ -57,7 +56,7 @@ export async function PATCH(
   try {
     // Validate the route context.
     const { params } = reviewRouteContextSchema.parse(context)
-    const { reviewId, userId } = params
+    const { listId, userId } = params
 
     // Ensure user is authenticated and has access to this resource.
     const token = await getToken({ req })
@@ -68,7 +67,7 @@ export async function PATCH(
       const body = reviewPATCHSchema.parse(json)
 
       // Update the review.
-      await db.update(movieReview).set(body).where(eq(movieReview.id, reviewId))
+      await db.update(movieReview).set(body).where(eq(movieReview.id, listId))
 
       return new Response('Review updated successfully!', { status: 200 })
     }
@@ -95,7 +94,7 @@ export async function DELETE(
   try {
     // Validate the route params.
     const { params } = reviewRouteContextSchema.parse(context)
-    const { reviewId, userId } = params
+    const { listId, userId } = params
 
     // Ensure user is authentication and has access to this resource.
     const token = await getToken({ req })
@@ -104,7 +103,7 @@ export async function DELETE(
       // Delete the list.
       const resultHeader = await db
         .delete(movieReview)
-        .where(eq(movieReview.id, reviewId))
+        .where(eq(movieReview.id, listId))
 
       console.log('Deleted rows:', resultHeader.rowsAffected)
 
@@ -115,7 +114,7 @@ export async function DELETE(
         )
       }
 
-      return new Response(`Deleted review with id: ${reviewId}`, {
+      return new Response(`Deleted review with id: ${listId}`, {
         status: 200,
       })
     }

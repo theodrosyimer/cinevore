@@ -1,46 +1,35 @@
-import {
-  getUserIdFromUrl,
-  getUserResourceIdFromUrl,
-} from '@/app/api/users/[userId]/get-user-id-from-url'
-import { comment, movieReview } from '@/db/planetscale'
+import { getUserIdFromUrl } from '@/app/api/users/[userId]/get-user-id-from-url'
+import { movieReview } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
-import { commentPATCHSchema } from '@/lib/validations/comment'
-import { and, eq } from 'drizzle-orm'
+import { reviewPATCHSchema } from '@/lib/validations/review'
+import { eq } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
 
-const routeContextSchema = z.object({
+const reviewRouteContextSchema = z.object({
   params: z.object({
-    commentId: z.coerce.number(),
-    listId: z.coerce.number(),
     userId: z.string(),
+    reviewId: z.coerce.number(),
   }),
 })
 
 export async function GET(
   req: NextRequest,
-  context: z.infer<typeof routeContextSchema>,
+  context: z.infer<typeof reviewRouteContextSchema>,
 ) {
   try {
-    const { params } = routeContextSchema.parse(context)
-    const { commentId, listId, userId } = params
+    const { params } = reviewRouteContextSchema.parse(context)
+    const { reviewId, userId } = params
 
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const userReviews = await db.query.commentToMovieReview.findMany({
-        where: (commentToMovieReview, { eq, and }) =>
-          and(
-            eq(commentToMovieReview.movieReviewId, listId),
-            eq(commentToMovieReview.commentId, commentId),
-          ),
-        columns: {},
-        with: {
-          comment: true,
-        },
+      const userReviews = await db.query.movieReview.findMany({
+        where: (movieReview, { eq, and }) =>
+          and(eq(movieReview.userId, token.id), eq(movieReview.id, reviewId)),
       })
 
       if (!userReviews) {
@@ -63,12 +52,12 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  context: z.infer<typeof routeContextSchema>,
+  context: z.infer<typeof reviewRouteContextSchema>,
 ) {
   try {
     // Validate the route context.
-    const { params } = routeContextSchema.parse(context)
-    const { commentId, listId, userId } = params
+    const { params } = reviewRouteContextSchema.parse(context)
+    const { reviewId, userId } = params
 
     // Ensure user is authenticated and has access to this resource.
     const token = await getToken({ req })
@@ -76,13 +65,10 @@ export async function PATCH(
     if (token && (userId === token.id || isAdmin(token))) {
       // Get the request body and validate it.
       const json = await req.json()
-      const body = commentPATCHSchema.parse(json)
+      const body = reviewPATCHSchema.parse(json)
 
-      // Update the comment review.
-      await db
-        .update(comment)
-        .set(body)
-        .where(and(eq(comment.id, commentId), eq(comment.authorId, token.id)))
+      // Update the review.
+      await db.update(movieReview).set(body).where(eq(movieReview.id, reviewId))
 
       return new Response('Review updated successfully!', { status: 200 })
     }
@@ -104,12 +90,12 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  context: z.infer<typeof routeContextSchema>,
+  context: z.infer<typeof reviewRouteContextSchema>,
 ) {
   try {
     // Validate the route params.
-    const { params } = routeContextSchema.parse(context)
-    const { commentId, listId, userId } = params
+    const { params } = reviewRouteContextSchema.parse(context)
+    const { reviewId, userId } = params
 
     // Ensure user is authentication and has access to this resource.
     const token = await getToken({ req })
@@ -117,8 +103,8 @@ export async function DELETE(
     if (token && (userId === token.id || isAdmin(token))) {
       // Delete the list.
       const resultHeader = await db
-        .delete(comment)
-        .where(eq(comment.id, commentId))
+        .delete(movieReview)
+        .where(eq(movieReview.id, reviewId))
 
       console.log('Deleted rows:', resultHeader.rowsAffected)
 
@@ -129,7 +115,7 @@ export async function DELETE(
         )
       }
 
-      return new Response(`Deleted review with id: ${commentId}`, {
+      return new Response(`Deleted review with id: ${reviewId}`, {
         status: 200,
       })
     }

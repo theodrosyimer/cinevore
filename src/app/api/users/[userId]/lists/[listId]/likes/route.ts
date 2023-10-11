@@ -8,7 +8,7 @@ import { z } from 'zod'
 
 const routeContextSchema = z.object({
   params: z.object({
-    reviewId: z.coerce.number(),
+    listId: z.coerce.number(),
     userId: z.string(),
   }),
 })
@@ -19,14 +19,14 @@ export async function GET(
 ) {
   try {
     const { params } = routeContextSchema.parse(context)
-    const { reviewId, userId } = params
+    const { listId, userId } = params
 
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
       const reviewLikes = await db.query.likeToMovieReview.findMany({
         where: (likeToMovieReview, { eq }) =>
-          eq(likeToMovieReview.movieReviewId, reviewId),
+          eq(likeToMovieReview.movieReviewId, listId),
         columns: {},
         with: {
           like: true,
@@ -57,7 +57,7 @@ export async function POST(
 ) {
   try {
     const { params } = routeContextSchema.parse(context)
-    const { reviewId, userId } = params
+    const { listId, userId } = params
 
     const token = await getToken({ req })
 
@@ -69,7 +69,7 @@ export async function POST(
       // check if user already like this review
       const results = await tx.query.likeToMovieReview.findMany({
         where: (likeToMovieReview, { eq }) =>
-          eq(likeToMovieReview.movieReviewId, reviewId),
+          eq(likeToMovieReview.movieReviewId, listId),
         columns: {},
         with: {
           like: {
@@ -99,7 +99,7 @@ export async function POST(
       // then use the like id to create a likeToMovieReview
       await tx.insert(likeToMovieReview).values({
         likeId: Number(resultHeaders.insertId),
-        movieReviewId: reviewId,
+        movieReviewId: listId,
       })
     })
 

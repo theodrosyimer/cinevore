@@ -1,12 +1,7 @@
-import {
-  getUserIdFromUrl,
-  getUserResourceIdFromUrl,
-} from '@/app/api/users/[userId]/get-user-id-from-url'
-import { comment, commentToMovieReview } from '@/db/planetscale'
+import { like, likeToMovieReview } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
-import { commentPOSTSchema } from '@/lib/validations/comment'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
@@ -29,20 +24,20 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const reviewComments = await db.query.commentToMovieReview.findMany({
-        where: (commentToMovieReview, { eq }) =>
-          eq(commentToMovieReview.movieReviewId, reviewId),
+      const reviewLikes = await db.query.likeToMovieReview.findMany({
+        where: (likeToMovieReview, { eq }) =>
+          eq(likeToMovieReview.movieReviewId, reviewId),
         columns: {},
         with: {
-          comment: true,
+          like: true,
         },
       })
 
-      if (!reviewComments) {
+      if (!reviewLikes) {
         return new Response(`Review comments not found`, { status: 404 })
       }
 
-      return NextResponse.json(reviewComments)
+      return NextResponse.json(reviewLikes)
     }
 
     return new Response('Unauthorized', { status: 403 })
@@ -70,20 +65,51 @@ export async function POST(
       return new Response('Unauthorized', { status: 403 })
     }
 
-    const json = await req.json()
-    const body = commentPOSTSchema.parse(json)
+    const result = await db.transaction(async (tx) => {
+      // check if user already like this review
+      const results = await tx.query.likeToMovieReview.findMany({
+        where: (likeToMovieReview, { eq }) =>
+          eq(likeToMovieReview.movieReviewId, reviewId),
+        columns: {},
+        with: {
+          like: {
+            // TODO: fill a bug report for this
+            // @ts-ignore
+            where: (like, { eq }) => eq(like.authorId, userId!),
+            // columns: {
+            //   authorId: true,
+            // },
+          },
+        },
+      })
 
-    await db.transaction(async (tx) => {
-      const resultHeaders = await tx.insert(comment).values(body)
-      await tx.insert(commentToMovieReview).values({
-        commentId: Number(resultHeaders.insertId),
+      // TODO: fill a bug report for this
+      // @ts-ignore
+      const filteredResults = results.filter((result) => result.like !== null)
+
+      // if result is `undefined`, then user has not liked this review yet
+      if (filteredResults.length) {
+        return filteredResults
+      }
+
+      // get the like author id
+      const resultHeaders = await tx.insert(like).values({
+        authorId: userId!,
+      })
+      // then use the like id to create a likeToMovieReview
+      await tx.insert(likeToMovieReview).values({
+        likeId: Number(resultHeaders.insertId),
         movieReviewId: reviewId,
       })
-      // console.log('HEADERS:', resultHeaders.insertId, result)
     })
 
+    // if result has a value, then user has already liked this review
+    if (result) {
+      return new Response('User already like this review!', { status: 409 })
+    }
+
     return NextResponse.json(
-      { message: 'Review comment created successfully' },
+      { message: 'Review like created successfully' },
       { status: 201 },
     )
   } catch (error) {
@@ -97,7 +123,7 @@ export async function POST(
     }
 
     return new Response(
-      `Error creating a comment to the review from the database.`,
+      `Error creating adding a like to the review from the database.`,
       {
         status: 500,
       },
