@@ -1,7 +1,3 @@
-import * as dotenv from 'dotenv'
-dotenv.config()
-
-import { userGETSchema } from '@/lib/validations/user'
 import { z } from 'zod'
 import { selectListSchema } from '@/lib/validations/list'
 
