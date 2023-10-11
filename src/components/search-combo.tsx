@@ -20,7 +20,7 @@ import { SyntheticEvent, useEffect, useRef, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { searchMulti } from "@/lib/tmdb/src/tmdb"
-import { TMDBSearchMultiResult } from "@/lib/tmdb/types/tmdb-api"
+import { SearchMovieMulti, SearchPersonMulti, TMDBSearchMultiResult } from "@/lib/tmdb/types/tmdb-api"
 import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/navigation"
 import { useDebounce } from "use-debounce"
@@ -89,11 +89,11 @@ export function SearchCombo() {
             const { id, media_type } = result
             if (media_type === 'movie') {
               // return { id, title: result.title, media_type }
-              return result
+              return result as SearchMovieMulti
             }
             if (media_type === 'person') {
               // return { id, name: result.name, media_type }
-              return result
+              return result as SearchPersonMulti
             }
           })
         console.log(movies)
@@ -134,6 +134,7 @@ export function SearchCombo() {
           <Input
             id="search"
             type="search"
+            value={text}
             aria-expanded={open}
             autoFocus
             placeholder="Search for Films, Actors..."
@@ -141,22 +142,30 @@ export function SearchCombo() {
             onChange={(e) => {
               setText(e.currentTarget.value)
             }}
+            onFocus={() => { setOpen(false) }
+            }
           />
         </form>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <ScrollArea>
           {/* <CommandInput placeholder="Search framework..." className="h-9" /> */}
-          {results?.map((movie) => (
+          {results?.length ? results.map((result) => (
             <CommandItem
-              key={movie.id}
+              key={result.id}
               onSelect={(currentValue) => {
                 setText(currentValue === text ? "" : currentValue)
                 setOpen(false)
-                router.push(`/film/${slugify(movie.title)}/?id=${movie.id}`)
+                result.media_type === 'movie'
+                  ? router.push(`/film/${slugify(result.title ?? '')}/?id=${result.id}`)
+                  : result.media_type === 'person'
+                    ? router.push(`/person/${slugify(result.name ?? '')}/?id=${result.id}`) : null
               }}
             >
-              {movie.title}
+              {result.media_type === 'movie'
+                ? result.title ?? ''
+                : result.media_type === 'person'
+                  ? result.name ?? '' : null}
               {/* <CheckIcon
                   className={cn(
                     "ml-auto h-4 w-4",
@@ -164,7 +173,7 @@ export function SearchCombo() {
                   )}
                 /> */}
             </CommandItem>
-          ))}
+          )) : null}
         </ScrollArea>
       </PopoverContent>
     </Popover>
