@@ -9,10 +9,15 @@ export async function getLists() {
     cache: 'no-cache',
   })
 
-  console.log('data', data)
+  if (!data.ok) {
+    console.error('Failed to get lists')
+    return []
+  }
+
+  // console.log('data', data)
 
   const json = await data.json() as unknown
-  console.log('json', json)
+  // console.log('json', json)
   const validatedLists = listsSchema.safeParse(json)
 
   if (!validatedLists.success) {
@@ -20,6 +25,6 @@ export async function getLists() {
     return []
   }
 
-  console.log('validatedLists', validatedLists)
+  // console.log('validatedLists', validatedLists)
   return validatedLists.data
 }

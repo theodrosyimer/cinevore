@@ -1,10 +1,9 @@
-import { getUsers } from "@/app/(site-layout)/(public)/members/getUsers"
+import { getUsers } from "@/app/(site-layout)/(public)/_members/getUsers"
 
 export async function Users() {
   const users = await getUsers()
   return (
     <>
-      <h1 className="text-4xl font-bold text-center">Members</h1>
       <pre className="divide-y-4 w-max">
         {users.length ? users.map((user) => {
           return (

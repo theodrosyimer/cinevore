@@ -1,4 +1,4 @@
-import { Users } from "@/app/(site-layout)/(public)/members/user"
+import { Users } from "@/app/(site-layout)/(public)/_members/user"
 
 export const metadata = {
   title: 'Members Page',

@@ -8,6 +8,12 @@ export async function getUsers() {
     method: 'GET',
     cache: "no-cache",
   })
+
+  if (!data.ok) {
+    console.error('Failed to get users')
+    return []
+  }
+
   const json = await data.json() as unknown
   const validatedUsers = usersSchemas.safeParse(json)
 
