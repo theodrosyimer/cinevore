@@ -4,7 +4,7 @@ import { z } from 'zod'
 const listsSchema = z.array(selectListSchema)
 
 export async function getLists() {
-  const data = await fetch(`${process.env.SERVER_URL}/api/lists`, {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/lists`, {
     method: 'GET',
     cache: 'no-cache',
   })

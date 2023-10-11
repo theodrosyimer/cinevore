@@ -7,7 +7,7 @@ import { z } from 'zod'
 const usersSchemas = z.array(userGETSchema)
 
 export async function getUsers() {
-  const data = await fetch(`${process.env.SERVER_URL}/api/users`, {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`, {
     method: 'GET',
     cache: "no-cache",
   })

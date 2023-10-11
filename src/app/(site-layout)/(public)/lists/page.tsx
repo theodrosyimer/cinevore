@@ -1,6 +1,4 @@
 import { getLists } from '@/app/(site-layout)/(public)/lists/getLists'
-import { UserInfos } from '@/components/user-infos'
-import { getCurrentUser } from '@/lib/session'
 
 export const metadata = {
   title: 'Lists Page',
@@ -28,7 +26,8 @@ export default async function ListsPage({
               <p>{list.description}</p>
             </div>
           )
-        }) : null}</pre>
+        }) : null}
+      </pre>
     </>
   )
 }

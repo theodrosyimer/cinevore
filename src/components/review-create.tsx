@@ -37,7 +37,7 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
   async function onSubmit(data: FormData) {
     setIsLoading(true)
 
-    const response = await fetch(`${process.env.SERVER_URL}/api/lists`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/lists`, {
       method: 'POST',
     }).catch((error) => {
       toast({

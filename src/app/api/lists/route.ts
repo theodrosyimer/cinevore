@@ -1,12 +1,9 @@
 import * as z from 'zod'
 
-import { list, movieList } from '@/db/planetscale'
 import { db } from '@/lib/db'
 import { RequiresProPlanError } from '@/lib/exceptions'
 import { getCurrentUser } from '@/lib/session'
-// import { movieListPostSchema } from "@/lib/validations/movie-list"
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
-import { eq } from 'drizzle-orm'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
@@ -17,7 +14,6 @@ export async function GET() {
 
     return NextResponse.json(lists, {
       status: 200,
-      headers: { 'content-type': 'application/json' }
     })
   } catch (error) {
     if (error instanceof Error) {
