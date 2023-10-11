@@ -19,7 +19,7 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
         },
         likes: {
           with: {
-            likes: true,
+            like: true,
           },
         },
       },
