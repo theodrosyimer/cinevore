@@ -31,7 +31,10 @@ export async function GET(
         return new Response('User not found', { status: 404 })
       }
 
-      return new Response(JSON.stringify(dbUser))
+      return new Response(JSON.stringify(dbUser), {
+        status: 200,
+        headers: { 'content-type': 'application/json' }
+      })
     }
 
     return new Response('Unauthorized', { status: 403 })
