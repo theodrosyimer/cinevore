@@ -2,7 +2,7 @@ import { getUserListsAndReviewsWithCommentsAndLikes } from "@/lib/actions/admin/
 import { isAdmin } from "@/lib/auth"
 import { formatSimpleErrorMessage } from "@/lib/utils/utils"
 import { getToken } from "next-auth/jwt"
-import type { NextRequest } from "next/server"
+import { NextResponse, type NextRequest } from "next/server"
 import { z } from "zod"
 
 const routeContextSchema = z.object({
