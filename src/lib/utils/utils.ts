@@ -18,7 +18,7 @@ export function formatDate(input: string | number, lang = 'en-US'): string {
 }
 
 export function baseUrl() {
-  if (window !== undefined) {
+  if (typeof window !== 'undefined') {
     if (process.env.NODE_ENV === 'production') {
       return process.env.NEXT_PUBLIC_APP_URL
     }
