@@ -29,7 +29,7 @@ export async function GET(
         return new Response(`User's reviews not found`, { status: 404 })
       }
 
-      return new Response(JSON.stringify(reviews))
+      returnNextResponse.json(reviews)
     }
 
     return new Response('Unauthorized', { status: 403 })

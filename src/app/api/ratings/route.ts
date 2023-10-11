@@ -4,6 +4,7 @@ import { list, movieList } from '@/db/planetscale'
 import { db } from '@/lib/db'
 import { RequiresProPlanError } from '@/lib/exceptions'
 import { getCurrentUser } from '@/lib/session'
+import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
@@ -30,7 +31,7 @@ export async function GET() {
         }
       })
 
-    return new Response(JSON.stringify(lists))
+    return NextResponse.json(lists)
   } catch (error) {
     return new Response(null, { status: 500 })
   }

@@ -6,7 +6,7 @@ import { RequiresProPlanError } from '@/lib/exceptions'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { userPOSTSchema } from '@/lib/validations/user'
 import { getToken } from 'next-auth/jwt'
-import type { NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import * as z from 'zod'
 
 export async function GET() {
@@ -21,7 +21,7 @@ export async function GET() {
       return new Response('Users  not found', { status: 404 })
     }
 
-    return new Response(JSON.stringify(users), { status: 200 })
+    return NextResponse.json(users, { status: 200 })
   } catch (error) {
     if (error instanceof Error) {
       console.log(error)

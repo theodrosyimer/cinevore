@@ -4,7 +4,7 @@ import { db } from "@/lib/db"
 import { formatSimpleErrorMessage } from "@/lib/utils/utils"
 import { and, or, sql } from "drizzle-orm"
 import { getToken } from "next-auth/jwt"
-import { NextRequest } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 
 export async function GET(
@@ -31,7 +31,7 @@ export async function GET(
         return new Response('Movies infos not found', { status: 404 })
       }
 
-      return new Response(JSON.stringify(moviesInfos))
+      return NextResponse.json(moviesInfos)
     }
 
     return new Response('Unauthorized', { status: 403 })

@@ -26,7 +26,7 @@ export async function GET(
         return new Response('User not found', { status: 404 })
       }
 
-      return new Response(JSON.stringify(dbUser))
+      return NextResponse.json(dbUser)
     }
 
     return new Response('Unauthorized', { status: 403 })

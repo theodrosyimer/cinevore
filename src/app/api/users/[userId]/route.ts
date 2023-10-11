@@ -6,7 +6,7 @@ import { userPatchSchema } from '@/lib/validations/user'
 import UsersModel from '@/models/users'
 import { eq } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'
-import type { NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
 
 export const routeContextSchema = z.object({
@@ -31,9 +31,8 @@ export async function GET(
         return new Response('User not found', { status: 404 })
       }
 
-      return new Response(JSON.stringify(dbUser), {
-        status: 200,
-        headers: { 'content-type': 'application/json' }
+      return NextResponse.json(dbUser, {
+        status: 200
       })
     }
 

@@ -6,6 +6,7 @@ import { authOptions } from '@/lib/auth'
 import { stripe } from '@/lib/stripe'
 import { getUserSubscriptionPlan } from '@/lib/subscription'
 import { absoluteUrl } from '@/lib/utils/utils'
+import { NextResponse } from 'next/server'
 
 const billingUrl = absoluteUrl('/dashboard/billing')
 
@@ -27,7 +28,7 @@ export async function GET(req: Request) {
         return_url: billingUrl,
       })
 
-      return new Response(JSON.stringify({ url: stripeSession.url }))
+      return NextResponse.json({ url: stripeSession.url })
     }
 
     // The user is on the free plan.
@@ -50,7 +51,7 @@ export async function GET(req: Request) {
       },
     })
 
-    return new Response(JSON.stringify({ url: stripeSession.url }))
+    return NextResponse.json({ url: stripeSession.url })
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })

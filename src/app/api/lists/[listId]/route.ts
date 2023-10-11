@@ -7,6 +7,7 @@ import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { insertListSchema } from '@/lib/validations/list'
 import { verifyUserAccessPrivileges } from '@/lib/validations/user-access-privileges'
 import { eq } from 'drizzle-orm'
+import { NextResponse } from 'next/server'
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -38,7 +39,7 @@ export async function GET(
       return new Response('User not found', { status: 404 })
     }
 
-    return new Response(JSON.stringify(userList))
+    return NextResponse.json(userList)
   } catch (error) {
     if (error instanceof Error) {
       console.log(error)

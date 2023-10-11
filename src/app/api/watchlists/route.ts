@@ -30,7 +30,7 @@ export async function GET() {
         }
       })
 
-    return new Response(JSON.stringify(lists))
+    return NextResponse.json(lists)
   } catch (error) {
     return new Response(null, { status: 500 })
   }

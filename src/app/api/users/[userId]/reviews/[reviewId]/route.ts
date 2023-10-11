@@ -6,7 +6,7 @@ import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { reviewPATCHSchema } from '@/lib/validations/review'
 import { eq } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'
-import type { NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
 
 const reviewRouteContextSchema = z.object({
@@ -36,7 +36,7 @@ export async function GET(
         return new Response('User not found', { status: 404 })
       }
 
-      return new Response(JSON.stringify(userReviews))
+      return NextResponse.json(userReviews)
     }
 
     return new Response('Unauthorized', { status: 403 })
