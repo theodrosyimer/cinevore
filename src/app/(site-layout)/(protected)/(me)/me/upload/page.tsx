@@ -1,24 +1,24 @@
 // import { env } from "@env.mjs"
-import * as dotenv from 'dotenv';
-dotenv.config();
-import { authOptions } from '@/lib/auth';
-import { getCurrentUser } from '@/lib/session';
-import { redirect } from 'next/navigation';
+import * as dotenv from 'dotenv'
+dotenv.config()
+import { authOptions } from '@/lib/auth'
+import { getCurrentUser } from '@/lib/session'
+import { redirect } from 'next/navigation'
 
 export const metadata = {
   title: 'Upload Page',
   description: "Upload your avatar's image.",
-};
+}
 
 export default async function UploadPage({
   params,
 }: {
-  params: { username: string };
+  params: { username: string }
 }) {
-  const { user, isAdmin } = await getCurrentUser();
+  const { user, isAdmin } = await getCurrentUser()
 
   if (!user) {
-    redirect(authOptions?.pages?.signIn || '/login');
+    redirect(authOptions?.pages?.signIn || '/login')
   }
 
   return (
@@ -43,5 +43,5 @@ export default async function UploadPage({
         </button>
       </form>
     </>
-  );
+  )
 }

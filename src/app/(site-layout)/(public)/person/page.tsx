@@ -3,5 +3,5 @@ export default function PersonPage() {
     <>
       <h1>Hello</h1>
     </>
-  );
+  )
 }

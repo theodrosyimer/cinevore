@@ -1564,4 +1564,4 @@ export const movieCertifications = {
       },
     ],
   },
-} as const;
+} as const

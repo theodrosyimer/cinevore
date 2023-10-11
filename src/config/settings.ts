@@ -1,4 +1,4 @@
-import { SettingsConfig } from '@/types';
+import { SettingsConfig } from '@/types'
 
 export const settingsConfig: SettingsConfig = {
   sidebarNav: [
@@ -38,4 +38,4 @@ export const settingsConfig: SettingsConfig = {
       items: [],
     },
   ],
-};
+}

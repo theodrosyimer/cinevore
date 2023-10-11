@@ -1,9 +1,9 @@
-import { getLists } from '@/app/(site-layout)/(public)/_lists/getLists';
+import { getLists } from '@/app/(site-layout)/(public)/_lists/getLists'
 
 export async function Lists() {
-  const lists = await getLists();
+  const lists = await getLists()
 
-  console.log('LISTS:', lists);
+  console.log('LISTS:', lists)
 
   return (
     <>
@@ -17,10 +17,10 @@ export async function Lists() {
                   <h2>{list.title}</h2>
                   <p>{list.description}</p>
                 </div>
-              );
+              )
             })
           : null}
       </pre>
     </>
-  );
+  )
 }

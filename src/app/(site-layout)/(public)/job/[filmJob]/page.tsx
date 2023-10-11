@@ -1,23 +1,23 @@
-import { FilmCardList } from '@/components/film-card-list';
+import { FilmCardList } from '@/components/film-card-list'
 
 export const metadata = {
   title: 'Job Details Page',
   description: 'Job details by name.',
-};
+}
 
-type Job = 'actor' | 'producer' | 'cameraman';
-type Params = { params: { job: Job; name: string } };
+type Job = 'actor' | 'producer' | 'cameraman'
+type Params = { params: { job: Job; name: string } }
 
 export function generateStaticParams() {
   return [
     { job: 'actor', name: 'john' },
     { job: 'producer', name: 'mouss' },
     { job: 'cameraman', name: 'aron' },
-  ];
+  ]
 }
 
 export default function JobDetailsPage({ params }: Params) {
-  const { job, name } = params;
+  const { job, name } = params
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -25,5 +25,5 @@ export default function JobDetailsPage({ params }: Params) {
       <p>{name}</p>
       <section>{/* <FilmCardList /> */}</section>
     </div>
-  );
+  )
 }

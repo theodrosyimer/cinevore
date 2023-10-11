@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm'
 import {
   boolean,
   index,
@@ -7,11 +7,11 @@ import {
   text,
   timestamp,
   varchar,
-} from 'drizzle-orm/mysql-core';
-import { movieList } from '../movie-lists';
-import { user } from '../users';
-import { comment } from '../comments';
-import { like } from '../likes';
+} from 'drizzle-orm/mysql-core'
+import { movieList } from '../movie-lists'
+import { user } from '../users'
+import { comment } from '../comments'
+import { like } from '../likes'
 
 export const list = mysqlTable(
   'list',
@@ -34,8 +34,8 @@ export const list = mysqlTable(
   (table) => ({
     id: index('id').on(table.id),
     userId: index('user_id').on(table.userId),
-  })
-);
+  }),
+)
 
 export const listRelations = relations(list, ({ one, many }) => ({
   user: one(user, { fields: [list.userId], references: [user.id] }),
@@ -46,18 +46,18 @@ export const listRelations = relations(list, ({ one, many }) => ({
   likes: many(likeToMovieList, {
     relationName: 'likes',
   }),
-}));
+}))
 
 export const commentToMovieList = mysqlTable(
   'comment_to_movie_list',
   {
     listId:
       int(
-        'list_id'
+        'list_id',
       ).notNull() /* .references(() => list.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
     commentId:
       int(
-        'comment_id'
+        'comment_id',
       ).notNull() /* .references(() => comment.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
     // createdAt: timestamp('created_at')
     //   .default(sql`CURRENT_TIMESTAMP`)
@@ -68,11 +68,11 @@ export const commentToMovieList = mysqlTable(
     return {
       compositeKeyIndex: index('compositeKeyIndex').on(
         table.commentId,
-        table.listId
+        table.listId,
       ),
-    };
-  }
-);
+    }
+  },
+)
 
 export const commentToMovieListRelations = relations(
   commentToMovieList,
@@ -87,19 +87,19 @@ export const commentToMovieListRelations = relations(
       references: [list.id],
       relationName: '',
     }),
-  })
-);
+  }),
+)
 
 export const likeToMovieList = mysqlTable(
   'like_to_movie_list',
   {
     listId:
       int(
-        'list_id'
+        'list_id',
       ).notNull() /* .references(() => list.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
     likeId:
       int(
-        'like_id'
+        'like_id',
       ).notNull() /* .references(() => like.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
     // createdAt: timestamp('created_at')
     //   .default(sql`CURRENT_TIMESTAMP`)
@@ -110,11 +110,11 @@ export const likeToMovieList = mysqlTable(
     return {
       compositeKeyIndex: index('compositeKeyIndex').on(
         table.listId,
-        table.likeId
+        table.likeId,
       ),
-    };
-  }
-);
+    }
+  },
+)
 
 export const likeToMovieListRelations = relations(
   likeToMovieList,
@@ -128,5 +128,5 @@ export const likeToMovieListRelations = relations(
       fields: [likeToMovieList.listId],
       references: [list.id],
     }),
-  })
-);
+  }),
+)

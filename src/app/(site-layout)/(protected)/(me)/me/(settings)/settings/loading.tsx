@@ -1,7 +1,7 @@
-import { DashboardHeader } from '@/components/dashboard-header';
-import { ReviewCreateButton } from '@/components/review-create-button';
-import { DashboardShell } from '@/components/shell';
-import { UserItem } from '@/components/user-item';
+import { DashboardHeader } from '@/components/dashboard-header'
+import { ReviewCreateButton } from '@/components/review-create-button'
+import { DashboardShell } from '@/components/shell'
+import { UserItem } from '@/components/user-item'
 
 export default function DashboardLoading() {
   return (
@@ -17,5 +17,5 @@ export default function DashboardLoading() {
         <UserItem.Skeleton />
       </div>
     </DashboardShell>
-  );
+  )
 }

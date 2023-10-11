@@ -1,12 +1,12 @@
 export const metadata = {
   title: 'Upcoming Films Page',
   description: 'Search for Upcoming films.',
-};
+}
 
 export default function UpcomingFilmsPage({
   params,
 }: {
-  params: { username: string };
+  params: { username: string }
 }) {
   return (
     <>
@@ -14,5 +14,5 @@ export default function UpcomingFilmsPage({
         Search for Popular Films
       </h1>
     </>
-  );
+  )
 }

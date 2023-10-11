@@ -1,26 +1,26 @@
-import { userGETSchema } from '@/lib/validations/user';
-import { z } from 'zod';
+import { userGETSchema } from '@/lib/validations/user'
+import { z } from 'zod'
 
-const usersSchemas = z.array(userGETSchema);
+const usersSchemas = z.array(userGETSchema)
 
 export async function getUsers() {
   const data = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`, {
     method: 'GET',
     cache: 'no-cache',
-  });
+  })
 
   if (!data.ok) {
-    console.error('Failed to get users');
-    return [];
+    console.error('Failed to get users')
+    return []
   }
 
-  const json = (await data.json()) as unknown;
-  const validatedUsers = usersSchemas.safeParse(json);
+  const json = (await data.json()) as unknown
+  const validatedUsers = usersSchemas.safeParse(json)
 
   if (!validatedUsers.success) {
-    console.error(validatedUsers.error.message);
-    return [];
+    console.error(validatedUsers.error.message)
+    return []
   }
 
-  return validatedUsers.data;
+  return validatedUsers.data
 }

@@ -1,20 +1,20 @@
-import * as z from 'zod';
+import * as z from 'zod'
 
-import { list, movieList } from '@/db/planetscale';
-import { db } from '@/lib/db';
-import { RequiresProPlanError } from '@/lib/exceptions';
-import { getCurrentUser } from '@/lib/session';
-import { NextResponse } from 'next/server';
+import { list, movieList } from '@/db/planetscale'
+import { db } from '@/lib/db'
+import { RequiresProPlanError } from '@/lib/exceptions'
+import { getCurrentUser } from '@/lib/session'
+import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const { user: currentUser } = await getCurrentUser();
+    const { user: currentUser } = await getCurrentUser()
 
     if (
       !currentUser ||
       !(currentUser?.role === 'admin' || currentUser?.role === 'superadmin')
     ) {
-      return new Response('Unauthorized', { status: 403 });
+      return new Response('Unauthorized', { status: 403 })
     }
 
     const lists = await db.query.movieList
@@ -23,26 +23,26 @@ export async function GET() {
     } */)
       .catch((error) => {
         if (error instanceof Error) {
-          console.log('Failed to get movie list\n', error);
+          console.log('Failed to get movie list\n', error)
         } else {
           console.log(
-            `Error getting user with "userId: ${currentUser.id}" from the database.`
-          );
+            `Error getting user with "userId: ${currentUser.id}" from the database.`,
+          )
         }
-      });
+      })
 
-    return NextResponse.json(lists);
+    return NextResponse.json(lists)
   } catch (error) {
-    return new Response(null, { status: 500 });
+    return new Response(null, { status: 500 })
   }
 }
 
 export async function POST(req: Request) {
   try {
-    const { user, isAdmin } = await getCurrentUser();
+    const { user, isAdmin } = await getCurrentUser()
 
     if (!user || !(user?.role === 'admin' || user?.role === 'superadmin')) {
-      return new Response('Unauthorized', { status: 403 });
+      return new Response('Unauthorized', { status: 403 })
     }
 
     // const json = await req.json()
@@ -75,16 +75,16 @@ export async function POST(req: Request) {
     //   return new Response("List created", { status: 201 })
     // }
 
-    return new Response('List created', { status: 201 });
+    return new Response('List created', { status: 201 })
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 });
+      return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
     if (error instanceof RequiresProPlanError) {
-      return new Response('Requires Pro Plan', { status: 402 });
+      return new Response('Requires Pro Plan', { status: 402 })
     }
 
-    return new Response(null, { status: 500 });
+    return new Response(null, { status: 500 })
   }
 }

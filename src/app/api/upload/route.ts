@@ -1,6 +1,6 @@
 // import type { NextRequest, NextResponse } from 'next/server'
 
-export {};
+export {}
 // import { deleteFile, sendErrorResponse } from '@/lib/utils.js'
 // import { UPLOADS_DIRECTORY } from '@/server.js'
 // import UsersModel from '@/models/users'

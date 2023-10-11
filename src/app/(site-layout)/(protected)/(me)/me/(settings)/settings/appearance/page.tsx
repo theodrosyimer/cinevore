@@ -1,8 +1,8 @@
-import { Separator } from '@/components/ui/separator';
-import { AppearanceForm } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/appearance/appearance-form';
-import { getCurrentUser } from '@/lib/session';
-import { redirect } from 'next/navigation';
-import { authOptions } from '@/lib/auth';
+import { Separator } from '@/components/ui/separator'
+import { AppearanceForm } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/appearance/appearance-form'
+import { getCurrentUser } from '@/lib/session'
+import { redirect } from 'next/navigation'
+import { authOptions } from '@/lib/auth'
 
 export default async function SettingsAppearancePage() {
   // const { user, isAdmin } = await getCurrentUser()
@@ -23,5 +23,5 @@ export default async function SettingsAppearancePage() {
       <Separator />
       <AppearanceForm />
     </div>
-  );
+  )
 }

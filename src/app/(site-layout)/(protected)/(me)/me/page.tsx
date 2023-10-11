@@ -1,20 +1,20 @@
-import { CardSkeleton } from '@/components/card-skeleton';
-import { getCurrentUser } from '@/lib/session';
+import { CardSkeleton } from '@/components/card-skeleton'
+import { getCurrentUser } from '@/lib/session'
 
 export const metadata = {
   title: 'Profile Page',
   description: "User's Profile Page.",
-};
+}
 
 export default async function MePage({
   params,
 }: {
-  params: { username: string };
+  params: { username: string }
 }) {
-  const { user, isAdmin } = await getCurrentUser();
+  const { user, isAdmin } = await getCurrentUser()
 
   if (!user) {
-    return null;
+    return null
   }
   // console.log(user)
   return (
@@ -37,5 +37,5 @@ export default async function MePage({
         </article>
       </section>
     </>
-  );
+  )
 }

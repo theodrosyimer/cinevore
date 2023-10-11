@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm'
 import {
   index,
   int,
@@ -6,11 +6,11 @@ import {
   timestamp,
   uniqueIndex,
   varchar,
-} from 'drizzle-orm/mysql-core';
-import { movieList } from '../movie-lists';
-import { movieInfosToUser } from '../movie-infos-to-users';
-import { watchlistToMovies } from '../watchlist';
-import { movieReview } from '../movie-reviews';
+} from 'drizzle-orm/mysql-core'
+import { movieList } from '../movie-lists'
+import { movieInfosToUser } from '../movie-infos-to-users'
+import { watchlistToMovies } from '../watchlist'
+import { movieReview } from '../movie-reviews'
 
 export const movie = mysqlTable(
   'movie',
@@ -37,13 +37,13 @@ export const movie = mysqlTable(
       watchedCount: index('watched_count').on(table.watchedCount),
       listedCount: index('listed_count').on(table.listedCount),
       likedCount: index('liked_count').on(table.likedCount),
-    };
-  }
-);
+    }
+  },
+)
 
 export const movieRelations = relations(movie, ({ one, many }) => ({
   movieLists: many(movieList),
   movieInfosToUsers: many(movieInfosToUser, { relationName: 'movie' }),
   watchlistToMovies: many(watchlistToMovies),
   movieReviews: many(movieReview, { relationName: 'reviews' }),
-}));
+}))

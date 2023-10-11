@@ -20,7 +20,6 @@ export async function GET(req: NextRequest) {
     const userIdFromParams = getUserIdFromUrl(req)
     const userReviewId = getUserResourceIdFromUrl(req)
 
-    console.log('USER ID FROM PARAMS:', userIdFromParams)
     if (token && (userIdFromParams === token.id || isAdmin(token))) {
       const reviewComments = await db.query.movieReview.findMany({
         where: (movieReview, { eq, and }) =>
@@ -29,7 +28,7 @@ export async function GET(req: NextRequest) {
             eq(movieReview.userId, userIdFromParams!),
           ),
       })
-      console.log('REVIEWS COMMENTS:', reviewComments)
+
       if (!reviewComments) {
         return new Response(`Review comments not found`, { status: 404 })
       }

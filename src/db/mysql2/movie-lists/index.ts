@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm'
 import {
   index,
   int,
@@ -6,11 +6,11 @@ import {
   primaryKey,
   timestamp,
   uniqueIndex,
-} from 'drizzle-orm/mysql-core';
-import { comment } from '../comments';
-import { like } from '../likes';
-import { list } from '../lists';
-import { movie } from '../movies';
+} from 'drizzle-orm/mysql-core'
+import { comment } from '../comments'
+import { like } from '../likes'
+import { list } from '../lists'
+import { movie } from '../movies'
 
 export const movieList = mysqlTable(
   'movie_list',
@@ -32,12 +32,12 @@ export const movieList = mysqlTable(
     compositeKey: primaryKey(table.listId, table.movieId),
     compositeKeyIndex: uniqueIndex('composite_key').on(
       table.movieId,
-      table.listId
+      table.listId,
     ),
     fkListId: index('FK_movie_id').on(table.listId),
     fkMovieId: index('FK_movie_id').on(table.movieId),
-  })
-);
+  }),
+)
 
 export const movieListRelations = relations(movieList, ({ one, many }) => ({
   list: one(list, {
@@ -50,7 +50,7 @@ export const movieListRelations = relations(movieList, ({ one, many }) => ({
   }),
   commentsToMovieList: many(commentToMovieList),
   likesToMovieList: many(likeToMovieList),
-}));
+}))
 
 export const commentToMovieList = mysqlTable(
   'comment_to_movie_list',
@@ -73,11 +73,11 @@ export const commentToMovieList = mysqlTable(
     return {
       compositeKeyIndex: index('compositeKeyIndex').on(
         table.commentId,
-        table.listId
+        table.listId,
       ),
-    };
-  }
-);
+    }
+  },
+)
 
 export const commentToMovieListRelations = relations(
   commentToMovieList,
@@ -90,8 +90,8 @@ export const commentToMovieListRelations = relations(
       fields: [commentToMovieList.listId],
       references: [list.id],
     }),
-  })
-);
+  }),
+)
 
 export const likeToMovieList = mysqlTable(
   'like_to_movie_list',
@@ -111,11 +111,11 @@ export const likeToMovieList = mysqlTable(
     return {
       compositeKeyIndex: index('compositeKeyIndex').on(
         table.listId,
-        table.likeId
+        table.likeId,
       ),
-    };
-  }
-);
+    }
+  },
+)
 
 export const likeToMovieListRelations = relations(
   likeToMovieList,
@@ -128,5 +128,5 @@ export const likeToMovieListRelations = relations(
       fields: [likeToMovieList.listId],
       references: [list.id],
     }),
-  })
-);
+  }),
+)

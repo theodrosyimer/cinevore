@@ -1,4 +1,4 @@
-import { AdminDashboardConfig } from '@/types';
+import { AdminDashboardConfig } from '@/types'
 
 export const adminDashboardConfig: AdminDashboardConfig = {
   mainNav: [],
@@ -46,4 +46,4 @@ export const adminDashboardConfig: AdminDashboardConfig = {
       items: [],
     },
   ],
-};
+}

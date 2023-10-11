@@ -1,4 +1,4 @@
-import { MovieMenubar } from '@/components/film-menubar';
+import { MovieMenubar } from '@/components/film-menubar'
 import {
   Card,
   CardContent,
@@ -6,9 +6,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { MovieInfosPopover } from '@/components/user-movie-infos-popover';
-import { SearchMovie } from '@/lib/tmdb/types/tmdb-api';
+} from '@/components/ui/card'
+import { MovieInfosPopover } from '@/components/user-movie-infos-popover'
+import { SearchMovie } from '@/lib/tmdb/types/tmdb-api'
 
 export function FilmCard({ film }: { film: SearchMovie }) {
   return (
@@ -24,5 +24,5 @@ export function FilmCard({ film }: { film: SearchMovie }) {
       {/* <MovieMenubar className="absolute bottom-0" /> */}
       <MovieInfosPopover />
     </Card>
-  );
+  )
 }

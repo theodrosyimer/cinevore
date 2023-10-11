@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm'
 import {
   index,
   mysqlTable,
@@ -6,8 +6,8 @@ import {
   timestamp,
   uniqueIndex,
   varchar,
-} from 'drizzle-orm/mysql-core';
-import { user } from '../users';
+} from 'drizzle-orm/mysql-core'
+import { user } from '../users'
 
 export const follower = mysqlTable(
   'follower',
@@ -27,12 +27,12 @@ export const follower = mysqlTable(
     compositeKey: primaryKey(table.followee, table.follower),
     compositeKeyIndex: uniqueIndex('composite_key').on(
       table.follower,
-      table.followee
+      table.followee,
     ),
     fkUser: index('FK_user').on(table.followee),
     fkUserFollower: index('FK_user_follower').on(table.follower),
-  })
-);
+  }),
+)
 
 export const followerRelations = relations(follower, ({ one, many }) => ({
   followee: one(user, {
@@ -47,4 +47,4 @@ export const followerRelations = relations(follower, ({ one, many }) => ({
   }),
   // user: many(user, { relationName: 'user_id' }),
   // follower: many(user, { relationName: 'follower' }),
-}));
+}))

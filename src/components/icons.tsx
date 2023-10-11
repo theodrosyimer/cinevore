@@ -36,9 +36,9 @@ import {
   ListVideo,
   // type Icon as LucideIcon,
   type LucideIcon,
-} from 'lucide-react';
+} from 'lucide-react'
 
-export type Icon = LucideIcon;
+export type Icon = LucideIcon
 
 export const Icons = {
   logo: Film,
@@ -92,11 +92,11 @@ export const Icons = {
   ),
   twitter: Twitter,
   check: Check,
-} as const;
+} as const
 
-export type IconName = keyof typeof Icons;
-export type TIcons = Pick<typeof Icons, IconName>;
+export type IconName = keyof typeof Icons
+export type TIcons = Pick<typeof Icons, IconName>
 export type IconProps = {
-  name: IconName;
-  className?: string;
-} & React.ComponentPropsWithoutRef<'svg'>;
+  name: IconName
+  className?: string
+} & React.ComponentPropsWithoutRef<'svg'>

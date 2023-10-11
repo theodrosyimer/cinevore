@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import * as dotenv from 'dotenv';
-dotenv.config();
-import Image from 'next/image';
-import { PlusCircledIcon } from '@radix-ui/react-icons';
+import * as dotenv from 'dotenv'
+dotenv.config()
+import Image from 'next/image'
+import { PlusCircledIcon } from '@radix-ui/react-icons'
 
-import { cn } from '@/lib/utils/utils';
+import { cn } from '@/lib/utils/utils'
 import {
   ContextMenu,
   ContextMenuContent,
@@ -14,41 +14,41 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from '@/components/ui/context-menu';
+} from '@/components/ui/context-menu'
 
-import { Album } from '../data/albums';
-import { playlists } from '../data/playlists';
+import { Album } from '../data/albums'
+import { playlists } from '../data/playlists'
 import {
   SearchMovie,
   TMDBImageSizesCategory,
   TMDBImageSizesCategoryKey,
-} from '@/lib/tmdb/types/tmdb-api';
-import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils';
-import { MovieInfosPopover } from '@/components/user-movie-infos-popover';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
+} from '@/lib/tmdb/types/tmdb-api'
+import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
+import { MovieInfosPopover } from '@/components/user-movie-infos-popover'
+import { AspectRatio } from '@/components/ui/aspect-ratio'
 
 export interface MovieArtworkProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  movie: SearchMovie;
-  movieId: string;
-  aspectRatio: 'portrait' | 'video';
-  width: TMDBImageSizesCategory[keyof TMDBImageSizesCategory];
+  movie: SearchMovie
+  movieId: string
+  aspectRatio: 'portrait' | 'video'
+  width: TMDBImageSizesCategory[keyof TMDBImageSizesCategory]
   // width: LT<T>
-  height?: number;
-  layout?: 'fill' | 'fixed' | 'responsive' | 'intrinsic';
+  height?: number
+  layout?: 'fill' | 'fixed' | 'responsive' | 'intrinsic'
 }
 
-type T = TMDBImageSizesCategory[keyof TMDBImageSizesCategory];
+type T = TMDBImageSizesCategory[keyof TMDBImageSizesCategory]
 
-type LT<T extends string> = T extends `w${infer Width}` ? Width : never;
+type LT<T extends string> = T extends `w${infer Width}` ? Width : never
 
-let a: LT<T> = '154';
+let a: LT<T> = '154'
 export type MovieArtworkPropsX<
-  TImageFormat extends keyof TMDBImageSizesCategory
+  TImageFormat extends keyof TMDBImageSizesCategory,
 > = MovieArtworkProps & {
-  aspectRatio: TImageFormat;
-  width: TMDBImageSizesCategory[TImageFormat];
-};
+  aspectRatio: TImageFormat
+  width: TMDBImageSizesCategory[TImageFormat]
+}
 export function MovieArtwork({
   movie,
   movieId,
@@ -59,14 +59,14 @@ export function MovieArtwork({
   className,
   ...props
 }: MovieArtworkProps) {
-  let imageUrl;
+  let imageUrl
 
-  let kind: TMDBImageSizesCategoryKey;
-  let size: TMDBImageSizesCategory[typeof kind] = 'w300';
+  let kind: TMDBImageSizesCategoryKey
+  let size: TMDBImageSizesCategory[typeof kind] = 'w300'
 
   // console.log('WIDTH:', width)
   if (aspectRatio === 'portrait') {
-    kind = 'poster_sizes';
+    kind = 'poster_sizes'
     // size = 'w154'
     // TODO: fix this type
     // @ts-ignore
@@ -74,11 +74,11 @@ export function MovieArtwork({
       format: kind,
       size: width,
       defaultImage: movie.poster_path!,
-    });
+    })
   }
 
   if (aspectRatio === 'video') {
-    kind = 'backdrop_sizes';
+    kind = 'backdrop_sizes'
     // size = 'w300'
     // TODO: fix this type
     // @ts-ignore
@@ -86,7 +86,7 @@ export function MovieArtwork({
       format: kind,
       size: width,
       defaultImage: movie.backdrop_path!,
-    });
+    })
   }
 
   return (
@@ -104,7 +104,7 @@ export function MovieArtwork({
               className={cn(
                 'h-auto w-auto object-cover transition-all hover:scale-105',
                 aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-video',
-                `w-[${size.slice(1)}px]`
+                `w-[${size.slice(1)}px]`,
               )}
             />
             {/* </AspectRatio> */}
@@ -149,5 +149,5 @@ export function MovieArtwork({
         <p className="text-xs text-muted-foreground">Popularity:{movie.popularity}</p>
       </div> */}
     </div>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { userNavigationConfig } from '@/config/user-navigation';
-import { SiteLayoutConfig } from '@/types';
+import { userNavigationConfig } from '@/config/user-navigation'
+import { SiteLayoutConfig } from '@/types'
 
 export const siteLayoutConfig: SiteLayoutConfig = {
   mainNav: [
@@ -30,4 +30,4 @@ export const siteLayoutConfig: SiteLayoutConfig = {
     },
   ],
   sidebarNav: userNavigationConfig.sidebarNav,
-};
+}

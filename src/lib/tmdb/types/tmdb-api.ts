@@ -5,28 +5,28 @@ import type {
   DeepWriteable,
   KeysOf,
   ValuesOf,
-} from './utility-types';
+} from './utility-types'
 
-import { z } from 'zod';
-import * as constants from '../constants/configuration-details';
-import { movieCertifications } from '../constants/movie-certifications';
+import { z } from 'zod'
+import * as constants from '../constants/configuration-details'
+import { movieCertifications } from '../constants/movie-certifications'
 import {
   movieCreditsSchema,
   movieDetailsSchema,
-} from './tmdb-api-movie-details';
+} from './tmdb-api-movie-details'
 
 /* ************************************************
                  CONFIGURATION
 ************************************************ */
 
-const TMDBBackdropSizesSchema = z.enum(constants.backdropSizes);
-const TMDBLogoSizesSchema = z.enum(constants.logoSizes);
+const TMDBBackdropSizesSchema = z.enum(constants.backdropSizes)
+const TMDBLogoSizesSchema = z.enum(constants.logoSizes)
 
-const TMDBPosterSizesSchema = z.enum(constants.poster_sizes);
-const TMDBProfileSizesSchema = z.enum(constants.profile_sizes);
-const TMDBStillSizesSchema = z.enum(constants.still_sizes);
+const TMDBPosterSizesSchema = z.enum(constants.poster_sizes)
+const TMDBProfileSizesSchema = z.enum(constants.profile_sizes)
+const TMDBStillSizesSchema = z.enum(constants.still_sizes)
 
-const TMDBChangeKeysSchema = z.enum(constants.changeKeys);
+const TMDBChangeKeysSchema = z.enum(constants.changeKeys)
 
 export const TMDBConfigurationSchema = z.object({
   images: z.object({
@@ -39,41 +39,41 @@ export const TMDBConfigurationSchema = z.object({
     still_sizes: TMDBStillSizesSchema,
   }),
   change_keys: TMDBChangeKeysSchema,
-});
+})
 export const TMDBImagesConfigurationSchema =
-  TMDBConfigurationSchema.shape.images;
+  TMDBConfigurationSchema.shape.images
 
-export type TMDBConfiguration = z.infer<typeof TMDBConfigurationSchema>;
+export type TMDBConfiguration = z.infer<typeof TMDBConfigurationSchema>
 
 // Images
-export type TMDBBackdropSizes = z.infer<typeof TMDBBackdropSizesSchema>;
-export type TMDBLogoSizes = z.infer<typeof TMDBLogoSizesSchema>;
-export type TMDBPosterSizes = z.infer<typeof TMDBPosterSizesSchema>;
-export type TMDBProfileSizes = z.infer<typeof TMDBProfileSizesSchema>;
-export type TMDBStillSizes = z.infer<typeof TMDBStillSizesSchema>;
-export type TMDBChangeKeys = z.infer<typeof TMDBChangeKeysSchema>;
+export type TMDBBackdropSizes = z.infer<typeof TMDBBackdropSizesSchema>
+export type TMDBLogoSizes = z.infer<typeof TMDBLogoSizesSchema>
+export type TMDBPosterSizes = z.infer<typeof TMDBPosterSizesSchema>
+export type TMDBProfileSizes = z.infer<typeof TMDBProfileSizesSchema>
+export type TMDBStillSizes = z.infer<typeof TMDBStillSizesSchema>
+export type TMDBChangeKeys = z.infer<typeof TMDBChangeKeysSchema>
 export type TMDBImagesConfiguration = z.infer<
   typeof TMDBImagesConfigurationSchema
->;
+>
 export type TMDBImagesConfigurationWriteable =
-  DeepWriteable<TMDBImagesConfiguration>;
-export type TMDBChangeKeysConfiguration = TMDBConfiguration['change_keys'];
+  DeepWriteable<TMDBImagesConfiguration>
+export type TMDBChangeKeysConfiguration = TMDBConfiguration['change_keys']
 
 export type TMDBImageSizesCategory = Omit<
   TMDBImagesConfigurationWriteable,
   'base_url' | 'secure_base_url'
->;
-export type TMDBImageSizesCategoryKey = KeysOf<TMDBImageSizesCategory>;
+>
+export type TMDBImageSizesCategoryKey = KeysOf<TMDBImageSizesCategory>
 
-export type TMDBImageSizesCategoryValues = ValuesOf<TMDBImageSizesCategory>;
+export type TMDBImageSizesCategoryValues = ValuesOf<TMDBImageSizesCategory>
 
 function example<
   TKey extends TMDBImageSizesCategoryKey,
-  TValue extends TMDBImageSizesCategory[TKey]
+  TValue extends TMDBImageSizesCategory[TKey],
 >(sizeCategory: TKey, value: TValue) {
   return {
     [sizeCategory]: value,
-  } as { [key in TKey]: TValue };
+  } as { [key in TKey]: TValue }
 }
 
 /* ************************************************
@@ -95,7 +95,7 @@ export const searchMovieSchema = z.object({
   video: z.boolean(),
   vote_average: z.number().optional(),
   vote_count: z.number().optional(),
-});
+})
 
 export const searchMovieMultiSchema = z.object({
   adult: z.boolean(),
@@ -113,7 +113,7 @@ export const searchMovieMultiSchema = z.object({
   video: z.boolean().optional(),
   vote_average: z.number().optional(),
   vote_count: z.number().optional(),
-});
+})
 
 export const searchTvShowMultiSchema = z.object({
   adult: z.boolean(),
@@ -131,7 +131,7 @@ export const searchTvShowMultiSchema = z.object({
   video: z.boolean().optional(),
   vote_average: z.number().optional(),
   vote_count: z.number().optional(),
-});
+})
 
 export const searchPersonMultiSchema = z.object({
   adult: z.boolean(),
@@ -144,63 +144,63 @@ export const searchPersonMultiSchema = z.object({
   known_for_department: z.string().optional(),
   profile_path: z.union([z.string().optional(), z.null()]),
   known_for: z.array(searchMovieMultiSchema).optional(),
-});
+})
 
 export const searchMultiSchema = z.union([
   searchMovieMultiSchema,
   searchPersonMultiSchema,
   searchTvShowMultiSchema,
-]);
+])
 
 export const tMDBSearchMultiSchema = z.object({
   page: z.number(),
   results: z.array(searchMultiSchema),
   total_pages: z.number(),
   total_results: z.number(),
-});
+})
 
-export type SearchMovie = z.infer<typeof searchMovieSchema>;
-export type TMDBSearchMulti = z.infer<typeof tMDBSearchMultiSchema>;
-export type TMDBSearchMultiResult = TMDBSearchMulti['results'];
-export type SearchMovieMulti = z.infer<typeof searchMovieMultiSchema>;
-export type SearchTvShowMulti = z.infer<typeof searchTvShowMultiSchema>;
-export type SearchPersonMulti = z.infer<typeof searchPersonMultiSchema>;
+export type SearchMovie = z.infer<typeof searchMovieSchema>
+export type TMDBSearchMulti = z.infer<typeof tMDBSearchMultiSchema>
+export type TMDBSearchMultiResult = TMDBSearchMulti['results']
+export type SearchMovieMulti = z.infer<typeof searchMovieMultiSchema>
+export type SearchTvShowMulti = z.infer<typeof searchTvShowMultiSchema>
+export type SearchPersonMulti = z.infer<typeof searchPersonMultiSchema>
 
 export const tMDBMovieResponseSchema = z.object({
   page: z.number(),
   results: z.array(searchMovieSchema),
   total_pages: z.number(),
   total_results: z.number(),
-});
+})
 
-export type TMDBMovieResponse = z.infer<typeof tMDBMovieResponseSchema>;
+export type TMDBMovieResponse = z.infer<typeof tMDBMovieResponseSchema>
 
 export const dateIntervalSchema = z.object({
   dates: z.object({
     maximum: z.string(),
     minimum: z.string(),
   }),
-});
+})
 
-export type DateInterval = z.infer<typeof dateIntervalSchema>;
+export type DateInterval = z.infer<typeof dateIntervalSchema>
 export const tMDBMovieResponseSchemaWithDateInterval = dateIntervalSchema.merge(
-  tMDBMovieResponseSchema
-);
+  tMDBMovieResponseSchema,
+)
 
 export type TMDBMovieResponseWithDateInterval = z.infer<
   typeof tMDBMovieResponseSchemaWithDateInterval
->;
+>
 
-export type MovieCertifications = typeof movieCertifications.certifications;
+export type MovieCertifications = typeof movieCertifications.certifications
 
-export type CountryListForMovieCertification = KeysOf<MovieCertifications>;
+export type CountryListForMovieCertification = KeysOf<MovieCertifications>
 
 export type MovieCertification<T extends CountryListForMovieCertification> =
-  MovieCertifications[T];
+  MovieCertifications[T]
 
-export type MovieDetails = z.infer<typeof movieDetailsSchema>;
+export type MovieDetails = z.infer<typeof movieDetailsSchema>
 
-export type MovieCredits = z.infer<typeof movieCreditsSchema>;
+export type MovieCredits = z.infer<typeof movieCreditsSchema>
 
 /* ************************************************
                   COMPANIES
@@ -215,7 +215,7 @@ export const productionCompanySchema = z.object({
   name: z.string(),
   origin_country: z.string(),
   parent_company: z.null(),
-});
+})
 
 export const logoSchema = z.object({
   aspect_ratio: z.number(),
@@ -226,13 +226,13 @@ export const logoSchema = z.object({
   vote_average: z.number(),
   vote_count: z.number(),
   width: z.number(),
-});
+})
 
 export const productionCompanyLogoSchema = z.object({
   id: z.number(),
   logos: z.array(logoSchema),
-});
+})
 
-export type ProductionCompany = z.infer<typeof productionCompanySchema>;
-export type Logo = z.infer<typeof logoSchema>;
-export type ProductionCompanyLogo = z.infer<typeof productionCompanyLogoSchema>;
+export type ProductionCompany = z.infer<typeof productionCompanySchema>
+export type Logo = z.infer<typeof logoSchema>
+export type ProductionCompanyLogo = z.infer<typeof productionCompanyLogoSchema>

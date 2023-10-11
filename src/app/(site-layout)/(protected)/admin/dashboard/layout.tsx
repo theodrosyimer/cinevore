@@ -1,20 +1,20 @@
-import { notFound } from 'next/navigation';
+import { notFound } from 'next/navigation'
 
-import { adminDashboardConfig } from '@/config/admin-dashboard';
-import { getCurrentUser } from '@/lib/session';
-import { DashboardNav } from '@/components/nav';
+import { adminDashboardConfig } from '@/config/admin-dashboard'
+import { getCurrentUser } from '@/lib/session'
+import { DashboardNav } from '@/components/nav'
 
 interface AdminDashboardLayoutProps {
-  children?: React.ReactNode;
+  children?: React.ReactNode
 }
 
 export default async function AdminDashboardLayout({
   children,
 }: AdminDashboardLayoutProps) {
-  const { user, isAdmin } = await getCurrentUser();
+  const { user, isAdmin } = await getCurrentUser()
 
   if (!user) {
-    return notFound();
+    return notFound()
   }
 
   return (
@@ -40,5 +40,5 @@ export default async function AdminDashboardLayout({
       </section>
     </div>
     // </div>
-  );
+  )
 }

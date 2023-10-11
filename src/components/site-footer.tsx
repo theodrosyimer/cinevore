@@ -1,10 +1,10 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import { siteConfig } from '@/config/site';
-import { cn } from '@/lib/utils/utils';
-import { Icons } from '@/components/icons';
-import Link from 'next/link';
-import { buttonVariants } from '@/components/ui/button';
+import { siteConfig } from '@/config/site'
+import { cn } from '@/lib/utils/utils'
+import { Icons } from '@/components/icons'
+import Link from 'next/link'
+import { buttonVariants } from '@/components/ui/button'
 
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   return (
@@ -48,5 +48,5 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
         </div>
       </div>
     </footer>
-  );
+  )
 }

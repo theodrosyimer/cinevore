@@ -1,24 +1,24 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 // import { env } from "@env.mjs"
-import { MovieBackdrop } from '@/components/film-backdrop';
-import { FilmCardList } from '@/components/film-card-list';
-import { Icons } from '@/components/icons';
-import { buttonVariants } from '@/components/ui/button';
-import { Card, CardContent, CardDescription } from '@/components/ui/card';
-import { featuresConfig } from '@/config/features';
-import { globalConfig } from '@/lib/tmdb/src/tmdb';
-import { cn } from '@/lib/utils/utils';
-import { Reviews } from '@/components/reviews';
-import { Review } from '@/components/review';
-import { db } from '@/lib/db';
-import { getImageFormatSize } from '@/lib/tmdb/src/utils';
-import { compare } from 'bcrypt';
+import { MovieBackdrop } from '@/components/film-backdrop'
+import { FilmCardList } from '@/components/film-card-list'
+import { Icons } from '@/components/icons'
+import { buttonVariants } from '@/components/ui/button'
+import { Card, CardContent, CardDescription } from '@/components/ui/card'
+import { featuresConfig } from '@/config/features'
+import { globalConfig } from '@/lib/tmdb/src/tmdb'
+import { cn } from '@/lib/utils/utils'
+import { Reviews } from '@/components/reviews'
+import { Review } from '@/components/review'
+import { db } from '@/lib/db'
+import { getImageFormatSize } from '@/lib/tmdb/src/utils'
+import { compare } from 'bcrypt'
 
 export const metadata = {
   title: 'Home Page',
   description: 'Welcome to Cinevore, the social network for film lovers',
-};
+}
 export default async function IndexPage() {
   return (
     <>
@@ -87,7 +87,7 @@ export default async function IndexPage() {
                     </CardDescription>
                   </CardContent>
                 </Card>
-              );
+              )
             })}
           </div>
         </section>
@@ -127,7 +127,7 @@ export default async function IndexPage() {
                   buttonVariants({
                     variant: 'link',
                     className: 'text-muted-foreground/50 pr-0',
-                  })
+                  }),
                 )}
               >
                 More
@@ -149,7 +149,7 @@ export default async function IndexPage() {
                   buttonVariants({
                     variant: 'link',
                     className: 'text-muted-foreground/50 pr-0',
-                  })
+                  }),
                 )}
               >
                 More
@@ -170,7 +170,7 @@ export default async function IndexPage() {
                   buttonVariants({
                     variant: 'link',
                     className: 'text-muted-foreground/50 pr-0',
-                  })
+                  }),
                 )}
               >
                 More
@@ -181,5 +181,5 @@ export default async function IndexPage() {
         </div>
       </div>
     </>
-  );
+  )
 }

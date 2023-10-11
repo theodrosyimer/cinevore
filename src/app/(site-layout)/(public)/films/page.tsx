@@ -1,18 +1,18 @@
-import { FilmCardList } from '@/components/film-card-list';
-import { MovieArtwork } from '@/components/film-artwork';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import * as dotenv from 'dotenv';
-dotenv.config();
+import { FilmCardList } from '@/components/film-card-list'
+import { MovieArtwork } from '@/components/film-artwork'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 export const metadata = {
   title: 'Films Search Page',
   description: 'Find all your preferred films here.',
-};
+}
 
 export default function FilmsPage({
   params,
 }: {
-  params: { username: string };
+  params: { username: string }
 }) {
   return (
     <>
@@ -24,5 +24,5 @@ export default function FilmsPage({
         </ScrollArea>
       </div>
     </>
-  );
+  )
 }

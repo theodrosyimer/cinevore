@@ -1,15 +1,15 @@
-'use client';
+'use client'
 
-import { DialogProps } from '@radix-ui/react-alert-dialog';
+import { DialogProps } from '@radix-ui/react-alert-dialog'
 import {
   CircleIcon,
   FileIcon,
   LaptopIcon,
   MoonIcon,
   SunIcon,
-} from '@radix-ui/react-icons';
-import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
+} from '@radix-ui/react-icons'
+import { useTheme } from 'next-themes'
+import { useRouter } from 'next/navigation'
 
 import {
   CommandDialog,
@@ -19,48 +19,48 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/components/ui/command';
-import { siteLayoutConfig } from '@/config/nav';
-import { User } from 'next-auth';
-import { useCallback, useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils/utils';
-import { userNavigationConfig } from '@/config/user-navigation';
+} from '@/components/ui/command'
+import { siteLayoutConfig } from '@/config/nav'
+import { User } from 'next-auth'
+import { useCallback, useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils/utils'
+import { userNavigationConfig } from '@/config/user-navigation'
 
 export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState('');
-  const { setTheme } = useTheme();
+  const router = useRouter()
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const { setTheme } = useTheme()
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen((open) => !open);
+        e.preventDefault()
+        setOpen((open) => !open)
       }
-    };
+    }
 
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
-  }, []);
+    document.addEventListener('keydown', down)
+    return () => document.removeEventListener('keydown', down)
+  }, [])
 
   const runCommand = useCallback((command: () => unknown) => {
-    setOpen(false);
-    command();
-  }, []);
+    setOpen(false)
+    command()
+  }, [])
 
   siteLayoutConfig.mainNav =
     user?.role && user?.role === 'user'
       ? siteLayoutConfig.mainNav.filter((item) => item.label !== 'admin')
-      : siteLayoutConfig.mainNav;
+      : siteLayoutConfig.mainNav
 
   return (
     <>
       <Button
         variant="outline"
         className={cn(
-          'relative w-full justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64'
+          'relative w-full justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64',
         )}
         onClick={() => setOpen(true)}
         {...props}
@@ -83,8 +83,8 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
               value="Search"
               onSelect={() => {
                 runCommand(() => {
-                  router.push(`/search`);
-                });
+                  router.push(`/search`)
+                })
               }}
             >
               <FileIcon className="mr-2 h-4 w-4" />
@@ -99,7 +99,7 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
                   key={navItem.href}
                   value={navItem.title}
                   onSelect={() => {
-                    runCommand(() => router.push(navItem.href as string));
+                    runCommand(() => router.push(navItem.href as string))
                   }}
                 >
                   <FileIcon className="mr-2 h-4 w-4" />
@@ -116,7 +116,7 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
                     key={navItem.href}
                     value={navItem.title}
                     onSelect={() => {
-                      runCommand(() => router.push(navItem.href as string));
+                      runCommand(() => router.push(navItem.href as string))
                     }}
                   >
                     <div className="mr-2 flex h-4 w-4 items-center justify-center">
@@ -145,5 +145,5 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
         </CommandList>
       </CommandDialog>
     </>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-export const backdropSizes = ['w300', 'w780', 'w1280', 'original'] as const;
+export const backdropSizes = ['w300', 'w780', 'w1280', 'original'] as const
 
 export const logoSizes = [
   'w45',
@@ -8,7 +8,7 @@ export const logoSizes = [
   'w300',
   'w500',
   'original',
-] as const;
+] as const
 
 export const poster_sizes = [
   'w92',
@@ -18,11 +18,11 @@ export const poster_sizes = [
   'w500',
   'w780',
   'original',
-] as const;
+] as const
 
-export const profile_sizes = ['w45', 'w185', 'h632', 'original'] as const;
+export const profile_sizes = ['w45', 'w185', 'h632', 'original'] as const
 
-export const still_sizes = ['w92', 'w185', 'w300', 'original'] as const;
+export const still_sizes = ['w92', 'w185', 'w300', 'original'] as const
 
 export const changeKeys = [
   'adult',
@@ -78,7 +78,7 @@ export const changeKeys = [
   'type',
   'video',
   'videos',
-] as const;
+] as const
 export const configurationDetails = {
   images: {
     base_url: 'http://image.tmdb.org/t/p/',
@@ -144,4 +144,4 @@ export const configurationDetails = {
     'video',
     'videos',
   ] as const,
-} as const;
+} as const

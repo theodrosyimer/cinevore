@@ -1,4 +1,4 @@
-import type { IconName } from '@/components/icons';
+import type { IconName } from '@/components/icons'
 
 export const featuresConfig = [
   {
@@ -42,11 +42,11 @@ export const featuresConfig = [
       'Compile and share lists of films on any topic and keep a watchlist of films to see',
     enabled: true,
   },
-] satisfies Feature[];
+] satisfies Feature[]
 
 export type Feature = {
-  name: 'watchlist' | 'likes' | 'reviews' | 'rate-movies' | 'diary' | 'lists';
-  description: string;
-  enabled: boolean;
-  icon: IconName;
-};
+  name: 'watchlist' | 'likes' | 'reviews' | 'rate-movies' | 'diary' | 'lists'
+  description: string
+  enabled: boolean
+  icon: IconName
+}

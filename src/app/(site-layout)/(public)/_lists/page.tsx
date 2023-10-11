@@ -1,9 +1,9 @@
-import { Lists } from '@/app/(site-layout)/(public)/_lists/lists';
+import { Lists } from '@/app/(site-layout)/(public)/_lists/lists'
 
 export const metadata = {
   title: 'Lists Page',
   description: 'Your lists of films.',
-};
+}
 
 export default function ListsPage() {
   return (
@@ -12,5 +12,5 @@ export default function ListsPage() {
 
       <Lists />
     </>
-  );
+  )
 }

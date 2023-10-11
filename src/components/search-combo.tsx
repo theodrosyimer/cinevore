@@ -1,36 +1,36 @@
-'use client';
+'use client'
 
-import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
+import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons'
 
-import { cn } from '@/lib/utils/utils';
-import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils/utils'
+import { Button } from '@/components/ui/button'
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from '@/components/ui/command';
+} from '@/components/ui/command'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { SyntheticEvent, useEffect, useRef, useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { toast } from '@/components/ui/use-toast';
-import { searchMulti } from '@/lib/tmdb/src/tmdb';
+} from '@/components/ui/popover'
+import { SyntheticEvent, useEffect, useRef, useState } from 'react'
+import { Input } from '@/components/ui/input'
+import { toast } from '@/components/ui/use-toast'
+import { searchMulti } from '@/lib/tmdb/src/tmdb'
 import {
   SearchMovieMulti,
   SearchPersonMulti,
   TMDBSearchMultiResult,
-} from '@/lib/tmdb/types/tmdb-api';
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-import { useDebounce } from 'use-debounce';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Label } from '@radix-ui/react-label';
-import { slugify } from '@/lib/utils/slugify';
+} from '@/lib/tmdb/types/tmdb-api'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { useDebounce } from 'use-debounce'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Label } from '@radix-ui/react-label'
+import { slugify } from '@/lib/utils/slugify'
 
 const results = [
   {
@@ -53,26 +53,26 @@ const results = [
     value: 'astro',
     label: 'Astro',
   },
-];
+]
 
 export function SearchCombo() {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const router = useRouter()
+  const [open, setOpen] = useState(false)
   // const [value, setValue] = useState<TMDBSearchMultiResult | null>(null)
 
-  const [results, setResults] = useState<TMDBSearchMultiResult | null>(null);
-  const searchParams = useSearchParams();
-  const search = searchParams.get('search') || '';
+  const [results, setResults] = useState<TMDBSearchMultiResult | null>(null)
+  const searchParams = useSearchParams()
+  const search = searchParams.get('search') || ''
 
-  const initialRender = useRef(true);
+  const initialRender = useRef(true)
 
-  const [text, setText] = useState(search);
-  const [query] = useDebounce(text, 500);
+  const [text, setText] = useState(search)
+  const [query] = useDebounce(text, 500)
 
   useEffect(() => {
     if (initialRender.current) {
-      initialRender.current = false;
-      return;
+      initialRender.current = false
+      return
     }
 
     if (!query) {
@@ -86,33 +86,33 @@ export function SearchCombo() {
         const movies = res?.results
           .filter((result) => result.media_type !== 'tv')
           .map((result) => {
-            if (!result) return;
+            if (!result) return
 
-            setOpen(true);
+            setOpen(true)
 
-            const { id, media_type } = result;
+            const { id, media_type } = result
             if (media_type === 'movie') {
               // return { id, title: result.title, media_type }
-              return result as SearchMovieMulti;
+              return result as SearchMovieMulti
             }
             if (media_type === 'person') {
               // return { id, name: result.name, media_type }
-              return result as SearchPersonMulti;
+              return result as SearchPersonMulti
             }
-          });
-        console.log(movies);
-        setResults(movies as TMDBSearchMultiResult);
-        setOpen(false);
-      });
+          })
+        console.log(movies)
+        setResults(movies as TMDBSearchMultiResult)
+        setOpen(false)
+      })
     }
-  }, [query]);
+  }, [query])
 
   function onSubmit(event: SyntheticEvent) {
-    event.preventDefault();
-    console.log('event target', text);
-    router.push(`/search?search=${query}`);
-    setResults(null);
-    setOpen(false);
+    event.preventDefault()
+    console.log('event target', text)
+    router.push(`/search?search=${query}`)
+    setResults(null)
+    setOpen(false)
   }
 
   return (
@@ -146,10 +146,10 @@ export function SearchCombo() {
             placeholder="Search for Films, Actors..."
             className="h-8 w-auto "
             onChange={(e) => {
-              setText(e.currentTarget.value);
+              setText(e.currentTarget.value)
             }}
             onFocus={() => {
-              setOpen(false);
+              setOpen(false)
             }}
           />
         </form>
@@ -162,21 +162,21 @@ export function SearchCombo() {
                 <CommandItem
                   key={result.id}
                   onSelect={(currentValue) => {
-                    setText(currentValue === text ? '' : currentValue);
-                    setOpen(false);
+                    setText(currentValue === text ? '' : currentValue)
+                    setOpen(false)
                     result.media_type === 'movie'
                       ? router.push(
                           `/film/${slugify(result.title ?? '')}/?id=${
                             result.id
-                          }`
+                          }`,
                         )
                       : result.media_type === 'person'
                       ? router.push(
                           `/person/${slugify(result.name ?? '')}/?id=${
                             result.id
-                          }`
+                          }`,
                         )
-                      : null;
+                      : null
                   }}
                 >
                   {result.media_type === 'movie'
@@ -196,5 +196,5 @@ export function SearchCombo() {
         </ScrollArea>
       </PopoverContent>
     </Popover>
-  );
+  )
 }

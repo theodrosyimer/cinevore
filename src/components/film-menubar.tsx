@@ -1,5 +1,5 @@
-import { Icons } from '@/components/icons';
-import LikeIcon from '@/components/like-icon';
+import { Icons } from '@/components/icons'
+import LikeIcon from '@/components/like-icon'
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -9,7 +9,7 @@ import {
   MenubarSeparator,
   MenubarShortcut,
   MenubarTrigger,
-} from '@/components/ui/menubar';
+} from '@/components/ui/menubar'
 
 export function MovieMenubar({ ...className }: { className?: string }) {
   return (
@@ -106,5 +106,5 @@ export function MovieMenubar({ ...className }: { className?: string }) {
         </MenubarContent>
       </MenubarMenu> */}
     </Menubar>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm'
 import {
   index,
   int,
@@ -7,10 +7,10 @@ import {
   timestamp,
   uniqueIndex,
   varchar,
-} from 'drizzle-orm/mysql-core';
-import { user } from '../users';
-import { commentToMovieList } from '../lists';
-import { commentToMovieReview } from '../movie-reviews';
+} from 'drizzle-orm/mysql-core'
+import { user } from '../users'
+import { commentToMovieList } from '../lists'
+import { commentToMovieReview } from '../movie-reviews'
 
 export const comment = mysqlTable(
   'comment',
@@ -29,12 +29,12 @@ export const comment = mysqlTable(
     return {
       id: uniqueIndex('id').on(table.id),
       fkAuthorId: index('FK_author_id').on(table.authorId),
-    };
-  }
-);
+    }
+  },
+)
 
 export const commentRelations = relations(comment, ({ one, many }) => ({
   user: one(user, { fields: [comment.authorId], references: [user.id] }),
   commentsToMovieList: many(commentToMovieList),
   commentsToMovieReview: many(commentToMovieReview),
-}));
+}))

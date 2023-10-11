@@ -1,22 +1,22 @@
-'use client';
+'use client'
 
-import * as React from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import * as React from 'react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-import { siteConfig } from '@/config/site';
-import { cn } from '@/lib/utils/utils';
-import { Icons } from '@/components/icons';
-import { Badge } from '@/components/ui/badge';
-import { MainNavItem } from '@/types';
+import { siteConfig } from '@/config/site'
+import { cn } from '@/lib/utils/utils'
+import { Icons } from '@/components/icons'
+import { Badge } from '@/components/ui/badge'
+import { MainNavItem } from '@/types'
 
 type MainNavProps = {
-  items?: MainNavItem[];
-  children?: React.ReactNode;
-};
+  items?: MainNavItem[]
+  children?: React.ReactNode
+}
 
 export function MainNav({ items, children }: MainNavProps) {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   return (
     <div className="mr-4 hidden md:flex">
@@ -39,16 +39,16 @@ export function MainNav({ items, children }: MainNavProps) {
                     pathname === item.href
                       ? 'text-foreground'
                       : 'text-foreground/60',
-                    item.disabled && 'cursor-not-allowed opacity-80'
+                    item.disabled && 'cursor-not-allowed opacity-80',
                   )}
                 >
                   {item.title}
                 </Link>
-              );
+              )
             })}
           </nav>
         ) : null}
       </nav>
     </div>
-  );
+  )
 }

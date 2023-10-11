@@ -1,5 +1,5 @@
-import { db } from '@/lib/db';
-import { sql } from 'drizzle-orm';
+import { db } from '@/lib/db'
+import { sql } from 'drizzle-orm'
 
 const preparedUser = db.query.user
   .findMany({
@@ -71,7 +71,7 @@ const preparedUser = db.query.user
       ratings: true,
     },
   })
-  .prepare();
+  .prepare()
 
 const preparedUsers = db.query.user
   .findMany({
@@ -142,12 +142,12 @@ const preparedUsers = db.query.user
       ratings: true,
     },
   })
-  .prepare();
+  .prepare()
 
 export async function getUserListsAndReviewsWithCommentsAndLikes(id: string) {
-  const user = await preparedUser.execute({ id });
+  const user = await preparedUser.execute({ id })
 
-  return user;
+  return user
 }
 
 // export async function getAllUsersListsAndReviewsWithCommentsAndLikes() {

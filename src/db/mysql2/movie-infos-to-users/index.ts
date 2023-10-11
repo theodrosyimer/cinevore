@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm'
 import {
   boolean,
   index,
@@ -9,9 +9,9 @@ import {
   timestamp,
   uniqueIndex,
   varchar,
-} from 'drizzle-orm/mysql-core';
-import { movie } from '../movies';
-import { user } from '../users';
+} from 'drizzle-orm/mysql-core'
+import { movie } from '../movies'
+import { user } from '../users'
 
 export const movieInfosToUser = mysqlTable(
   'movie_infos_to_user',
@@ -54,15 +54,15 @@ export const movieInfosToUser = mysqlTable(
       compositeKey: primaryKey(table.userId, table.movieId),
       compositeKeyIndex: uniqueIndex('composite_key').on(
         table.movieId,
-        table.userId
+        table.userId,
       ),
       rating: index('rating').on(table.rating),
       liked: index('liked').on(table.liked),
       watched: index('watched').on(table.watched),
       reviewed: index('reviewed').on(table.reviewed),
-    };
-  }
-);
+    }
+  },
+)
 
 export const movieInfosToUserRelations = relations(
   movieInfosToUser,
@@ -77,5 +77,5 @@ export const movieInfosToUserRelations = relations(
       references: [user.id],
       relationName: 'user',
     }),
-  })
-);
+  }),
+)

@@ -1,7 +1,7 @@
-import { MovieArtwork } from '@/components/film-artwork';
-import { UserInfos } from '@/components/user-infos';
-import { getImageFormatSize } from '@/lib/tmdb/src/utils';
-import { MovieDetails } from '@/lib/tmdb/types/tmdb-api';
+import { MovieArtwork } from '@/components/film-artwork'
+import { UserInfos } from '@/components/user-infos'
+import { getImageFormatSize } from '@/lib/tmdb/src/utils'
+import { MovieDetails } from '@/lib/tmdb/types/tmdb-api'
 import {
   SelectComment,
   SelectCommentToMovieReview,
@@ -9,26 +9,26 @@ import {
   SelectLikeToMovieReview,
   SelectMovieReview,
   SelectUser,
-} from '@/types/db';
+} from '@/types/db'
 
 export interface ReviewAndCommentsProps extends SelectMovieReview {
-  user: SelectUser;
+  user: SelectUser
   comments: (SelectCommentToMovieReview & {
-    comments: SelectComment[];
-  })[];
+    comments: SelectComment[]
+  })[]
   likes: (SelectLikeToMovieReview & {
-    likes: SelectLike[];
-  })[];
+    likes: SelectLike[]
+  })[]
 } /*  & { film: MovieDetails } */
 
 export function Review({
   review,
   film,
 }: {
-  review: ReviewAndCommentsProps;
-  film: MovieDetails;
+  review: ReviewAndCommentsProps
+  film: MovieDetails
 }) {
-  const likesCount = review.likes.length;
+  const likesCount = review.likes.length
 
   // console.log('FILM', film, review.user)
 
@@ -49,5 +49,5 @@ export function Review({
         {/* {review.commentsToMovieReview.map(comment => comment?.comments?.content)} */}
       </div>
     </article>
-  );
+  )
 }

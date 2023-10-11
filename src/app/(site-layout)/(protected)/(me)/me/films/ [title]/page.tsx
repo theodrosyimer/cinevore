@@ -3,15 +3,15 @@
 export const metadata = {
   title: "Film's Details Page",
   description: 'Details about a film.',
-};
+}
 
 export default function UserFilmPage({
   params,
 }: {
   params: {
-    title: string;
-    id: number;
-  };
+    title: string
+    id: number
+  }
 }) {
   return (
     <>
@@ -20,5 +20,5 @@ export default function UserFilmPage({
       </h1>
       {/* <Film></Film> */}
     </>
-  );
+  )
 }

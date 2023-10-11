@@ -79,6 +79,6 @@ export const languages = [
   'zh-SG',
   'zh-TW',
   'zu-ZA',
-] as const;
+] as const
 
-export type LANGUAGE = (typeof languages)[number];
+export type LANGUAGE = (typeof languages)[number]

@@ -1,13 +1,13 @@
-import { NewListForm } from '@/components/list-create';
-import { getCurrentUser } from '@/lib/session';
+import { NewListForm } from '@/components/list-create'
+import { getCurrentUser } from '@/lib/session'
 
 export const metadata = {
   title: 'Create List Page',
   description: 'Create a new list of films.',
-};
+}
 
 export default async function NewListPage() {
-  const { user } = await getCurrentUser();
+  const { user } = await getCurrentUser()
 
   return (
     <div className="grid w-full space-y-6 p-20">
@@ -18,5 +18,5 @@ export default async function NewListPage() {
       </div>
       <NewListForm />
     </div>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { Label } from '@/components/ui/label';
-import React from 'react';
+import { Label } from '@/components/ui/label'
+import React from 'react'
 
 export default function FilmRatingStars() {
   return (
@@ -165,5 +165,5 @@ export default function FilmRatingStars() {
         </div>
       </div>
     </>
-  );
+  )
 }

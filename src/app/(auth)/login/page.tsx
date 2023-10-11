@@ -1,15 +1,15 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
+import { Metadata } from 'next'
+import Link from 'next/link'
 
-import { cn } from '@/lib/utils/utils';
-import { buttonVariants } from '@/components/ui/button';
-import { Icons } from '@/components/icons';
-import { UserLoginForm } from '@/components/user-login-form';
+import { cn } from '@/lib/utils/utils'
+import { buttonVariants } from '@/components/ui/button'
+import { Icons } from '@/components/icons'
+import { UserLoginForm } from '@/components/user-login-form'
 
 export const metadata: Metadata = {
   title: 'Login',
   description: 'Login to your account',
-};
+}
 
 export default function LoginPage() {
   return (
@@ -18,7 +18,7 @@ export default function LoginPage() {
         href="/"
         className={cn(
           buttonVariants({ variant: 'ghost' }),
-          'absolute left-4 top-4 md:left-8 md:top-8'
+          'absolute left-4 top-4 md:left-8 md:top-8',
         )}
       >
         <>
@@ -47,5 +47,5 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
-  );
+  )
 }

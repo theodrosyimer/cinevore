@@ -1,4 +1,4 @@
-import { relations, sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm'
 import {
   boolean,
   index,
@@ -7,9 +7,9 @@ import {
   text,
   timestamp,
   varchar,
-} from 'drizzle-orm/mysql-core';
-import { movieList } from '../movie-lists';
-import { user } from '../users';
+} from 'drizzle-orm/mysql-core'
+import { movieList } from '../movie-lists'
+import { user } from '../users'
 
 export const list = mysqlTable(
   'list',
@@ -32,10 +32,10 @@ export const list = mysqlTable(
   (table) => ({
     id: index('id').on(table.id),
     userId: index('user_id').on(table.userId),
-  })
-);
+  }),
+)
 
 export const listRelations = relations(list, ({ one, many }) => ({
   user: one(user, { fields: [list.userId], references: [user.id] }),
   movieLists: many(movieList),
-}));
+}))
