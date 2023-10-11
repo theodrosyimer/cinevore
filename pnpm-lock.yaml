@@ -85,7 +85,7 @@ dependencies:
     version: 1.0.7(@types/react-dom@18.2.7)(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)
   '@t3-oss/env-nextjs':
     specifier: ^0.6.1
-    version: 0.6.1(typescript@5.2.2)(zod@3.21.4)
+    version: 0.6.1(typescript@5.2.2)(zod@3.22.3)
   '@tanstack/react-query':
     specifier: ^4.33.0
     version: 4.36.1(react-dom@18.2.0)(react@18.2.0)
@@ -118,7 +118,7 @@ dependencies:
     version: 0.28.6(@planetscale/database@1.11.0)(mysql2@3.6.1)
   drizzle-zod:
     specifier: ^0.5.1
-    version: 0.5.1(drizzle-orm@0.28.6)(zod@3.21.4)
+    version: 0.5.1(drizzle-orm@0.28.6)(zod@3.22.3)
   eslint:
     specifier: 8.48.0
     version: 8.48.0
@@ -183,8 +183,8 @@ dependencies:
     specifier: ^9.0.4
     version: 9.0.4(react@18.2.0)
   zod:
-    specifier: 3.21.4
-    version: 3.21.4
+    specifier: 3.22.3
+    version: 3.22.3
 
 devDependencies:
   '@tailwindcss/line-clamp':
@@ -2098,25 +2098,25 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@t3-oss/env-core@0.6.1(typescript@5.2.2)(zod@3.21.4):
+  /@t3-oss/env-core@0.6.1(typescript@5.2.2)(zod@3.22.3):
     resolution: {integrity: sha512-KQD7qEDJtkWIWWmTVjNvk0wnHpkvAQ6CRbUxbWMFNG/fiosBQDQvtRpBNu6USxBscJCoC4z6y7P9MN52/mLOzw==}
     peerDependencies:
       typescript: '>=4.7.2'
       zod: ^3.0.0
     dependencies:
       typescript: 5.2.2
-      zod: 3.21.4
+      zod: 3.22.3
     dev: false
 
-  /@t3-oss/env-nextjs@0.6.1(typescript@5.2.2)(zod@3.21.4):
+  /@t3-oss/env-nextjs@0.6.1(typescript@5.2.2)(zod@3.22.3):
     resolution: {integrity: sha512-z1dIC++Vxj9kmzX5nSPfcrCSkszy3dTEPC4Ssx7Ap5AqR3c2Qa7S0xf8axn6coy7D/vCXDAAnHYnCMDhtcY3SQ==}
     peerDependencies:
       typescript: '>=4.7.2'
       zod: ^3.0.0
     dependencies:
-      '@t3-oss/env-core': 0.6.1(typescript@5.2.2)(zod@3.21.4)
+      '@t3-oss/env-core': 0.6.1(typescript@5.2.2)(zod@3.22.3)
       typescript: 5.2.2
-      zod: 3.21.4
+      zod: 3.22.3
     dev: false
 
   /@tailwindcss/line-clamp@0.4.4(tailwindcss@3.3.3):
@@ -2958,7 +2958,7 @@ packages:
       hanji: 0.0.5
       json-diff: 0.9.0
       minimatch: 7.4.6
-      zod: 3.21.4
+      zod: 3.22.3
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -3029,14 +3029,14 @@ packages:
       mysql2: 3.6.1
     dev: false
 
-  /drizzle-zod@0.5.1(drizzle-orm@0.28.6)(zod@3.21.4):
+  /drizzle-zod@0.5.1(drizzle-orm@0.28.6)(zod@3.22.3):
     resolution: {integrity: sha512-C/8bvzUH/zSnVfwdSibOgFjLhtDtbKYmkbPbUCq46QZyZCH6kODIMSOgZ8R7rVjoI+tCj3k06MRJMDqsIeoS4A==}
     peerDependencies:
       drizzle-orm: '>=0.23.13'
       zod: '*'
     dependencies:
       drizzle-orm: 0.28.6(@planetscale/database@1.11.0)(mysql2@3.6.1)
-      zod: 3.21.4
+      zod: 3.22.3
     dev: false
 
   /electron-to-chromium@1.4.544:
@@ -5802,5 +5802,5 @@ packages:
     resolution: {integrity: sha512-N+d4UJSJbt/R3wqY7Coqs5pcV0aUj2j9IaQ3rNj9bVCLld8tTGKRa2USARjnvZJWVx1NDmQev8EknoczaOQDOA==}
     dev: false
 
-  /zod@3.21.4:
-    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+  /zod@3.22.3:
+    resolution: {integrity: sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug==}
