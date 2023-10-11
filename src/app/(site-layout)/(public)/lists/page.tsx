@@ -1,4 +1,4 @@
-import { getLists } from './getLists'
+import { getLists } from '@/app/(site-layout)/(public)/lists/getLists'
 import { UserInfos } from '@/components/user-infos'
 import { getCurrentUser } from '@/lib/session'
 

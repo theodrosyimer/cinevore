@@ -1,4 +1,4 @@
-import { getUsers } from './getUsers'
+import { getUsers } from "@/app/(site-layout)/(public)/members/getUsers"
 
 export const metadata = {
   title: 'Members Page',
