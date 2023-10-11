@@ -1,6 +1,5 @@
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
-import { getUserIdFromUrl } from '@/app/api/users/[userId]/get-user-id-from-url'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
