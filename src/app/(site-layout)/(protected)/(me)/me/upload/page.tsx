@@ -6,7 +6,7 @@ import { getCurrentUser } from '@/lib/session'
 import { redirect } from 'next/navigation'
 
 export const metadata = {
-  title: 'Upload Page',
+  title: 'Upload Image',
   description: "Upload your avatar's image.",
 }
 
@@ -15,12 +15,6 @@ export default async function UploadPage({
 }: {
   params: { username: string }
 }) {
-  const { user, isAdmin } = await getCurrentUser()
-
-  if (!user) {
-    redirect(authOptions?.pages?.signIn || '/login')
-  }
-
   return (
     <>
       <form

@@ -51,6 +51,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@t3-oss/env-nextjs": "^0.6.1",
     "@tanstack/react-query": "^4.33.0",
+    "@uploadthing/react": "^5.6.2",
     "@vercel/og": "^0.5.17",
     "autoprefixer": "10.4.15",
     "bcrypt": "^5.1.1",
@@ -80,6 +81,7 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.2.2",
+    "uploadthing": "^5.7.1",
     "use-debounce": "^9.0.4",
     "zod": "3.22.3",
     "zustand": "^4.4.3"

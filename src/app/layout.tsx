@@ -1,15 +1,17 @@
 import '@/styles/globals.css'
 // import { Inter } from 'next/font/google'
+import ReactQueryProvider from '@/providers/react-query'
+import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { Inter as FontSans } from 'next/font/google'
 import localFont from 'next/font/local'
-
-import ReactQueryProvider from '@/providers/react-query'
+import { extractRouterConfig } from 'uploadthing/server'
 // import ThemeContextProvider from '@/contexts/theme'
-import { ThemeProvider } from '@/components/theme-provider'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
-import { cn } from '@/lib/utils/utils'
-import { siteConfig } from '@/config/site'
+import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
+import { siteConfig } from '@/config/site'
+import { cn } from '@/lib/utils/utils'
+import { ourFileRouter } from '@/app/api/uploadthing/core'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -87,7 +89,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body
         className={cn(
-          'min-h-screen grid grid-rows-layout font-sans antialiased',
+          'grid min-h-screen grid-rows-layout font-sans antialiased',
           // inter.className,
           fontSans.variable,
           fontHeading.variable,
@@ -95,6 +97,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ReactQueryProvider>
+            <NextSSRPlugin
+              /**
+               * The `extractRouterConfig` will extract **only** the route configs
+               * from the router to prevent additional information from being
+               * leaked to the client. The data passed to the client is the same
+               * as if you were to fetch `/api/uploadthing` directly.
+               */
+              routerConfig={extractRouterConfig(ourFileRouter)}
+            />
             {children}
             <Toaster />
             <TailwindIndicator />

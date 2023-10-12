@@ -18,7 +18,7 @@ export default async function MeLayout({ children }: MeLayoutProps) {
 
   return (
     <>
-      <div className="space-y-6 mt-14 pb-16">
+      <div className="space-y-6 pb-16">
         {/* <div className="space-y-0.5">
           <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
           <p className="text-muted-foreground">
