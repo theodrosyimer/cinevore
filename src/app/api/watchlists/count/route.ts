@@ -1,10 +1,5 @@
-import * as z from 'zod'
-
-import { watchlistToMovies } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
-import { RequiresProPlanError } from '@/lib/exceptions'
-import { movieToWatchlistPOSTSchema } from '@/lib/validations/watchlist'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 
@@ -21,13 +16,16 @@ export async function GET(req: NextRequest) {
       },
     })
 
-    if (!watchlists) {
-      return new Response("User's watchlist not found", { status: 404 })
+    if (!watchlists.length) {
+      return new Response('No watchlist not found', { status: 404 })
     }
 
-    return NextResponse.json(watchlists, {
-      status: 200,
-    })
+    return NextResponse.json(
+      { total: watchlists.length },
+      {
+        status: 200,
+      },
+    )
   } catch (error) {
     return new Response(null, { status: 500 })
   }

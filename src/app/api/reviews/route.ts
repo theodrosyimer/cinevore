@@ -4,34 +4,22 @@ import { db } from '@/lib/db'
 import { RequiresProPlanError } from '@/lib/exceptions'
 import { getCurrentUser } from '@/lib/session'
 import { NextResponse } from 'next/server'
+import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 
 export async function GET() {
   try {
-    const { user: currentUser } = await getCurrentUser()
-
-    if (
-      !currentUser ||
-      !(currentUser?.role === 'admin' || currentUser?.role === 'superadmin')
-    ) {
-      return new Response('Unauthorized', { status: 403 })
-    }
-
-    const lists = await db.query.movieList
-      .findMany(/* {
+    const reviews =
+      await db.query.movieReview.findMany(/* {
       where: eq(user.id, movieList.userId),
     } */)
-      .catch((error) => {
-        if (error instanceof Error) {
-          console.log('Failed to get movie list\n', error)
-        } else {
-          console.log(
-            `Error getting user with "userId: ${currentUser.id}" from the database.`,
-          )
-        }
-      })
 
-    return NextResponse.json(lists)
+    return NextResponse.json(reviews)
   } catch (error) {
+    if (error instanceof Error) {
+      console.log(error)
+      return new Response(formatSimpleErrorMessage(error), { status: 500 })
+    }
+
     return new Response(null, { status: 500 })
   }
 }
