@@ -11,16 +11,8 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
     reviews = await db.query.movieReview.findMany({
       with: {
         user: true,
-        comments: {
-          with: {
-            comment: true,
-          },
-        },
-        likes: {
-          with: {
-            like: true,
-          },
-        },
+        comments: true,
+        likes: true,
       },
     })
 
