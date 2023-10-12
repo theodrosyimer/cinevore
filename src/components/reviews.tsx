@@ -1,7 +1,6 @@
-import { Review, ReviewAndCommentsProps } from '@/components/review'
+import { Review } from '@/components/review'
 import { db } from '@/lib/db'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
-import { useSearchParams } from 'next/navigation'
 
 export async function Reviews({ children }: { children?: React.ReactNode }) {
   // const searchParams = useSearchParams()

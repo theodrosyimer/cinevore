@@ -1,4 +1,4 @@
-import { like, likeToMovieReview } from '@/db/planetscale'
+import { like, likeToMovieList } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
@@ -38,11 +38,11 @@ export async function DELETE(
 
         // Delete the like relationship to the review.
         await tx
-          .delete(likeToMovieReview)
+          .delete(likeToMovieList)
           .where(
             and(
-              eq(likeToMovieReview.movieReviewId, listId),
-              eq(likeToMovieReview.likeId, likeId!),
+              eq(likeToMovieList.listId, listId),
+              eq(likeToMovieList.likeId, likeId!),
             ),
           )
 

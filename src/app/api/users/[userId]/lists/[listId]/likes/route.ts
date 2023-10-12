@@ -24,12 +24,11 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const reviewLikes = await db.query.likeToMovieReview.findMany({
-        where: (likeToMovieReview, { eq }) =>
-          eq(likeToMovieReview.movieReviewId, listId),
+      const reviewLikes = await db.query.list.findMany({
+        where: (list, { eq }) => eq(list.id, listId),
         columns: {},
         with: {
-          like: true,
+          likes: true,
         },
       })
 
@@ -67,12 +66,11 @@ export async function POST(
 
     const result = await db.transaction(async (tx) => {
       // check if user already like this review
-      const results = await tx.query.likeToMovieReview.findMany({
-        where: (likeToMovieReview, { eq }) =>
-          eq(likeToMovieReview.movieReviewId, listId),
+      const results = await tx.query.list.findMany({
+        where: (list, { eq }) => eq(list.id, listId),
         columns: {},
         with: {
-          like: {
+          likes: {
             // TODO: fill a bug report for this
             // @ts-ignore
             where: (like, { eq }) => eq(like.authorId, userId!),

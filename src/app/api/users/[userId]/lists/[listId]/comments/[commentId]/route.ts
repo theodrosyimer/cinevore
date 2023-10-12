@@ -31,11 +31,11 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const userReviews = await db.query.commentToMovieReview.findMany({
-        where: (commentToMovieReview, { eq, and }) =>
+      const userList = await db.query.commentToMovieList.findMany({
+        where: (commentToMovieList, { eq, and }) =>
           and(
-            eq(commentToMovieReview.movieReviewId, listId),
-            eq(commentToMovieReview.commentId, commentId),
+            eq(commentToMovieList.listId, listId),
+            eq(commentToMovieList.commentId, commentId),
           ),
         columns: {},
         with: {
@@ -43,11 +43,11 @@ export async function GET(
         },
       })
 
-      if (!userReviews) {
-        return new Response('User not found', { status: 404 })
+      if (!userList) {
+        return new Response('User list not found', { status: 404 })
       }
 
-      return NextResponse.json(userReviews)
+      return NextResponse.json(userList)
     }
 
     return new Response('Unauthorized', { status: 403 })

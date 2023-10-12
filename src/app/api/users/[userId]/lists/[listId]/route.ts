@@ -1,7 +1,8 @@
-import { movieReview } from '@/db/planetscale'
+import { list, movieReview } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
+import { listPATCHSchema } from '@/lib/validations/list'
 import { reviewPATCHSchema } from '@/lib/validations/review'
 import { eq } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'
@@ -26,9 +27,9 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const userReviews = await db.query.movieReview.findMany({
-        where: (movieReview, { eq, and }) =>
-          and(eq(movieReview.userId, token.id), eq(movieReview.id, listId)),
+      const userReviews = await db.query.list.findMany({
+        where: (list, { eq, and }) =>
+          and(eq(list.userId, userId), eq(list.id, listId)),
       })
 
       if (!userReviews) {
@@ -64,10 +65,10 @@ export async function PATCH(
     if (token && (userId === token.id || isAdmin(token))) {
       // Get the request body and validate it.
       const json = await req.json()
-      const body = reviewPATCHSchema.parse(json)
+      const body = listPATCHSchema.parse(json)
 
       // Update the review.
-      await db.update(movieReview).set(body).where(eq(movieReview.id, listId))
+      await db.update(list).set(body).where(eq(list.id, listId))
 
       return new Response('Review updated successfully!', { status: 200 })
     }
@@ -101,9 +102,7 @@ export async function DELETE(
 
     if (token && (userId === token.id || isAdmin(token))) {
       // Delete the list.
-      const resultHeader = await db
-        .delete(movieReview)
-        .where(eq(movieReview.id, listId))
+      const resultHeader = await db.delete(list).where(eq(list.id, listId))
 
       console.log('Deleted rows:', resultHeader.rowsAffected)
 

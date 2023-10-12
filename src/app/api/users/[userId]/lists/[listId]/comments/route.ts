@@ -2,7 +2,11 @@ import {
   getUserIdFromUrl,
   getUserResourceIdFromUrl,
 } from '@/app/api/users/[userId]/get-user-id-from-url'
-import { comment, commentToMovieReview } from '@/db/planetscale'
+import {
+  comment,
+  commentToMovieList,
+  commentToMovieReview,
+} from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
@@ -28,20 +32,20 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const reviewComments = await db.query.commentToMovieReview.findMany({
-        where: (commentToMovieReview, { eq }) =>
-          eq(commentToMovieReview.movieReviewId, listId),
+      const listComments = await db.query.commentToMovieList.findMany({
+        where: (commentToMovieList, { eq }) =>
+          eq(commentToMovieList.listId, listId),
         columns: {},
         with: {
           comment: true,
         },
       })
 
-      if (!reviewComments) {
+      if (!listComments) {
         return new Response(`Review comments not found`, { status: 404 })
       }
 
-      return NextResponse.json(reviewComments)
+      return NextResponse.json(listComments)
     }
 
     return new Response('Unauthorized', { status: 403 })
@@ -74,15 +78,15 @@ export async function POST(
 
     await db.transaction(async (tx) => {
       const resultHeaders = await tx.insert(comment).values(body)
-      await tx.insert(commentToMovieReview).values({
+      await tx.insert(commentToMovieList).values({
         commentId: Number(resultHeaders.insertId),
-        movieReviewId: listId,
+        listId: listId,
       })
       // console.log('HEADERS:', resultHeaders.insertId, result)
     })
 
     return NextResponse.json(
-      { message: 'Review comment created successfully' },
+      { message: 'Movie list comment created successfully' },
       { status: 201 },
     )
   } catch (error) {
@@ -96,7 +100,7 @@ export async function POST(
     }
 
     return new Response(
-      `Error creating a comment to the review from the database.`,
+      `Error creating a comment to movie list from the database.`,
       {
         status: 500,
       },

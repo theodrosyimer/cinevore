@@ -55,7 +55,7 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
     }
 
     toast({
-      title: 'Account created.',
+      title: 'Welcome to Cinevore! 🎉',
       description: 'Your account has been created.',
     })
     return router.push(signInResult?.url ?? '/me')
