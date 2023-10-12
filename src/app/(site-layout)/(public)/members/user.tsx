@@ -1,10 +1,10 @@
-import { getUsers } from '@/app/(site-layout)/(public)/_members/getUsers'
+import { getUsers } from '@/app/(site-layout)/(public)/members/getUsers'
 
 export async function Users() {
   const users = await getUsers()
   return (
     <>
-      <pre className="divide-y-4 w-max">
+      <pre className="w-max divide-y-4">
         {users.length
           ? users.map((user) => {
               return (

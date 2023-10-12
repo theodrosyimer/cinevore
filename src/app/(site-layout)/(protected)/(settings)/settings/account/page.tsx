@@ -1,5 +1,5 @@
 import { Separator } from '@/components/ui/separator'
-import { AccountForm } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/account/account-form'
+import { AccountForm } from '@/app/(site-layout)/(protected)/(settings)/settings/account/account-form'
 
 import { getCurrentUser } from '@/lib/session'
 import { redirect } from 'next/navigation'

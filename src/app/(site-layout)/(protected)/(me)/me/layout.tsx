@@ -1,4 +1,4 @@
-import { SidebarNav } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/components/sidebar-nav'
+import { SidebarNav } from '@/app/(site-layout)/(protected)/(settings)/settings/components/sidebar-nav'
 import Loading from '@/app/(site-layout)/loading'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'

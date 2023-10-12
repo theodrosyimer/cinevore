@@ -1,5 +1,5 @@
 import { Separator } from '@/components/ui/separator'
-import { AppearanceForm } from '@/app/(site-layout)/(protected)/(me)/me/(settings)/settings/appearance/appearance-form'
+import { AppearanceForm } from '@/app/(site-layout)/(protected)/(settings)/settings/appearance/appearance-form'
 import { getCurrentUser } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { authOptions } from '@/lib/auth'

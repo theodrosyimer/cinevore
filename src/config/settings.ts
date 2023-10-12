@@ -3,39 +3,37 @@ import { SettingsConfig } from '@/types'
 export const settingsConfig: SettingsConfig = {
   sidebarNav: [
     {
-      title: 'Profile',
-      href: '/me/settings',
-      items: [],
-    },
-    {
-      title: 'Password',
-      href: '/me/settings/password',
+      title: 'Account',
+      href: '/settings',
       items: [],
     },
     {
       title: 'Account',
-      href: '/me/settings/account',
+      href: '/settings/account',
       items: [],
     },
     {
+      title: 'Password',
+      href: '/settings/password',
+      items: [],
+      disabled: true,
+    },
+
+    {
       title: 'Avatar',
-      href: '/me/settings/avatar',
+      href: '/settings/avatar',
       items: [],
     },
     {
       title: 'Appearance',
-      href: '/me/settings/appearance',
+      href: '/settings/appearance',
       items: [],
     },
     {
       title: 'Notifications',
-      href: '/me/settings/notifications',
+      href: '/settings/notifications',
       items: [],
-    },
-    {
-      title: 'Display',
-      href: '/me/settings/display',
-      items: [],
+      disabled: true,
     },
   ],
 }

@@ -41,24 +41,21 @@ export default function UploadDnD() {
   )
 
   return (
-    <main className="flex flex-col items-center justify-start p-24">
-      <UploadDropzone<OurFileRouter>
-        endpoint="imageUploader"
-        onClientUploadComplete={(res) => {
-          if (res) {
-            setImages(res)
-            const json = JSON.stringify(res)
-            // Do something with the response
-            console.log(json)
-          }
-          //alert("Upload Completed");
-        }}
-        onUploadError={(error: Error) => {
-          // Do something with the error.
-          alert(`ERROR! ${error.message}`)
-        }}
-      />
-      {imgList}
-    </main>
+    <UploadDropzone<OurFileRouter>
+      endpoint="imageUploader"
+      onClientUploadComplete={(res) => {
+        if (res) {
+          setImages(res)
+          const json = JSON.stringify(res)
+          // Do something with the response
+          console.log(json)
+        }
+        //alert("Upload Completed");
+      }}
+      onUploadError={(error: Error) => {
+        // Do something with the error.
+        alert(`ERROR! ${error.message}`)
+      }}
+    />
   )
 }
