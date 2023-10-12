@@ -4,21 +4,15 @@ import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { MovieDetails } from '@/lib/tmdb/types/tmdb-api'
 import {
   SelectComment,
-  SelectCommentToMovieReview,
   SelectLike,
-  SelectLikeToMovieReview,
   SelectMovieReview,
   SelectUser,
 } from '@/types/db'
 
 export interface ReviewAndCommentsProps extends SelectMovieReview {
   user: SelectUser
-  comments: (SelectCommentToMovieReview & {
-    comments: SelectComment[]
-  })[]
-  likes: (SelectLikeToMovieReview & {
-    likes: SelectLike[]
-  })[]
+  comments: SelectComment[]
+  likes: SelectLike[]
 } /*  & { film: MovieDetails } */
 
 export function Review({
@@ -33,7 +27,7 @@ export function Review({
   // console.log('FILM', film, review.user)
 
   return (
-    <article className="flex gap-6 mb-8">
+    <article className="mb-8 flex gap-6">
       <MovieArtwork
         aspectRatio="portrait"
         height={50}

@@ -70,30 +70,8 @@ export type NewComment = InferInsertModel<typeof schema.comment>
 export type SelectComment = InferSelectModel<typeof schema.comment>
 export type NewLike = InferInsertModel<typeof schema.like>
 export type SelectLike = InferSelectModel<typeof schema.like>
-export type NewCommentToMovieList = InferInsertModel<
-  typeof schema.commentToMovieList
->
-export type SelectCommentToMovieList = InferSelectModel<
-  typeof schema.commentToMovieList
->
-export type NewLikeToMovieList = InferInsertModel<typeof schema.likeToMovieList>
-export type SelectLikeToMovieList = InferSelectModel<
-  typeof schema.likeToMovieList
->
 export type NewMovieReview = InferInsertModel<typeof schema.movieReview>
 export type SelectMovieReview = InferSelectModel<typeof schema.movieReview>
-export type NewCommentToMovieReview = InferInsertModel<
-  typeof schema.commentToMovieReview
->
-export type SelectCommentToMovieReview = InferSelectModel<
-  typeof schema.commentToMovieReview
->
-export type NewLikeToMovieReview = InferInsertModel<
-  typeof schema.likeToMovieReview
->
-export type SelectLikeToMovieReview = InferSelectModel<
-  typeof schema.likeToMovieReview
->
 export type NewFollower = InferInsertModel<typeof schema.follower>
 export type SelectFollower = InferSelectModel<typeof schema.follower>
 export type NewWatchlist = InferInsertModel<typeof schema.watchlist>

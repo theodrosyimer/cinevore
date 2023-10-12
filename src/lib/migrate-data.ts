@@ -2,12 +2,8 @@ import * as schema from '@/db/planetscale/index'
 import { hashPassword } from '@/lib/bcrypt'
 import type {
   NewComment,
-  NewCommentToMovieList,
-  NewCommentToMovieReview,
   NewFollower,
   NewLike,
-  NewLikeToMovieList,
-  NewLikeToMovieReview,
   NewList,
   NewMovie,
   NewMovieInfosToUser,
@@ -600,61 +596,6 @@ export const defaultComments = [
     content: 'Love this list 👌',
   },
 ] satisfies NewComment[]
-
-export const defaultCommentsToMovieLists = [
-  {
-    commentId: 2,
-    listId: 1,
-  },
-  {
-    commentId: 4,
-    listId: 2,
-  },
-  {
-    commentId: 6,
-    listId: 3,
-  },
-  {
-    commentId: 8,
-    listId: 4,
-  },
-  {
-    commentId: 10,
-    listId: 5,
-  },
-  {
-    commentId: 12,
-    listId: 6,
-  },
-] satisfies NewCommentToMovieList[]
-
-export const defaultCommentsToMovieReviews = [
-  {
-    commentId: 1,
-    movieReviewId: 1,
-  },
-  {
-    commentId: 3,
-    movieReviewId: 1,
-  },
-  {
-    commentId: 5,
-    movieReviewId: 1,
-  },
-  {
-    commentId: 7,
-    movieReviewId: 1,
-  },
-  {
-    commentId: 9,
-    movieReviewId: 1,
-  },
-  {
-    commentId: 11,
-    movieReviewId: 1,
-  },
-] satisfies NewCommentToMovieReview[]
-
 export const defaultLikes = [
   {
     id: 1,
@@ -729,60 +670,6 @@ export const defaultLikes = [
     resourceId: defaultLists[6]?.id ?? 1,
   },
 ] satisfies NewLike[]
-
-export const defaultLikesToMovieLists = [
-  {
-    likeId: 2,
-    listId: 1,
-  },
-  {
-    likeId: 4,
-    listId: 2,
-  },
-  {
-    likeId: 6,
-    listId: 3,
-  },
-  {
-    likeId: 8,
-    listId: 4,
-  },
-  {
-    likeId: 10,
-    listId: 5,
-  },
-  {
-    likeId: 12,
-    listId: 6,
-  },
-] satisfies NewLikeToMovieList[]
-
-export const defaultLikesToMovieReviews = [
-  {
-    likeId: 1,
-    movieReviewId: 1,
-  },
-  {
-    likeId: 3,
-    movieReviewId: 1,
-  },
-  {
-    likeId: 5,
-    movieReviewId: 1,
-  },
-  {
-    likeId: 7,
-    movieReviewId: 1,
-  },
-  {
-    likeId: 9,
-    movieReviewId: 1,
-  },
-  {
-    likeId: 11,
-    movieReviewId: 1,
-  },
-] satisfies NewLikeToMovieReview[]
 
 const ratingsAvailable = [
   '0',

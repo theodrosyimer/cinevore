@@ -59,7 +59,7 @@ export function MovieArtwork({
   className,
   ...props
 }: MovieArtworkProps) {
-  let imageUrl
+  let imageUrl: string | undefined
 
   let kind: TMDBImageSizesCategoryKey
   let size: TMDBImageSizesCategory[typeof kind] = 'w300'
