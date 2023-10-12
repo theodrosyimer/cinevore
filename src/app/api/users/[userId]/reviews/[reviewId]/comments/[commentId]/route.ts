@@ -1,12 +1,8 @@
-import {
-  getUserIdFromUrl,
-  getUserResourceIdFromUrl,
-} from '@/app/api/users/[userId]/get-user-id-from-url'
-import { comment, movieReview } from '@/db/planetscale'
+import { comment } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
-import { commentPATCHSchema } from '@/lib/validations/comment'
+import { userCommentPATCHSchema } from '@/lib/validations/comment'
 import { and, eq } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
@@ -31,23 +27,16 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const userReviews = await db.query.commentToMovieReview.findMany({
-        where: (commentToMovieReview, { eq, and }) =>
-          and(
-            eq(commentToMovieReview.movieReviewId, reviewId),
-            eq(commentToMovieReview.commentId, commentId),
-          ),
-        columns: {},
-        with: {
-          comment: true,
-        },
+      const userComment = await db.query.comment.findMany({
+        where: (comment, { eq, and }) =>
+          and(eq(comment.resourceId, reviewId), eq(comment.id, commentId)),
       })
 
-      if (!userReviews) {
-        return new Response('User not found', { status: 404 })
+      if (!userComment) {
+        return new Response('Comment not found', { status: 404 })
       }
 
-      return NextResponse.json(userReviews)
+      return NextResponse.json(userComment)
     }
 
     return new Response('Unauthorized', { status: 403 })
@@ -66,25 +55,36 @@ export async function PATCH(
   context: z.infer<typeof routeContextSchema>,
 ) {
   try {
-    // Validate the route context.
     const { params } = routeContextSchema.parse(context)
     const { commentId, reviewId, userId } = params
 
-    // Ensure user is authenticated and has access to this resource.
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      // Get the request body and validate it.
       const json = await req.json()
-      const body = commentPATCHSchema.parse(json)
+      const body = userCommentPATCHSchema.parse(json)
 
-      // Update the comment review.
-      await db
+      const result = await db
         .update(comment)
         .set(body)
-        .where(and(eq(comment.id, commentId), eq(comment.authorId, token.id)))
+        .where(
+          and(
+            eq(comment.id, commentId),
+            eq(comment.authorId, userId),
+            eq(comment.resourceId, reviewId),
+          ),
+        )
 
-      return new Response('Review updated successfully!', { status: 200 })
+      if (!result.rowsAffected) {
+        return new Response(
+          "This review comment can't be updated, it does not exist or is already deleted or is on another resource!",
+          { status: 404 },
+        )
+      }
+
+      return new Response('Review comment updated successfully!', {
+        status: 200,
+      })
     }
 
     return new Response('Unauthorized', { status: 403 })
@@ -118,18 +118,24 @@ export async function DELETE(
       // Delete the list.
       const resultHeader = await db
         .delete(comment)
-        .where(eq(comment.id, commentId))
+        .where(
+          and(
+            eq(comment.resourceType, 'movie_review'),
+            eq(comment.authorId, userId),
+            eq(comment.resourceId, reviewId),
+          ),
+        )
 
       console.log('Deleted rows:', resultHeader.rowsAffected)
 
       if (!resultHeader.rowsAffected) {
         return new Response(
-          'This review does not exist or is already deleted!',
+          'This review comment does not exist or is already deleted!',
           { status: 404 },
         )
       }
 
-      return new Response(`Deleted review with id: ${commentId}`, {
+      return new Response(`Deleted review comment with id: ${commentId}`, {
         status: 200,
       })
     }
@@ -145,7 +151,7 @@ export async function DELETE(
       return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
-    return new Response(`Error deleting movie list from the database.`, {
+    return new Response(`Error deleting review comment from the database.`, {
       status: 500,
     })
   }

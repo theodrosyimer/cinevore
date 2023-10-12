@@ -5,25 +5,24 @@ import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 const insertRefineOptions = {
   authorId: z.string(),
   content: z.string(),
+  // resourceType: z.string(),
+  // resourceId: z.number(),
 }
 
 const insertOptionalRefineOptions = {
   content: z.string().optional(),
 }
 
-export const commentPOSTSchema = createInsertSchema(
+export const insertCommentSchema = createInsertSchema(
   comment,
   insertRefineOptions,
 )
-export const commentPATCHSchema = createInsertSchema(comment).pick({
+export const userCommentSchema = createInsertSchema(comment).pick({
   content: true,
 })
 
-export const commentGETSchema = createSelectSchema(comment)
-
-export const commentPatchSchema = z.object({
-  title: z.string().min(3).max(128).optional(),
-
-  // TODO: Type this properly from editorjs block types?
-  content: z.any().optional(),
+export const userCommentPATCHSchema = createInsertSchema(comment).pick({
+  content: true,
 })
+
+export const userCommentGETSchema = createSelectSchema(comment)

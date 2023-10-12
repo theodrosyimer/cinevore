@@ -13,10 +13,10 @@ import {
 import {
   list as listSchema,
   listRelations as listRelationsSchema,
-  commentToMovieList as commentToMovieListSchema,
-  commentToMovieListRelations as commentToMovieListRelationsSchema,
-  likeToMovieList as likeToMovieListSchema,
-  likeToMovieListRelations as likeToMovieListRelationsSchema,
+  // commentToMovieList as commentToMovieListSchema,
+  // commentToMovieListRelations as commentToMovieListRelationsSchema,
+  // likeToMovieList as likeToMovieListSchema,
+  // likeToMovieListRelations as likeToMovieListRelationsSchema,
 } from './lists'
 import {
   movieInfosToUser as movieInfosToUserSchema,
@@ -27,10 +27,10 @@ import {
   movieListRelations as movieListRelationsSchema,
 } from './movie-lists'
 import {
-  commentToMovieReview as commentToMovieReviewSchema,
-  commentToMovieReviewRelations as commentToMovieReviewRelationsSchema,
-  likeToMovieReview as likeToMovieReviewSchema,
-  likeToMovieReviewRelations as likeToMovieReviewRelationsSchema,
+  // commentToMovieReview as commentToMovieReviewSchema,
+  // commentToMovieReviewRelations as commentToMovieReviewRelationsSchema,
+  // likeToMovieReview as likeToMovieReviewSchema,
+  // likeToMovieReviewRelations as likeToMovieReviewRelationsSchema,
   movieReview as movieReviewSchema,
   movieReviewRelations as movieReviewRelationsSchema,
 } from './movie-reviews'
@@ -77,18 +77,18 @@ export const rating = ratingSchema
 export const ratingRelations = ratingRelationsSchema
 export const movieList = movieListSchema
 export const movieListRelations = movieListRelationsSchema
-export const commentToMovieList = commentToMovieListSchema
-export const commentToMovieListRelations = commentToMovieListRelationsSchema
-export const likeToMovieList = likeToMovieListSchema
-export const likeToMovieListRelations = likeToMovieListRelationsSchema
+// export const commentToMovieList = commentToMovieListSchema
+// export const commentToMovieListRelations = commentToMovieListRelationsSchema
+// export const likeToMovieList = likeToMovieListSchema
+// export const likeToMovieListRelations = likeToMovieListRelationsSchema
 export const ratingToMovieList = ratingToMovieListSchema
 export const ratingToMovieListRelations = ratingToMovieListRelationsSchema
 export const movieReview = movieReviewSchema
 export const movieReviewRelations = movieReviewRelationsSchema
-export const commentToMovieReview = commentToMovieReviewSchema
-export const commentToMovieReviewRelations = commentToMovieReviewRelationsSchema
-export const likeToMovieReview = likeToMovieReviewSchema
-export const likeToMovieReviewRelations = likeToMovieReviewRelationsSchema
+// export const commentToMovieReview = commentToMovieReviewSchema
+// export const commentToMovieReviewRelations = commentToMovieReviewRelationsSchema
+// export const likeToMovieReview = likeToMovieReviewSchema
+// export const likeToMovieReviewRelations = likeToMovieReviewRelationsSchema
 export const ratingToMovieReview = ratingToMovieReviewSchema
 export const ratingToMovieReviewRelations = ratingToMovieReviewRelationsSchema
 export const follower = followerSchema

@@ -1,8 +1,5 @@
-import * as schema from '@/db/planetscale'
 // import { migrate } from 'drizzle-orm/mysql2/migrator'
 import { migrate } from 'drizzle-orm/planetscale-serverless/migrator'
-import { connect } from '@planetscale/database'
-import { drizzle } from 'drizzle-orm/planetscale-serverless'
 // import { drizzle } from 'drizzle-orm/mysql2'
 
 // import * as dotenv from "dotenv"
@@ -10,12 +7,12 @@ import { drizzle } from 'drizzle-orm/planetscale-serverless'
 import { clearDbTables, db, makeColumnEmojiFriendly } from '@/lib/db'
 import {
   addComments,
-  addCommentsToMovieLists,
-  addCommentsToMovieReviews,
+  // addCommentsToMovieLists,
+  // addCommentsToMovieReviews,
   addFollowers,
   addLikes,
-  addLikesToMovieLists,
-  addLikesToMovieReviews,
+  // addLikesToMovieLists,
+  // addLikesToMovieReviews,
   addLists,
   addMovieInfosToUsers,
   addMovieLists,
@@ -68,11 +65,11 @@ async function main() {
     await addMovieLists(db)
     await addMovieReviews(db)
     await addLikes(db)
-    await addLikesToMovieLists(db)
-    await addLikesToMovieReviews(db)
+    // await addLikesToMovieLists(db)
+    // await addLikesToMovieReviews(db)
     await addComments(db)
-    await addCommentsToMovieLists(db)
-    await addCommentsToMovieReviews(db)
+    // await addCommentsToMovieLists(db)
+    // await addCommentsToMovieReviews(db)
     await addFollowers(db)
     await addWatchlists(db)
     await addWatchlistToMovies(db)

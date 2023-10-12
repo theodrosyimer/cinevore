@@ -2,15 +2,11 @@ import {
   getUserIdFromUrl,
   getUserResourceIdFromUrl,
 } from '@/app/api/users/[userId]/get-user-id-from-url'
-import {
-  comment,
-  commentToMovieList,
-  commentToMovieReview,
-} from '@/db/planetscale'
+import { comment } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
-import { commentPOSTSchema } from '@/lib/validations/comment'
+import { userCommentSchema } from '@/lib/validations/comment'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
@@ -21,6 +17,7 @@ const routeContextSchema = z.object({
     userId: z.string(),
   }),
 })
+
 export async function GET(
   req: NextRequest,
   context: z.infer<typeof routeContextSchema>,
@@ -32,13 +29,12 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const listComments = await db.query.commentToMovieList.findMany({
-        where: (commentToMovieList, { eq }) =>
-          eq(commentToMovieList.listId, listId),
-        columns: {},
-        with: {
-          comment: true,
-        },
+      const listComments = await db.query.comment.findMany({
+        where: (comment, { eq, and }) =>
+          and(
+            eq(comment.resourceId, listId),
+            eq(comment.resourceType, 'movie_list'),
+          ),
       })
 
       if (!listComments) {
@@ -74,19 +70,17 @@ export async function POST(
     }
 
     const json = await req.json()
-    const body = commentPOSTSchema.parse(json)
+    const body = userCommentSchema.parse(json)
 
-    await db.transaction(async (tx) => {
-      const resultHeaders = await tx.insert(comment).values(body)
-      await tx.insert(commentToMovieList).values({
-        commentId: Number(resultHeaders.insertId),
-        listId: listId,
-      })
-      // console.log('HEADERS:', resultHeaders.insertId, result)
+    await db.insert(comment).values({
+      ...body,
+      authorId: userId,
+      resourceId: listId,
+      resourceType: 'movie_list',
     })
 
     return NextResponse.json(
-      { message: 'Movie list comment created successfully' },
+      { message: 'Review comment created successfully' },
       { status: 201 },
     )
   } catch (error) {
@@ -100,7 +94,7 @@ export async function POST(
     }
 
     return new Response(
-      `Error creating a comment to movie list from the database.`,
+      `Error creating a comment to the review from the database.`,
       {
         status: 500,
       },

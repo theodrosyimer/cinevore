@@ -41,95 +41,95 @@ export const list = mysqlTable(
 export const listRelations = relations(list, ({ one, many }) => ({
   user: one(user, { fields: [list.userId], references: [user.id] }),
   movies: many(movieList),
-  comments: many(commentToMovieList, {
-    relationName: 'comments',
+  comments: many(comment, {
+    relationName: 'listComments',
   }),
-  likes: many(likeToMovieList, {
-    relationName: 'likes',
+  likes: many(like, {
+    relationName: 'listLikes',
   }),
 }))
 
-export const commentToMovieList = mysqlTable(
-  'comment_to_movie_list',
-  {
-    listId:
-      int(
-        'list_id',
-      ).notNull() /* .references(() => list.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    commentId:
-      int(
-        'comment_id',
-      ).notNull() /* .references(() => comment.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    // createdAt: timestamp('created_at')
-    //   .default(sql`CURRENT_TIMESTAMP`)
-    //   .notNull(),
-    // updatedAt: timestamp('updated_at').onUpdateNow(),
-  },
-  (table) => {
-    return {
-      compositePK: primaryKey(table.listId, table.commentId),
-      compositeKeyIndex: index('compositeKeyIndex').on(
-        table.commentId,
-        table.listId,
-      ),
-    }
-  },
-)
+// export const commentToMovieList = mysqlTable(
+//   'comment_to_movie_list',
+//   {
+//     listId:
+//       int(
+//         'list_id',
+//       ).notNull() /* .references(() => list.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
+//     commentId:
+//       int(
+//         'comment_id',
+//       ).notNull() /* .references(() => comment.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
+//     // createdAt: timestamp('created_at')
+//     //   .default(sql`CURRENT_TIMESTAMP`)
+//     //   .notNull(),
+//     // updatedAt: timestamp('updated_at').onUpdateNow(),
+//   },
+//   (table) => {
+//     return {
+//       compositePK: primaryKey(table.listId, table.commentId),
+//       compositeKeyIndex: index('compositeKeyIndex').on(
+//         table.commentId,
+//         table.listId,
+//       ),
+//     }
+//   },
+// )
 
-export const commentToMovieListRelations = relations(
-  commentToMovieList,
-  ({ one, many }) => ({
-    comment: one(comment, {
-      fields: [commentToMovieList.commentId],
-      references: [comment.id],
-      relationName: 'comments',
-    }),
-    list: one(list, {
-      fields: [commentToMovieList.listId],
-      references: [list.id],
-      relationName: '',
-    }),
-  }),
-)
+// export const commentToMovieListRelations = relations(
+//   commentToMovieList,
+//   ({ one, many }) => ({
+//     comment: one(comment, {
+//       fields: [commentToMovieList.commentId],
+//       references: [comment.id],
+//       relationName: 'comments',
+//     }),
+//     list: one(list, {
+//       fields: [commentToMovieList.listId],
+//       references: [list.id],
+//       relationName: '',
+//     }),
+//   }),
+// )
 
-export const likeToMovieList = mysqlTable(
-  'like_to_movie_list',
-  {
-    listId:
-      int(
-        'list_id',
-      ).notNull() /* .references(() => list.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    likeId:
-      int(
-        'like_id',
-      ).notNull() /* .references(() => like.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    // createdAt: timestamp('created_at')
-    //   .default(sql`CURRENT_TIMESTAMP`)
-    //   .notNull(),
-    // updatedAt: timestamp('updated_at').onUpdateNow(),
-  },
-  (table) => {
-    return {
-      compositePK: primaryKey(table.listId, table.likeId),
-      compositeKeyIndex: index('compositeKeyIndex').on(
-        table.likeId,
-        table.listId,
-      ),
-    }
-  },
-)
+// export const likeToMovieList = mysqlTable(
+//   'like_to_movie_list',
+//   {
+//     listId:
+//       int(
+//         'list_id',
+//       ).notNull() /* .references(() => list.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
+//     likeId:
+//       int(
+//         'like_id',
+//       ).notNull() /* .references(() => like.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
+//     // createdAt: timestamp('created_at')
+//     //   .default(sql`CURRENT_TIMESTAMP`)
+//     //   .notNull(),
+//     // updatedAt: timestamp('updated_at').onUpdateNow(),
+//   },
+//   (table) => {
+//     return {
+//       compositePK: primaryKey(table.listId, table.likeId),
+//       compositeKeyIndex: index('compositeKeyIndex').on(
+//         table.likeId,
+//         table.listId,
+//       ),
+//     }
+//   },
+// )
 
-export const likeToMovieListRelations = relations(
-  likeToMovieList,
-  ({ one, many }) => ({
-    likes: one(like, {
-      fields: [likeToMovieList.likeId],
-      references: [like.id],
-      relationName: 'likes',
-    }),
-    list: one(list, {
-      fields: [likeToMovieList.listId],
-      references: [list.id],
-    }),
-  }),
-)
+// export const likeToMovieListRelations = relations(
+//   likeToMovieList,
+//   ({ one, many }) => ({
+//     likes: one(like, {
+//       fields: [likeToMovieList.likeId],
+//       references: [like.id],
+//       relationName: 'likes',
+//     }),
+//     list: one(list, {
+//       fields: [likeToMovieList.listId],
+//       references: [list.id],
+//     }),
+//   }),
+// )

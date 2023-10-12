@@ -1,12 +1,8 @@
-import {
-  getUserIdFromUrl,
-  getUserResourceIdFromUrl,
-} from '@/app/api/users/[userId]/get-user-id-from-url'
-import { comment, commentToMovieReview } from '@/db/planetscale'
+import { comment } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
-import { commentPOSTSchema } from '@/lib/validations/comment'
+import { userCommentSchema } from '@/lib/validations/comment'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
@@ -29,13 +25,12 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const reviewComments = await db.query.commentToMovieReview.findMany({
-        where: (commentToMovieReview, { eq }) =>
-          eq(commentToMovieReview.movieReviewId, reviewId),
-        columns: {},
-        with: {
-          comment: true,
-        },
+      const reviewComments = await db.query.comment.findMany({
+        where: (comment, { eq, and }) =>
+          and(
+            eq(comment.resourceId, reviewId),
+            eq(comment.resourceType, 'movie_review'),
+          ),
       })
 
       if (!reviewComments) {
@@ -71,16 +66,16 @@ export async function POST(
     }
 
     const json = await req.json()
-    const body = commentPOSTSchema.parse(json)
+    const body = userCommentSchema.parse(json)
 
-    await db.transaction(async (tx) => {
-      const resultHeaders = await tx.insert(comment).values(body)
-      await tx.insert(commentToMovieReview).values({
-        commentId: Number(resultHeaders.insertId),
-        movieReviewId: reviewId,
+    await db
+      .insert(comment)
+      .values({
+        ...body,
+        authorId: userId,
+        resourceId: reviewId,
+        resourceType: 'movie_review',
       })
-      // console.log('HEADERS:', resultHeaders.insertId, result)
-    })
 
     return NextResponse.json(
       { message: 'Review comment created successfully' },

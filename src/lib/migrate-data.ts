@@ -139,47 +139,47 @@ export async function addComments(tx: PlanetScaleDatabase<typeof schema>) {
   console.log(`\t🎬  Added ${defaultComments.length} comments\n`)
 }
 
-export async function addCommentsToMovieLists(
-  tx: PlanetScaleDatabase<typeof schema>,
-) {
-  await Promise.all(
-    defaultCommentsToMovieLists.map(async (defaultCommentsToMovieList) => {
-      if (defaultCommentsToMovieList)
-        await tx
-          .insert(schema.commentToMovieList)
-          .values(defaultCommentsToMovieList)
-    }),
-  )
-    .catch(() => {
-      throw new Error('Failed to add comments to movies lists to the database')
-    })
-    .finally(() => {})
-  console.log(
-    `\t🎬  Added ${defaultCommentsToMovieLists.length} comments to movie list\n`,
-  )
-}
+// export async function addCommentsToMovieLists(
+//   tx: PlanetScaleDatabase<typeof schema>,
+// ) {
+//   await Promise.all(
+//     defaultCommentsToMovieLists.map(async (defaultCommentsToMovieList) => {
+//       if (defaultCommentsToMovieList)
+//         await tx
+//           .insert(schema.commentToMovieList)
+//           .values(defaultCommentsToMovieList)
+//     }),
+//   )
+//     .catch(() => {
+//       throw new Error('Failed to add comments to movies lists to the database')
+//     })
+//     .finally(() => {})
+//   console.log(
+//     `\t🎬  Added ${defaultCommentsToMovieLists.length} comments to movie list\n`,
+//   )
+// }
 
-export async function addCommentsToMovieReviews(
-  tx: PlanetScaleDatabase<typeof schema>,
-) {
-  await Promise.all(
-    defaultCommentsToMovieReviews.map(async (defaultCommentsToMovieReview) => {
-      if (defaultCommentsToMovieReview)
-        await tx
-          .insert(schema.commentToMovieReview)
-          .values(defaultCommentsToMovieReview)
-    }),
-  )
-    .catch(() => {
-      throw new Error(
-        'Failed to add comments to movies reviews to the database',
-      )
-    })
-    .finally(() => {})
-  console.log(
-    `\t🎬  Added ${defaultCommentsToMovieReviews.length} comments to movie reviews\n`,
-  )
-}
+// export async function addCommentsToMovieReviews(
+//   tx: PlanetScaleDatabase<typeof schema>,
+// ) {
+//   await Promise.all(
+//     defaultCommentsToMovieReviews.map(async (defaultCommentsToMovieReview) => {
+//       if (defaultCommentsToMovieReview)
+//         await tx
+//           .insert(schema.commentToMovieReview)
+//           .values(defaultCommentsToMovieReview)
+//     }),
+//   )
+//     .catch(() => {
+//       throw new Error(
+//         'Failed to add comments to movies reviews to the database',
+//       )
+//     })
+//     .finally(() => {})
+//   console.log(
+//     `\t🎬  Added ${defaultCommentsToMovieReviews.length} comments to movie reviews\n`,
+//   )
+// }
 
 export async function addLikes(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
@@ -194,43 +194,43 @@ export async function addLikes(tx: PlanetScaleDatabase<typeof schema>) {
   console.log(`\t🎬  Added ${defaultLikes.length} likes to movies\n`)
 }
 
-export async function addLikesToMovieLists(
-  tx: PlanetScaleDatabase<typeof schema>,
-) {
-  await Promise.all(
-    defaultLikesToMovieLists.map(async (defaultLikesToMovieList) => {
-      if (defaultLikesToMovieList)
-        await tx.insert(schema.likeToMovieList).values(defaultLikesToMovieList)
-    }),
-  )
-    .catch(() => {
-      throw new Error('Failed to add likes to movies lists to the database')
-    })
-    .finally(() => {})
-  console.log(
-    `\t🎬  Added ${defaultLikesToMovieLists.length} likes to movies lists\n`,
-  )
-}
+// export async function addLikesToMovieLists(
+//   tx: PlanetScaleDatabase<typeof schema>,
+// ) {
+//   await Promise.all(
+//     defaultLikesToMovieLists.map(async (defaultLikesToMovieList) => {
+//       if (defaultLikesToMovieList)
+//         await tx.insert(schema.likeToMovieList).values(defaultLikesToMovieList)
+//     }),
+//   )
+//     .catch(() => {
+//       throw new Error('Failed to add likes to movies lists to the database')
+//     })
+//     .finally(() => {})
+//   console.log(
+//     `\t🎬  Added ${defaultLikesToMovieLists.length} likes to movies lists\n`,
+//   )
+// }
 
-export async function addLikesToMovieReviews(
-  tx: PlanetScaleDatabase<typeof schema>,
-) {
-  await Promise.all(
-    defaultLikesToMovieReviews.map(async (defaultLikesToMovieReview) => {
-      if (defaultLikesToMovieReview)
-        await tx
-          .insert(schema.likeToMovieReview)
-          .values(defaultLikesToMovieReview)
-    }),
-  )
-    .catch(() => {
-      throw new Error('Failed to add likes to movies reviews to the database')
-    })
-    .finally(() => {})
-  console.log(
-    `\t🎬  Added ${defaultLikesToMovieReviews.length} likes to movies reviews\n`,
-  )
-}
+// export async function addLikesToMovieReviews(
+//   tx: PlanetScaleDatabase<typeof schema>,
+// ) {
+//   await Promise.all(
+//     defaultLikesToMovieReviews.map(async (defaultLikesToMovieReview) => {
+//       if (defaultLikesToMovieReview)
+//         await tx
+//           .insert(schema.likeToMovieReview)
+//           .values(defaultLikesToMovieReview)
+//     }),
+//   )
+//     .catch(() => {
+//       throw new Error('Failed to add likes to movies reviews to the database')
+//     })
+//     .finally(() => {})
+//   console.log(
+//     `\t🎬  Added ${defaultLikesToMovieReviews.length} likes to movies reviews\n`,
+//   )
+// }
 
 export async function addRatings(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
@@ -559,62 +559,86 @@ export const defaultComments = [
   {
     id: 1,
     authorId: defaultUsers[0]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[1]?.id ?? 1,
     content: 'Very nice review 👌',
   },
   {
     id: 2,
     authorId: defaultUsers[0]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[1]?.id ?? 1,
     content: 'Very nice List 👌',
   },
   {
     id: 3,
     authorId: defaultUsers[1]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[2]?.id ?? 1,
     content: 'Very nice review 👌',
   },
   {
     id: 4,
     authorId: defaultUsers[1]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[2]?.id ?? 1,
     content: 'Very nice List 👌',
   },
   {
     id: 5,
     authorId: defaultUsers[2]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[3]?.id ?? 1,
     content: 'Very nice review 👌',
   },
   {
     id: 6,
     authorId: defaultUsers[2]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[3]?.id ?? 1,
     content: 'Very nice list 👌',
   },
   {
     id: 7,
     authorId: defaultUsers[3]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[4]?.id ?? 1,
     content: 'Interesting review 👌',
   },
   {
     id: 8,
     authorId: defaultUsers[3]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[4]?.id ?? 1,
     content: 'Interesting list 👌',
   },
   {
     id: 9,
     authorId: defaultUsers[4]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[5]?.id ?? 1,
     content:
       'Got almost the same list as you. Go checkout mine: https://google.com 👌',
   },
   {
     id: 10,
     authorId: defaultUsers[4]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[5]?.id ?? 1,
     content: 'What an in-depth review! 👌',
   },
   {
     id: 11,
     authorId: defaultUsers[5]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[6]?.id ?? 1,
     content: 'Love this review 👌',
   },
   {
     id: 12,
     authorId: defaultUsers[5]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[6]?.id ?? 1,
     content: 'Love this list 👌',
   },
 ] satisfies NewComment[]
@@ -677,50 +701,74 @@ export const defaultLikes = [
   {
     id: 1,
     authorId: defaultUsers[0]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[1]?.id ?? 1,
   },
   {
     id: 2,
     authorId: defaultUsers[0]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[1]?.id ?? 1,
   },
   {
     id: 3,
     authorId: defaultUsers[1]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[2]?.id ?? 1,
   },
   {
     id: 4,
     authorId: defaultUsers[1]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[2]?.id ?? 1,
   },
   {
     id: 5,
     authorId: defaultUsers[2]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[3]?.id ?? 1,
   },
   {
     id: 6,
     authorId: defaultUsers[2]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[3]?.id ?? 1,
   },
   {
     id: 7,
     authorId: defaultUsers[3]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[4]?.id ?? 1,
   },
   {
     id: 8,
     authorId: defaultUsers[3]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[4]?.id ?? 1,
   },
   {
     id: 9,
     authorId: defaultUsers[4]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[5]?.id ?? 1,
   },
   {
     id: 10,
     authorId: defaultUsers[4]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[5]?.id ?? 1,
   },
   {
     id: 11,
     authorId: defaultUsers[5]?.id ?? '',
+    resourceType: 'movie_review',
+    resourceId: defaultMovieReviews[6]?.id ?? 1,
   },
   {
     id: 12,
     authorId: defaultUsers[5]?.id ?? '',
+    resourceType: 'movie_list',
+    resourceId: defaultLists[6]?.id ?? 1,
   },
 ] satisfies NewLike[]
 

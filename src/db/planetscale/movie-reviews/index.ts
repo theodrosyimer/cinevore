@@ -46,85 +46,89 @@ export const movieReviewRelations = relations(movieReview, ({ one, many }) => ({
     fields: [movieReview.movieId],
     references: [movie.tmdbId],
   }),
-  comments: many(commentToMovieReview),
-  likes: many(likeToMovieReview),
+  comments: many(comment, {
+    relationName: 'reviewComments',
+  }),
+  likes: many(like, {
+    relationName: 'reviewLikes',
+  }),
 }))
 
-export const commentToMovieReview = mysqlTable(
-  'comment_to_movie_review',
-  {
-    movieReviewId:
-      int(
-        'movie_review_id',
-      ).notNull() /* .references(() => movieReview.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    commentId:
-      int(
-        'comment_id',
-      ).notNull() /* .references(() => comment.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    // createdAt: timestamp('created_at')
-    //   .default(sql`CURRENT_TIMESTAMP`)
-    //   .notNull(),
-    // updatedAt: timestamp('updated_at').onUpdateNow(),
-  },
-  (table) => {
-    return {
-      compositePK: primaryKey(table.movieReviewId, table.commentId),
-      compositeKeyIndex: index('compositeKeyIndex').on(
-        table.commentId,
-        table.movieReviewId,
-      ),
-    }
-  },
-)
+// export const commentToMovieReview = mysqlTable(
+//   'comment_to_movie_review',
+//   {
+//     movieReviewId:
+//       int(
+//         'movie_review_id',
+//       ).notNull() /* .references(() => movieReview.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
+//     commentId:
+//       int(
+//         'comment_id',
+//       ).notNull() /* .references(() => comment.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
+//     // createdAt: timestamp('created_at')
+//     //   .default(sql`CURRENT_TIMESTAMP`)
+//     //   .notNull(),
+//     // updatedAt: timestamp('updated_at').onUpdateNow(),
+//   },
+//   (table) => {
+//     return {
+//       compositePK: primaryKey(table.movieReviewId, table.commentId),
+//       compositeKeyIndex: index('compositeKeyIndex').on(
+//         table.commentId,
+//         table.movieReviewId,
+//       ),
+//     }
+//   },
+// )
 
-export const commentToMovieReviewRelations = relations(
-  commentToMovieReview,
-  ({ one, many }) => ({
-    review: one(movieReview, {
-      fields: [commentToMovieReview.movieReviewId],
-      references: [movieReview.id],
-    }),
-    comment: one(comment, {
-      fields: [commentToMovieReview.commentId],
-      references: [comment.id],
-    }),
-  }),
-)
+// export const commentToMovieReviewRelations = relations(
+//   commentToMovieReview,
+//   ({ one, many }) => ({
+//     review: one(movieReview, {
+//       fields: [commentToMovieReview.movieReviewId],
+//       references: [movieReview.id],
+//     }),
+//     comment: one(comment, {
+//       fields: [commentToMovieReview.commentId],
+//       references: [comment.id],
+//     }),
+//   }),
+// )
 
-export const likeToMovieReview = mysqlTable(
-  'like_to_movie_review',
-  {
-    movieReviewId:
-      int(
-        'movie_review_id',
-      ).notNull() /* .references(() => movieReview.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    likeId:
-      int(
-        'like_id',
-      ).notNull() /* .references(() => like.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
-    // createdAt: timestamp('created_at')
-    //   .default(sql`CURRENT_TIMESTAMP`)
-    //   .notNull(),
-    // updatedAt: timestamp('updated_at').onUpdateNow(),
-  },
-  (table) => {
-    return {
-      compositePK: primaryKey(table.movieReviewId, table.likeId),
-      compositeKeyIndex: index('id').on(table.likeId, table.movieReviewId),
-    }
-  },
-)
+// export const likeToMovieReview = mysqlTable(
+//   'like_to_movie_review',
+//   {
+//     movieReviewId:
+//       int(
+//         'movie_review_id',
+//       ).notNull() /* .references(() => movieReview.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
+//     likeId:
+//       int(
+//         'like_id',
+//       ).notNull() /* .references(() => like.id, { onDelete: "cascade", onUpdate: "cascade" }) */,
+//     // createdAt: timestamp('created_at')
+//     //   .default(sql`CURRENT_TIMESTAMP`)
+//     //   .notNull(),
+//     // updatedAt: timestamp('updated_at').onUpdateNow(),
+//   },
+//   (table) => {
+//     return {
+//       compositePK: primaryKey(table.movieReviewId, table.likeId),
+//       compositeKeyIndex: index('id').on(table.likeId, table.movieReviewId),
+//     }
+//   },
+// )
 
-export const likeToMovieReviewRelations = relations(
-  likeToMovieReview,
-  ({ one, many }) => ({
-    review: one(movieReview, {
-      fields: [likeToMovieReview.movieReviewId],
-      references: [movieReview.id],
-    }),
-    like: one(like, {
-      fields: [likeToMovieReview.likeId],
-      references: [like.id],
-    }),
-  }),
-)
+// export const likeToMovieReviewRelations = relations(
+//   likeToMovieReview,
+//   ({ one, many }) => ({
+//     review: one(movieReview, {
+//       fields: [likeToMovieReview.movieReviewId],
+//       references: [movieReview.id],
+//     }),
+//     like: one(like, {
+//       fields: [likeToMovieReview.likeId],
+//       references: [like.id],
+//     }),
+//   }),
+// )

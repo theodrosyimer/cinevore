@@ -6,7 +6,7 @@ import { comment, movieReview } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
-import { commentPATCHSchema } from '@/lib/validations/comment'
+import { userCommentPATCHSchema } from '@/lib/validations/comment'
 import { and, eq } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
@@ -31,23 +31,16 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const userList = await db.query.commentToMovieList.findMany({
-        where: (commentToMovieList, { eq, and }) =>
-          and(
-            eq(commentToMovieList.listId, listId),
-            eq(commentToMovieList.commentId, commentId),
-          ),
-        columns: {},
-        with: {
-          comment: true,
-        },
+      const userComment = await db.query.comment.findMany({
+        where: (comment, { eq, and }) =>
+          and(eq(comment.resourceId, listId), eq(comment.id, commentId)),
       })
 
-      if (!userList) {
-        return new Response('User list not found', { status: 404 })
+      if (!userComment) {
+        return new Response('List comment not found', { status: 404 })
       }
 
-      return NextResponse.json(userList)
+      return NextResponse.json(userComment)
     }
 
     return new Response('Unauthorized', { status: 403 })
@@ -76,20 +69,30 @@ export async function PATCH(
     if (token && (userId === token.id || isAdmin(token))) {
       // Get the request body and validate it.
       const json = await req.json()
-      const body = commentPATCHSchema.parse(json)
+      const body = userCommentPATCHSchema.parse(json)
 
-      const userComment = await db.query.comment.findFirst({
-        where: (comment, { eq, and }) =>
-          and(eq(comment.id, commentId), eq(comment.authorId, userId)),
-      })
-      console.log('userComment', userComment)
       // Update the comment review.
-      // await db
-      //   .update(comment)
-      //   .set(body)
-      //   .where(and(eq(comment.id, commentId), eq(comment.authorId, token.id)))
+      const result = await db
+        .update(comment)
+        .set(body)
+        .where(
+          and(
+            eq(comment.id, commentId),
+            eq(comment.authorId, userId),
+            eq(comment.resourceId, listId),
+          ),
+        )
 
-      return new Response('Review updated successfully!', { status: 200 })
+      if (!result.rowsAffected) {
+        return new Response(
+          "This list comment can't be updated, it does not exist or is already deleted or is on another resource!",
+          { status: 404 },
+        )
+      }
+
+      return new Response('Review comment updated successfully!', {
+        status: 200,
+      })
     }
 
     return new Response('Unauthorized', { status: 403 })
@@ -112,15 +115,12 @@ export async function DELETE(
   context: z.infer<typeof routeContextSchema>,
 ) {
   try {
-    // Validate the route params.
     const { params } = routeContextSchema.parse(context)
     const { commentId, listId, userId } = params
 
-    // Ensure user is authentication and has access to this resource.
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      // Delete the list.
       const resultHeader = await db
         .delete(comment)
         .where(eq(comment.id, commentId))
@@ -129,12 +129,12 @@ export async function DELETE(
 
       if (!resultHeader.rowsAffected) {
         return new Response(
-          'This review does not exist or is already deleted!',
+          'This review comment does not exist or is already deleted!',
           { status: 404 },
         )
       }
 
-      return new Response(`Deleted review with id: ${commentId}`, {
+      return new Response(`Deleted review comment with id: ${commentId}`, {
         status: 200,
       })
     }
@@ -150,7 +150,7 @@ export async function DELETE(
       return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
-    return new Response(`Error deleting movie list from the database.`, {
+    return new Response(`Error deleting review comment from the database.`, {
       status: 500,
     })
   }

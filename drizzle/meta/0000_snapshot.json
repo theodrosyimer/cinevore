@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "8c4f00e5-e2a3-4663-b1cf-4ebc60d985ed",
+  "id": "2e91226e-9bf0-48f4-8eba-2732e5d163b8",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -115,6 +115,20 @@
           "notNull": true,
           "autoincrement": false
         },
+        "resource_id": {
+          "name": "resource_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "resource_type": {
+          "name": "resource_type",
+          "type": "enum('movie_review','movie_list')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "content": {
           "name": "content",
           "type": "text",
@@ -153,6 +167,20 @@
             "author_id"
           ],
           "isUnique": false
+        },
+        "FK_resource_id": {
+          "name": "FK_resource_id",
+          "columns": [
+            "resource_id"
+          ],
+          "isUnique": false
+        },
+        "FK_resource_type": {
+          "name": "FK_resource_type",
+          "columns": [
+            "resource_type"
+          ],
+          "isUnique": false
         }
       },
       "foreignKeys": {},
@@ -161,86 +189,6 @@
           "name": "comment_id",
           "columns": [
             "id"
-          ]
-        }
-      },
-      "uniqueConstraints": {}
-    },
-    "comment_to_movie_list": {
-      "name": "comment_to_movie_list",
-      "columns": {
-        "list_id": {
-          "name": "list_id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "comment_id": {
-          "name": "comment_id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "compositeKeyIndex": {
-          "name": "compositeKeyIndex",
-          "columns": [
-            "comment_id",
-            "list_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "comment_to_movie_list_comment_id_list_id": {
-          "name": "comment_to_movie_list_comment_id_list_id",
-          "columns": [
-            "comment_id",
-            "list_id"
-          ]
-        }
-      },
-      "uniqueConstraints": {}
-    },
-    "comment_to_movie_review": {
-      "name": "comment_to_movie_review",
-      "columns": {
-        "movie_review_id": {
-          "name": "movie_review_id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "comment_id": {
-          "name": "comment_id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "compositeKeyIndex": {
-          "name": "compositeKeyIndex",
-          "columns": [
-            "comment_id",
-            "movie_review_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "comment_to_movie_review_comment_id_movie_review_id": {
-          "name": "comment_to_movie_review_comment_id_movie_review_id",
-          "columns": [
-            "comment_id",
-            "movie_review_id"
           ]
         }
       },
@@ -325,6 +273,20 @@
           "notNull": true,
           "autoincrement": false
         },
+        "resource_type": {
+          "name": "resource_type",
+          "type": "enum('movie_review','movie_list')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "resource_id": {
+          "name": "resource_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -343,19 +305,26 @@
         }
       },
       "indexes": {
-        "id": {
-          "name": "id",
-          "columns": [
-            "id"
-          ],
-          "isUnique": true
-        },
         "FK_author_id": {
           "name": "FK_author_id",
           "columns": [
             "author_id"
           ],
           "isUnique": false
+        },
+        "FK_resource_id": {
+          "name": "FK_resource_id",
+          "columns": [
+            "resource_id"
+          ],
+          "isUnique": false
+        },
+        "FK_resource_type": {
+          "name": "FK_resource_type",
+          "columns": [
+            "resource_type"
+          ],
+          "isUnique": false
         }
       },
       "foreignKeys": {},
@@ -365,85 +334,13 @@
           "columns": [
             "id"
           ]
-        }
-      },
-      "uniqueConstraints": {}
-    },
-    "like_to_movie_list": {
-      "name": "like_to_movie_list",
-      "columns": {
-        "list_id": {
-          "name": "list_id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
         },
-        "like_id": {
-          "name": "like_id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "compositeKeyIndex": {
-          "name": "compositeKeyIndex",
+        "like_author_id_id_resource_id": {
+          "name": "like_author_id_id_resource_id",
           "columns": [
-            "like_id",
-            "list_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "like_to_movie_list_like_id_list_id": {
-          "name": "like_to_movie_list_like_id_list_id",
-          "columns": [
-            "like_id",
-            "list_id"
-          ]
-        }
-      },
-      "uniqueConstraints": {}
-    },
-    "like_to_movie_review": {
-      "name": "like_to_movie_review",
-      "columns": {
-        "movie_review_id": {
-          "name": "movie_review_id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "like_id": {
-          "name": "like_id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "id": {
-          "name": "id",
-          "columns": [
-            "like_id",
-            "movie_review_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {
-        "like_to_movie_review_like_id_movie_review_id": {
-          "name": "like_to_movie_review_like_id_movie_review_id",
-          "columns": [
-            "like_id",
-            "movie_review_id"
+            "author_id",
+            "id",
+            "resource_id"
           ]
         }
       },
