@@ -15,7 +15,7 @@ export const commentPOSTSchema = createInsertSchema(
   comment,
   insertRefineOptions,
 )
-export const commentPATCHSchema = createInsertSchema(comment).partial().pick({
+export const commentPATCHSchema = createInsertSchema(comment).pick({
   content: true,
 })
 

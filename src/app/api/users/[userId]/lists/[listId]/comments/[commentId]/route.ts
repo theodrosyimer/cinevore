@@ -78,11 +78,16 @@ export async function PATCH(
       const json = await req.json()
       const body = commentPATCHSchema.parse(json)
 
+      const userComment = await db.query.comment.findFirst({
+        where: (comment, { eq, and }) =>
+          and(eq(comment.id, commentId), eq(comment.authorId, userId)),
+      })
+      console.log('userComment', userComment)
       // Update the comment review.
-      await db
-        .update(comment)
-        .set(body)
-        .where(and(eq(comment.id, commentId), eq(comment.authorId, token.id)))
+      // await db
+      //   .update(comment)
+      //   .set(body)
+      //   .where(and(eq(comment.id, commentId), eq(comment.authorId, token.id)))
 
       return new Response('Review updated successfully!', { status: 200 })
     }
