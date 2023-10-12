@@ -35,7 +35,7 @@ export async function SiteHeader() {
               <SearchCombo />
               {/* <ModeToggle /> */}
               {/* <UserCreateListButton size={'sm'} /> */}
-              {/* {!user ? (
+              {!user ? (
                 <nav>
                   <Link
                     href="/login"
@@ -46,7 +46,7 @@ export async function SiteHeader() {
                     Login
                   </Link>
                 </nav>
-              ) : null} */}
+              ) : null}
               <UserAccountNav
                 user={{
                   name: user?.name,
