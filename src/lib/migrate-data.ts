@@ -139,48 +139,6 @@ export async function addComments(tx: PlanetScaleDatabase<typeof schema>) {
   console.log(`\t🎬  Added ${defaultComments.length} comments\n`)
 }
 
-// export async function addCommentsToMovieLists(
-//   tx: PlanetScaleDatabase<typeof schema>,
-// ) {
-//   await Promise.all(
-//     defaultCommentsToMovieLists.map(async (defaultCommentsToMovieList) => {
-//       if (defaultCommentsToMovieList)
-//         await tx
-//           .insert(schema.commentToMovieList)
-//           .values(defaultCommentsToMovieList)
-//     }),
-//   )
-//     .catch(() => {
-//       throw new Error('Failed to add comments to movies lists to the database')
-//     })
-//     .finally(() => {})
-//   console.log(
-//     `\t🎬  Added ${defaultCommentsToMovieLists.length} comments to movie list\n`,
-//   )
-// }
-
-// export async function addCommentsToMovieReviews(
-//   tx: PlanetScaleDatabase<typeof schema>,
-// ) {
-//   await Promise.all(
-//     defaultCommentsToMovieReviews.map(async (defaultCommentsToMovieReview) => {
-//       if (defaultCommentsToMovieReview)
-//         await tx
-//           .insert(schema.commentToMovieReview)
-//           .values(defaultCommentsToMovieReview)
-//     }),
-//   )
-//     .catch(() => {
-//       throw new Error(
-//         'Failed to add comments to movies reviews to the database',
-//       )
-//     })
-//     .finally(() => {})
-//   console.log(
-//     `\t🎬  Added ${defaultCommentsToMovieReviews.length} comments to movie reviews\n`,
-//   )
-// }
-
 export async function addLikes(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
     defaultLikes.map(async (defaultLike) => {

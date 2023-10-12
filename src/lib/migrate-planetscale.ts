@@ -7,12 +7,8 @@ import { migrate } from 'drizzle-orm/planetscale-serverless/migrator'
 import { clearDbTables, db, makeColumnEmojiFriendly } from '@/lib/db'
 import {
   addComments,
-  // addCommentsToMovieLists,
-  // addCommentsToMovieReviews,
   addFollowers,
   addLikes,
-  // addLikesToMovieLists,
-  // addLikesToMovieReviews,
   addLists,
   addMovieInfosToUsers,
   addMovieLists,
@@ -65,11 +61,7 @@ async function main() {
     await addMovieLists(db)
     await addMovieReviews(db)
     await addLikes(db)
-    // await addLikesToMovieLists(db)
-    // await addLikesToMovieReviews(db)
     await addComments(db)
-    // await addCommentsToMovieLists(db)
-    // await addCommentsToMovieReviews(db)
     await addFollowers(db)
     await addWatchlists(db)
     await addWatchlistToMovies(db)
