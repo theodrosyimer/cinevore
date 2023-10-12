@@ -182,7 +182,7 @@ export async function DELETE(
       return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
-    return new Response(`Error deleting movie list from the database.`, {
+    return new Response(`Error deleting list like from the database.`, {
       status: 500,
     })
   }

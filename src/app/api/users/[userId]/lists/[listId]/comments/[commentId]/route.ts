@@ -90,7 +90,7 @@ export async function PATCH(
         )
       }
 
-      return new Response('Review comment updated successfully!', {
+      return new Response('List comment updated successfully!', {
         status: 200,
       })
     }
@@ -115,26 +115,35 @@ export async function DELETE(
   context: z.infer<typeof routeContextSchema>,
 ) {
   try {
+    // Validate the route params.
     const { params } = routeContextSchema.parse(context)
     const { commentId, listId, userId } = params
 
+    // Ensure user is authentication and has access to this resource.
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
+      // Delete the list.
       const resultHeader = await db
         .delete(comment)
-        .where(eq(comment.id, commentId))
+        .where(
+          and(
+            eq(comment.resourceType, 'movie_list'),
+            eq(comment.authorId, userId),
+            eq(comment.resourceId, listId),
+          ),
+        )
 
       console.log('Deleted rows:', resultHeader.rowsAffected)
 
       if (!resultHeader.rowsAffected) {
         return new Response(
-          'This review comment does not exist or is already deleted!',
+          "This list comment can't be updated, it does not exist or is already deleted or is on another resource!",
           { status: 404 },
         )
       }
 
-      return new Response(`Deleted review comment with id: ${commentId}`, {
+      return new Response(`Deleted list comment with id: ${commentId}`, {
         status: 200,
       })
     }
@@ -150,7 +159,7 @@ export async function DELETE(
       return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
-    return new Response(`Error deleting review comment from the database.`, {
+    return new Response(`Error deleting list comment from the database.`, {
       status: 500,
     })
   }

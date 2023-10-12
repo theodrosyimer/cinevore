@@ -156,7 +156,7 @@ export async function DELETE(
       })
 
       if (result) {
-        return new Response(`Deleted like to review with id: ${listId}`, {
+        return new Response(`Deleted like to list with id: ${listId}`, {
           status: 200,
         })
       }
@@ -179,7 +179,7 @@ export async function DELETE(
       return new Response(formatSimpleErrorMessage(error), { status: 500 })
     }
 
-    return new Response(`Error deleting movie list from the database.`, {
+    return new Response(`Error deleting list like from the database.`, {
       status: 500,
     })
   }
