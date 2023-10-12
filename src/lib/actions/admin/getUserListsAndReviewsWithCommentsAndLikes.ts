@@ -25,15 +25,11 @@ const preparedUser = db.query.user
             },
           },
           comments: {
-            with: {
-              comment: {
-                with: {
-                  commentsToMovieList: true,
-                },
-              },
-            },
+            where: (comment, { eq }) => eq(comment.resourceType, 'movie_list'),
           },
-          likes: true,
+          likes: {
+            where: (like, { eq }) => eq(like.resourceType, 'movie_list'),
+          },
         },
       },
       reviews: {
@@ -45,11 +41,12 @@ const preparedUser = db.query.user
             },
           },
           comments: {
-            with: {
-              comment: true,
-            },
+            where: (comment, { eq }) =>
+              eq(comment.resourceType, 'movie_review'),
           },
-          likes: true,
+          likes: {
+            where: (like, { eq }) => eq(like.resourceType, 'movie_review'),
+          },
         },
       },
       movieInfosToUser: true,
@@ -95,15 +92,7 @@ const preparedUsers = db.query.user
               listId: false,
             },
           },
-          comments: {
-            with: {
-              comment: {
-                with: {
-                  commentsToMovieList: true,
-                },
-              },
-            },
-          },
+          comments: true,
           likes: true,
         },
       },
@@ -115,11 +104,7 @@ const preparedUsers = db.query.user
               imdbId: false,
             },
           },
-          comments: {
-            with: {
-              comment: true,
-            },
-          },
+          comments: true,
           likes: true,
         },
       },

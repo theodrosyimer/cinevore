@@ -1,8 +1,4 @@
-import {
-  getUserIdFromUrl,
-  getUserResourceIdFromUrl,
-} from '@/app/api/users/[userId]/get-user-id-from-url'
-import { comment, movieReview } from '@/db/planetscale'
+import { comment } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'

@@ -1,4 +1,3 @@
-import { getUserIdFromUrl } from '@/app/api/users/[userId]/get-user-id-from-url'
 import { movieReview } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
