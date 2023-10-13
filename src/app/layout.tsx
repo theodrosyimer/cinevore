@@ -89,7 +89,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <body
         className={cn(
-          'grid min-h-screen grid-rows-layout font-sans antialiased',
+          'grid min-h-screen w-screen grid-rows-layout font-sans antialiased',
           // inter.className,
           fontSans.variable,
           fontHeading.variable,

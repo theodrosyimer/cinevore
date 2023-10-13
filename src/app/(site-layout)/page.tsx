@@ -10,10 +10,7 @@ import { featuresConfig } from '@/config/features'
 import { globalConfig } from '@/lib/tmdb/src/tmdb'
 import { cn } from '@/lib/utils/utils'
 import { Reviews } from '@/components/reviews'
-import { Review } from '@/components/review'
-import { db } from '@/lib/db'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
-import { compare } from 'bcrypt'
 
 export const metadata = {
   title: 'Home Page',
@@ -27,11 +24,11 @@ export default async function IndexPage() {
           <MovieBackdrop
             url={`${globalConfig.IMAGE_BASE_URI}/original/yUa0iCocBPsGJ79BwrshHqz45Qc.jpg`}
             altText=""
-            className="w-full rounded-b-md blur-[2px] brightness-50 "
+            className="rounded-b-md blur-[2px] brightness-50 "
           />
-          <section className="grid w-full">
-            <div className="grid w-[36rem] gap-2">
-              <h1 className="text-left text-4xl font-bold">
+          <section className="grid w-full sm:grid-cols-3 md:grid-cols-8">
+            <div className="grid gap-2 sm:col-span-3 md:col-span-5">
+              <h1 className="text-left font-bold sm:text-2xl md:text-3xl lg:text-4xl">
                 Track films you&apos;ve watched.
                 <br />
                 Save those you want to see.
@@ -40,7 +37,7 @@ export default async function IndexPage() {
                 <br />
                 Tell your friends what you think.
               </h1>
-              <p className="text-left text-muted-foreground">
+              <p className="text-left text-muted-foreground md:text-lg lg:text-xl">
                 Cinevore, the social network for film lovers. Join us today!
               </p>
               <div className="flex justify-center gap-4">

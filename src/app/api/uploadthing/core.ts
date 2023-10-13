@@ -1,3 +1,7 @@
+import { user } from '@/db/planetscale'
+import { db } from '@/lib/db'
+import { getCurrentUser } from '@/lib/session'
+import { eq } from 'drizzle-orm'
 import { type NextRequest } from 'next/server'
 import { createUploadthing, type FileRouter } from 'uploadthing/next'
 
@@ -12,7 +16,7 @@ export const ourFileRouter = {
     // Set permissions and file types for this FileRoute
     .middleware(async ({ req }) => {
       // This code runs on your server before upload
-      const user = await auth(req)
+      const { user } = await getCurrentUser()
 
       // If you throw, the user will not be able to upload
       if (!user) throw new Error('Unauthorized')
@@ -22,18 +26,22 @@ export const ourFileRouter = {
     })
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      console.log('Upload complete for userId:', metadata.userId)
+      await db
+        .update(user)
+        .set({ image: file.url })
+        .where(eq(user.id, metadata.userId))
 
+      console.log('Upload complete for userId:', metadata.userId)
       console.log('file url', file.url)
     }),
 
   // Takes a 4 2mb images and/or 1 256mb video
-  mediaPost: f({
-    image: { maxFileSize: '2MB', maxFileCount: 4 },
-    video: { maxFileSize: '256MB', maxFileCount: 1 },
-  })
-    .middleware(({ req }) => auth(req))
-    .onUploadComplete((data) => console.log('file', data)),
+  // mediaPost: f({
+  //   image: { maxFileSize: '2MB', maxFileCount: 4 },
+  //   video: { maxFileSize: '256MB', maxFileCount: 1 },
+  // })
+  //   .middleware(({ req }) => auth(req))
+  //   .onUploadComplete((data) => console.log('file', data)),
 } satisfies FileRouter
 
 export type OurFileRouter = typeof ourFileRouter

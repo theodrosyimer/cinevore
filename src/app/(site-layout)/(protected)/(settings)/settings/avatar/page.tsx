@@ -3,12 +3,13 @@
 // You need to import our styles for the button to look right. Best to import in the root /layout.tsx but this is fine
 import '@uploadthing/react/styles.css'
 
-import { UploadDropzone } from '@uploadthing/react'
+import { UploadDropzone } from '@/lib/utils/uploadthing'
 
 import { OurFileRouter } from '@/app/api/uploadthing/core'
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { cn } from '@/lib/utils/utils'
 
 export default function UploadDnD() {
   const [images, setImages] = useState<
@@ -41,7 +42,7 @@ export default function UploadDnD() {
   )
 
   return (
-    <UploadDropzone<OurFileRouter>
+    <UploadDropzone
       endpoint="imageUploader"
       onClientUploadComplete={(res) => {
         if (res) {
@@ -56,6 +57,7 @@ export default function UploadDnD() {
         // Do something with the error.
         alert(`ERROR! ${error.message}`)
       }}
+      className={cn('max-w-full')}
     />
   )
 }

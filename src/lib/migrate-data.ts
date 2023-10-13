@@ -36,7 +36,7 @@ import type {
   PlanetScaleDatabase,
 } from 'drizzle-orm/planetscale-serverless'
 
-const adminPassword = (await hashPassword('theotheo')) as string
+const adminPassword = (await hashPassword('!Theotheotheo1')) as string
 const superAdminPassword = (await hashPassword('!#tHeodros1')) as string
 const yetuP = (await hashPassword('yetuyetu')) as string
 const mathiasP = (await hashPassword('mathiasmathias')) as string

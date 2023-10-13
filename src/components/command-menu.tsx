@@ -25,7 +25,7 @@ import { User } from 'next-auth'
 import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils/utils'
-import { userNavigationConfig } from '@/config/user-navigation'
+import { userNavigationConfig } from '@/config/user-profile'
 
 export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
   const router = useRouter()
@@ -50,10 +50,15 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
     command()
   }, [])
 
-  siteLayoutConfig.mainNav =
-    user?.role && user?.role === 'user'
-      ? siteLayoutConfig.mainNav.filter((item) => item.label !== 'admin')
-      : siteLayoutConfig.mainNav
+  if (user?.role && user?.role === 'user') {
+    siteLayoutConfig.mainNav = siteLayoutConfig.mainNav.filter(
+      (item) => item.label !== 'admin' || !item.disabled,
+    )
+
+    siteLayoutConfig.sidebarNav = siteLayoutConfig.sidebarNav.filter(
+      (item) => item.label !== 'admin' || !item.disabled,
+    )
+  }
 
   return (
     <>

@@ -15,10 +15,7 @@ export function MovieBackdrop({
   altText: string
 }) {
   return (
-    <AspectRatio
-      ratio={16 / 9}
-      className={cn('bg-muted object-cover rounded-md', className)}
-    >
+    <AspectRatio ratio={16 / 9} className={cn('bg-muted object-cover')}>
       {/* <Image
         src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
         alt="Photo by Drew Beamer"
@@ -31,7 +28,7 @@ export function MovieBackdrop({
         // width={width}
         // height="200"
         lang="en"
-        className={cn('object-cover rounded-md')}
+        className={cn('h-auto w-auto max-w-full object-cover', className)}
       />
     </AspectRatio>
   )

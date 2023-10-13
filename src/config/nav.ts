@@ -1,4 +1,4 @@
-import { userNavigationConfig } from '@/config/user-navigation'
+import { userNavigationConfig } from '@/config/user-profile'
 import { SiteLayoutConfig } from '@/types'
 
 export const siteLayoutConfig: SiteLayoutConfig = {

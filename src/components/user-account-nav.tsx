@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { UserAvatar } from '@/components/user-avatar'
 import { cn } from '@/lib/utils/utils'
+import { userAccountNavConfig } from '@/config/user-account-nav'
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, 'name' | 'image' | 'email'>
@@ -39,15 +40,11 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           </div>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/me">Profile</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/list/new">New list</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/me/settings">Settings</Link>
-        </DropdownMenuItem>
+        {userAccountNavConfig.map((item) => (
+          <DropdownMenuItem key={item.title} asChild>
+            <Link href={item.href}>{item.title}</Link>
+          </DropdownMenuItem>
+        ))}
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"

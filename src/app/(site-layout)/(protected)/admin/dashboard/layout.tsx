@@ -18,26 +18,11 @@ export default async function AdminDashboardLayout({
   }
 
   return (
-    // <div className="flex min-h-screen flex-col space-y-6">
-    //   <header className="sticky top-0 z-40 border-b bg-background">
-    //     <div className="container flex h-16 items-center justify-between py-4">
-    //       <MainNav items={dashboardConfig.mainNav} />
-    //       <UserAccountNav
-    //         user={{
-    //           name: user.name,
-    //           image: user.image,
-    //           email: user.email,
-    //         }}
-    //       />
-    //     </div>
-    //   </header>
-    <div className="flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0 mt-14">
-      <aside className=" md:w-1/5">
+    <div className="mt-14 flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0">
+      <aside className="w-auto md:w-1/5">
         <DashboardNav items={adminDashboardConfig.sidebarNav} />
       </aside>
-      <section className="flex w-full flex-1 flex-col overflow-hidden">
-        {children}
-      </section>
+      <section className="grid w-full">{children}</section>
     </div>
     // </div>
   )

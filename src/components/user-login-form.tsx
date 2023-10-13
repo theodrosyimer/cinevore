@@ -45,6 +45,8 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
       callbackUrl: searchParams?.get('from') || '/me',
     })
 
+    console.log('signInResult', signInResult)
+
     setIsLoading(false)
 
     if (!signInResult?.ok) {

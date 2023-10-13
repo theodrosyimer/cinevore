@@ -30,7 +30,7 @@ export const adminDashboardConfig: AdminDashboardConfig = {
     {
       title: 'Comments',
       href: '/admin/dashboard/comments',
-      icon: 'post',
+      icon: 'comment',
       items: [],
     },
     // {

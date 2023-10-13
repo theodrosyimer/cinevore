@@ -5,7 +5,7 @@ import { SiteHeader } from '@/components/site-header'
 import { UserInfos } from '@/components/user-infos'
 import { UserNavigation } from '@/components/user-navigation'
 import { settingsConfig } from '@/config/settings'
-import { userNavigationConfig } from '@/config/user-navigation'
+import { userNavigationConfig } from '@/config/user-profile'
 import { getCurrentUser } from '@/lib/session'
 import { Separator } from '@radix-ui/react-dropdown-menu'
 // import { Footer } from "@/components/footer"
