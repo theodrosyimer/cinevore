@@ -3,6 +3,7 @@
 import { CardSkeleton } from '@/components/card-skeleton'
 import { FilmCard, MovieArtworkProps } from '@/components/film-card'
 import { FilmCardDisplay } from '@/components/film-user-card'
+import { UserInfos } from '@/components/user-infos'
 import { useFilms } from '@/hooks/useFilms-zod'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import {
@@ -19,6 +20,7 @@ import {
 } from '@/types/db'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import { z } from 'zod'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
   limit?: number
@@ -32,7 +34,7 @@ export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
       addedAt: Date
       movie: SelectMovie
     }[]
-    user?: Pick<SelectUser, 'name'>
+    user?: SelectUser
   }
 }
 export function UserFilmListDisplay(
@@ -59,35 +61,43 @@ export function UserFilmListDisplay(
     filmList.movies = filmList.movies.slice(0, limit)
   }
 
+  let zindex = filmList.movies.length + 1
+
   return (
     <>
-      <article
-        className={cn(
-          'grid overflow-x-hidden overscroll-x-contain transition-all hover:z-50 hover:scale-[1.01] hover:brightness-75',
-          `w-[44rem] grid-cols-12`,
-        )}
-      >
-        {filmList.movies.map((filmList) => (
-          <>
-            {' '}
-            <FilmCardDisplay
-              key={filmList.movie.tmdbId}
-              movie={filmList.movie}
-              className={cn('', className)}
-              aspectRatio={aspectRatio ?? 'portrait'}
-              // TODO: fix `width` type
-              // @ts-ignore
-              width={width}
-              movieImageWidth={getImageFormatSize(
-                'poster_sizes',
-                // @ts-ignore
-                movieImageWidth,
-              )}
-            />
-          </>
-        ))}
-        <p>{filmList.user?.name}</p>
-      </article>
+      <div className="grid gap-2">
+        <article
+          className={cn(
+            'relative grid overflow-x-hidden overscroll-x-contain transition-all hover:z-50 hover:scale-[1.01] hover:brightness-75',
+            `grid-cols-12 z-[${zindex}]`,
+          )}
+        >
+          {filmList.movies.map((filmList) => {
+            zindex--
+            return (
+              <>
+                {' '}
+                <FilmCardDisplay
+                  key={filmList.movie.tmdbId}
+                  movie={filmList.movie}
+                  className={cn('', className)}
+                  aspectRatio={aspectRatio ?? 'portrait'}
+                  // TODO: fix `width` type
+                  // @ts-ignore
+                  width={width}
+                  movieImageWidth={getImageFormatSize(
+                    'poster_sizes',
+                    // @ts-ignore
+                    movieImageWidth,
+                  )}
+                />
+              </>
+            )
+          })}
+        </article>
+        <p>{filmList.title}</p>
+        <UserInfos user={filmList.user!} showUserName={false} />
+      </div>
     </>
   )
 }

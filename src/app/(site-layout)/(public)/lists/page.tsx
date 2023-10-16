@@ -3,6 +3,7 @@ import { UserFilmListDisplay } from '@/components/film-user-card-list'
 import { Reviews } from '@/components/reviews'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { db } from '@/lib/db'
+import { handleSlug } from '@/lib/utils/slugify'
 import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'
 
@@ -22,7 +23,7 @@ export default async function ListsPage() {
       },
       user: {
         columns: {
-          name: true,
+          password: false,
         },
       },
     },
@@ -32,7 +33,7 @@ export default async function ListsPage() {
     return <div>No lists found</div>
   }
 
-  console.log('USER LISTS:', JSON.stringify(userLists, null, 2))
+  // console.log('USER LISTS:', JSON.stringify(userLists, null, 2))
 
   return (
     <>
@@ -55,7 +56,12 @@ export default async function ListsPage() {
         {/* <Lists /> */}
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {userLists.map((list) => (
-            <Link key={list.id} href={`/list/?id=${list.id}`}>
+            <Link
+              key={list.id}
+              href={`/members/${list.user.name}/list/${handleSlug(list.title)
+                ?.slug}/?id=${list.id}`}
+              className="justify-self-center"
+            >
               {' '}
               <UserFilmListDisplay
                 filmList={list}
