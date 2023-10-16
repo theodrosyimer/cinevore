@@ -23,7 +23,13 @@ export default async function DiaryPage({
       <h1 className="text-center text-4xl font-bold">Likes</h1>
 
       <section>
-        <FilmCardList aspectRatio="portrait" width="w92" />
+        <FilmCardList
+          aspectRatio="portrait"
+          width={92}
+          movieImageWidth="w92"
+          isSlider={true}
+          isSnapped={true}
+        />
       </section>
     </>
   )

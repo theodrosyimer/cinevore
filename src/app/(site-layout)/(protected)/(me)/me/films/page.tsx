@@ -29,7 +29,13 @@ export default async function UserFilmsPage({
       </h1>
 
       <section className="flex space-x-4 pb-4">
-        <FilmCardList aspectRatio="portrait" width="w92" />
+        <FilmCardList
+          aspectRatio="portrait"
+          width={92}
+          movieImageWidth="w92"
+          isSlider={true}
+          isSnapped={true}
+        />
       </section>
     </>
   )

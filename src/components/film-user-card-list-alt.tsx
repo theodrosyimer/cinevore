@@ -62,7 +62,7 @@ export function UserFilmListDisplay(
         {films.results.map((film) => (
           <FilmCardDisplay
             key={film.id}
-            movie={film}
+            // movie={film}
             className={cn('', isSnapped ? 'snap-start' : '', className)}
             aspectRatio={aspectRatio ?? 'portrait'}
             // TODO: fix `width` type
