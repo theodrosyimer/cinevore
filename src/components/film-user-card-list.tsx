@@ -34,7 +34,7 @@ export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
       addedAt: Date
       movie: SelectMovie
     }[]
-    user?: SelectUser
+    user?: Omit<SelectUser, 'password'>
   }
 }
 export function UserFilmListDisplay(
