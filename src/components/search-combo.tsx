@@ -142,7 +142,6 @@ export function SearchCombo() {
             type="search"
             value={text}
             aria-expanded={open}
-            autoFocus
             placeholder="Search for Films, Actors..."
             className="h-8 w-auto "
             onChange={(e) => {

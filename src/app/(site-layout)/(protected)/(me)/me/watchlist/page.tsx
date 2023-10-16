@@ -17,7 +17,7 @@ export default async function DiaryPage({
 
   return (
     <>
-      <h1 className="text-4xl font-bold text-center">Watchlist</h1>
+      <h1 className="text-center text-4xl font-bold">Watchlist</h1>
 
       <section>
         <FilmCardList aspectRatio="portrait" width="w92" />

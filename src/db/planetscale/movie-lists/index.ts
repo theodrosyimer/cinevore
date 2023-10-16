@@ -6,6 +6,7 @@ import {
   primaryKey,
   timestamp,
   uniqueIndex,
+  varchar,
 } from 'drizzle-orm/mysql-core'
 import { comment } from '../comments'
 import { like } from '../likes'

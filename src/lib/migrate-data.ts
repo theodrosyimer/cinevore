@@ -374,12 +374,42 @@ export const defaultUsers = [
 ] satisfies NewUser[]
 
 export const defaultMovies = [
-  { tmdbId: 87101, imdbId: 'tt1340138' },
-  { tmdbId: 601, imdbId: 'tt0083866' },
-  { tmdbId: 238, imdbId: 'tt0068646' },
-  { tmdbId: 389, imdbId: 'tt0050083' },
-  { tmdbId: 603692, imdbId: 'tt10366206' },
-  { tmdbId: 157336, imdbId: 'tt0816692' },
+  {
+    tmdbId: 87101,
+    imdbId: 'tt1340138',
+    backdropPath: '/9WxqnP9c29wXd03sALSpxpTx8fk.jpg',
+    posterPath: '/kn28W24slBLyGr8ZIZnxNE5YZrY.jpg',
+  },
+  {
+    tmdbId: 601,
+    imdbId: 'tt0083866',
+    backdropPath: '/g4a5YLWwi6OCp8TcvxsUNrXMbN5.jpg',
+    posterPath: '/oZRVDpNtmHk8M1VYy1aeOWUXgbC.jpg',
+  },
+  {
+    tmdbId: 238,
+    imdbId: 'tt0068646',
+    backdropPath: '/tmU7GeKVybMWFButWEGl2M4GeiP.jpg',
+    posterPath: '/3bhkrj58Vtu7enYsRolD1fZdja1.jpg',
+  },
+  {
+    tmdbId: 389,
+    imdbId: 'tt0050083',
+    backdropPath: '/qqHQsStV6exghCM7zbObuYBiYxw.jpg',
+    posterPath: '/ow3wq89wM8qd5X7hWKxiRfsFf9C.jpg',
+  },
+  {
+    tmdbId: 603692,
+    imdbId: 'tt10366206',
+    backdropPath: '/kBBMF7GWYXzdRSk5w4xwip7yk3U.jpg',
+    posterPath: '/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg',
+  },
+  {
+    tmdbId: 157336,
+    imdbId: 'tt081669',
+    backdropPath: '/pZvZjxPFfWWIwtPQodsNygQ6u5Z.jpg',
+    posterPath: '/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
+  },
 ] satisfies NewMovie[]
 
 export const defaultLists = [
@@ -429,12 +459,24 @@ export const defaultMovieLists = [
     movieId: defaultMovies[3]?.tmdbId ?? 2,
   },
   {
+    listId: 1,
+    movieId: defaultMovies[5]?.tmdbId ?? 2,
+  },
+  {
     listId: 2,
     movieId: defaultMovies[0]?.tmdbId ?? 1,
   },
   {
     listId: 2,
     movieId: defaultMovies[1]?.tmdbId ?? 2,
+  },
+  {
+    listId: 2,
+    movieId: defaultMovies[5]?.tmdbId ?? 2,
+  },
+  {
+    listId: 2,
+    movieId: defaultMovies[2]?.tmdbId ?? 2,
   },
   {
     listId: 3,
@@ -445,12 +487,28 @@ export const defaultMovieLists = [
     movieId: defaultMovies[4]?.tmdbId ?? 2,
   },
   {
+    listId: 3,
+    movieId: defaultMovies[0]?.tmdbId ?? 2,
+  },
+  {
+    listId: 3,
+    movieId: defaultMovies[3]?.tmdbId ?? 2,
+  },
+  {
     listId: 4,
     movieId: defaultMovies[1]?.tmdbId ?? 1,
   },
   {
     listId: 4,
+    movieId: defaultMovies[5]?.tmdbId ?? 2,
+  },
+  {
+    listId: 4,
     movieId: defaultMovies[3]?.tmdbId ?? 2,
+  },
+  {
+    listId: 4,
+    movieId: defaultMovies[2]?.tmdbId ?? 2,
   },
   {
     listId: 5,
@@ -461,12 +519,28 @@ export const defaultMovieLists = [
     movieId: defaultMovies[3]?.tmdbId ?? 2,
   },
   {
+    listId: 5,
+    movieId: defaultMovies[0]?.tmdbId ?? 2,
+  },
+  {
+    listId: 5,
+    movieId: defaultMovies[1]?.tmdbId ?? 2,
+  },
+  {
     listId: 6,
     movieId: defaultMovies[2]?.tmdbId ?? 1,
   },
   {
     listId: 6,
+    movieId: defaultMovies[4]?.tmdbId ?? 2,
+  },
+  {
+    listId: 6,
     movieId: defaultMovies[5]?.tmdbId ?? 2,
+  },
+  {
+    listId: 6,
+    movieId: defaultMovies[0]?.tmdbId ?? 2,
   },
 ] satisfies NewMovieList[]
 

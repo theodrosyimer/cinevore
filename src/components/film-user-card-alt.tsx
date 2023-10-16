@@ -31,7 +31,7 @@ type LT<T extends string> = T extends `w${infer Width}` ? Width : never
 
 let a: LT<T> = '154'
 
-export function FilmCard({
+export function FilmCardDisplay({
   movie,
   movieImageWidth,
   aspectRatio,
@@ -74,7 +74,7 @@ export function FilmCard({
   return (
     <div
       className={cn(
-        `group relative grid w-min gap-2 overflow-hidden rounded-md shadow-2xl `,
+        `group relative z-0 grid w-[154px] gap-2 overflow-hidden rounded-md shadow-2xl transition-all hover:z-50 hover:brightness-50`,
         className,
       )}
       {...props}
@@ -91,7 +91,7 @@ export function FilmCard({
           lang="en"
           className={cn(
             'h-auto w-auto rounded-md object-cover transition-all focus:rounded-md ',
-            hasMenu ? 'hover:cursor-pointer hover:brightness-50' : '',
+            hasMenu ? 'hover:cursor-pointer ' : '',
             aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-video',
             `w-[${size.slice(1)}px]`,
           )}

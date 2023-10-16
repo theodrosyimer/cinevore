@@ -24,12 +24,19 @@ import {
 } from '@/components/ui/popover'
 import { SelectUser } from '@/types/db'
 import { User } from 'next-auth'
+import { cn } from '@/lib/utils/utils'
 
 interface UserInfos {
   user: User
+  showUserName?: boolean
+  avatarWidth?: number
 }
 
-export function UserInfos({ user }: UserInfos) {
+export function UserInfos({
+  user,
+  showUserName = true,
+  avatarWidth = 14,
+}: UserInfos) {
   return (
     <Card className="xs:w-auto w-60 border-0">
       {/* <CardHeader>
@@ -40,20 +47,37 @@ export function UserInfos({ user }: UserInfos) {
       </CardHeader> */}
       {/* <CardContent className="grid gap-6"> */}
       <div className="flex items-center space-x-4">
-        <div className="flex items-center justify-between space-x-4">
-          <Avatar className="lg:h-14 lg:w-14">
-            <AvatarImage src={user.image ?? undefined} />
-            <AvatarFallback>
+        <div
+          className={cn(
+            'flex items-center justify-between',
+            showUserName ? 'space-x-4' : 'space-x-2',
+          )}
+        >
+          <Avatar className="lg:h-8 lg:w-8">
+            <AvatarImage
+              src={user.image ?? undefined}
+              className={cn(`h-[${avatarWidth}rem] w-[${avatarWidth}]rem`)}
+            />
+            <AvatarFallback
+              className={cn(`h-[${avatarWidth}rem] w-[${avatarWidth}]rem`)}
+            >
               {user.name?.slice(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <div>
-            <p className="md:text-md lg:text-md font-medium leading-none">
+            <p
+              className={
+                (cn('md:text-md lg:text-md font-medium leading-none'),
+                showUserName ? 'space-x-4' : 'space-x-2')
+              }
+            >
               {user.name}
             </p>
-            <p className="md:text-md lg:text-md text-muted-foreground">
-              {user.email}
-            </p>
+            {showUserName && (
+              <p className="md:text-md lg:text-md text-muted-foreground">
+                {user.email}
+              </p>
+            )}
           </div>
         </div>
       </div>

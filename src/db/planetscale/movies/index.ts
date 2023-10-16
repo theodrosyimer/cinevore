@@ -18,6 +18,8 @@ export const movie = mysqlTable(
     tmdbId: int('tmdb_id').notNull().primaryKey(),
     imdbId: varchar('imdb__id', { length: 255 }).notNull().unique(),
     // slug: varchar("slug", { length: 255 }).notNull().unique(),
+    backdropPath: varchar('backdrop_path', { length: 255 }).notNull(),
+    posterPath: varchar('poster_path', { length: 255 }).notNull(),
     watchedCount: int('watched_count').notNull().default(0),
     listedCount: int('listed_count').notNull().default(0),
     likedCount: int('liked_count').notNull().default(0),

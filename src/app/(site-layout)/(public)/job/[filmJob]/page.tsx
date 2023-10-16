@@ -21,7 +21,7 @@ export default function JobDetailsPage({ params }: Params) {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold text-center">Films from {job}</h1>
+      <h1 className="text-center text-4xl font-bold">Films from {job}</h1>
       <p>{name}</p>
       <section>{/* <FilmCardList /> */}</section>
     </div>

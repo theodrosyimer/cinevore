@@ -22,9 +22,9 @@ export default async function IndexPage() {
       <div className="grid gap-12">
         <div className="-mt-14 grid">
           <MovieBackdrop
-            url={`${globalConfig.IMAGE_BASE_URI}/original/yUa0iCocBPsGJ79BwrshHqz45Qc.jpg`}
+            url={`${globalConfig.IMAGE_BASE_URI}/w1280/nuO8o9ltxhI7AZQxePavEZ4TyHa.jpg`}
             altText=""
-            className="rounded-b-md blur-[2px] brightness-50 "
+            className="rounded-b-md blur-[2px] brightness-50"
           />
           <section className="grid w-full sm:grid-cols-3 md:grid-cols-8">
             <div className="grid gap-2 sm:col-span-3 md:col-span-5">
@@ -62,7 +62,8 @@ export default async function IndexPage() {
             <FilmCardList
               limit={7}
               aspectRatio="portrait"
-              width={getImageFormatSize('poster_sizes', 'w185')}
+              movieImageWidth={getImageFormatSize('poster_sizes', 'w185')}
+              isSlider={false}
             />
           </div>
         </section>
@@ -96,7 +97,8 @@ export default async function IndexPage() {
             <FilmCardList
               limit={12}
               aspectRatio="portrait"
-              width={getImageFormatSize('poster_sizes', 'w92')}
+              movieImageWidth={getImageFormatSize('poster_sizes', 'w92')}
+              isSlider={true}
             />
           </div>
         </section>

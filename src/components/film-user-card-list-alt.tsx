@@ -2,6 +2,7 @@
 
 import { CardSkeleton } from '@/components/card-skeleton'
 import { FilmCard, MovieArtworkProps } from '@/components/film-card'
+import { FilmCardDisplay } from '@/components/film-user-card'
 import { useFilms } from '@/hooks/useFilms-zod'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
@@ -22,15 +23,15 @@ export interface FilmListOptions {
   isSnapped?: boolean
 }
 
-export function FilmCardList(
+export function UserFilmListDisplay(
   {
-    limit = 14,
+    limit = 8,
     className,
     aspectRatio,
     width,
     movieImageWidth,
-    isSlider = true,
-    isSnapped = true,
+    isSlider = false,
+    isSnapped = false,
   }: FilmCardProps & FilmListOptions = {} as FilmCardProps & FilmListOptions,
 ) {
   const { data: films, isLoading } = useFilms()
@@ -51,15 +52,15 @@ export function FilmCardList(
     <>
       <div
         className={cn(
-          '',
+          'grid',
           isSlider
-            ? `grid grid-cols-[${films.results.length})] gap-4 overflow-x-auto overscroll-x-contain`
-            : `grid grid-cols-[${films.results.length}] gap-4`,
+            ? `grid-cols-11 gap-4 overflow-x-hidden overscroll-x-contain`
+            : `grid-cols-[${films.results.length}] gap-4`,
           isSnapped ? 'snap-x snap-mandatory' : '',
         )}
       >
         {films.results.map((film) => (
-          <FilmCard
+          <FilmCardDisplay
             key={film.id}
             movie={film}
             className={cn('', isSnapped ? 'snap-start' : '', className)}
@@ -72,6 +73,7 @@ export function FilmCardList(
               // @ts-ignore
               movieImageWidth,
             )}
+            hasMenu={false}
           />
         ))}
       </div>

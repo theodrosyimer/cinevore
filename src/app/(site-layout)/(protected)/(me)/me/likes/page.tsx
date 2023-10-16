@@ -20,7 +20,7 @@ export default async function DiaryPage({
 
   return (
     <>
-      <h1 className="text-4xl font-bold text-center">Likes</h1>
+      <h1 className="text-center text-4xl font-bold">Likes</h1>
 
       <section>
         <FilmCardList aspectRatio="portrait" width="w92" />

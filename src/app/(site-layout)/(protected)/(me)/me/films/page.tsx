@@ -24,7 +24,7 @@ export default async function UserFilmsPage({
 
   return (
     <>
-      <h1 className="text-4xl font-bold text-center">
+      <h1 className="text-center text-4xl font-bold">
         Your movies {params.username}
       </h1>
 

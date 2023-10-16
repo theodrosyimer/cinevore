@@ -15,7 +15,7 @@ export default function JobDetailsPage({
 }) {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold text-center">
+      <h1 className="text-center text-4xl font-bold">
         Films from {params.username}
       </h1>
 

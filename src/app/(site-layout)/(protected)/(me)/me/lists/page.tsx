@@ -20,7 +20,7 @@ export default async function ListsPage({
 
   return (
     <>
-      <h1 className="text-4xl font-bold text-center">Lists</h1>
+      <h1 className="text-center text-4xl font-bold">Lists</h1>
 
       <section>
         <FilmCardList aspectRatio="portrait" width="w92" />

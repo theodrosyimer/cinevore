@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "9fb3de82-b857-408e-b7c6-3d1c82f10190",
+  "id": "3d9965b3-c9f1-45f7-8e88-9654c297fbac",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -449,6 +449,20 @@
         },
         "imdb__id": {
           "name": "imdb__id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "backdrop_path": {
+          "name": "backdrop_path",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "poster_path": {
+          "name": "poster_path",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true,

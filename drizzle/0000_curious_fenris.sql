@@ -58,6 +58,8 @@ CREATE TABLE `list` (
 CREATE TABLE `movie` (
 	`tmdb_id` int NOT NULL,
 	`imdb__id` varchar(255) NOT NULL,
+	`backdrop_path` varchar(255) NOT NULL,
+	`poster_path` varchar(255) NOT NULL,
 	`watched_count` int NOT NULL DEFAULT 0,
 	`listed_count` int NOT NULL DEFAULT 0,
 	`liked_count` int NOT NULL DEFAULT 0,

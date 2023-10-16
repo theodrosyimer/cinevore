@@ -1,4 +1,4 @@
-import { MovieArtwork } from '@/components/film-artwork'
+import { FilmCard } from '@/components/film-card'
 import { UserInfos } from '@/components/user-infos'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { MovieDetails } from '@/lib/tmdb/types/tmdb-api'
@@ -18,9 +18,11 @@ export interface ReviewAndCommentsProps extends SelectMovieReview {
 export function Review({
   review,
   film,
+  imageWidth = 92,
 }: {
   review: ReviewAndCommentsProps
   film: MovieDetails
+  imageWidth?: number
 }) {
   const likesCount = review.likes.length
 
@@ -28,17 +30,19 @@ export function Review({
 
   return (
     <article className="mb-8 flex gap-6">
-      <MovieArtwork
+      <FilmCard
         aspectRatio="portrait"
-        height={50}
-        width={getImageFormatSize('poster_sizes', 'w92')}
+        // @ts-ignore
+        width={imageWidth}
+        // @ts-ignore
+        movieImageWidth={getImageFormatSize('poster_sizes', 'w92')}
         movie={film}
         movieId={film.id.toString()}
       />
       <div className="grid">
         <h2 className="text-xl ">{film.title}</h2>
-        <UserInfos user={review.user} />
-        <p>{review.content}</p>
+        <UserInfos user={review.user} avatarWidth={1} showUserName={false} />
+        <p className="text-muted-foreground">{review.content}</p>
         <p>{likesCount} likes</p>
         {/* {review.commentsToMovieReview.map(comment => comment?.comments?.content)} */}
       </div>
