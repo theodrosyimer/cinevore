@@ -1,9 +1,15 @@
-export type MemberListPageProps = {}
+export type MemberListPageProps = {
+  params: {
+    username: string
+    title: string
+  }
+}
 
-export default function MemberListPage({}: MemberListPageProps) {
+export default function MemberListPage({ params }: MemberListPageProps) {
   return (
     <>
-      <h1>Member List Page</h1>
+      <h1>{params.username}</h1>
+      <p>{params.title}</p>
     </>
   )
 }

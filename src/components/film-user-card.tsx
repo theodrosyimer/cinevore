@@ -86,7 +86,7 @@ export function FilmCardDisplay({
         lang="en"
         className={cn(
           'h-auto w-auto rounded-md object-cover transition-all focus:rounded-md ',
-          aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-video',
+          aspectRatio === 'portrait' ? 'aspect-[0.667]' : 'aspect-video',
           `w-[${size.slice(1)}px]`,
         )}
       />

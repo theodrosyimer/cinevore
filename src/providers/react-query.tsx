@@ -1,6 +1,6 @@
 'use client'
 
-import { queryClientOptions } from '@/providers/react-query-options'
+import { queryClientOptions } from '@/lib/react-query/options'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
 

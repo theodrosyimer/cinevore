@@ -25,6 +25,7 @@ import {
 import { SelectUser } from '@/types/db'
 import { User } from 'next-auth'
 import { cn } from '@/lib/utils/utils'
+import { Icons } from '@/components/icons'
 
 interface UserInfos {
   user: User
@@ -35,10 +36,10 @@ interface UserInfos {
 export function UserInfos({
   user,
   showUserName = true,
-  avatarWidth = 14,
+  avatarWidth = 4,
 }: UserInfos) {
   return (
-    <Card className="xs:w-auto w-60 border-0">
+    <Card className="xs:w-auto w-auto border-0">
       {/* <CardHeader>
         <CardTitle>Team Members</CardTitle>
         <CardDescription>
@@ -61,7 +62,10 @@ export function UserInfos({
             <AvatarFallback
               className={cn(`h-[${avatarWidth}rem] w-[${avatarWidth}]rem`)}
             >
-              {user.name?.slice(0, 2).toUpperCase()}
+              <span className="text-sm">
+                {user.name?.slice(0, 2).toUpperCase()}
+              </span>
+              {/* <Icons.user /> */}
             </AvatarFallback>
           </Avatar>
           <div>

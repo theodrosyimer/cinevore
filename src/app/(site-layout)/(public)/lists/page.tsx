@@ -26,6 +26,8 @@ export default async function ListsPage() {
           password: false,
         },
       },
+      likes: true,
+      comments: true,
     },
   })
 
@@ -38,13 +40,13 @@ export default async function ListsPage() {
   return (
     <>
       <div className="w-full">
-        <section className="mb-12 grid gap-6">
+        <section className="mb-16 grid gap-6">
           <h1 className="text-center text-3xl text-muted-foreground">
             Collect, curate, and share. Lists are the perfect way to group
             films.
           </h1>
           <Link
-            href="/list/new"
+            href="/me/list/new"
             className={cn(
               'w-max justify-self-center',
               buttonVariants({ variant: 'default' }),
@@ -57,19 +59,20 @@ export default async function ListsPage() {
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {userLists.map((list) => (
             <Link
-              key={list.id}
+              key={list.user.name}
               href={`/members/${list.user.name}/list/${handleSlug(list.title)
-                ?.slug}/?id=${list.id}`}
+                ?.slug}?id=${list.id}`}
               className="justify-self-center"
             >
               {' '}
               <UserFilmListDisplay
+                key={list.title}
                 filmList={list}
                 limit={4}
                 // colsCount={10}
                 aspectRatio={'portrait'}
-                // width={185}
-                movieImageWidth="w185"
+                // width={300}
+                movieImageWidth="w300"
               />
             </Link>
           ))}

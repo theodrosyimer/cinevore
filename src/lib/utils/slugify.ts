@@ -45,6 +45,7 @@ const sanitizeString = (text: string) =>
     .split(' ')
     // .filter((x) => x)
     .join('-')
+    .replace(/(.*)(-)$/g, '$1')
 
 export const slugify = (text: string): { slug: string } | { error: Error } => {
   const _text = text

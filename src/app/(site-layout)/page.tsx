@@ -63,7 +63,7 @@ export default async function IndexPage() {
               limit={7}
               aspectRatio="portrait"
               movieImageWidth={getImageFormatSize('poster_sizes', 'w185')}
-              isSlider={false}
+              isSlider={true}
             />
           </div>
         </section>

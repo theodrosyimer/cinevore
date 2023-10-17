@@ -23,38 +23,38 @@ export async function SiteHeader() {
   return (
     <>
       <header className="supports-backdrop-blur:bg-background/60 bg-scroll:bg-transparent sticky top-0 z-[100] w-full border-b bg-background/95 backdrop-blur">
-        <div className="container flex h-16 items-center  justify-between">
+        <div className="container flex h-16 items-center justify-between">
           <MainNav items={siteLayoutConfig.mainNav} />
           <MobileNav items={siteLayoutConfig} />
-          <div className="flex flex-1 items-center justify-end space-x-2">
+          <div className="flex items-center">
             <div className=" hidden w-full flex-1 md:w-auto md:flex-none">
               <CommandMenu user={user} />
             </div>
-            <nav className="flex place-items-center gap-2">
-              {/* <Search /> */}
-              <SearchCombo />
-              {/* <ModeToggle /> */}
-              {/* <UserCreateListButton size={'sm'} /> */}
-              {!user ? (
-                <nav>
-                  <Link
-                    href="/login"
-                    className={cn(
-                      buttonVariants({ variant: 'secondary', size: 'sm' }),
-                    )}
-                  >
-                    Login
-                  </Link>
-                </nav>
-              ) : null}
-              <UserAccountNav
-                user={{
-                  name: user?.name,
-                  image: user?.image,
-                  email: user?.email,
-                }}
-              />
-            </nav>
+            {/* <Search /> */}
+            <SearchCombo />
+            {/* <ModeToggle /> */}
+            {/* <UserCreateListButton size={'sm'} /> */}
+            {!user ? (
+              <Link
+                href="/login"
+                className={cn(
+                  buttonVariants({
+                    variant: 'secondary',
+                    size: 'sm',
+                    className: 'ml-2',
+                  }),
+                )}
+              >
+                Login
+              </Link>
+            ) : null}
+            <UserAccountNav
+              user={{
+                name: user?.name,
+                image: user?.image,
+                email: user?.email,
+              }}
+            />
           </div>
         </div>
       </header>
