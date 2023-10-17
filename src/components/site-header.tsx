@@ -27,7 +27,7 @@ export async function SiteHeader() {
           <MainNav items={siteLayoutConfig.mainNav} />
           <MobileNav items={siteLayoutConfig} />
           <div className="flex items-center">
-            <div className=" hidden w-full flex-1 md:w-auto md:flex-none">
+            <div className="hidden w-full flex-1 md:w-auto md:flex-none">
               <CommandMenu user={user} />
             </div>
             {/* <Search /> */}

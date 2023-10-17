@@ -49,31 +49,33 @@ export function FilmCardList(
 
   return (
     <>
-      <div
-        className={cn(
-          '',
-          isSlider
-            ? `grid grid-cols-[${films.results.length})] gap-4 overflow-x-auto overscroll-x-contain`
-            : `grid grid-cols-[${films.results.length}] gap-4`,
-          isSnapped ? 'snap-x snap-mandatory' : '',
-        )}
-      >
-        {films.results.map((film) => (
-          <FilmCard
-            key={film.id}
-            movie={film}
-            className={cn('', isSnapped ? 'snap-start' : '', className)}
-            aspectRatio={aspectRatio ?? 'portrait'}
-            // TODO: fix `width` type
-            // @ts-ignore
-            width={width}
-            movieImageWidth={getImageFormatSize(
-              'poster_sizes',
+      <div className="relative grid gap-2 overflow-x-hidden hover:rounded-md">
+        <article
+          className={cn(
+            '',
+            isSlider
+              ? `grid grid-cols-[repeat(${limit},_minmax(0,_1fr))] gap-4 overflow-x-auto overscroll-x-contain`
+              : `grid grid-cols-[${films.results.length}] gap-4`,
+            isSnapped ? 'snap-x snap-mandatory' : '',
+          )}
+        >
+          {films.results.map((film) => (
+            <FilmCard
+              key={film.id}
+              movie={film}
+              className={cn('', isSnapped ? 'snap-start' : '', className)}
+              aspectRatio={aspectRatio ?? 'portrait'}
+              // TODO: fix `width` type
               // @ts-ignore
-              movieImageWidth,
-            )}
-          />
-        ))}
+              width={width}
+              movieImageWidth={getImageFormatSize(
+                'poster_sizes',
+                // @ts-ignore
+                movieImageWidth,
+              )}
+            />
+          ))}
+        </article>
       </div>
     </>
   )

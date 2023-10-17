@@ -58,10 +58,14 @@ export default async function FilmPage({
 
   return (
     <>
-      <div className="grid w-full justify-center gap-8">
-        <MovieBackdrop url={backdropImageUrl} altText={film.title} />
+      <div className="-mt-14 grid w-full justify-center gap-8">
+        <MovieBackdrop
+          url={backdropImageUrl}
+          altText={film.title}
+          className="rounded-b-md bg-gradient-to-r from-background"
+        />
 
-        <div className="grid grid-cols-5 gap-4 relative max-w-[1080px]">
+        <div className="relative grid max-w-[1080px] grid-cols-5 gap-4">
           <img
             src={posterImageUrl!}
             alt={film?.title!}
@@ -69,11 +73,11 @@ export default async function FilmPage({
             // height="200"
             lang="en"
             className={cn(
-              'sticky top-20 z-40 h-auto w-auto object-cover aspect-[3/4] rounded-md col-auto',
+              'sticky top-20 z-40 col-auto aspect-[3/4] h-auto w-auto rounded-md object-cover',
             )}
           />
-          <div className="grid gap-2 col-span-3 self-center">
-            <h1 className="text-2xl font-bold text-start">{film?.title}</h1>
+          <div className="col-span-3 grid gap-2 self-center">
+            <h1 className="text-start text-2xl font-bold">{film?.title}</h1>
             <section>
               <p className="text-md text-muted-foreground">{film.overview}</p>
             </section>
@@ -81,7 +85,7 @@ export default async function FilmPage({
               <MovieInfosTabs
                 credits={film.credits}
                 genres={film.genres}
-                className="hidden sm:block w-full"
+                className="hidden w-full sm:block"
               />
             </section>
             <span className={cn('text-sm text-muted-foreground')}>

@@ -44,6 +44,7 @@ export const movieReviewRelations = relations(movieReview, ({ one, many }) => ({
   movie: one(movie, {
     fields: [movieReview.movieId],
     references: [movie.tmdbId],
+    relationName: 'reviews',
   }),
   comments: many(comment, {
     relationName: 'reviewComments',

@@ -74,7 +74,7 @@ export function FilmCard({
   return (
     <div
       className={cn(
-        `group relative grid w-min gap-2 overflow-hidden rounded-md shadow-2xl `,
+        `group relative grid w-full gap-2 overflow-hidden rounded-md shadow-2xl `,
         className,
       )}
       {...props}
@@ -82,7 +82,7 @@ export function FilmCard({
       <Link
         href={`/film/${handleSlug(movie?.title ?? '')?.slug}/?id=${movie.id}`}
         // tabindex="-1"
-        className={cn('w-[154px]')}
+        className={cn(`w-[${size.slice(1)}px]`)}
       >
         <img
           src={imageUrl!}
@@ -92,8 +92,8 @@ export function FilmCard({
           className={cn(
             'h-auto w-auto rounded-md object-cover transition-all focus:rounded-md ',
             hasMenu ? 'hover:cursor-pointer hover:brightness-50' : '',
-            aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-video',
-            `w-[${size.slice(1)}px]`,
+            aspectRatio === 'portrait' ? 'aspect-[0.667]' : 'aspect-video',
+            // `w-[${size.slice(1)}px]`,
           )}
         />
       </Link>

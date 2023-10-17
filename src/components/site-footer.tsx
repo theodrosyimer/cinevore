@@ -5,13 +5,20 @@ import { cn } from '@/lib/utils/utils'
 import { Icons } from '@/components/icons'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
+import { footerConfig } from '@/config/footer'
 
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   return (
     <footer className={cn('container', className)}>
-      <Link href="/about" className={cn(buttonVariants({ variant: 'link' }))}>
-        About
-      </Link>
+      {footerConfig.map((item) => (
+        <Link
+          key={item.title}
+          href={item.href}
+          className={cn(buttonVariants({ variant: 'link' }))}
+        >
+          {item.title}
+        </Link>
+      ))}
       <div className="flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:justify-items-center md:gap-2 md:px-0">
           <Icons.logo />
@@ -33,6 +40,15 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
               className="font-medium underline underline-offset-4"
             >
               Vercel
+            </a>
+            . Film data from{' '}
+            <a
+              href="https://developer.themoviedb.org/docs"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
+            >
+              TMDB
             </a>
             . The source code is available on{' '}
             <a

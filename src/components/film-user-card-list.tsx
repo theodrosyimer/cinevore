@@ -70,16 +70,17 @@ export function UserFilmListDisplay(
 
   return (
     <>
-      <div className="relative grid gap-2 overflow-x-hidden">
+      <div className="relative grid gap-2 overflow-x-hidden hover:rounded-md">
         <article
           className={cn(
-            `z-[${zindex}] grid grid-cols-[repeat(${limit},_minmax(0,_100px))] xs:grid-cols-[repeat(${limit},_minmax(0,_50px))] grid-rows-[min-content] overflow-x-hidden overscroll-x-contain rounded-md transition-all hover:z-50 hover:scale-[1.01] hover:brightness-75`,
+            `z-[${zindex}] grid grid-cols-[repeat(4,_minmax(0,_100px))] xs:grid-cols-[repeat(${limit},_minmax(0,_50px))] grid-rows-[min-content] overflow-x-hidden overscroll-x-contain rounded-md transition-all hover:z-50 hover:scale-[1.01]  hover:brightness-75`,
           )}
         >
           {filmList.movies.map((filmList) => {
             zindex--
             return (
               <FilmCardDisplay
+                limit={limit}
                 key={filmList.movie.tmdbId}
                 movie={filmList.movie}
                 className={cn('', className)}
