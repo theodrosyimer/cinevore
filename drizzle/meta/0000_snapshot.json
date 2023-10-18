@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "3d9965b3-c9f1-45f7-8e88-9654c297fbac",
+  "id": "6809c6cc-fd69-40b0-a015-613c60701464",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -454,6 +454,20 @@
           "notNull": true,
           "autoincrement": false
         },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "backdrop_path": {
           "name": "backdrop_path",
           "type": "varchar(255)",
@@ -524,6 +538,20 @@
           ],
           "isUnique": true
         },
+        "slug": {
+          "name": "slug",
+          "columns": [
+            "slug"
+          ],
+          "isUnique": true
+        },
+        "title": {
+          "name": "title",
+          "columns": [
+            "title"
+          ],
+          "isUnique": false
+        },
         "watched_count": {
           "name": "watched_count",
           "columns": [
@@ -560,6 +588,12 @@
           "name": "movie_imdb__id_unique",
           "columns": [
             "imdb__id"
+          ]
+        },
+        "movie_slug_unique": {
+          "name": "movie_slug_unique",
+          "columns": [
+            "slug"
           ]
         }
       }

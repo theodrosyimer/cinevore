@@ -147,12 +147,30 @@ export default async function ListsPage() {
             <div className="divide-y divide-border rounded-md border"></div>
           </section>
         </div>
-        <section className="flex items-center justify-between justify-items-center">
+        <section className="mt-12 flex items-center justify-between justify-items-center">
           <h2 className="text-md mb-2 uppercase text-muted-foreground">
             Recently Added
           </h2>
           <Link
             href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
+            className={cn(
+              'text-sm uppercase',
+              buttonVariants({
+                variant: 'link',
+                className: 'pr-0 text-muted-foreground/50',
+              }),
+            )}
+          >
+            More
+          </Link>
+        </section>
+        <div className="divide-y divide-border rounded-md border "></div>
+        <section className="mt-12 flex items-center justify-between justify-items-center">
+          <h2 className="text-md mb-2 uppercase text-muted-foreground">
+            Crew Lists
+          </h2>
+          <Link
+            href={`${process.env.NEXT_PUBLIC_APP_URL}/crew/lists?sortBy=popular`}
             className={cn(
               'text-sm uppercase',
               buttonVariants({

@@ -2,12 +2,19 @@
 import { MovieBackdrop } from '@/components/film-backdrop'
 import MovieReviewList from '@/components/film-review-list'
 import { MovieInfosTabs } from '@/components/film-tabs'
+import { FilmCardDisplay } from '@/components/film-user-card'
+import { SimilarFilmCardDisplay } from '@/components/similar-film-user-card'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { UserMovieActions } from '@/components/user-movie-infos'
 import { getCurrentUser } from '@/lib/session'
-import { globalConfig, searchByID, searchByTitle } from '@/lib/tmdb/src/tmdb'
+import {
+  getSimilarByID,
+  globalConfig,
+  searchByID,
+  searchByTitle,
+} from '@/lib/tmdb/src/tmdb'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
 import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils/utils'
 import Link from 'next/link'
@@ -36,6 +43,18 @@ export default async function FilmPage({
     })
     return
   })
+  console.log('Search Params:', searchParams)
+  const similarFilms = await getSimilarByID({
+    id: `${searchParams.id}`,
+    category: 'movie',
+  }).catch((error) => {
+    toast({
+      title: error.name,
+      description: error.message,
+    })
+    return
+  })
+  console.log('SIMILAR FILMS:', JSON.stringify(similarFilms, null, 2))
 
   if (!film) {
     return notFound()
@@ -100,7 +119,74 @@ export default async function FilmPage({
                 iMDB
               </Link>
             </span>
-            {/* <MovieReviewList /> */}
+            <section className="mt-12 flex items-center justify-between justify-items-center">
+              <h2 className="text-md uppercase text-muted-foreground">
+                Popular Reviews
+              </h2>
+              <Link
+                href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
+                className={cn(
+                  'text-sm uppercase',
+                  buttonVariants({
+                    variant: 'link',
+                    className: 'pr-0 text-muted-foreground/50',
+                  }),
+                )}
+              >
+                More
+              </Link>
+            </section>
+            <div className="divide-y divide-border rounded-md border "></div>
+            <section className="mt-12 flex items-center justify-between justify-items-center">
+              <h2 className="text-md uppercase text-muted-foreground">
+                Similar Films
+              </h2>
+              <Link
+                href={`${process.env.NEXT_PUBLIC_APP_URL}/films?filter=similar`}
+                className={cn(
+                  'text-sm uppercase',
+                  buttonVariants({
+                    variant: 'link',
+                    className: 'pr-0 text-muted-foreground/50',
+                  }),
+                )}
+              >
+                More
+              </Link>
+            </section>
+            <div className="divide-y divide-border rounded-md border "></div>
+            <div className="grid grid-cols-3 gap-y-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+              {similarFilms?.results
+                ?.slice(0, 6)
+                .map((film) => (
+                  <SimilarFilmCardDisplay
+                    key={film.id}
+                    movie={film}
+                    movieImageWidth="w92"
+                    aspectRatio="portrait"
+                    width={92}
+                    className="col-auto"
+                  />
+                ))}
+            </div>
+            <section className="mt-12 flex items-center justify-between justify-items-center">
+              <h2 className="text-md uppercase text-muted-foreground">
+                Popular Lists
+              </h2>
+              <Link
+                href={`${process.env.NEXT_PUBLIC_APP_URL}/lists?sortBy=popular`}
+                className={cn(
+                  'text-sm uppercase',
+                  buttonVariants({
+                    variant: 'link',
+                    className: 'pr-0 text-muted-foreground/50',
+                  }),
+                )}
+              >
+                More
+              </Link>
+            </section>
+            <div className="divide-y divide-border rounded-md border "></div>
           </div>
           {user ? <UserMovieActions className="col-auto" /> : null}
         </div>

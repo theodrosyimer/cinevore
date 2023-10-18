@@ -8,6 +8,7 @@ import {
   tMDBMovieResponseSchemaWithDateInterval,
   tMDBSearchMultiSchema,
   TMDBMovieResponse,
+  SearchMovie,
 } from '../types/tmdb-api'
 import { extractLanguageFromLanguageCode, generateTMDBUrl } from './utils'
 import { type GlobalConfig, type QueryOptions } from '../types'
@@ -121,6 +122,31 @@ export async function searchByID({
   return data
 }
 
+export async function getSimilarByID({
+  id,
+  category,
+  language = globalConfig.language,
+  page = '1',
+}: QueryOptions) {
+  const url = generateTMDBUrl(`${category}/${id}/similar`, {
+    language,
+    page,
+  })
+
+  console.log('URL', url.href)
+  const response = await fetch(url.href)
+
+  if (!response.ok) {
+    throw new Error(`Returned with a ${response.status} code`)
+  }
+
+  const data = (await response.json()) as TMDBMovieResponse
+
+  // TODO: need to parse the data
+  // return movieDetailsSchema.parse(data)
+  return data
+}
+
 // ! this function is not working properly
 export async function searchMulti({
   query,
@@ -175,6 +201,30 @@ export async function searchByTitle({
 
   return data
 }
+
+export async function discover({
+  filter,
+  category,
+  language = globalConfig.language,
+  page = '1',
+}: QueryOptions) {
+  const url = generateTMDBUrl(`discover/${category}`, {
+    filter,
+    language,
+    page,
+  })
+  console.log('SEARCH URL', url.href)
+  const response = await fetch(url)
+
+  if (!response.ok) {
+    throw new Error(`Returned with a ${response.status} code`)
+  }
+
+  const data = (await response.json()) as TMDBMovieResponse
+
+  return data
+}
+
 export async function getTopRated({
   category,
   language = globalConfig.language,

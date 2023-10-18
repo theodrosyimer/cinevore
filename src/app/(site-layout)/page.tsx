@@ -37,7 +37,7 @@ export default async function IndexPage() {
                   <br />
                   Tell your friends what you think.
                 </h1>
-                <p className="text-left text-muted-foreground sm:text-sm md:text-lg lg:text-xl">
+                <p className="text-left text-xs text-muted-foreground sm:text-sm md:text-lg lg:text-xl">
                   Cinevore, the social network for film lovers. Join us today!
                 </p>
                 <div className="flex justify-center gap-4">

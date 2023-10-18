@@ -58,6 +58,8 @@ CREATE TABLE `list` (
 CREATE TABLE `movie` (
 	`tmdb_id` int NOT NULL,
 	`imdb__id` varchar(255) NOT NULL,
+	`slug` varchar(255) NOT NULL,
+	`title` varchar(255) NOT NULL,
 	`backdrop_path` varchar(255) NOT NULL,
 	`poster_path` varchar(255) NOT NULL,
 	`watched_count` int NOT NULL DEFAULT 0,
@@ -67,8 +69,10 @@ CREATE TABLE `movie` (
 	`updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP,
 	CONSTRAINT `movie_tmdb_id` PRIMARY KEY(`tmdb_id`),
 	CONSTRAINT `movie_imdb__id_unique` UNIQUE(`imdb__id`),
+	CONSTRAINT `movie_slug_unique` UNIQUE(`slug`),
 	CONSTRAINT `tmdb_id` UNIQUE(`tmdb_id`),
-	CONSTRAINT `imdb_id` UNIQUE(`imdb__id`)
+	CONSTRAINT `imdb_id` UNIQUE(`imdb__id`),
+	CONSTRAINT `slug` UNIQUE(`slug`)
 );
 --> statement-breakpoint
 CREATE TABLE `movie_infos_to_user` (
@@ -188,6 +192,7 @@ CREATE INDEX `FK_resource_id` ON `like` (`resource_id`);--> statement-breakpoint
 CREATE INDEX `FK_resource_type` ON `like` (`resource_type`);--> statement-breakpoint
 CREATE INDEX `id` ON `list` (`id`);--> statement-breakpoint
 CREATE INDEX `user_id` ON `list` (`user_id`);--> statement-breakpoint
+CREATE INDEX `title` ON `movie` (`title`);--> statement-breakpoint
 CREATE INDEX `watched_count` ON `movie` (`watched_count`);--> statement-breakpoint
 CREATE INDEX `listed_count` ON `movie` (`listed_count`);--> statement-breakpoint
 CREATE INDEX `liked_count` ON `movie` (`liked_count`);--> statement-breakpoint

@@ -24,7 +24,7 @@ export interface FilmListOptions {
 
 export function FilmCardList(
   {
-    limit = 14,
+    limit = 12,
     className,
     aspectRatio,
     width,
@@ -73,6 +73,7 @@ export function FilmCardList(
                 // @ts-ignore
                 movieImageWidth,
               )}
+              hasMenu={false}
             />
           ))}
         </article>

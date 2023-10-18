@@ -17,13 +17,13 @@ export function CastTooltip({ cast }: { cast: MovieCast }) {
         <TooltipTrigger asChild>
           <Badge
             variant="secondary"
-            className="hover:bg-secondary/60 space-y-1 space-x-1 mr-2 rounded-md"
+            className="mr-2 space-x-1 space-y-1 rounded-md hover:bg-secondary/60"
             key={cast.id}
           >
             <Link
-              href={`${process.env.NEXT_PUBLIC_APP_URL}/job/actor/${cast.id}`}
+              href={`/job/actor/${encodeURI(cast.name)}`}
               className={cn(
-                'text-foreground text-sm font-medium transition-colors sm:text-xs rounded-md',
+                'rounded-md text-sm font-medium text-foreground transition-colors sm:text-xs',
               )}
             >
               {cast.name}

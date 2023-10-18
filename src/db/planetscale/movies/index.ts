@@ -17,7 +17,8 @@ export const movie = mysqlTable(
   {
     tmdbId: int('tmdb_id').notNull().primaryKey(),
     imdbId: varchar('imdb__id', { length: 255 }).notNull().unique(),
-    // slug: varchar("slug", { length: 255 }).notNull().unique(),
+    slug: varchar('slug', { length: 255 }).notNull().unique(),
+    title: varchar('title', { length: 255 }).notNull(),
     backdropPath: varchar('backdrop_path', { length: 255 }).notNull(),
     posterPath: varchar('poster_path', { length: 255 }).notNull(),
     watchedCount: int('watched_count').notNull().default(0),
@@ -35,7 +36,8 @@ export const movie = mysqlTable(
     return {
       tmdbId: uniqueIndex('tmdb_id').on(table.tmdbId),
       imdbId: uniqueIndex('imdb_id').on(table.imdbId),
-      // slug: index("slug").on(table.slug),
+      slug: uniqueIndex('slug').on(table.slug),
+      title: index('title').on(table.title),
       watchedCount: index('watched_count').on(table.watchedCount),
       listedCount: index('listed_count').on(table.listedCount),
       likedCount: index('liked_count').on(table.likedCount),

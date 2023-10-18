@@ -42,7 +42,7 @@ export function MovieInfosTabs({
       </TabsList>
       <TabsContent value="cast">
         <Card>
-          <CardContent className="space-y-1 mt-4">
+          <CardContent className="mt-4 space-y-1">
             {credits?.cast?.map((cast) => (
               <CastTooltip cast={cast} key={cast.id} />
             ))}
@@ -51,15 +51,15 @@ export function MovieInfosTabs({
       </TabsContent>
       <TabsContent value="crew">
         <Card>
-          <CardContent className="space-y-2 mt-4">
+          <CardContent className="mt-4 space-y-2">
             {credits?.crew?.map((crew) => (
               <div
-                className="w-full flex items-center justify-between space-x-2"
+                className="flex w-full items-center justify-between space-x-2"
                 key={crew.id}
               >
                 <div className="flex items-center space-x-2">
                   <Link
-                    href={`job/person/${crew.id}`}
+                    href={`/job/${crew.job}/${crew.name}`}
                     className="w-max text-sm font-semibold hover:underline"
                   >
                     {crew.name}
@@ -72,7 +72,7 @@ export function MovieInfosTabs({
                   <Badge variant="secondary" className="w-max">
                     {crew.job}
                   </Badge>
-                  <div className="text-sm text-gray-500 w-max">
+                  <div className="w-max text-sm text-gray-500">
                     {crew.department}
                   </div>
                 </div>
@@ -81,18 +81,13 @@ export function MovieInfosTabs({
           </CardContent>
         </Card>
       </TabsContent>
-      <TabsContent value="details">
+      <TabsContent aria-disabled value="details">
         <Card>
           <CardHeader>
             <CardTitle></CardTitle>
             <CardDescription></CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-              <Input id="current" type="password" />
-            </div>
-          </CardContent>
+          <CardContent className="space-y-2"></CardContent>
           <CardFooter></CardFooter>
         </Card>
       </TabsContent>
@@ -102,12 +97,7 @@ export function MovieInfosTabs({
             <CardTitle></CardTitle>
             <CardDescription></CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-              <Input id="current" type="password" />
-            </div>
-          </CardContent>
+          <CardContent className="space-y-2"></CardContent>
           <CardFooter></CardFooter>
         </Card>
       </TabsContent>
@@ -117,12 +107,7 @@ export function MovieInfosTabs({
             <CardTitle></CardTitle>
             <CardDescription></CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-              <Input id="current" type="password" />
-            </div>
-          </CardContent>
+          <CardContent className="space-y-2"></CardContent>
           <CardFooter></CardFooter>
         </Card>
       </TabsContent>

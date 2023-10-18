@@ -67,7 +67,7 @@ export function FilmMenuFilter({ className }: { className?: string }) {
                 <ListItem
                   key={filter.title}
                   title={filter.title}
-                  href={filter.href}
+                  href={filter.value}
                 >
                   {/* {filter.title} */}
                 </ListItem>
@@ -84,7 +84,7 @@ export function FilmMenuFilter({ className }: { className?: string }) {
                 <ListItem
                   key={filter.title}
                   title={filter.title}
-                  href={filter.href}
+                  href={filter.value}
                 >
                   {filter.title}
                 </ListItem>
@@ -101,7 +101,7 @@ export function FilmMenuFilter({ className }: { className?: string }) {
                 <ListItem
                   key={filter.title}
                   title={filter.title}
-                  href={filter.href}
+                  href={filter.value}
                 >
                   {filter.title}
                 </ListItem>

@@ -15,6 +15,7 @@ export type GlobalConfigKey = keyof GlobalConfig
 export type MovieCategory = 'movie'
 export type TvShowCategory = 'tv'
 export type SearchCategory = 'search'
+export type DiscoverCategory = 'discover'
 export type OtherCategory = 'person' | 'company'
 export type CommonFilterCategory =
   | 'popular'
@@ -36,6 +37,8 @@ export type RouteSegment =
   | `${MovieCategory}/${MovieFilterCategory}`
   | `${TvShowCategory}/${TvFilterCategory}`
   | `${SearchCategory}/${SearchFilterCategory}`
+  | `${DiscoverCategory}/${MovieCategory}`
+  | `${DiscoverCategory}/${TvShowCategory}`
 
 export type QueryOptions = {
   query?: string
@@ -44,6 +47,13 @@ export type QueryOptions = {
   body?: Record<string, string>
   category: MovieCategory | TvShowCategory
   language?: LANGUAGE
+  filter?: {
+    year?: string
+    rating?: string
+    popular?: string
+    genre?: string
+    service?: string
+  }
 }
 
 export type QueryOptionsWithoutBodyAndCategory = Omit<

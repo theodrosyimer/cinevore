@@ -14,11 +14,19 @@ export const metadata = {
   description: 'Find all your preferred films here.',
 }
 
-export default async function FilmsPage({
-  params,
-}: {
-  params: { username: string }
-}) {
+export default async function FilmsPage() {
+  return (
+    <div className={cn('grid gap-8')}>
+      <div className="flex items-center justify-center gap-4 justify-self-start">
+        <h2 className="text-lg uppercase">Browse by:</h2>
+        <FilmSearchFilter />
+      </div>
+      <FilmsPageDefaultContent />
+    </div>
+  )
+}
+
+async function FilmsPageDefaultContent() {
   const filmsReviewedByUsers = await db.query.movie.findMany({
     with: {
       movieReviews: {
@@ -41,11 +49,7 @@ export default async function FilmsPage({
   }
 
   return (
-    <div className={cn('grid gap-8')}>
-      <div className="flex items-center justify-center gap-4 justify-self-start">
-        <h2 className="text-xl uppercase">Filter by:</h2>
-        <FilmSearchFilter />
-      </div>
+    <>
       <section className="">
         <div className="flex items-center justify-between justify-items-center">
           <h2 className="text-md mb-2 uppercase text-muted-foreground">
@@ -186,6 +190,6 @@ export default async function FilmsPage({
           <div className="mb-4 divide-y divide-border  rounded-md border"></div>
         </section>
       </div>
-    </div>
+    </>
   )
 }
