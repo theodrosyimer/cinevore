@@ -1,5 +1,0 @@
-.MenubarContent {
-  --radix-menubar-trigger-width: min-content;
-  width: var(--radix-menubar-trigger-width);
-  max-height: var(--radix-menubar-content-available-height);
-}

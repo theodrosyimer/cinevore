@@ -7,7 +7,10 @@ import { cn } from '@/lib/utils/utils'
 export function UserMovieActions({ ...className }: { className?: string }) {
   return (
     <article
-      className={cn('grid bg-secondary rounded-md p-4 h-max', className)}
+      className={cn(
+        'hidden h-max rounded-md bg-secondary p-4 lg:grid',
+        className,
+      )}
     >
       <div className="flex justify-evenly">
         <div className="grid  place-items-center">
@@ -24,7 +27,7 @@ export function UserMovieActions({ ...className }: { className?: string }) {
           <Label className="text-sm text-muted-foreground">WatchList</Label>
         </div>
       </div>
-      <div className="divide-y divide-border rounded-md border my-4 bg-primary-foreground"></div>
+      <div className="my-4 divide-y divide-border rounded-md border bg-primary-foreground"></div>
       <div className="flex justify-evenly">
         <Icons.starHalf className="hidden" />
         <Icons.star />
@@ -33,7 +36,7 @@ export function UserMovieActions({ ...className }: { className?: string }) {
         <Icons.star />
         <Icons.star />
       </div>
-      <div className="divide-y divide-border rounded-md border my-4"></div>
+      <div className="my-4 divide-y divide-border rounded-md border"></div>
       <div className="flex justify-evenly">
         <FilmRatingStars />
       </div>

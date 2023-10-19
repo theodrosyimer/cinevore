@@ -22,7 +22,7 @@ export async function SiteHeader() {
 
   return (
     <>
-      <header className="supports-backdrop-blur:bg-background/60 bg-scroll:bg-transparent sticky top-0 z-[100] w-full border-b bg-background/95 backdrop-blur">
+      <header className="supports-backdrop-blur:bg-background/60 bg-scroll:bg-transparent sticky top-0 z-[80] w-full border-b bg-background/95 backdrop-blur">
         <div className="container flex h-16 items-center justify-between">
           <MainNav items={siteLayoutConfig.mainNav} />
           <MobileNav items={siteLayoutConfig} />

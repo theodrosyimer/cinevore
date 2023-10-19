@@ -1,20 +1,19 @@
 'use client'
-
 import { CardSkeleton } from '@/components/card-skeleton'
 import { FilmCard, MovieArtworkProps } from '@/components/film-card'
-import { useFilms } from '@/hooks/useFilms-zod'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
-import { handleSlug } from '@/lib/utils/slugify'
 import { cn } from '@/lib/utils/utils'
-import { useRouter } from 'next/navigation'
-import { useCallback } from 'react'
+import { getPopular } from '@/lib/tmdb/src/tmdb'
+import { useQuery } from '@tanstack/react-query'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
-  limit?: number
-  className?: string
-  width?: number
+  columnsCount: keyof typeof gridColumnsConfig
   movieImageWidth: TMDBImageSizesCategory[keyof TMDBImageSizesCategory]
+  limit?: keyof typeof gridColumnsConfig
+  width?: number
+  hasMenu?: boolean
+  className?: string
 }
 
 export interface FilmListOptions {
@@ -22,18 +21,41 @@ export interface FilmListOptions {
   isSnapped?: boolean
 }
 
-export function FilmCardList(
+export const gridColumnsConfig = {
+  1: 'grid-cols-1',
+  2: 'grid-cols-2',
+  3: 'grid-cols-3',
+  4: 'grid-cols-4',
+  5: 'grid-cols-5',
+  6: 'grid-cols-6',
+  7: 'grid-cols-7',
+  8: 'grid-cols-8',
+  9: 'grid-cols-9',
+  10: 'grid-cols-10',
+  11: 'grid-cols-11',
+  12: 'grid-cols-12',
+  13: 'grid-cols-[13]',
+  14: 'grid-cols-[14]',
+} as const
+
+export async function FilmCardList(
   {
-    limit = 12,
+    limit,
     className,
     aspectRatio,
     width,
     movieImageWidth,
     isSlider = true,
     isSnapped = true,
+    hasMenu = false,
+    columnsCount,
   }: FilmCardProps & FilmListOptions = {} as FilmCardProps & FilmListOptions,
 ) {
-  const { data: films, isLoading } = useFilms()
+  const { data: films, isLoading } = useQuery({
+    queryKey: ['popularMovies'],
+    queryFn: () => getPopular({ category: 'movie', page: '1' }),
+  })
+  // const { data: films, isLoading } = useFilms()
 
   if (isLoading) {
     return <CardSkeleton />
@@ -49,13 +71,21 @@ export function FilmCardList(
 
   return (
     <>
-      <div className="relative grid gap-2 overflow-x-hidden hover:rounded-md">
+      <div className="relative grid w-full gap-2 overflow-x-hidden hover:rounded-md">
         <article
           className={cn(
-            '',
+            'grid',
             isSlider
-              ? `grid grid-cols-[repeat(${limit},_minmax(0,_1fr))] gap-4 overflow-x-auto overscroll-x-contain`
-              : `grid grid-cols-[${films.results.length}] gap-4`,
+              ? `${
+                  gridColumnsConfig[
+                    columnsCount as keyof typeof gridColumnsConfig
+                  ]
+                } gap-4 overflow-x-auto overscroll-x-contain`
+              : `${
+                  gridColumnsConfig[
+                    columnsCount as keyof typeof gridColumnsConfig
+                  ]
+                } gap-4`,
             isSnapped ? 'snap-x snap-mandatory' : '',
           )}
         >
@@ -73,7 +103,7 @@ export function FilmCardList(
                 // @ts-ignore
                 movieImageWidth,
               )}
-              hasMenu={false}
+              hasMenu={hasMenu}
             />
           ))}
         </article>

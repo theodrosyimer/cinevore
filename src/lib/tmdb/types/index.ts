@@ -47,18 +47,20 @@ export type QueryOptions = {
   body?: Record<string, string>
   category: MovieCategory | TvShowCategory
   language?: LANGUAGE
-  filter?: {
-    year?: string
-    rating?: string
-    popular?: string
-    genre?: string
-    service?: string
-  }
+  filters?: MovieSearchFilters
+}
+
+export type MovieSearchFilters = {
+  year?: string
+  rating?: string
+  popular?: string
+  genre?: string
+  service?: string
 }
 
 export type QueryOptionsWithoutBodyAndCategory = Omit<
   QueryOptions,
-  'body' | 'category'
+  'body' | 'category' | 'filters'
 >
 
 export type OptionalQueryOptions = {

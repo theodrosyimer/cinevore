@@ -1,9 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from 'next/image'
 
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { cn } from '@/lib/utils/utils'
-import { FilmCardList } from '@/components/film-card-list'
 
 export function MovieBackdrop({
   url,

@@ -24,7 +24,7 @@ export const siteLayoutConfig: SiteLayoutConfig = {
       href: '/pricing',
     },
     {
-      title: 'Admin Dashboard',
+      title: 'Admin',
       href: '/admin/dashboard',
       label: 'admin',
     },

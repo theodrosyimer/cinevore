@@ -68,7 +68,11 @@ export function FilmSearchFilter() {
                   value={filter.title}
                   onSelect={() => {
                     router.push(
-                      `${pathname}?${createQueryString('year', filter.title)}`,
+                      `${
+                        pathname === '/search/films'
+                          ? pathname
+                          : `/search/films`
+                      }?${createQueryString('year', filter.title)}`,
                     )
                   }}
                 >
@@ -99,10 +103,11 @@ export function FilmSearchFilter() {
                   value={filter.title}
                   onSelect={() => {
                     router.push(
-                      `${pathname}?${createQueryString(
-                        'rating',
-                        filter.title,
-                      )}`,
+                      `${
+                        pathname === '/search/films'
+                          ? pathname
+                          : `/search/films`
+                      }?${createQueryString('rating', filter.title)}`,
                     )
                   }}
                 >
@@ -133,10 +138,11 @@ export function FilmSearchFilter() {
                   value={filter.title}
                   onSelect={() => {
                     router.push(
-                      `${pathname}?${createQueryString(
-                        'popular',
-                        filter.title,
-                      )}`,
+                      `${
+                        pathname === '/search/films'
+                          ? pathname
+                          : `/search/films`
+                      }?${createQueryString('popular', filter.title)}`,
                     )
                   }}
                 >
@@ -167,7 +173,11 @@ export function FilmSearchFilter() {
                   value={filter.title}
                   onSelect={() => {
                     router.push(
-                      `${pathname}?${createQueryString('genre', filter.title)}`,
+                      `${
+                        pathname === '/search/films'
+                          ? pathname
+                          : `/search/films`
+                      }?${createQueryString('genre', filter.title)}`,
                     )
                   }}
                 >
@@ -198,10 +208,11 @@ export function FilmSearchFilter() {
                   value={filter.title}
                   onSelect={() => {
                     router.push(
-                      `${pathname}?${createQueryString(
-                        'service',
-                        filter.title,
-                      )}`,
+                      `${
+                        pathname === '/search/films'
+                          ? pathname
+                          : `/search/films`
+                      }?${createQueryString('service', filter.title)}`,
                     )
                   }}
                 >

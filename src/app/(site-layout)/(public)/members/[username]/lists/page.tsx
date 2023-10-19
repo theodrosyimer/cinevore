@@ -1,4 +1,4 @@
-import { Users } from '@/app/(site-layout)/(public)/members/user'
+import { Members } from '@/app/(site-layout)/(public)/members/user'
 import { db } from '@/lib/db'
 
 export const metadata = {

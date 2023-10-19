@@ -70,7 +70,7 @@ const preparedUser = db.query.user
   })
   .prepare()
 
-const preparedUsers = db.query.user
+const preparedUsersResources = db.query.user
   .findMany({
     columns: {
       password: false,
@@ -135,8 +135,56 @@ export async function getUserListsAndReviewsWithCommentsAndLikes(id: string) {
   return user
 }
 
-// export async function getAllUsersListsAndReviewsWithCommentsAndLikes() {
-//   const users = await preparedUsers.execute()
-//
-//   return users
-// }
+export async function getAllUsersListsAndReviewsWithCommentsAndLikes() {
+  const users = await preparedUsersResources.execute()
+
+  return users
+}
+
+const preparedUsers = db.query.user
+  .findMany({
+    columns: {
+      password: false,
+    },
+    with: {
+      lists: {
+        with: {
+          movies: {
+            columns: {
+              listId: false,
+            },
+          },
+          comments: true,
+          likes: true,
+        },
+      },
+      reviews: {
+        with: {
+          movie: {
+            columns: {
+              tmdbId: false,
+              imdbId: false,
+            },
+          },
+          comments: true,
+          likes: true,
+        },
+      },
+      movieInfosToUser: {
+        where: (movieInfoToUser, { eq, or }) =>
+          or(
+            eq(movieInfoToUser.watched, true),
+            eq(movieInfoToUser.reviewed, true),
+            eq(movieInfoToUser.liked, true),
+          ),
+      },
+      likes: true,
+    },
+  })
+  .prepare()
+
+export async function getAllUsersListsAndWatchedFilmsAndLikes() {
+  const users = await preparedUsers.execute()
+
+  return users
+}

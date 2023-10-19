@@ -21,6 +21,8 @@ export default async function DiaryPage({
 
       <section>
         <FilmCardList
+          // limit={12}
+          columnsCount={12}
           aspectRatio="portrait"
           width={92}
           movieImageWidth="w92"

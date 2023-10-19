@@ -131,7 +131,7 @@ export function SearchCombo() {
         </Button> */}
         <form
           onSubmit={onSubmit}
-          className={cn('relative w-full md:ml-2' /* , className */)}
+          className={cn('relative mr-2 w-full md:ml-2' /* , className */)}
           // {...props}
         >
           <Label htmlFor="search" className="sr-only">

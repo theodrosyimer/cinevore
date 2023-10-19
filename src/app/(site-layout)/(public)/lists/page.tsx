@@ -66,12 +66,13 @@ export default async function ListsPage() {
             >
               {' '}
               <UserFilmListDisplay
+                limit={4}
+                columnsCount={4}
                 key={list.title}
                 filmList={list}
-                limit={4}
                 // colsCount={10}
                 aspectRatio={'portrait'}
-                // width={300}
+                width={300}
                 movieImageWidth="w300"
               />
             </Link>
@@ -98,8 +99,9 @@ export default async function ListsPage() {
             </div>
             <div className="divide-y divide-border rounded-md border "></div>
             <UserFilmListDisplay
-              filmList={userLists[0]!}
               limit={4}
+              columnsCount={4}
+              filmList={userLists[0]!}
               // colsCount={10}
               aspectRatio={'portrait'}
               // width={185}

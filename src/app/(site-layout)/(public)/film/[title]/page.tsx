@@ -1,8 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { MovieBackdrop } from '@/components/film-backdrop'
 import MovieReviewList from '@/components/film-review-list'
+import { FilmReviews } from '@/components/film-reviews'
 import { MovieInfosTabs } from '@/components/film-tabs'
 import { FilmCardDisplay } from '@/components/film-user-card'
+import { Reviews } from '@/components/reviews'
 import { SimilarFilmCardDisplay } from '@/components/similar-film-user-card'
 import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
@@ -43,7 +45,7 @@ export default async function FilmPage({
     })
     return
   })
-  console.log('Search Params:', searchParams)
+
   const similarFilms = await getSimilarByID({
     id: `${searchParams.id}`,
     category: 'movie',
@@ -54,7 +56,6 @@ export default async function FilmPage({
     })
     return
   })
-  console.log('SIMILAR FILMS:', JSON.stringify(similarFilms, null, 2))
 
   if (!film) {
     return notFound()
@@ -84,7 +85,7 @@ export default async function FilmPage({
           className="rounded-b-md bg-gradient-to-r from-background"
         />
 
-        <div className="relative grid max-w-[1080px] grid-cols-5 gap-4">
+        <div className="relative grid grid-cols-[max-content,_1fr,max-content] gap-4">
           <img
             src={posterImageUrl!}
             alt={film?.title!}
@@ -95,7 +96,7 @@ export default async function FilmPage({
               'sticky top-20 z-40 col-auto aspect-[3/4] h-auto w-auto rounded-md object-cover',
             )}
           />
-          <div className="col-span-3 grid gap-2 self-center">
+          <div className=" grid gap-2 justify-self-center ">
             <h1 className="text-start text-2xl font-bold">{film?.title}</h1>
             <section>
               <p className="text-md text-muted-foreground">{film.overview}</p>
@@ -124,7 +125,7 @@ export default async function FilmPage({
                 Popular Reviews
               </h2>
               <Link
-                href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
+                href={'/reviews?popular=all-time'}
                 className={cn(
                   'text-sm uppercase',
                   buttonVariants({
@@ -137,6 +138,7 @@ export default async function FilmPage({
               </Link>
             </section>
             <div className="divide-y divide-border rounded-md border "></div>
+            <FilmReviews movieId={film.id} />
             <section className="mt-12 flex items-center justify-between justify-items-center">
               <h2 className="text-md uppercase text-muted-foreground">
                 Similar Films
@@ -156,9 +158,9 @@ export default async function FilmPage({
             </section>
             <div className="divide-y divide-border rounded-md border "></div>
             <div className="grid grid-cols-3 gap-y-4 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
-              {similarFilms?.results
-                ?.slice(0, 6)
-                .map((film) => (
+              {similarFilms?.results?.slice(0, 6).map((film) => {
+                if (!film.poster_path) return null
+                return (
                   <SimilarFilmCardDisplay
                     key={film.id}
                     movie={film}
@@ -167,7 +169,8 @@ export default async function FilmPage({
                     width={92}
                     className="col-auto"
                   />
-                ))}
+                )
+              })}
             </div>
             <section className="mt-12 flex items-center justify-between justify-items-center">
               <h2 className="text-md uppercase text-muted-foreground">

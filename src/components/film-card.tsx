@@ -74,7 +74,9 @@ export function FilmCard({
   return (
     <div
       className={cn(
-        `group relative grid gap-2 overflow-hidden rounded-md`,
+        `group relative grid gap-2 overflow-hidden rounded-md w-[${movieImageWidth.slice(
+          1,
+        )}px]`,
         className,
       )}
       {...props}
@@ -90,10 +92,10 @@ export function FilmCard({
           width={width}
           lang="en"
           className={cn(
-            'h-auto w-auto rounded-md object-cover transition-all focus:rounded-md ',
-            hasMenu ? 'hover:cursor-pointer hover:brightness-50' : '',
+            'h-auto w-auto rounded-md object-cover transition-all hover:brightness-50 focus:rounded-md',
+            hasMenu ? 'hover:cursor-pointer ' : '',
             aspectRatio === 'portrait' ? 'aspect-[0.667]' : 'aspect-video',
-            // `w-[${size.slice(1)}px]`,
+            `w-[${movieImageWidth.slice(1)}px]`,
           )}
         />
       </Link>

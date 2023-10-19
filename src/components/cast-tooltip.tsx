@@ -21,7 +21,7 @@ export function CastTooltip({ cast }: { cast: MovieCast }) {
             key={cast.id}
           >
             <Link
-              href={`/job/actor/${encodeURI(cast.name)}`}
+              href={`/job/actor/${encodeURI(cast.name)}?id=${cast.id}`}
               className={cn(
                 'rounded-md text-sm font-medium text-foreground transition-colors sm:text-xs',
               )}

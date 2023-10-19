@@ -71,6 +71,7 @@ async function FilmsPageDefaultContent() {
         <div className="mb-4 divide-y divide-border rounded-md border"></div>
         <FilmCardList
           limit={4}
+          columnsCount={4}
           aspectRatio={'portrait'}
           width={342}
           movieImageWidth="w342"
@@ -99,10 +100,11 @@ async function FilmsPageDefaultContent() {
         <div className="mb-4 divide-y divide-border rounded-md border"></div>
         <FilmCardList
           limit={12}
+          columnsCount={12}
           aspectRatio={'portrait'}
           width={92}
           movieImageWidth="w92"
-          isSlider={true}
+          isSlider={false}
           isSnapped={false}
         />
       </section>

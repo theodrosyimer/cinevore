@@ -17,11 +17,25 @@ import { insertListSchema } from '@/lib/validations/list'
 import { getCurrentUser } from '@/lib/session'
 import { Textarea } from '@/components/ui/textarea'
 
-interface NewListFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { SelectUser } from '@/types/db'
+import { User } from 'next-auth'
+
+interface NewListFormProps extends React.HTMLAttributes<HTMLDivElement> {
+  user: User
+}
 
 type FormData = z.infer<typeof insertListSchema>
 
-export function NewListForm({ className, ...props }: NewListFormProps) {
+export function NewListForm({ user, className, ...props }: NewListFormProps) {
   const {
     register,
     handleSubmit,
@@ -64,7 +78,7 @@ export function NewListForm({ className, ...props }: NewListFormProps) {
 
     toast({
       title: `List "${data.title}" created.`,
-      description: 'Your account has been created.',
+      description: 'Your list was created successfully.',
     })
     return router.push(response?.url ?? '/me')
   }
@@ -72,8 +86,8 @@ export function NewListForm({ className, ...props }: NewListFormProps) {
   return (
     <div className={cn('', className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
-        <div className="grid gap-2 md:grid-cols-2">
-          <div className="grid gap-2 items-start">
+        <div className="mb-4 grid gap-2 md:grid-cols-2">
+          <div className="grid items-start gap-2">
             <div className="grid gap-2">
               <div className="grid gap-1">
                 <Label className="sr-only" htmlFor="title">
@@ -98,9 +112,9 @@ export function NewListForm({ className, ...props }: NewListFormProps) {
               </div>
               <div className="grid gap-1">
                 <Label className="sr-only" htmlFor="privacy">
-                  Tags
+                  Privacy
                 </Label>
-                <Input
+                {/* <Input
                   id="privacy"
                   placeholder="privacy"
                   type="text"
@@ -110,7 +124,22 @@ export function NewListForm({ className, ...props }: NewListFormProps) {
                   autoFocus
                   disabled={isLoading || isGitHubLoading}
                   {...register('isPrivate')}
-                />
+                /> */}
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue
+                      placeholder=""
+                      className="placeholder-muted-foreground"
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Privacy</SelectLabel>
+                      <SelectItem value="false">Public</SelectItem>
+                      <SelectItem value="true">Private</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
                 {errors?.isPrivate && (
                   <p className="px-1 text-xs text-red-600">
                     {errors.isPrivate.message}
@@ -124,7 +153,7 @@ export function NewListForm({ className, ...props }: NewListFormProps) {
               Description
             </Label>
             <Textarea
-              placeholder="Type your description here."
+              placeholder="Describe what makes this list unique."
               id="description"
               disabled={isLoading || isGitHubLoading}
               className="h-64"

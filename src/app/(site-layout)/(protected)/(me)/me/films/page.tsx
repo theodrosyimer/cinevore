@@ -30,6 +30,8 @@ export default async function UserFilmsPage({
 
       <section className="flex space-x-4 pb-4">
         <FilmCardList
+          // limit={12}
+          columnsCount={12}
           aspectRatio="portrait"
           width={92}
           movieImageWidth="w92"

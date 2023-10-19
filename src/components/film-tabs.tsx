@@ -59,7 +59,7 @@ export function MovieInfosTabs({
               >
                 <div className="flex items-center space-x-2">
                   <Link
-                    href={`/job/${crew.job}/${crew.name}`}
+                    href={`/job/${crew.job}/${crew.name}?id=${crew.id}`}
                     className="w-max text-sm font-semibold hover:underline"
                   >
                     {crew.name}

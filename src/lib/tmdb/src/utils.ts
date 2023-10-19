@@ -4,6 +4,7 @@ import type {
   CommonFilterCategory,
   MovieCategory,
   MovieFilterCategory,
+  MovieSearchFilters,
   OptionalQueryOptions,
   QueryOptionsWithoutBodyAndCategory,
   RouteSegment,
@@ -44,7 +45,9 @@ export function mergeSearchParamsToUrl(
 }
 export function generateTMDBUrl(
   segment: RouteSegment,
-  params: QueryOptionsWithoutBodyAndCategory & OptionalQueryOptions,
+  params: QueryOptionsWithoutBodyAndCategory &
+    OptionalQueryOptions &
+    MovieSearchFilters,
 ) {
   const url = new URL(
     `${globalConfig.API_VERSION}/${segment}`,

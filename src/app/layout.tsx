@@ -1,6 +1,6 @@
 import '@/styles/globals.css'
 // import { Inter } from 'next/font/google'
-import ReactQueryProvider from '@/providers/react-query'
+import { Providers } from '@/providers/react-query'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { Inter as FontSans } from 'next/font/google'
 import localFont from 'next/font/local'
@@ -96,12 +96,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ReactQueryProvider>
+          <Providers>
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             {children}
             <Toaster />
             <TailwindIndicator />
-          </ReactQueryProvider>
+          </Providers>
         </ThemeProvider>
       </body>
     </html>

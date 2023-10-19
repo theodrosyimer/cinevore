@@ -59,14 +59,14 @@ export default async function IndexPage() {
           </MovieBackdrop>
         </div>
         <section>
-          <div className="grid grid-cols-7 gap-4">
-            <FilmCardList
-              limit={7}
-              aspectRatio="portrait"
-              movieImageWidth={getImageFormatSize('poster_sizes', 'w185')}
-              isSlider={true}
-            />
-          </div>
+          <FilmCardList
+            limit={7}
+            columnsCount={12}
+            aspectRatio="portrait"
+            width={185}
+            movieImageWidth={getImageFormatSize('poster_sizes', 'w185')}
+            isSlider={false}
+          />
         </section>
         <section>
           <h2
@@ -91,12 +91,28 @@ export default async function IndexPage() {
           </div>
         </section>
         <section>
-          <h2 className="text-md mb-2 uppercase text-muted-foreground">
-            Just reviewed...
-          </h2>
+          <div className="flex items-center justify-between justify-items-center">
+            <h2 className="text-md mb-2 uppercase text-muted-foreground">
+              Just Reviewed...
+            </h2>
+            <Link
+              href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
+              className={cn(
+                'text-sm uppercase',
+                buttonVariants({
+                  variant: 'link',
+                  className: 'pr-0 text-muted-foreground/50',
+                }),
+              )}
+            >
+              More
+            </Link>
+          </div>
+          <div className="divide-y divide-border rounded-md border "></div>
           <div className="grid grid-cols-12 gap-4">
             <FilmCardList
               limit={12}
+              columnsCount={12}
               aspectRatio="portrait"
               movieImageWidth={getImageFormatSize('poster_sizes', 'w92')}
               isSlider={true}

@@ -2,6 +2,7 @@
 
 import { CardSkeleton } from '@/components/card-skeleton'
 import { FilmCard, MovieArtworkProps } from '@/components/film-card'
+import { gridColumnsConfig } from '@/components/film-card-list'
 import { FilmCardDisplay } from '@/components/film-user-card'
 import { useFilms } from '@/hooks/useFilms-zod'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
@@ -12,7 +13,8 @@ import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
-  limit?: number
+  limit?: keyof typeof gridColumnsConfig
+
   className?: string
   width?: number
   movieImageWidth: TMDBImageSizesCategory[keyof TMDBImageSizesCategory]

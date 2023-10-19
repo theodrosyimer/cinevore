@@ -101,7 +101,6 @@ export const movieImagesSchema = z.object({
   logos: z.array(moviePosterSchema),
   posters: z.array(moviePosterSchema),
 })
-
 export const movieVideosSchema = z.object({
   results: z.array(movieVideoSchema),
 })

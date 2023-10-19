@@ -9,6 +9,7 @@ import {
   tMDBSearchMultiSchema,
   TMDBMovieResponse,
   SearchMovie,
+  PersonCredits,
 } from '../types/tmdb-api'
 import { extractLanguageFromLanguageCode, generateTMDBUrl } from './utils'
 import { type GlobalConfig, type QueryOptions } from '../types'
@@ -122,6 +123,33 @@ export async function searchByID({
   return data
 }
 
+export async function getPersonByID({
+  id,
+  language = globalConfig.language,
+  page = '1',
+}: Omit<QueryOptions, 'category'>) {
+  const url = generateTMDBUrl(`person/${id}`, {
+    language,
+    page,
+    append_to_response: 'videos,images,credits',
+    include_image_language: extractLanguageFromLanguageCode(language),
+    include_video_language: extractLanguageFromLanguageCode(language),
+  })
+
+  // console.log('URL', url.href);
+  const response = await fetch(url.href)
+
+  if (!response.ok) {
+    throw new Error(`Returned with a ${response.status} code`)
+  }
+
+  const data = (await response.json()) as PersonCredits
+
+  // TODO: need to parse the data
+  // return movieDetailsSchema.parse(data)
+  return data
+}
+
 export async function getSimilarByID({
   id,
   category,
@@ -203,13 +231,13 @@ export async function searchByTitle({
 }
 
 export async function discover({
-  filter,
+  filters,
   category,
   language = globalConfig.language,
   page = '1',
 }: QueryOptions) {
   const url = generateTMDBUrl(`discover/${category}`, {
-    filter,
+    ...filters,
     language,
     page,
   })

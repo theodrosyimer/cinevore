@@ -29,7 +29,7 @@ export function Review({
   // console.log('FILM', film, review.user)
 
   return (
-    <article className="mb-8 flex gap-6">
+    <article className="flex gap-6">
       <FilmCard
         aspectRatio="portrait"
         // @ts-ignore
@@ -40,7 +40,7 @@ export function Review({
       />
       <div className="grid">
         <h2 className="text-xl ">{film.title}</h2>
-        <UserInfos user={review.user} avatarWidth={1} showUserName={false} />
+        <UserInfos user={review.user} showUserName={false} />
         <p className="text-muted-foreground">{review.content}</p>
         <p>{likesCount} likes</p>
         {/* {review.commentsToMovieReview.map(comment => comment?.comments?.content)} */}

@@ -30,13 +30,15 @@ import { Icons } from '@/components/icons'
 interface UserInfos {
   user: User
   showUserName?: boolean
-  avatarWidth?: number
+  avatarWidth?: string
+  className?: string
 }
 
 export function UserInfos({
   user,
+  className,
+  avatarWidth,
   showUserName = true,
-  avatarWidth = 4,
 }: UserInfos) {
   return (
     <Card className="xs:w-auto w-auto border-0">
@@ -54,14 +56,9 @@ export function UserInfos({
             showUserName ? 'space-x-4' : 'space-x-2',
           )}
         >
-          <Avatar className="lg:h-8 lg:w-8">
-            <AvatarImage
-              src={user.image ?? undefined}
-              className={cn(`h-[${avatarWidth}rem] w-[${avatarWidth}]rem`)}
-            />
-            <AvatarFallback
-              className={cn(`h-[${avatarWidth}rem] w-[${avatarWidth}]rem`)}
-            >
+          <Avatar className={cn('h-8 w-8', className)}>
+            <AvatarImage src={user.image ?? undefined} className={cn()} />
+            <AvatarFallback className={cn('', avatarWidth)}>
               <span className="text-sm">
                 {user.name?.slice(0, 2).toUpperCase()}
               </span>
