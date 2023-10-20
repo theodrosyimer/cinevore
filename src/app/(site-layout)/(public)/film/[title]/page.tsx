@@ -85,7 +85,8 @@ export default async function FilmPage({
           className="rounded-b-md bg-gradient-to-r from-background"
         />
 
-        <div className="relative grid grid-cols-[max-content,_1fr,max-content] gap-4">
+        {/* <div className="relative grid grid-cols-[_minmax(_4rem,_6rem),_1fr,max-content] gap-4 sm:grid-cols-[_minmax(_5rem,_8rem),_1fr,max-content] md:grid-cols-[max-content,_1fr,max-content]"> */}
+        <div className="relative grid grid-cols-[1] gap-4 sm:grid-cols-[_minmax(_5rem,_8rem),_1fr,max-content] md:grid-cols-[max-content,_1fr,max-content]">
           <img
             src={posterImageUrl!}
             alt={film?.title!}
@@ -93,19 +94,19 @@ export default async function FilmPage({
             // height="200"
             lang="en"
             className={cn(
-              'sticky top-20 z-40 col-auto aspect-[3/4] h-auto w-auto rounded-md object-cover',
+              'col-auto aspect-[3/4] h-auto w-16 rounded-md object-cover sm:sticky sm:top-20 sm:z-40 sm:col-auto sm:w-auto',
             )}
           />
           <div className=" grid gap-2 justify-self-center ">
             <h1 className="text-start text-2xl font-bold">{film?.title}</h1>
             <section>
-              <p className="text-md text-muted-foreground">{film.overview}</p>
+              <p className="text-muted-foreground">{film.overview}</p>
             </section>
             <section>
               <MovieInfosTabs
                 credits={film.credits}
                 genres={film.genres}
-                className="hidden w-full sm:block"
+                className="w-full"
               />
             </section>
             <span className={cn('text-sm text-muted-foreground')}>

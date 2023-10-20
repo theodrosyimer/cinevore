@@ -65,6 +65,7 @@ export default async function IndexPage() {
             width={342}
             movieImageWidth={getImageFormatSize('poster_sizes', 'w342')}
             isSlider={false}
+            hasMenu={true}
           />
         </section>
         <section>

@@ -36,10 +36,10 @@ export function UserMovieActions({ ...className }: { className?: string }) {
         <Icons.star />
         <Icons.star />
       </div>
-      <div className="my-4 divide-y divide-border rounded-md border"></div>
+      {/* <div className="my-4 divide-y divide-border rounded-md border"></div>
       <div className="flex justify-evenly">
         <FilmRatingStars />
-      </div>
+      </div> */}
     </article>
   )
 }

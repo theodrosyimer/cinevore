@@ -37,6 +37,7 @@ export function Review({
         // @ts-ignore
         movieImageWidth={getImageFormatSize('poster_sizes', 'w92')}
         movie={film}
+        hasMenu={false}
       />
       <div className="grid">
         <h2 className="text-xl ">{film.title}</h2>
