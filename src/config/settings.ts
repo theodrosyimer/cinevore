@@ -7,11 +7,11 @@ export const settingsConfig: SettingsConfig = {
       href: '/settings',
       items: [],
     },
-    {
-      title: 'Account',
-      href: '/settings/account',
-      items: [],
-    },
+    // {
+    //   title: 'Account',
+    //   href: '/settings/account',
+    //   items: [],
+    // },
     {
       title: 'Password',
       href: '/settings/password',

@@ -238,7 +238,6 @@ export default async function IndexPage() {
                 More
               </Link>
             </div>
-            <div className="divide-y divide-border rounded-md border"></div>
           </section>
         </div>
       </div>
