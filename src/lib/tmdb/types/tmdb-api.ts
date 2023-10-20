@@ -312,7 +312,9 @@ export const personSchema = z.object({
   popularity: z.number().optional(),
   profile_path: z.union([z.string().optional(), z.null()]),
   images: personImagesSchema.optional(),
-  credits: movieCastSchema.optional(),
+  credits: z.object({
+    cast: z.array(movieCastSchema.optional()),
+  }),
 })
 
 export type PersonCredits = z.infer<typeof personSchema>

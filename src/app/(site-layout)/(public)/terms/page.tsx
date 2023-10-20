@@ -1,4 +1,4 @@
-import { SidebarNav } from '@/app/(site-layout)/(protected)/(settings)/settings/components/sidebar-nav'
+import { SidebarNav } from '@/components/sidebar-nav'
 import { BackButton } from '@/components/back-button'
 import { Icons } from '@/components/icons'
 import { buttonVariants } from '@/components/ui/button'

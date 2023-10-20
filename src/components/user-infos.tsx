@@ -59,7 +59,7 @@ export function UserInfos({
           <Avatar className={cn('h-8 w-8', className)}>
             <AvatarImage src={user.image ?? undefined} className={cn()} />
             <AvatarFallback className={cn('', avatarWidth)}>
-              <span className="text-sm">
+              <span className={cn('text-sm')}>
                 {user.name?.slice(0, 2).toUpperCase()}
               </span>
               {/* <Icons.user /> */}

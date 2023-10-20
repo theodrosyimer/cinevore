@@ -4,9 +4,9 @@ import { FilmCard, MovieArtworkProps } from '@/components/film-card'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'
-import { getPopular } from '@/lib/tmdb/src/tmdb'
+import { getPersonByID, getPopular, searchByID } from '@/lib/tmdb/src/tmdb'
 import { useQuery } from '@tanstack/react-query'
-import { useFilms } from '@/hooks/useFilms-zod'
+import { MovieCast } from '@/lib/tmdb/types/tmdb-api-movie-details'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
   columnsCount: keyof typeof gridColumnsConfig
@@ -15,6 +15,7 @@ export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
   width?: number
   hasMenu?: boolean
   className?: string
+  moviesCredits: MovieCast[]
 }
 
 export interface FilmListOptions {
@@ -39,7 +40,7 @@ export const gridColumnsConfig = {
   14: 'grid-cols-[14]',
 } as const
 
-export async function FilmCardList(
+export async function ActorFilmCardList(
   {
     limit,
     className,
@@ -50,25 +51,45 @@ export async function FilmCardList(
     isSnapped = true,
     hasMenu = false,
     columnsCount,
+    moviesCredits,
   }: FilmCardProps & FilmListOptions = {} as FilmCardProps & FilmListOptions,
 ) {
   // const { data: films, isLoading } = useQuery({
-  //   queryKey: ['popularMovies'],
-  //   queryFn: () => getPopular({ category: 'movie', page: '1' }),
+  //   queryKey: ['personCredits'],
+  //   queryFn: () => getPersonByID({ id }),
   // })
-  const { data: films, isLoading } = useFilms()
+  // // const { data: films, isLoading } = useFilms()
 
-  if (isLoading) {
-    return <CardSkeleton />
-  }
+  // if (isLoading) {
+  //   return <CardSkeleton />
+  // }
 
-  if (!films) {
-    return <div>No films found</div>
-  }
+  // if (!films) {
+  //   return <div>No films found</div>
+  // }
 
-  if (limit) {
-    films.results = films.results.slice(0, limit)
-  }
+  // if (limit) {
+  //   films.results = films.results.slice(0, limit)
+  // }
+
+  // {
+  //   moviesCredits.map(async (movie) => {
+  //     const film = await searchByID({
+  //       id: movie.id.toString(),
+  //       category: 'movie',
+  //     }).catch((error) => {
+  //       console.log(error.message)
+  //     })
+
+  //     if (!film) return
+
+  //     return (
+  //       // TODO: fix this type error
+  //       // @ts-ignore
+  //       <Review key={movie.id} review={movie} film={film} />
+  //     )
+  //   })
+  // }
 
   return (
     <>

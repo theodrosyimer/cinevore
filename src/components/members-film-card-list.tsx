@@ -6,7 +6,7 @@ import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'
 import { getPopular } from '@/lib/tmdb/src/tmdb'
 import { useQuery } from '@tanstack/react-query'
-import { useFilms } from '@/hooks/useFilms-zod'
+import { SelectComment, SelectLike, SelectMovie, SelectUser } from '@/types/db'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
   columnsCount: keyof typeof gridColumnsConfig
@@ -15,6 +15,17 @@ export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
   width?: number
   hasMenu?: boolean
   className?: string
+  filmList: SelectUser & {
+    movies: {
+      movieId: number
+      listId: number
+      addedAt: Date
+      movie: SelectMovie
+    }[]
+    user?: Omit<SelectUser, 'password'>
+    likes?: SelectLike[]
+    comments?: SelectComment[]
+  }
 }
 
 export interface FilmListOptions {
@@ -39,7 +50,7 @@ export const gridColumnsConfig = {
   14: 'grid-cols-[14]',
 } as const
 
-export async function FilmCardList(
+export async function MemberFilmCardList(
   {
     limit,
     className,
@@ -52,22 +63,22 @@ export async function FilmCardList(
     columnsCount,
   }: FilmCardProps & FilmListOptions = {} as FilmCardProps & FilmListOptions,
 ) {
-  // const { data: films, isLoading } = useQuery({
-  //   queryKey: ['popularMovies'],
-  //   queryFn: () => getPopular({ category: 'movie', page: '1' }),
-  // })
-  const { data: films, isLoading } = useFilms()
+  const { data: filmsPages, isLoading } = useQuery({
+    queryKey: ['popularMovies'],
+    queryFn: async () => getPopular({ category: 'movie', page: '1' }),
+  })
+  // const { data: films, isLoading } = useFilms()
 
   if (isLoading) {
     return <CardSkeleton />
   }
 
-  if (!films) {
+  if (!filmsPages) {
     return <div>No films found</div>
   }
 
   if (limit) {
-    films.results = films.results.slice(0, limit)
+    filmsPages.results = filmsPages.results.slice(0, limit)
   }
 
   return (
@@ -90,7 +101,7 @@ export async function FilmCardList(
             isSnapped ? 'snap-x snap-mandatory' : '',
           )}
         >
-          {films.results.map((film) => (
+          {filmsPages.results.map((film) => (
             <FilmCard
               key={film.id}
               movie={film}

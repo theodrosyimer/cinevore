@@ -4,39 +4,46 @@ import { Separator } from '@/components/ui/separator'
 import { UserInfos } from '@/components/user-infos'
 import { userNavigationConfig } from '@/config/user-profile'
 import { db } from '@/lib/db'
-import { MembersSidebarNav } from '@/components/members-sidebar-nav'
+import { UserFilmListDisplay } from '@/components/film-user-card-list'
+import { getAllUserListsAndWatchedFilmsAndLikesByUsername } from '@/lib/actions/admin/getUserListsAndReviewsWithCommentsAndLikes'
+import { MemberFilmCardList } from '@/components/members-film-card-list'
 import { membersNavConfig } from '@/config/members'
+import { MembersSidebarNav } from '@/components/members-sidebar-nav'
 
 export const metadata = {
   title: 'Member Films Reviews Page',
   description: 'Find all the list of films of a particular member.',
 }
 
-export type MemberFilmReviewsPageProps = {
+export type MemberFilmsPageProps = {
   params: { username: string }
 }
 
-export default async function MemberFilmReviewsPage({
+export default async function MemberFilmsPage({
   params,
-}: MemberFilmReviewsPageProps) {
+}: MemberFilmsPageProps) {
   console.log('PARAMS:', params)
 
-  const userWithReviews = await db.query.user.findFirst({
-    where: (user, { eq }) => eq(user.name, params.username),
+  // const userWithReviews = await db.query.user.findFirst({
+  //   where: (user, { eq }) => eq(user.name, params.username),
 
-    with: {
-      // movies: {
-      //   with: {
-      //     movie: true,
-      //   },
-      // },
-      reviews: true,
-    },
-  })
+  //   with: {
+  //     movieInfosToUser: {
+  //       with: {
+  //         movie: true,
+  //       },
+  //     },
+  //     reviews: true,
+  //   },
+  // })
+
+  const userWithReviews =
+    await getAllUserListsAndWatchedFilmsAndLikesByUsername(params.username)
 
   if (!userWithReviews) {
     return <div>No lists found</div>
   }
+  // console.log('USER WITH REVIEWS:', JSON.stringify(userWithReviews, null, 2))
 
   return (
     <>
@@ -62,7 +69,7 @@ export default async function MemberFilmReviewsPage({
             />
           </aside>
           <div className="grid flex-1 gap-8 md:max-w-2xl">
-            <h1 className="text-center text-4xl">Member Film Reviews Page</h1>
+            {/* <MemberFilmCardList filmList={userWithReviews} /> */}
             {userWithReviews.reviews.map((review) => (
               <div key={review.id}>
                 <h2>Review ID: {review.id}</h2>

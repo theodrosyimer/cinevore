@@ -1,4 +1,4 @@
-import { Members } from '@/app/(site-layout)/(public)/members/user'
+import { Members } from '@/app/(site-layout)/(public)/members/members'
 import { buttonVariants } from '@/components/ui/button'
 import { UserAvatar } from '@/components/user-avatar'
 import { db } from '@/lib/db'

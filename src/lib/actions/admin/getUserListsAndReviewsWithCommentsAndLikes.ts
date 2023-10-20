@@ -2,7 +2,7 @@ import { db } from '@/lib/db'
 import { sql } from 'drizzle-orm'
 
 const preparedUser = db.query.user
-  .findMany({
+  .findFirst({
     where: (user, { eq }) => eq(user.id, sql.placeholder('id')),
     columns: {
       password: false,
@@ -177,6 +177,7 @@ const preparedUsers = db.query.user
             eq(movieInfoToUser.reviewed, true),
             eq(movieInfoToUser.liked, true),
           ),
+        // with: {}
       },
       likes: true,
     },
@@ -185,6 +186,60 @@ const preparedUsers = db.query.user
 
 export async function getAllUsersListsAndWatchedFilmsAndLikes() {
   const users = await preparedUsers.execute()
+
+  return users
+}
+
+const preparedUserResource = db.query.user
+  .findFirst({
+    where: (user, { eq }) => eq(user.name, sql.placeholder('name')),
+    columns: {
+      password: false,
+    },
+    with: {
+      lists: {
+        with: {
+          movies: {
+            columns: {
+              listId: false,
+            },
+          },
+          comments: true,
+          likes: true,
+        },
+      },
+      reviews: {
+        with: {
+          movie: {
+            columns: {
+              tmdbId: false,
+              imdbId: false,
+            },
+          },
+          comments: true,
+          likes: true,
+        },
+      },
+      movieInfosToUser: {
+        where: (movieInfoToUser, { eq, or }) =>
+          or(
+            eq(movieInfoToUser.watched, true),
+            eq(movieInfoToUser.reviewed, true),
+            eq(movieInfoToUser.liked, true),
+          ),
+        with: {
+          movie: true,
+        },
+      },
+      likes: true,
+    },
+  })
+  .prepare()
+
+export async function getAllUserListsAndWatchedFilmsAndLikesByUsername(
+  name: string,
+) {
+  const users = await preparedUserResource.execute({ name })
 
   return users
 }

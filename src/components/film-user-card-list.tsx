@@ -104,6 +104,11 @@ export function UserFilmListDisplay(
     zindex = limit
   }
 
+  if (limit) {
+    filmList.movies = filmList.movies.slice(0, limit)
+    zindex = limit
+  }
+
   return (
     <>
       <div className="relative grid gap-2 overflow-x-hidden hover:rounded-md">

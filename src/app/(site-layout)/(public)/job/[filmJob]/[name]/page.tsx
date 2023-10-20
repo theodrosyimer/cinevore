@@ -1,23 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import { MovieBackdrop } from '@/components/film-backdrop'
+import { ActorFilmCardList } from '@/components/actor-films-credits'
 import { FilmCardList } from '@/components/film-card-list'
-import MovieReviewList from '@/components/film-review-list'
-import { MovieInfosTabs } from '@/components/film-tabs'
-import { Badge } from '@/components/ui/badge'
-import { buttonVariants } from '@/components/ui/button'
+import { FilmCardDisplay } from '@/components/film-user-card'
 import { toast } from '@/components/ui/use-toast'
-import { UserMovieActions } from '@/components/user-movie-infos'
-import { getCurrentUser } from '@/lib/session'
-import {
-  getPersonByID,
-  globalConfig,
-  searchByID,
-  searchByTitle,
-} from '@/lib/tmdb/src/tmdb'
+import { getPersonByID } from '@/lib/tmdb/src/tmdb'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
-import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils/utils'
-import Link from 'next/link'
-import { notFound, useSearchParams } from 'next/navigation'
+import { cn } from '@/lib/utils/utils'
+import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Job Details Page',
@@ -38,7 +27,6 @@ export default async function JobDetailsPage({
   params,
   searchParams,
 }: JobDetailsPageProps) {
-  const { user } = await getCurrentUser()
   const person = await getPersonByID({
     id: `${searchParams.id}`,
   }).catch((error) => {
@@ -70,15 +58,9 @@ export default async function JobDetailsPage({
 
   return (
     <>
-      <div className="grid w-full justify-center gap-8">
-        {/* <MovieBackdrop
-          url={posterImageUrl}
-          altText={person.title}
-          className="rounded-b-md bg-gradient-to-r from-background"
-        /> */}
-
-        <div className="relative grid gap-8 md:grid-cols-[_0.33fr,_1fr] md:gap-8 lg:gap-12">
-          <div className="sm:grid sm:grid-cols-[_0.33fr,_1fr] sm:gap-4 md:block">
+      <div className="relative grid gap-8 md:grid-cols-[_minmax(_12rem,_0.33fr),_1fr] md:gap-8 lg:gap-12">
+        <div className="sm:grid sm:grid-cols-[_0.33fr,_1fr] sm:gap-4 md:block">
+          <div className="col-auto grid gap-2">
             <img
               src={posterImageUrl!}
               alt={person?.name!}
@@ -89,34 +71,38 @@ export default async function JobDetailsPage({
                 'col-auto mb-4 aspect-[0.667] h-auto w-80 rounded-md object-cover',
               )}
             />
-            <p className="xs:text-sm text-sm text-muted-foreground sm:text-base ">
-              {person.biography}
+            <p className="text-md text-center font-bold md:hidden">
+              {person?.name}
             </p>
           </div>
-          <div className="grid gap-2 self-center">
-            <section>
-              <div className="grid items-center justify-between">
-                <p className="text-md uppercase text-muted-foreground">
-                  Films starring
-                </p>
-                <h1 className="text-start text-2xl font-bold">
-                  {person?.name}
-                </h1>
-              </div>
-              <div className="my-4 divide-y divide-border rounded-md border"></div>
-              <FilmCardList
-                // limit={12}
-                columnsCount={4}
-                aspectRatio={'portrait'}
-                width={185}
-                movieImageWidth="w185"
-                isSlider={false}
-                isSnapped={false}
-              />
-            </section>
-            <div className="divide-y divide-border rounded-md border "></div>
-          </div>
+          <p className="xs:text-sm text-sm text-muted-foreground sm:text-base ">
+            {person.biography}
+          </p>
         </div>
+        <div className="grid gap-2">
+          <section>
+            <div className="grid items-center justify-between">
+              <p className="text-md uppercase text-muted-foreground">
+                Films starring
+              </p>
+              <h1 className="text-start text-2xl font-bold">{person?.name}</h1>
+            </div>
+            <div className="my-4 divide-y divide-border rounded-md border"></div>
+
+            {/* <ActorFilmCardList moviesCredits={person.credits?.cast} /> */}
+
+            <FilmCardList
+              // limit={12}
+              columnsCount={4}
+              aspectRatio={'portrait'}
+              width={185}
+              movieImageWidth="w185"
+              isSlider={false}
+              isSnapped={false}
+            />
+          </section>
+        </div>
+        {/* <div className="divide-y divide-border rounded-md border"></div> */}
       </div>
     </>
   )

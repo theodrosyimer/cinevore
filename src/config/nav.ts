@@ -19,10 +19,10 @@ export const siteLayoutConfig: SiteLayoutConfig = {
       title: 'Features',
       href: '/#features',
     },
-    {
-      title: 'Pricing',
-      href: '/pricing',
-    },
+    // {
+    //   title: 'Pricing',
+    //   href: '/pricing',
+    // },
     {
       title: 'Admin',
       href: '/admin/dashboard',

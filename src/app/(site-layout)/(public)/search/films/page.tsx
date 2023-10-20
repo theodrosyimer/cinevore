@@ -24,7 +24,12 @@ export default async function SearchFilmsPage() {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
     queryKey: ['popularMovies'],
-    queryFn: () => getPopular({ category: 'movie', page: '1' }),
+    queryFn: async () =>
+      await Promise.all([
+        getPopular({ category: 'movie', page: '1' }),
+        getPopular({ category: 'movie', page: '2' }),
+        getPopular({ category: 'movie', page: '3' }),
+      ]),
   })
   const dehydratedState = dehydrate(queryClient)
 

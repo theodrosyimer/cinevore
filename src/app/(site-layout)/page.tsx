@@ -24,10 +24,10 @@ export default async function IndexPage() {
           <MovieBackdrop
             url={`${globalConfig.IMAGE_BASE_URI}/w1280/nuO8o9ltxhI7AZQxePavEZ4TyHa.jpg`}
             altText=""
-            className="rounded-b-md opacity-50"
+            className="rounded-b-md opacity-40"
           >
-            <section className="absolute grid w-full grid-cols-8 justify-items-center self-end">
-              <div className="col-span-3 col-start-3 col-end-8 grid gap-2 md:col-span-5 md:col-start-3 md:col-end-8">
+            <section className="absolute grid w-full items-center justify-items-start gap-4 self-end sm:left-16 md:self-center">
+              <div className="grid gap-2">
                 <h1 className="text-left font-bold sm:text-xl md:text-3xl lg:text-4xl">
                   Track films you&apos;ve watched.
                   <br />
@@ -40,7 +40,7 @@ export default async function IndexPage() {
                 <p className="text-left text-xs text-muted-foreground sm:text-sm md:text-lg lg:text-xl">
                   Cinevore, the social network for film lovers. Join us today!
                 </p>
-                <div className="flex justify-center gap-4">
+                <div className="flex justify-end gap-4">
                   <Link
                     href="/register"
                     className={cn(buttonVariants({ variant: 'default' }))}
@@ -48,10 +48,10 @@ export default async function IndexPage() {
                     Get Started
                   </Link>
                   <Link
-                    href="/register"
+                    href="/films"
                     className={cn(buttonVariants({ variant: 'secondary' }))}
                   >
-                    Get Started
+                    Browse Films
                   </Link>
                 </div>
               </div>
@@ -60,11 +60,11 @@ export default async function IndexPage() {
         </div>
         <section>
           <FilmCardList
-            limit={7}
-            columnsCount={12}
+            limit={4}
+            columnsCount={4}
             aspectRatio="portrait"
-            width={185}
-            movieImageWidth={getImageFormatSize('poster_sizes', 'w185')}
+            width={342}
+            movieImageWidth={getImageFormatSize('poster_sizes', 'w342')}
             isSlider={false}
           />
         </section>
@@ -75,8 +75,9 @@ export default async function IndexPage() {
           >
             Cinevore lets you
           </h2>
-          <div className="grid grid-cols-1 gap-2  md:grid-cols-2 lg:grid-cols-3">
-            {featuresConfig.map((feature, index) => {
+          <div className="grid grid-cols-1 gap-2  sm:grid-cols-2 lg:grid-cols-3">
+            {/* {featuresConfig.map((feature, index) => {
+              let icon = Icons[feature.icon]
               return (
                 <Card key={index} className="p-4">
                   <CardContent className="grid grid-cols-2">
@@ -87,7 +88,55 @@ export default async function IndexPage() {
                   </CardContent>
                 </Card>
               )
-            })}
+            })} */}
+            <Card className="p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
+                <Icons.watched className="col-auto md:h-10 md:w-10" />
+                <CardDescription className="text-md sm:text-foreground">
+                  {featuresConfig[0]?.description}
+                </CardDescription>
+              </CardContent>
+            </Card>
+            <Card className="p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
+                <Icons.like className="col-auto md:h-10 md:w-10" />
+                <CardDescription className="text-md sm:text-foreground">
+                  {featuresConfig[1]?.description}
+                </CardDescription>
+              </CardContent>
+            </Card>
+            <Card className="p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
+                <Icons.listVideo className="col-auto md:h-10 md:w-10" />
+                <CardDescription className="text-md sm:text-foreground">
+                  {featuresConfig[2]?.description}
+                </CardDescription>
+              </CardContent>
+            </Card>
+            <Card className="p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
+                <Icons.star className="col-auto md:h-10 md:w-10" />
+                <CardDescription className="text-md sm:text-foreground">
+                  {featuresConfig[3]?.description}
+                </CardDescription>
+              </CardContent>
+            </Card>
+            <Card className="p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
+                <Icons.post className="col-auto md:h-10 md:w-10" />
+                <CardDescription className="text-md sm:text-foreground">
+                  {featuresConfig[4]?.description}
+                </CardDescription>
+              </CardContent>
+            </Card>
+            <Card className="p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
+                <Icons.page className="col-auto md:h-10 md:w-10" />
+                <CardDescription className="text-md sm:text-foreground">
+                  {featuresConfig[5]?.description}
+                </CardDescription>
+              </CardContent>
+            </Card>
           </div>
         </section>
         <section>
@@ -96,7 +145,7 @@ export default async function IndexPage() {
               Just Reviewed...
             </h2>
             <Link
-              href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
+              href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?popular=all-time`}
               className={cn(
                 'text-sm uppercase',
                 buttonVariants({
@@ -108,16 +157,14 @@ export default async function IndexPage() {
               More
             </Link>
           </div>
-          <div className="divide-y divide-border rounded-md border "></div>
-          <div className="grid grid-cols-12 gap-4">
-            <FilmCardList
-              limit={12}
-              columnsCount={12}
-              aspectRatio="portrait"
-              movieImageWidth={getImageFormatSize('poster_sizes', 'w92')}
-              isSlider={true}
-            />
-          </div>
+          <div className="mb-4 divide-y divide-border rounded-md border"></div>
+          <FilmCardList
+            limit={12}
+            columnsCount={12}
+            aspectRatio="portrait"
+            movieImageWidth={getImageFormatSize('poster_sizes', 'w92')}
+            isSlider={true}
+          />
         </section>
         <section>
           <p className="text-center text-2xl">
@@ -137,7 +184,7 @@ export default async function IndexPage() {
                 Popular reviews this week
               </h2>
               <Link
-                href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
+                href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?popular=all-time`}
                 className={cn(
                   'text-sm uppercase',
                   buttonVariants({
@@ -159,7 +206,7 @@ export default async function IndexPage() {
                 Popular lists
               </h2>
               <Link
-                href={`${process.env.NEXT_PUBLIC_APP_URL}/lists?sortBy=popular`}
+                href={`${process.env.NEXT_PUBLIC_APP_URL}/lists?popular=all-time`}
                 className={cn(
                   'text-sm uppercase',
                   buttonVariants({
@@ -180,7 +227,7 @@ export default async function IndexPage() {
                 Popular reviewers
               </h2>
               <Link
-                href={`${process.env.NEXT_PUBLIC_APP_URL}/members?sortBy=popular`}
+                href={`${process.env.NEXT_PUBLIC_APP_URL}/members?popular=all-time`}
                 className={cn(
                   'text-sm uppercase',
                   buttonVariants({

@@ -46,7 +46,7 @@ export default async function ListsPage() {
             films.
           </h1>
           <Link
-            href="/me/list/new"
+            href="/list/new"
             className={cn(
               'w-max justify-self-center',
               buttonVariants({ variant: 'default' }),
@@ -97,7 +97,7 @@ export default async function ListsPage() {
                 More
               </Link>
             </div>
-            <div className="divide-y divide-border rounded-md border "></div>
+            <div className="mb-4 divide-y divide-border rounded-md border "></div>
             <UserFilmListDisplay
               limit={4}
               columnsCount={4}

@@ -1,4 +1,4 @@
-import { SidebarNav } from '@/app/(site-layout)/(protected)/(settings)/settings/components/sidebar-nav'
+import { SidebarNav } from '@/components/sidebar-nav'
 import { ProfileForm } from '@/app/(site-layout)/(protected)/(settings)/settings/profile-form'
 import { Separator } from '@/components/ui/separator'
 import { settingsConfig } from '@/config/settings'
