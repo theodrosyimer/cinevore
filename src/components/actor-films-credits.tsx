@@ -111,7 +111,7 @@ export async function ActorFilmCardList(
             isSnapped ? 'snap-x snap-mandatory' : '',
           )}
         >
-          {films.results.map((film) => (
+          {/* {films.results.map((film) => (
             <FilmCard
               key={film.id}
               movie={film}
@@ -127,7 +127,7 @@ export async function ActorFilmCardList(
               )}
               hasMenu={hasMenu}
             />
-          ))}
+          ))} */}
         </article>
       </div>
     </>
