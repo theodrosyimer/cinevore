@@ -13,24 +13,28 @@ export const adminDashboardConfig: AdminDashboardConfig = {
       title: 'Films',
       href: '/admin/dashboard/films',
       icon: 'logo',
+      disabled: true,
       items: [],
     },
     {
       title: 'Lists',
       href: '/admin/dashboard/lists',
       icon: 'logo',
+      disabled: true,
       items: [],
     },
     {
       title: 'Reviews',
       href: '/admin/dashboard/reviews',
       icon: 'post',
+      disabled: true,
       items: [],
     },
     {
       title: 'Comments',
       href: '/admin/dashboard/comments',
       icon: 'comment',
+      disabled: true,
       items: [],
     },
     // {

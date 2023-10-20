@@ -21,7 +21,7 @@ export function UserCreateButton({
   async function onClick() {
     setIsLoading(true)
 
-    const response = await fetch('/api/posts', {
+    const response = await fetch('/api/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export function UserCreateButton({
     if (!response?.ok) {
       if (response.status === 402) {
         return toast({
-          title: 'Limit of 3 posts reached.',
+          title: 'Limit of 3 items reached.',
           description: 'Please upgrade to the PRO plan.',
           variant: 'destructive',
         })
@@ -44,7 +44,7 @@ export function UserCreateButton({
 
       return toast({
         title: 'Something went wrong.',
-        description: 'Your post was not created. Please try again.',
+        description: 'User was not created. Please try again.',
         variant: 'destructive',
       })
     }
