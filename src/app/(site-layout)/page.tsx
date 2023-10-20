@@ -25,38 +25,37 @@ export default async function IndexPage() {
             url={`${globalConfig.IMAGE_BASE_URI}/w1280/nuO8o9ltxhI7AZQxePavEZ4TyHa.jpg`}
             altText=""
             className="rounded-b-md opacity-40"
-          >
-            <section className="absolute grid w-full items-center justify-items-start gap-4 self-end sm:left-16 md:self-center">
-              <div className="grid gap-2">
-                <h1 className="text-left font-bold sm:text-xl md:text-3xl lg:text-4xl">
-                  Track films you&apos;ve watched.
-                  <br />
-                  Save those you want to see.
-                  <br />
-                  Rate and review them.
-                  <br />
-                  Tell your friends what you think.
-                </h1>
-                <p className="text-left text-xs text-muted-foreground sm:text-sm md:text-lg lg:text-xl">
-                  Cinevore, the social network for film lovers. Join us today!
-                </p>
-                <div className="flex justify-end gap-4">
-                  <Link
-                    href="/register"
-                    className={cn(buttonVariants({ variant: 'default' }))}
-                  >
-                    Get Started
-                  </Link>
-                  <Link
-                    href="/films"
-                    className={cn(buttonVariants({ variant: 'secondary' }))}
-                  >
-                    Browse Films
-                  </Link>
-                </div>
+          ></MovieBackdrop>
+          <section className="absolute grid w-full items-center justify-items-start gap-4 self-end sm:left-16 md:self-center">
+            <div className="grid gap-2">
+              <h1 className="text-left font-bold sm:text-xl md:text-3xl lg:text-4xl">
+                Track films you&apos;ve watched.
+                <br />
+                Save those you want to see.
+                <br />
+                Rate and review them.
+                <br />
+                Tell your friends what you think.
+              </h1>
+              <p className="text-left text-xs text-muted-foreground sm:text-sm md:text-lg lg:text-xl">
+                Cinevore, the social network for film lovers. Join us today!
+              </p>
+              <div className="flex justify-end gap-4">
+                <Link
+                  href="/register"
+                  className={cn(buttonVariants({ variant: 'default' }))}
+                >
+                  Get Started
+                </Link>
+                <Link
+                  href="/films"
+                  className={cn(buttonVariants({ variant: 'secondary' }))}
+                >
+                  Browse Films
+                </Link>
               </div>
-            </section>
-          </MovieBackdrop>
+            </div>
+          </section>
         </div>
         <section>
           <FilmCardList

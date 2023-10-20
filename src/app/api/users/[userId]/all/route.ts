@@ -20,7 +20,7 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (params.userId === token.id || isAdmin(token))) {
-      const [dbUser] = await getUserListsAndReviewsWithCommentsAndLikes(
+      const dbUser = await getUserListsAndReviewsWithCommentsAndLikes(
         params.userId,
       )
 
