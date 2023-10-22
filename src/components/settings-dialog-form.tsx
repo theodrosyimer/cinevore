@@ -166,7 +166,10 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
                   </Label>
                   <Input
                     id="name"
-                    value="Pedro Duarte"
+                    value={
+                      user?.name.charAt(0).toUpperCase() +
+                        user?.name.slice(1) || ''
+                    }
                     className="col-span-3"
                     {...register('name')}
                   />
@@ -182,7 +185,7 @@ export function EditDialog({ user, className, ...props }: UserNameFormProps) {
                   </Label>
                   <Input
                     id="username"
-                    value="@peduarte"
+                    value={user?.name || ''}
                     className="col-span-3"
                   />
                 </div>

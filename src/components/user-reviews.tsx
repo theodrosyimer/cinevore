@@ -1,14 +1,22 @@
 import { Review } from '@/components/review'
 import { db } from '@/lib/db'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
+import { User } from 'next-auth'
 
-export async function Reviews({ children }: { children?: React.ReactNode }) {
+export async function UserReviews({
+  children,
+  user,
+}: {
+  children?: React.ReactNode
+  user: User
+}) {
   // const searchParams = useSearchParams()
   // const sortBy = searchParams.get('sortBy') /* || 'popular' */
 
   let reviews = []
   try {
     reviews = await db.query.movieReview.findMany({
+      where: (movieReview, { eq }) => eq(movieReview.userId, user.id),
       with: {
         user: true,
         comments: true,
@@ -16,7 +24,7 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
       },
     })
 
-    // console.log('Reviews Page:', reviews)
+    console.log('Reviews Page:', reviews)
     return (
       <>
         <section className="grid gap-4">

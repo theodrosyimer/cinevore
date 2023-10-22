@@ -39,7 +39,7 @@ export const gridColumnsConfig = {
   14: 'grid-cols-[14]',
 } as const
 
-export async function FilmCardList(
+export function FilmCardList(
   {
     limit,
     className,
@@ -52,11 +52,11 @@ export async function FilmCardList(
     columnsCount,
   }: FilmCardProps & FilmListOptions = {} as FilmCardProps & FilmListOptions,
 ) {
-  // const { data: films, isLoading } = useQuery({
-  //   queryKey: ['popularMovies'],
-  //   queryFn: () => getPopular({ category: 'movie', page: '1' }),
-  // })
-  const { data: films, isLoading } = useFilms()
+  const { data: films, isLoading } = useQuery({
+    queryKey: ['popularMovies'],
+    queryFn: () => getPopular({ category: 'movie', page: '1' }),
+  })
+  // const { data: films, isLoading } = useFilms()
 
   if (isLoading) {
     return <CardSkeleton />
@@ -72,7 +72,7 @@ export async function FilmCardList(
 
   return (
     <>
-      <div className="relative grid w-full gap-2 overflow-x-hidden hover:rounded-md">
+      <div className="relative grid grid-flow-col grid-cols-[12] gap-2 overflow-x-auto overscroll-x-contain hover:rounded-md">
         <article
           className={cn(
             'grid',

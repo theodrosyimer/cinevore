@@ -8,6 +8,7 @@ import {
   SelectMovieReview,
   SelectUser,
 } from '@/types/db'
+import Link from 'next/link'
 
 export interface ReviewAndCommentsProps extends SelectMovieReview {
   user: SelectUser
@@ -40,7 +41,12 @@ export function Review({
         hasMenu={false}
       />
       <div className="grid">
-        <h2 className="text-xl ">{film.title}</h2>
+        <Link
+          href={`/members/${review.user.name}/reviews/${review.id}`}
+          className="text-xl "
+        >
+          {film.title}
+        </Link>
         <UserInfos user={review.user} showUserName={false} />
         <p className="text-muted-foreground">{review.content}</p>
         <p>{likesCount} likes</p>

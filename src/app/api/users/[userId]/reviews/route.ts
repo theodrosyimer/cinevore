@@ -4,7 +4,7 @@ import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
-import { insertReviewSchema } from '@/lib/validations/review'
+import { insertReviewSchema } from '@/lib/validations/routes/review'
 import { movieReview } from '@/db/planetscale'
 
 const routeContextSchema = z.object({

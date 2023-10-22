@@ -100,7 +100,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             {children}
             <Toaster />
-            <TailwindIndicator />
+            {/* <TailwindIndicator /> */}
           </Providers>
         </ThemeProvider>
       </body>

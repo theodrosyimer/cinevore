@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
@@ -14,7 +13,6 @@ import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils/utils'
 import { insertListSchema } from '@/lib/validations/list'
-import { getCurrentUser } from '@/lib/session'
 import { Textarea } from '@/components/ui/textarea'
 
 import {
@@ -26,7 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { SelectUser } from '@/types/db'
 import { User } from 'next-auth'
 
 interface NewListFormProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -51,12 +48,9 @@ export function NewListForm({ user, className, ...props }: NewListFormProps) {
   async function onSubmit(data: FormData) {
     setIsLoading(true)
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/lists`,
-      {
-        method: 'POST',
-      },
-    ).catch((error) => {
+    const response = await fetch(`/api/lists`, {
+      method: 'POST',
+    }).catch((error) => {
       toast({
         title: 'Server error. Please try later.',
         description: `${error.message}`,
@@ -184,31 +178,6 @@ export function NewListForm({ user, className, ...props }: NewListFormProps) {
           </button>
         </div>
       </form>
-      {/* <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or
-          </span>
-        </div>
-      </div> */}
-      {/* <button
-        type="button"
-        className={cn(buttonVariants({ variant: "outline" }))}
-        onClick={() => {
-          setIsGitHubLoading(true)
-        }}
-        disabled={isLoading || isGitHubLoading}
-      >
-        {isGitHubLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.gitHub className="mr-2 h-4 w-4" />
-        )}{" "}
-        Github
-      </button> */}
     </div>
   )
 }

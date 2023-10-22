@@ -1,3 +1,5 @@
+export type DashboardFilmsPage = {}
+
 import { redirect } from 'next/navigation'
 
 import { authOptions } from '@/lib/auth'
@@ -10,13 +12,15 @@ import { DashboardShell } from '@/components/shell'
 import { desc, eq } from 'drizzle-orm'
 import { user } from '@/db/planetscale'
 import { UserItem } from '@/components/user-item'
+import { FilmCardDisplay } from '@/components/film-user-card'
+import { AddFilmButton } from '@/components/admin-add-films'
 
 export const metadata = {
   title: 'Dashboard',
 }
 
-export default async function DashboardPage() {
-  const users = await db.query.user.findMany({
+export default async function DashboardFilmsPage({}: DashboardFilmsPage) {
+  const movies = await db.query.movie.findMany({
     // where: eq(user.id, currentUser.id),
     // columns: {
     //   id: true,
@@ -29,15 +33,24 @@ export default async function DashboardPage() {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="Users" text="Create and manage users.">
-        <UserCreateButton />
+      <DashboardHeader heading="Films" text="Add and manage films.">
+        <AddFilmButton />
       </DashboardHeader>
       <div>
-        {users?.length ? (
+        {movies?.length ? (
           <div className="divide-y divide-border rounded-md border ">
-            {users.map((user) => (
-              <UserItem key={user.id} user={user} />
-            ))}
+            <div className="grid grid-cols-6 p-4">
+              {movies.map((movie) => (
+                // <UserItem key={user.id} user={user} />
+                <FilmCardDisplay
+                  key={movie.tmdbId}
+                  movie={movie}
+                  movieImageWidth="w185"
+                  aspectRatio="portrait"
+                  width={185}
+                />
+              ))}
+            </div>
           </div>
         ) : (
           <EmptyPlaceholder>

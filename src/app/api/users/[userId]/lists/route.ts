@@ -4,7 +4,7 @@ import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
-import { insertReviewSchema } from '@/lib/validations/review'
+import { insertReviewSchema } from '@/lib/validations/routes/review'
 import { list, movieReview } from '@/db/planetscale'
 import { insertListSchema } from '@/lib/validations/list'
 

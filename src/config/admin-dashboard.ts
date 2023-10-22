@@ -13,7 +13,7 @@ export const adminDashboardConfig: AdminDashboardConfig = {
       title: 'Films',
       href: '/admin/dashboard/films',
       icon: 'logo',
-      disabled: true,
+      disabled: false,
       items: [],
     },
     {

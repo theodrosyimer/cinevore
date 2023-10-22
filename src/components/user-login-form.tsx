@@ -91,7 +91,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
             )}
           </div>
           {
-            /* isRegisterPage ? */ <div className="grid gap-1">
+            <div className="grid gap-1">
               <Label className="sr-only" htmlFor="name">
                 Name
               </Label>
@@ -110,7 +110,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
                   {errors.name.message}
                 </p>
               )}
-            </div> /* : null */
+            </div>
           }
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="password">

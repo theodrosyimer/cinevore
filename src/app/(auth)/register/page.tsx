@@ -4,6 +4,8 @@ import { cn } from '@/lib/utils/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Icons } from '@/components/icons'
 import { UserRegisterForm } from '@/components/user-register-form'
+import { MovieBackdrop } from '@/components/film-backdrop'
+import { globalConfig } from '@/lib/tmdb/src/tmdb'
 
 export const metadata = {
   title: 'Create an account',
@@ -22,7 +24,15 @@ export default function RegisterPage() {
       >
         Login
       </Link>
-      <div className="hidden h-full bg-muted lg:block" />
+      {/* <MovieBackdrop
+        url={`${globalConfig.IMAGE_BASE_URI}/w780/jxjkQcaDsedyX0EubnZ1lW9Tfp.jpg`}
+        altText="training day poster image"
+        className="rounded-b-md opacity-40"
+        aspectRatio={0.667}
+      ></MovieBackdrop> */}
+      <div className="relative hidden h-full bg-muted lg:block">
+        {/* <div className="absolute bottom-0 right-0 top-0 h-full w-60 overflow-hidden bg-gradient-to-l from-background from-[2rem]  opacity-100"></div> */}
+      </div>
       <div className="lg:p-8">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">

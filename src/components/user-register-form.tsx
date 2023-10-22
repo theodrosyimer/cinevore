@@ -13,7 +13,10 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils/utils'
-import { userRegisterAuthSchema } from '@/lib/validations/auth'
+import {
+  userRegisterAuthSchema,
+  userRegisterSchema,
+} from '@/lib/validations/auth'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -25,7 +28,7 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(userRegisterAuthSchema),
+    resolver: zodResolver(userRegisterSchema),
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
@@ -38,6 +41,7 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
     const signInResult = await signIn('credentials', {
       email: data.email.toLowerCase(),
       password: data.password,
+      confirmPassword: data.confirmPassword,
       name: data.name,
       redirect: false,
       callbackUrl: searchParams?.get('from') || '/me',

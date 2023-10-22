@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils/utils'
 import { Icons } from '@/components/icons'
 import { Badge } from '@/components/ui/badge'
 import { MainNavItem } from '@/types'
+import { useTheme } from 'next-themes'
 
 type MainNavProps = {
   items?: MainNavItem[]
@@ -17,6 +18,7 @@ type MainNavProps = {
 
 export function MainNav({ items, children }: MainNavProps) {
   const pathname = usePathname()
+  const { theme } = useTheme()
 
   return (
     <div className="mr-4 hidden md:flex">
@@ -36,9 +38,13 @@ export function MainNav({ items, children }: MainNavProps) {
                   href={item.disabled ? '#' : item.href}
                   className={cn(
                     'flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm',
-                    pathname === item.href
-                      ? 'text-foreground'
-                      : 'text-foreground/60',
+                    pathname === item.href &&
+                      theme === 'light' &&
+                      'text-foreground',
+                    pathname === item.href &&
+                      theme === 'dark' &&
+                      'text-foreground',
+                    pathname !== item.href && 'text-foreground/60',
                     item.disabled && 'cursor-not-allowed opacity-80',
                   )}
                 >

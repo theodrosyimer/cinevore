@@ -22,7 +22,32 @@ export default async function ListsPage({
     <>
       <h1 className="text-center text-4xl font-bold">Lists</h1>
 
-      <section>
+      <section className="grid gap-2">
+        <h2>My awesome list</h2>
+        <FilmCardList
+          // limit={12}
+          columnsCount={12}
+          aspectRatio="portrait"
+          width={92}
+          movieImageWidth="w92"
+          isSlider={true}
+          isSnapped={true}
+        />
+      </section>
+      <section className="grid gap-2">
+        <h2>My list for lovers</h2>
+        <FilmCardList
+          // limit={12}
+          columnsCount={12}
+          aspectRatio="portrait"
+          width={92}
+          movieImageWidth="w92"
+          isSlider={true}
+          isSnapped={true}
+        />
+      </section>
+      <section className="grid gap-2">
+        <h2>Horror films</h2>
         <FilmCardList
           // limit={12}
           columnsCount={12}

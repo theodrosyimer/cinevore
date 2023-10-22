@@ -76,7 +76,7 @@ export function UserOperations({ user }: UserOperationsProps) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you sure you want to delete this post?
+              Are you sure you want to delete this user?
             </AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone.

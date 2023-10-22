@@ -23,10 +23,10 @@ export default async function IndexPage() {
         <div className="relative -mt-14 grid">
           <MovieBackdrop
             url={`${globalConfig.IMAGE_BASE_URI}/w1280/nuO8o9ltxhI7AZQxePavEZ4TyHa.jpg`}
-            altText=""
+            altText="training day backdrop image"
             className="rounded-b-md opacity-40"
           ></MovieBackdrop>
-          <section className="absolute grid w-full items-center justify-items-start gap-4 self-end sm:left-16 md:self-center">
+          <section className="absolute grid items-center justify-items-start gap-4 self-end sm:left-16 md:self-center">
             <div className="grid gap-2">
               <h1 className="text-left font-bold sm:text-xl md:text-3xl lg:text-4xl">
                 Track films you&apos;ve watched.
@@ -89,50 +89,50 @@ export default async function IndexPage() {
                 </Card>
               )
             })} */}
-            <Card className="p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
-                <Icons.watched className="col-auto md:h-10 md:w-10" />
-                <CardDescription className="text-md sm:text-foreground">
+            <Card className="grid items-center p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
+                <Icons.watched className="place-self-center md:h-10 md:w-10" />
+                <CardDescription className="sm:text-foreground">
                   {featuresConfig[0]?.description}
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card className="p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
-                <Icons.like className="col-auto md:h-10 md:w-10" />
-                <CardDescription className="text-md sm:text-foreground">
+            <Card className="grid items-center p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
+                <Icons.like className="place-self-center md:h-10 md:w-10" />
+                <CardDescription className="sm:text-foreground">
                   {featuresConfig[1]?.description}
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card className="p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
-                <Icons.listVideo className="col-auto md:h-10 md:w-10" />
-                <CardDescription className="text-md sm:text-foreground">
+            <Card className="grid items-center p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
+                <Icons.page className="place-self-center md:h-10 md:w-10" />
+                <CardDescription className="sm:text-foreground">
                   {featuresConfig[2]?.description}
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card className="p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
-                <Icons.star className="col-auto md:h-10 md:w-10" />
-                <CardDescription className="text-md sm:text-foreground">
+            <Card className="grid items-center p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
+                <Icons.star className="place-self-center md:h-10 md:w-10" />
+                <CardDescription className="sm:text-foreground">
                   {featuresConfig[3]?.description}
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card className="p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
-                <Icons.post className="col-auto md:h-10 md:w-10" />
-                <CardDescription className="text-md sm:text-foreground">
+            <Card className="grid items-center p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
+                <Icons.calendar className="place-self-center md:h-10 md:w-10" />
+                <CardDescription className="sm:text-foreground">
                   {featuresConfig[4]?.description}
                 </CardDescription>
               </CardContent>
             </Card>
-            <Card className="p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] gap-4">
-                <Icons.page className="col-auto md:h-10 md:w-10" />
-                <CardDescription className="text-md sm:text-foreground">
+            <Card className="grid items-center p-4">
+              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
+                <Icons.layoutGrid className="place-self-center md:h-10 md:w-10" />
+                <CardDescription className="sm:text-foreground">
                   {featuresConfig[5]?.description}
                 </CardDescription>
               </CardContent>
@@ -141,7 +141,7 @@ export default async function IndexPage() {
         </section>
         <section>
           <div className="flex items-center justify-between justify-items-center">
-            <h2 className="text-md mb-2 uppercase text-muted-foreground">
+            <h2 className="uppercase text-muted-foreground">
               Just Reviewed...
             </h2>
             <Link
@@ -158,13 +158,16 @@ export default async function IndexPage() {
             </Link>
           </div>
           <div className="mb-4 divide-y divide-border rounded-md border"></div>
-          <FilmCardList
-            limit={12}
-            columnsCount={12}
-            aspectRatio="portrait"
-            movieImageWidth={getImageFormatSize('poster_sizes', 'w92')}
-            isSlider={true}
-          />
+          <div className="grid grid-flow-col gap-4 overflow-x-auto overscroll-x-contain">
+            <FilmCardList
+              limit={12}
+              columnsCount={12}
+              aspectRatio="portrait"
+              width={185}
+              movieImageWidth={getImageFormatSize('poster_sizes', 'w185')}
+              isSlider={true}
+            />
+          </div>
         </section>
         <section>
           <p className="text-center text-2xl">
@@ -196,7 +199,7 @@ export default async function IndexPage() {
                 More
               </Link>
             </div>
-            <div className="divide-y divide-border rounded-md border "></div>
+            <div className="mb-4 divide-y divide-border rounded-md border"></div>
             <Reviews />
           </section>
 
@@ -239,6 +242,7 @@ export default async function IndexPage() {
                 More
               </Link>
             </div>
+            <div className="divide-y divide-border rounded-md border "></div>
           </section>
         </div>
       </div>

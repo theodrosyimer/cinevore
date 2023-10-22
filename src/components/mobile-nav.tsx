@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { MainNavItem, SiteLayoutConfig } from '@/types'
+import { useTheme } from 'next-themes'
 
 type MobileNavProps = {
   items?: SiteLayoutConfig
@@ -104,6 +105,8 @@ function MobileLink({
 }: MobileLinkProps) {
   const router = useRouter()
   const pathname = usePathname()
+  const { theme } = useTheme()
+
   return (
     <Link
       href={href}
@@ -113,7 +116,9 @@ function MobileLink({
       }}
       className={cn(
         'hover:text-foreground/100',
-        pathname === href ? 'text-foreground' : 'text-foreground/60',
+        pathname === href && theme === 'light' && 'text-accent-foreground',
+        pathname === href && theme === 'dark' && 'text-accent',
+        pathname !== href && 'text-foreground/60',
         className,
       )}
       {...props}

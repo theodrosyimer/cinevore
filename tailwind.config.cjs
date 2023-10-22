@@ -87,13 +87,20 @@ module.exports = {
       backgroundImage: {
         'not-found': "url('/bg-404.jpg')",
       },
-    },
-    screens: {
-      xs: '320px',
-      sm: '480px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1280px',
+      padding: {
+        DEFAULT: '1rem',
+        // sm: '2rem',
+        // lg: '4rem',
+        // xl: '5rem',
+        // '2xl': '6rem',
+      },
+      screens: {
+        xs: '320px',
+        sm: '480px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

@@ -7,18 +7,20 @@ export function MovieBackdrop({
   url,
   altText,
   className,
+  aspectRatio = 16 / 9,
   children,
 }: {
   className?: string
   url: string
   altText: string
   children?: React.ReactNode
+  aspectRatio?: number
 }) {
   return (
     <>
       <AspectRatio
-        ratio={16 / 9}
-        className="relative grid w-full overflow-hidden bg-cover bg-[0%] bg-no-repeat"
+        ratio={aspectRatio}
+        className="relative grid  overflow-hidden bg-cover bg-[0%] bg-no-repeat"
       >
         <img
           src={url}
@@ -26,7 +28,7 @@ export function MovieBackdrop({
           // width={width}
           // height="200"
           lang="en"
-          className={cn('w-full max-w-full object-cover ', className)}
+          className={cn(' max-w-full object-cover ', className)}
         />
         <div className="absolute bottom-0 left-0 top-0 h-full w-72 overflow-hidden bg-gradient-to-r from-background from-[2rem]  opacity-100"></div>
         <div className="absolute bottom-0 right-0 top-0 h-full w-72 overflow-hidden bg-gradient-to-l from-background from-[2rem]  opacity-100"></div>

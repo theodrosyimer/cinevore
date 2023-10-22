@@ -14,6 +14,7 @@ import {
   SelectMovie,
   SelectUser,
 } from '@/types/db'
+import type { MouseEvent } from 'react'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
   columnsCount: keyof (typeof gridColumnsConfig)['default' | 'xs']
@@ -109,9 +110,16 @@ export function UserFilmListDisplay(
     zindex = limit
   }
 
+  function handleCLick(e: MouseEvent<HTMLDivElement, MouseEvent>) {
+    console.log('clicked')
+  }
+
   return (
     <>
-      <div className="relative grid gap-2 overflow-x-hidden hover:rounded-md">
+      <div
+        onClick={(e) => handleCLick}
+        className="relative grid gap-2 overflow-x-hidden hover:rounded-md"
+      >
         <article
           className={cn(
             `grid ${

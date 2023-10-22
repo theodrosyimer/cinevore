@@ -3,7 +3,7 @@ import type { IconName } from '@/components/icons'
 export const featuresConfig = [
   {
     name: 'watchlist',
-    icon: 'listVideo',
+    icon: 'watched',
     description: 'Keep track of every film you ever watched.',
     enabled: true,
   },
@@ -16,7 +16,7 @@ export const featuresConfig = [
   },
   {
     name: 'reviews',
-    icon: 'media',
+    icon: 'page',
     description:
       'Write and share reviews, and follow friends and other members to read theirs',
     enabled: true,
@@ -30,14 +30,14 @@ export const featuresConfig = [
   },
   {
     name: 'diary',
-    icon: 'post',
+    icon: 'calendar',
     description:
       'Keep a diary of your film watching (and upgrade to Pro for comprehensive stats)',
     enabled: true,
   },
   {
     name: 'lists',
-    icon: 'trash',
+    icon: 'layoutGrid',
     description:
       'Compile and share lists of films on any topic and keep a watchlist of films to see',
     enabled: true,

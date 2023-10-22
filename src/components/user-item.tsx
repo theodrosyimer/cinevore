@@ -27,7 +27,7 @@ export function UserItem({ user }: UserItemProps) {
           </p>
         </div>
       </div>
-      {/* <UserOperations user={{ id: user.id, name: user.name }}> */}
+      {/* <UserOperations user={{ id: user.id, name: user.name }} /> */}
       <EditDialog user={{ id: user.id, name: user.name }} />
       {/* </UserOperations> */}
     </div>

@@ -10,16 +10,33 @@ const registerRefineOptions = {
 
 const loginRefineOptionsd = {
   email: z.string().email(),
-  password: z.string(),
+  password: z.string().nonempty({ message: 'Password is required' }),
   name: z.string().min(2).max(50),
 }
 
-export const userRegisterConfirmPassword = z.object({
-  // email: z.string().email(),
-  // password: z.string().min(5),
-  confirmPassword: z.string().min(5),
-  // name: z.string().min(3),
-})
+export const userRegisterSchema = z
+  .object({
+    // email: z.string().email(),
+    // password: z.string().min(5),
+    // name: z.string().min(3),
+    name: z.string().min(2).max(50),
+    email: z.string().email(),
+    password: z
+      .string()
+      .max(25)
+      .regex(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g,
+        {
+          message:
+            'Password must contain at least 12 characters, one uppercase, one lowercase, one number and one of these special characters: #?!@$ %^&*-',
+        },
+      ),
+    confirmPassword: z.string().nonempty({ message: 'Confirm your password' }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  })
 
 export const insertLoginUserSchema = createInsertSchema(
   user,
@@ -29,5 +46,5 @@ export const insertLoginUserSchema = createInsertSchema(
 const insertUserSchema = createInsertSchema(user, registerRefineOptions)
 export const userRegisterAuthSchema = z.intersection(
   insertUserSchema,
-  userRegisterConfirmPassword,
+  userRegisterSchema,
 )

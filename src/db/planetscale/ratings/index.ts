@@ -31,6 +31,11 @@ export const rating = mysqlTable(
       '4.5',
       '5',
     ]).notNull(),
+    resourceId: int('resource_id').notNull(),
+    resourceType: mysqlEnum('resource_type', [
+      'movie_review',
+      'movie_list',
+    ]).notNull(),
     createdAt: timestamp('created_at')
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),

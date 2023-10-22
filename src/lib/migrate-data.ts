@@ -38,10 +38,10 @@ import type {
 
 const adminPassword = (await hashPassword('!Theotheotheo1')) as string
 const superAdminPassword = (await hashPassword('!#tHeodros1')) as string
-const yetuP = (await hashPassword('yetuyetu')) as string
-const mathiasP = (await hashPassword('mathiasmathias')) as string
-const edenP = (await hashPassword('edeneden')) as string
-const antoineP = (await hashPassword('antoineantoine')) as string
+const yetuP = (await hashPassword('!Yetuyetuyetu1')) as string
+const mathiasP = (await hashPassword('!Mathiasmathiasmathias1')) as string
+const edenP = (await hashPassword('!Edenedeneden1')) as string
+const antoineP = (await hashPassword('!Antoineantoineantoine1')) as string
 
 // type MySql2DrizzleTransaction = MySqlTransaction<MySql2QueryResultHKT, MySql2PreparedQueryHKT, Record<string, never>, ExtractTablesWithRelations<Record<string, never>>>
 
