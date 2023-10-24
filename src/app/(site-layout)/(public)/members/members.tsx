@@ -1,5 +1,6 @@
 import { getUsers } from '@/app/(site-layout)/(public)/members/getUsers'
 import { Icons } from '@/components/icons'
+import { MemberAvatar } from '@/components/member-avatar'
 import { UserAvatar } from '@/components/user-avatar'
 import { getAllUsersListsAndWatchedFilmsAndLikes } from '@/lib/actions/admin/getUserListsAndReviewsWithCommentsAndLikes'
 import { cn } from '@/lib/utils/utils'
@@ -22,7 +23,7 @@ export async function Members() {
                   )}
                 >
                   <div className="flex items-center gap-2">
-                    <UserAvatar user={user} className="md:h-12 md:w-12" />
+                    <MemberAvatar user={user} className="md:h-12 md:w-12" />
                     <div className="grid">
                       <Link href={`/members/${user.name}?id=${user.id}`}>
                         {user.name}

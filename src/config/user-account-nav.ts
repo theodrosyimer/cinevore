@@ -3,7 +3,7 @@ import { MainNavItem } from '@/types'
 export const userAccountNavConfig: MainNavItem[] = [
   {
     title: 'Profile',
-    href: '/me',
+    href: '/me/films',
   },
   {
     title: 'New list',

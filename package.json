@@ -92,7 +92,7 @@
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.9",
-    "@tanstack/eslint-plugin-query": "^4.34.1",
+    "@tanstack/eslint-plugin-query": "^5.0.0",
     "@tanstack/react-query-devtools": "^5.0.0",
     "@types/bcrypt": "^5.0.0",
     "@types/multer": "^1.4.7",

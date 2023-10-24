@@ -1,5 +1,3 @@
-'use client'
-
 import { MovieArtworkProps } from '@/components/film-card'
 import { FilmCardDisplay } from '@/components/film-user-card'
 import { Icons } from '@/components/icons'
@@ -89,7 +87,7 @@ const zindexConfig = {
 
 export function UserFilmListDisplay(
   {
-    limit = 4,
+    limit,
     className,
     aspectRatio,
     width,
@@ -99,14 +97,14 @@ export function UserFilmListDisplay(
   }: FilmCardProps = {} as FilmCardProps,
 ) {
   let zindex = columnsCount
-
+  console.log('FILMLIST:', filmList)
   if (limit) {
-    filmList.movies = filmList.movies.slice(0, limit)
+    filmList.movies = filmList?.movies?.slice(0, limit)
     zindex = limit
   }
 
   if (limit) {
-    filmList.movies = filmList.movies.slice(0, limit)
+    filmList.movies = filmList?.movies?.slice(0, limit)
     zindex = limit
   }
 
@@ -117,7 +115,7 @@ export function UserFilmListDisplay(
   return (
     <>
       <div
-        onClick={(e) => handleCLick}
+        // onClick={(e) => handleCLick}
         className="relative grid gap-2 overflow-x-hidden hover:rounded-md"
       >
         <article
@@ -133,7 +131,7 @@ export function UserFilmListDisplay(
             } grid-rows-[min-content] overflow-x-hidden overscroll-x-contain rounded-md transition-all hover:z-50 hover:scale-[1.01]  hover:brightness-75`,
           )}
         >
-          {filmList.movies.map((filmList) => {
+          {filmList?.movies?.map((filmList) => {
             zindex--
             return (
               <FilmCardDisplay

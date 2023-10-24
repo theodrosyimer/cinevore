@@ -111,6 +111,8 @@ CREATE TABLE `rating` (
 	`id` int AUTO_INCREMENT NOT NULL,
 	`user_id` varchar(255) NOT NULL,
 	`value` enum('0','0.5','1','1.5','2','2.5','3','3.5','4','4.5','5') NOT NULL,
+	`resource_id` int NOT NULL,
+	`resource_type` enum('movie_review','movie_list') NOT NULL,
 	`created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated_at` timestamp ON UPDATE CURRENT_TIMESTAMP,
 	CONSTRAINT `rating_id` PRIMARY KEY(`id`)

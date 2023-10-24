@@ -1,7 +1,9 @@
 import { FilmCardList } from '@/components/film-card-list'
+import { UserFilmsTabs } from '@/components/user-films-tabs'
 import { authOptions } from '@/lib/auth'
+import { db } from '@/lib/db'
 import { getCurrentUser } from '@/lib/session'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 
 export const metadata = {
   title: 'Films Page',
@@ -16,15 +18,33 @@ export default async function UserFilmsPage({
     id: number
   }
 }) {
-  // const { user, isAdmin } = await getCurrentUser()
+  const { user: currentUser, isAdmin } = await getCurrentUser()
 
-  // if (!user) {
-  //   redirect(authOptions?.pages?.signIn || "/login")
-  // }
+  if (!currentUser) {
+    notFound()
+  }
+
+  const userMovies = await db.query.user.findFirst({
+    where: (user, { eq }) => eq(user.id, currentUser.id),
+    with: {
+      movieInfosToUser: true,
+    },
+  })
+  console.log('userMovies', userMovies)
+  // const moviesInfos = await db.query.movieInfosToUser.findMany({
+  //   where: (movieInfosToUser, { eq }) =>
+  //     and(
+  //       eq(movieInfosToUser.userId, params.userId),
+  //       or(
+  //         eq(movieInfosToUser.watched, true),
+  //         eq(movieInfosToUser.reviewed, true),
+  //       ),
+  //     ),
+  // })
 
   return (
     <>
-      <h1 className="text-center text-4xl font-bold">
+      {/* <h1 className="text-center text-4xl font-bold">
         Your movies {params.username}
       </h1>
 
@@ -38,7 +58,8 @@ export default async function UserFilmsPage({
           isSlider={true}
           isSnapped={true}
         />
-      </section>
+      </section> */}
+      <UserFilmsTabs userMovies={userMovies} />
     </>
   )
 }

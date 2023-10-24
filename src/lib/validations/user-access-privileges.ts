@@ -1,7 +1,9 @@
 import * as schema from '@/db/planetscale'
+import { db } from '@/lib/db'
 
 import { getCurrentUser } from '@/lib/session'
 import { TableName, TableColumns } from '@/types/db'
+import { eq } from 'drizzle-orm'
 
 export async function verifyUserAccessPrivileges<
   T extends TableName,

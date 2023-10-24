@@ -2,10 +2,10 @@ import { SiteLayoutConfig } from '@/types'
 
 export const userNavigationConfig: SiteLayoutConfig = {
   mainNav: [
-    {
-      title: 'Profile',
-      href: '/me',
-    },
+    // {
+    //   title: 'Profile',
+    //   href: '/me',
+    // },
     {
       title: 'Films',
       href: '/me/films',
@@ -36,11 +36,11 @@ export const userNavigationConfig: SiteLayoutConfig = {
       title: 'Me',
       href: '/me',
       items: [
-        {
-          title: 'Profile',
-          href: '/me',
-          items: [],
-        },
+        // {
+        //   title: 'Profile',
+        //   href: '/me',
+        //   items: [],
+        // },
         {
           title: 'Films',
           href: '/me/films',

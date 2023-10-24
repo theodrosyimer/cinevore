@@ -1,4 +1,5 @@
 import { Members } from '@/app/(site-layout)/(public)/members/members'
+import { MemberAvatar } from '@/components/member-avatar'
 import { buttonVariants } from '@/components/ui/button'
 import { UserAvatar } from '@/components/user-avatar'
 import { db } from '@/lib/db'
@@ -48,7 +49,7 @@ export default async function MembersPage() {
                     href={`/members/${encodeURI(user.name)}`}
                     className="font-serif"
                   >
-                    <UserAvatar
+                    <MemberAvatar
                       key={user.id}
                       user={user}
                       className="h-[8.5rem] w-[8.5rem]"

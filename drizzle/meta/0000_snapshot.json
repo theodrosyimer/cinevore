@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "59464549-a560-4767-9824-9b416608c8df",
+  "id": "94f1dec6-ac92-4231-9c71-6c03ffa119c1",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -871,6 +871,20 @@
         "value": {
           "name": "value",
           "type": "enum('0','0.5','1','1.5','2','2.5','3','3.5','4','4.5','5')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "resource_id": {
+          "name": "resource_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "resource_type": {
+          "name": "resource_type",
+          "type": "enum('movie_review','movie_list')",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false

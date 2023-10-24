@@ -57,6 +57,7 @@ type FormData = z.infer<typeof userNameSchema>
 async function deleteUser(userId: string) {
   const response = await fetch(`/api/users/${userId}`, {
     method: 'DELETE',
+    credentials: 'include',
   })
 
   if (!response?.ok) {

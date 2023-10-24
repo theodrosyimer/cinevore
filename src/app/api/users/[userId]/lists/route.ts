@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { insertReviewSchema } from '@/lib/validations/routes/review'
 import { list, movieReview } from '@/db/planetscale'
 import { insertListSchema } from '@/lib/validations/list'
+import listsModel from '@/models/lists'
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -25,12 +26,10 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const lists = await db.query.list.findMany({
-        where: (list, { eq }) => eq(list.userId, userId),
-      })
+      const lists = await listsModel.getAllByUserId(userId)
 
       if (!lists) {
-        return new Response(`User's reviews not found`, { status: 404 })
+        return new Response(`User's lists not found`, { status: 404 })
       }
 
       return NextResponse.json(lists)
@@ -64,9 +63,9 @@ export async function POST(
     const json = await req.json()
     const body = insertListSchema.parse(json)
 
-    await db.insert(list).values(body)
+    await db.insert(list).values({ ...body, userId })
 
-    return new Response('Review created successfully', { status: 201 })
+    return new Response('List created successfully', { status: 201 })
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })

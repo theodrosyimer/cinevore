@@ -35,7 +35,7 @@ interface UserInfos {
   className?: string
 }
 
-export function UserInfos({
+export function MemberInfos({
   user,
   className,
   avatarWidth,
@@ -60,7 +60,7 @@ export function UserInfos({
           <Avatar className={cn('h-8 w-8', className)}>
             <AvatarImage src={user.image ?? undefined} className={cn()} />
             <AvatarFallback className={cn('', avatarWidth)}>
-              <Link href={`/me`} className={cn('text-sm')}>
+              <Link href={`/members/${user.name}`} className={cn('text-sm')}>
                 {user.name?.slice(0, 2).toUpperCase()}
               </Link>
               {/* <Icons.user /> */}
@@ -73,7 +73,7 @@ export function UserInfos({
                 showUserName ? 'space-x-4' : 'space-x-2')
               }
             >
-              <Link href={`/me`} className={cn('text-sm')}>
+              <Link href={`/members/${user.name}`} className={cn('text-sm')}>
                 {user.name}
               </Link>
             </p>

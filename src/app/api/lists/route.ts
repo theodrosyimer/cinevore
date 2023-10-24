@@ -5,6 +5,8 @@ import { RequiresProPlanError } from '@/lib/exceptions'
 import { getCurrentUser } from '@/lib/session'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { NextResponse } from 'next/server'
+import { insertListSchema } from '@/lib/validations/list'
+import { list } from '@/db/planetscale'
 
 export async function GET() {
   try {
@@ -33,14 +35,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
     }
 
-    // const json = await req.json()
-    // const body = movieListPostSchema.parse(json)
+    const json = await req.json()
+    const body = insertListSchema.parse(json)
 
-    // const results = await db.insert(list).values({})
+    const results = await db
+      .insert(list)
+      .values({ ...body, userId: currentUser.id })
 
-    // if (!results) {
-    //   return new Response(null, { status: 500 })
-    // }
+    if (!results) {
+      return new Response(null, { status: 500 })
+    }
 
     // console.log("insert id:", results[0].insertId)
 
@@ -54,10 +58,6 @@ export async function POST(req: Request) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.issues }, { status: 422 })
-    }
-
-    if (error instanceof RequiresProPlanError) {
-      return NextResponse.json({ error: 'Requires Pro Plan' }, { status: 402 })
     }
 
     if (error instanceof Error) {

@@ -6,6 +6,7 @@ import { userNavigationConfig } from '@/config/user-profile'
 import { db } from '@/lib/db'
 import { MembersSidebarNav } from '@/components/members-sidebar-nav'
 import { membersNavConfig } from '@/config/members'
+import { MemberInfos } from '@/components/member-infos'
 
 export const metadata = {
   title: 'Member Films Likes Page',
@@ -42,7 +43,7 @@ export default async function MemberFilmLikesPage({
     <>
       <div className="space-y-6 pb-16">
         <div className="space-y-0.5">
-          <UserInfos
+          <MemberInfos
             user={userWithLikes}
             showUserName={false}
             avatarWidth="h-14 w-14"

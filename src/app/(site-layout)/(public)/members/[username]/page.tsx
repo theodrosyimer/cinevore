@@ -7,6 +7,7 @@ import { userNavigationConfig } from '@/config/user-profile'
 import { db } from '@/lib/db'
 import { MembersSidebarNav } from '@/components/members-sidebar-nav'
 import { MemberReviews } from '@/components/member-reviews'
+import { MemberInfos } from '@/components/member-infos'
 
 export const metadata = {
   title: 'Member Films Reviews Page',
@@ -44,7 +45,7 @@ export default async function MemberFilmReviewsPage({
       <div className="space-y-6 pb-16">
         <div className="grid grid-cols-[_1fr,auto]">
           <div className="space-y-0.5">
-            <UserInfos
+            <MemberInfos
               user={userWithReviews}
               showUserName={false}
               avatarWidth="h-14 w-14"

@@ -77,12 +77,6 @@ export function setQuery<
   return baseQuery
 }
 
-const q = setQuery({
-  page: '1',
-  id: '2',
-  body: { name: 'test' },
-})
-
 export function isCallback(
   callback: unknown,
 ): asserts callback is (...args: any) => any {

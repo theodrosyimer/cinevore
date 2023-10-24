@@ -8,12 +8,11 @@ import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'
 
 export const metadata = {
-  title: 'Lists Page',
-  description: 'Your lists of films.',
+  title: 'Members Lists Page',
+  description: 'Lists of films from members.',
 }
 
 export default async function ListsPage() {
-  let limit = 4
   const userLists = await db.query.list.findMany({
     with: {
       movies: {

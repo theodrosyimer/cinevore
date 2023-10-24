@@ -1,5 +1,6 @@
 import FilmRatingStars from '@/components/film-rating-stars'
 import { Icons } from '@/components/icons'
+import LikeIcon from '@/components/like-icon'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils/utils'
@@ -14,7 +15,8 @@ export function UserMovieActions({ ...className }: { className?: string }) {
     >
       <div className="flex justify-evenly">
         <div className="grid  place-items-center">
-          <Icons.like className="fill-muted" />
+          {/* <Icons.like className="fill-muted" /> */}
+          <LikeIcon />
           <Label className="text-sm text-muted-foreground">Watch</Label>
           {/* <Checkbox /> */}
         </div>
@@ -29,7 +31,7 @@ export function UserMovieActions({ ...className }: { className?: string }) {
       </div>
       <div className="my-4 divide-y divide-border rounded-md border bg-primary-foreground"></div>
       <div className="flex justify-evenly">
-        <Icons.starHalf className="hidden" />
+        <Icons.starHalf className="hidden hover:block hover:stroke-red-600" />
         <Icons.star />
         <Icons.star />
         <Icons.star />

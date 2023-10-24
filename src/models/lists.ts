@@ -15,7 +15,15 @@ class ListsModel {
     return db.insert(list).values(newList)
   }
 
-  getAll = async () => db.select().from(list)
+  getAll = async (userId: string) =>
+    db.query.list.findMany({
+      with: {
+        movies: true,
+        user: true,
+        likes: true,
+        comments: true,
+      },
+    })
 
   getAllByPage = async (page: number, limit = 3) =>
     db
@@ -24,11 +32,83 @@ class ListsModel {
       .limit(limit)
       .offset((page - 1) * limit)
 
+  getAllByUserId = async (userId: string) =>
+    db.query.list.findMany({
+      where: (list, { eq }) => eq(list.userId, userId),
+      with: {
+        movies: {
+          with: {
+            movie: true,
+          },
+        },
+        user: {
+          columns: {
+            password: false,
+          },
+        },
+        likes: true,
+        comments: true,
+      },
+    })
+
+  getAllByUserIdByPage = async (userId: string, page: number, limit = 3) =>
+    db.query.list.findMany({
+      where: (list, { eq }) => eq(list.userId, userId),
+      limit: limit,
+      offset: (page - 1) * limit,
+      with: {
+        movies: {
+          with: {
+            movie: true,
+          },
+        },
+        user: {
+          columns: {
+            password: false,
+          },
+        },
+        likes: true,
+        comments: true,
+      },
+    })
+
   getById = async (listId: number, userId: string) =>
-    db
-      .select()
-      .from(list)
-      .where(and(eq(list.id, listId), eq(list.userId, userId)))
+    db.query.list.findFirst({
+      where: (list, { and, eq }) =>
+        and(eq(list.id, listId), eq(list.userId, userId)),
+      with: {
+        movies: {
+          with: {
+            movie: true,
+          },
+        },
+        user: {
+          columns: {
+            password: false,
+          },
+        },
+      },
+    })
+
+  getByIdWithLikesAndComments = async (listId: number, userId: string) =>
+    db.query.list.findFirst({
+      where: (list, { and, eq }) =>
+        and(eq(list.id, listId), eq(list.userId, userId)),
+      with: {
+        movies: {
+          with: {
+            movie: true,
+          },
+        },
+        user: {
+          columns: {
+            password: false,
+          },
+        },
+        likes: true,
+        comments: true,
+      },
+    })
 
   deleteById = async (listId: number, userId: string) =>
     db.delete(list).where(and(eq(list.id, listId), eq(list.userId, userId)))

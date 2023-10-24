@@ -26,6 +26,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils/utils'
 import { userNavigationConfig } from '@/config/user-profile'
+import { Icons } from '@/components/icons'
 
 export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
   const router = useRouter()
@@ -92,8 +93,22 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
                 })
               }}
             >
-              <FileIcon className="mr-2 h-4 w-4" />
+              <Icons.listVideo className="mr-2 h-4 w-4" />
               Search for Movies, actors...
+            </CommandItem>
+          </CommandGroup>
+          <CommandGroup heading="Create">
+            <CommandItem
+              key="2"
+              value="Create a new list"
+              onSelect={() => {
+                runCommand(() => {
+                  router.push(`/list/new`)
+                })
+              }}
+            >
+              <Icons.listVideo className="mr-2 h-4 w-4" />
+              New List
             </CommandItem>
           </CommandGroup>
           <CommandGroup heading="Links">
@@ -125,7 +140,7 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
                     }}
                   >
                     <div className="mr-2 flex h-4 w-4 items-center justify-center">
-                      <CircleIcon className="h-3 w-3" />
+                      <Icons.user className="h-3 w-3" />
                     </div>
                     {navItem.title}
                   </CommandItem>
