@@ -17,7 +17,7 @@ interface SearchProps extends React.HTMLAttributes<HTMLFormElement> {}
 export function Search({ className, ...props }: SearchProps) {
   const [results, setResults] = React.useState<FuseResult<string>[]>([])
   const searchParams = useSearchParams()
-  console.log(searchParams.get('search'))
+  // console.log(searchParams.get('search'))
 
   function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault()
@@ -31,13 +31,13 @@ export function Search({ className, ...props }: SearchProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className={cn('relative w-full ml-4', className)}
+      className={cn('relative ml-4 w-full', className)}
       {...props}
     >
       <Input
         type="search"
         placeholder="Search for Films, Actors..."
-        className="h-8 w-full sm:w-64 sm:pr-12  md:max-w-40"
+        className="md:max-w-40 h-8 w-full sm:w-64  sm:pr-12"
         onChange={async (e) => {
           const { value } = e.currentTarget
           // Dynamically load fuse.js

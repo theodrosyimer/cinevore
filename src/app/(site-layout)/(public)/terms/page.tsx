@@ -14,8 +14,8 @@ export default function TermsPage(props: TermsPageProps) {
   return (
     <>
       <div className="w-full space-y-6 pb-16">
-        <div className="flex space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-          <aside className="sticky top-0 z-50 w-full lg:w-1/5">
+        <div className="flex flex-col space-y-8 sm:flex-row sm:space-x-12 lg:space-y-0">
+          <aside className="sticky top-0 z-50 w-full sm:w-1/5">
             <BackButton />
           </aside>
           {/* <div className="flex-1 lg:max-w-2xl"></div> */}

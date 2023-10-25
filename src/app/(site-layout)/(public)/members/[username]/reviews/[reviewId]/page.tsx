@@ -1,14 +1,47 @@
-export type MemberListPageProps = {
+import { Review } from '@/components/review'
+import { buttonVariants } from '@/components/ui/button'
+import { UserFilmCard } from '@/components/user-film-card'
+import { db } from '@/lib/db'
+import { searchByID } from '@/lib/tmdb/src/tmdb'
+import listsModel from '@/models/lists'
+import Link from 'next/link'
+
+export type MemberReviewPageProps = {
   params: {
     username: string
-    reviewId: number
+    reviewId: string
   }
 }
 
-export default function MemberReviewPage({ params }: MemberListPageProps) {
+export default async function MemberReviewPage({
+  params,
+}: MemberReviewPageProps) {
+  // console.log('params', params)
+
+  // const title = params.title.replace(/-/g, ' ')
+
+  const review = await db.query.movieReview.findFirst({
+    where: (review, { eq }) => eq(review.id, +params.reviewId),
+    with: {
+      user: true,
+      comments: true,
+      likes: true,
+    },
+  })
+  console.log('list', review)
+  const film = await searchByID({
+    id: review?.movieId.toString(),
+    category: 'movie',
+  })
   return (
     <>
-      <h1>{params.username} Review Page</h1>
+      <section>
+        {/* <h1 className="text-md mb-2 uppercase">{review?.title}</h1> */}
+        <article className="flex gap-2">
+          {review ? <Review review={review} film={film} /> : null}
+        </article>
+      </section>
+      <section>Comments</section>
     </>
   )
 }

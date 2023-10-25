@@ -1,5 +1,6 @@
 import { FilmCardList } from '@/components/film-card-list'
 import { FilmSearchFilter } from '@/components/film-search-filter'
+import { FilmSearchFilterPopover } from '@/components/film-search-filter-popover'
 import { UserFilmListDisplay } from '@/components/film-user-card-list'
 import { Reviews } from '@/components/reviews'
 import { buttonVariants } from '@/components/ui/button'
@@ -17,9 +18,12 @@ export const metadata = {
 export default async function FilmsPage() {
   return (
     <div className={cn('grid gap-8')}>
-      <div className="flex items-center justify-center gap-4 justify-self-start">
-        <h2 className="text-lg uppercase">Browse by:</h2>
+      <div className="hidden items-center justify-center gap-4 justify-self-start md:flex">
+        <h2 className="uppercase md:text-lg">Browse by:</h2>
         <FilmSearchFilter />
+      </div>
+      <div className="flex items-center justify-center gap-4 justify-self-end md:hidden">
+        <FilmSearchFilterPopover />
       </div>
       <FilmsPageDefaultContent />
     </div>

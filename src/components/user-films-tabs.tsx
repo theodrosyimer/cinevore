@@ -58,7 +58,6 @@ export function UserFilmsTabs({ className, userMovies }: MovieInfosTabsProps) {
                   movie={film}
                   key={film.id}
                   movieImageWidth="w185"
-                  width={185}
                   aspectRatio="portrait"
                 />
               )
@@ -79,7 +78,6 @@ export function UserFilmsTabs({ className, userMovies }: MovieInfosTabsProps) {
                   movie={film}
                   key={film.id}
                   movieImageWidth="w185"
-                  width={185}
                   aspectRatio="portrait"
                 />
               )
@@ -101,7 +99,6 @@ export function UserFilmsTabs({ className, userMovies }: MovieInfosTabsProps) {
                   movie={film}
                   key={film.id}
                   movieImageWidth="w185"
-                  width={185}
                   aspectRatio="portrait"
                 />
               )

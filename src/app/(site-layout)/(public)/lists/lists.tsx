@@ -3,7 +3,7 @@ import { getLists } from '@/app/(site-layout)/(public)/lists/getLists'
 export async function Lists() {
   const lists = await getLists()
 
-  console.log('LISTS:', lists)
+  // console.log('LISTS:', lists)
 
   return (
     <>

@@ -52,7 +52,7 @@ export function AppearanceForm() {
   })
 
   function onSubmit(data: AppearanceFormValues) {
-    console.log('DATA:', data)
+    // console.log('DATA:', data)
     setTheme(data.theme)
     toast({
       title: 'You submitted the following values:',

@@ -63,8 +63,8 @@ const defaultValues: FormData = {
   isPrivate: false,
 }
 
-async function deleteUser(userId: string) {
-  const response = await fetch(`/api/users/${userId}`, {
+async function deleteUserList(userId: string, listId: number) {
+  const response = await fetch(`/api/users/${userId}/lists/${listId}`, {
     method: 'DELETE',
     credentials: 'include',
   })
@@ -72,12 +72,14 @@ async function deleteUser(userId: string) {
   if (!response?.ok) {
     toast({
       title: 'Something went wrong.',
-      description: 'Your post was not deleted. Please try again.',
+      description: 'Your list was not deleted. Please try again.',
       variant: 'destructive',
     })
   }
 
-  return true
+  return toast({
+    title: 'Your list was deleted succesfully.',
+  })
 }
 export function NewListForm({
   user,
@@ -185,7 +187,10 @@ export function NewListForm({
                   control={control}
                   name="isPrivate"
                   render={({ field }) => (
-                    <Select onValueChange={field.onChange}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value ? '1' : '0'}
+                    >
                       <SelectTrigger>
                         <SelectValue
                           placeholder="Privacy settings"
@@ -245,7 +250,7 @@ export function NewListForm({
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Save
+            {list ? 'Update' : 'Save'}
           </button>
         </div>
       </form>
@@ -267,7 +272,10 @@ export function NewListForm({
                   event.preventDefault()
                   setIsDeleteLoading(true)
 
-                  const deleted = await deleteUser(user.id.toString())
+                  const deleted = await deleteUserList(
+                    user.id.toString(),
+                    list?.id ?? 0,
+                  )
 
                   if (deleted) {
                     setIsDeleteLoading(false)

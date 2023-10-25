@@ -51,6 +51,47 @@ class ListsModel {
       },
     })
 
+  getAllByUserName = async (username: string) =>
+    db.query.user.findFirst({
+      where: (user, { eq }) => eq(user.name, username),
+      columns: {
+        password: false,
+      },
+      with: {
+        lists: {
+          with: {
+            movies: {
+              with: {
+                movie: true,
+              },
+            },
+            likes: true,
+            comments: true,
+          },
+        },
+      },
+    })
+
+  getAllByUserIdOnlyPublic = async (userId: string) =>
+    db.query.list.findMany({
+      where: (list, { eq }) =>
+        and(eq(list.userId, userId), eq(list.isPrivate, false)),
+      with: {
+        movies: {
+          with: {
+            movie: true,
+          },
+        },
+        user: {
+          columns: {
+            password: false,
+          },
+        },
+        likes: true,
+        comments: true,
+      },
+    })
+
   getAllByUserIdByPage = async (userId: string, page: number, limit = 3) =>
     db.query.list.findMany({
       where: (list, { eq }) => eq(list.userId, userId),
@@ -72,10 +113,35 @@ class ListsModel {
       },
     })
 
-  getById = async (listId: number, userId: string) =>
+  getAllByUserIdByPageOnlyPublic = async (
+    userId: string,
+    page: number,
+    limit = 3,
+  ) =>
+    db.query.list.findMany({
+      where: (list, { eq, and }) =>
+        and(eq(list.userId, userId), eq(list.isPrivate, false)),
+      limit: limit,
+      offset: (page - 1) * limit,
+      with: {
+        movies: {
+          with: {
+            movie: true,
+          },
+        },
+        user: {
+          columns: {
+            password: false,
+          },
+        },
+        likes: true,
+        comments: true,
+      },
+    })
+
+  getById = async (listId: number) =>
     db.query.list.findFirst({
-      where: (list, { and, eq }) =>
-        and(eq(list.id, listId), eq(list.userId, userId)),
+      where: (list, { and, eq }) => and(eq(list.id, listId)),
       with: {
         movies: {
           with: {
@@ -93,7 +159,11 @@ class ListsModel {
   getByIdWithLikesAndComments = async (listId: number, userId: string) =>
     db.query.list.findFirst({
       where: (list, { and, eq }) =>
-        and(eq(list.id, listId), eq(list.userId, userId)),
+        and(
+          eq(list.id, listId),
+          eq(list.userId, userId),
+          eq(list.isPrivate, true),
+        ),
       with: {
         movies: {
           with: {
@@ -107,6 +177,50 @@ class ListsModel {
         },
         likes: true,
         comments: true,
+      },
+    })
+
+  getByIdWithLikesAndCommentsOnlyPublic = async (
+    listId: number,
+    userId: string,
+  ) =>
+    db.query.list.findFirst({
+      where: (list, { and, eq }) =>
+        and(
+          eq(list.id, listId),
+          eq(list.userId, userId),
+          eq(list.isPrivate, false),
+        ),
+      with: {
+        movies: {
+          with: {
+            movie: true,
+          },
+        },
+        user: {
+          columns: {
+            password: false,
+          },
+        },
+        likes: true,
+        comments: true,
+      },
+    })
+
+  getByTitle = async (listTitle: string) =>
+    db.query.list.findFirst({
+      where: (list, { and, eq }) => and(eq(list.title, listTitle)),
+      with: {
+        movies: {
+          with: {
+            movie: true,
+          },
+        },
+        user: {
+          columns: {
+            password: false,
+          },
+        },
       },
     })
 

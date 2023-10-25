@@ -65,7 +65,7 @@ export function Search({ className, ...props }: SearchProps) {
               return result
             }
           })
-        console.log(movies)
+        // console.log(movies)
         setResults(movies as TMDBSearchMultiResult)
       })
     }
@@ -73,7 +73,7 @@ export function Search({ className, ...props }: SearchProps) {
 
   function onSubmit(event: SyntheticEvent) {
     event.preventDefault()
-    console.log('event target', text)
+    // console.log('event target', text)
     return toast({
       title: 'Not implemented',
       description: "We're still working on the search.",
@@ -83,7 +83,7 @@ export function Search({ className, ...props }: SearchProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className={cn('relative w-full ml-4', className)}
+      className={cn('relative ml-4 w-full', className)}
       {...props}
     >
       <Input

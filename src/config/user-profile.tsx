@@ -54,7 +54,7 @@ export const userNavigationConfig: SiteLayoutConfig = {
         {
           title: 'Reviews',
           href: '/me/reviews',
-          disabled: true,
+          disabled: false,
           items: [],
         },
         {
@@ -66,8 +66,9 @@ export const userNavigationConfig: SiteLayoutConfig = {
         {
           title: 'Likes',
           href: '/me/likes',
+          disabled: true,
           items: [],
-          label: 'admin',
+          // label: 'admin',
         },
       ],
     },

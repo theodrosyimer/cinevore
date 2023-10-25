@@ -30,7 +30,7 @@ export default async function UserFilmsPage({
       movieInfosToUser: true,
     },
   })
-  console.log('userMovies', userMovies)
+  // console.log('userMovies', userMovies)
   // const moviesInfos = await db.query.movieInfosToUser.findMany({
   //   where: (movieInfosToUser, { eq }) =>
   //     and(

@@ -20,7 +20,7 @@ export type MemberFilmReviewsPageProps = {
 export default async function MemberFilmReviewsPage({
   params,
 }: MemberFilmReviewsPageProps) {
-  console.log('PARAMS:', params)
+  // console.log('PARAMS:', params)
 
   const userWithReviews = await db.query.user.findFirst({
     where: (user, { eq }) => eq(user.name, params.username),
@@ -49,10 +49,6 @@ export default async function MemberFilmReviewsPage({
             avatarWidth="h-14 w-14"
             className="h-16 w-16"
           />
-          <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
-          <p className="text-muted-foreground">
-            Manage your account settings and set e-mail preferences.
-          </p>
         </div>
         <Separator className="my-6" />
         <div className="flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0">

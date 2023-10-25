@@ -79,11 +79,13 @@ export default async function FilmPage({
   return (
     <>
       <div className="-mt-14 grid w-full justify-center gap-8">
-        <MovieBackdrop
-          url={backdropImageUrl}
-          altText={film.title}
-          className="rounded-b-md bg-gradient-to-r from-background"
-        />
+        {backdropImageUrl ? (
+          <MovieBackdrop
+            url={backdropImageUrl}
+            altText={film.title}
+            className="rounded-b-md bg-gradient-to-r from-background"
+          />
+        ) : null}
 
         {/* <div className="relative grid grid-cols-[_minmax(_4rem,_6rem),_1fr,max-content] gap-4 sm:grid-cols-[_minmax(_5rem,_8rem),_1fr,max-content] md:grid-cols-[max-content,_1fr,max-content]"> */}
         <div className="relative grid grid-cols-[1] gap-4 sm:grid-cols-[_minmax(_5rem,_8rem),_1fr,max-content] md:grid-cols-[max-content,_1fr,max-content]">

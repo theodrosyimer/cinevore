@@ -84,7 +84,6 @@ export const membersNavConfig: MemberNavConfig = {
           href: 'members',
           path: '/likes',
           items: [],
-          label: 'admin',
         },
       ],
     },

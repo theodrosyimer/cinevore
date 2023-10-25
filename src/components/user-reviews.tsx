@@ -24,7 +24,7 @@ export async function UserReviews({
       },
     })
 
-    console.log('Reviews Page:', reviews)
+    // console.log('Reviews Page:', reviews)
     return (
       <>
         <section className="grid gap-4">
@@ -33,7 +33,7 @@ export async function UserReviews({
               id: review.movieId.toString(),
               category: 'movie',
             }).catch((error) => {
-              console.log(error.message)
+              // console.log(error.message)
             })
 
             if (!film) return

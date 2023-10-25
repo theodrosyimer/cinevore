@@ -13,6 +13,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query'
 import { getPopular } from '@/lib/tmdb/src/tmdb'
+import { FilmSearchFilterPopover } from '@/components/film-search-filter-popover'
 dotenv.config()
 
 export const metadata = {
@@ -24,20 +25,18 @@ export default async function SearchFilmsPage() {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
     queryKey: ['popularMovies'],
-    queryFn: async () =>
-      await Promise.all([
-        getPopular({ category: 'movie', page: '1' }),
-        getPopular({ category: 'movie', page: '2' }),
-        getPopular({ category: 'movie', page: '3' }),
-      ]),
+    queryFn: () => getPopular({ category: 'movie', page: '1' }),
   })
   const dehydratedState = dehydrate(queryClient)
 
   return (
     <div className={cn('grid gap-8')}>
-      <div className="flex items-center justify-center gap-4 justify-self-start">
-        <h2 className="text-lg uppercase">Browse by:</h2>
+      <div className="hidden items-center justify-center gap-4 justify-self-start md:flex">
+        <h2 className="uppercase md:text-lg">Browse by:</h2>
         <FilmSearchFilter />
+      </div>
+      <div className="flex items-center justify-center gap-4 justify-self-end md:hidden">
+        <FilmSearchFilterPopover />
       </div>
       <section className="">
         <div className="flex items-center justify-between justify-items-center">

@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 export const metadata = {
   title: 'Members Page',
-  description: 'Find all your preferred films here.',
+  description: 'Find all members films here.',
 }
 
 export default async function MembersPage() {

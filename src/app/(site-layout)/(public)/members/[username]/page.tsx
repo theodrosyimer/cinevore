@@ -21,7 +21,7 @@ export type MemberFilmReviewsPageProps = {
 export default async function MemberFilmReviewsPage({
   params,
 }: MemberFilmReviewsPageProps) {
-  console.log('PARAMS:', params)
+  // console.log('PARAMS:', params)
 
   const userWithReviews = await db.query.user.findFirst({
     where: (user, { eq }) => eq(user.name, params.username),
@@ -60,7 +60,7 @@ export default async function MemberFilmReviewsPage({
         </div>
         <Separator className="my-6" />
         <div className="flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0">
-          <aside className="hidden md:block md:w-1/5">
+          <aside className="hidden md:flex md:w-1/5">
             <MembersSidebarNav
               member={userWithReviews}
               items={membersNavConfig.mainNav}

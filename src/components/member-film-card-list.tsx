@@ -88,7 +88,7 @@ const zindexConfig = {
   14: 'z-[14]',
 } as const
 
-export function UserFilmListDisplay(
+export function MemberFilmListDisplay(
   {
     limit,
     className,
@@ -117,11 +117,11 @@ export function UserFilmListDisplay(
 
   return (
     <>
-      <div
+      <article
         // onClick={handleCLick}
-        className="relative grid gap-2 overflow-x-hidden hover:rounded-md"
+        className="relative grid grid-cols-2 gap-2 overflow-x-hidden hover:rounded-md"
       >
-        <article
+        <div
           className={cn(
             `grid ${
               gridColumnsConfig['default'][
@@ -157,28 +157,30 @@ export function UserFilmListDisplay(
               />
             )
           })}
-        </article>
-        {hasTitle && <p className="text-xl font-bold">{filmList.title}</p>}
-        {hasInfos && (
-          <div className="flex items-center gap-6">
-            <UserInfos
-              user={filmList.user!}
-              showUserName={false}
-              avatarWidth="h-8 w-8"
-            />
-            <div className="flex gap-2">
-              <div className="flex gap-1">
-                <Icons.like width={20} />
-                <span>{filmList.likes?.length ?? 0}</span>
+        </div>
+        <div className="grid-rows-layout">
+          {hasTitle && <h3 className="text-xl font-bold">{filmList.title}</h3>}
+          {hasInfos && (
+            <>
+              <div className="text-muted-foreground">
+                {filmList.description}
               </div>
-              <div className="flex gap-1">
-                <Icons.comment width={20} />
-                {filmList.comments?.length ?? 0}
+              <div className=" flex items-center gap-6">
+                <div className="flex gap-2">
+                  <div className="flex items-center gap-1">
+                    <Icons.like size={18} />
+                    <span>{filmList.likes?.length ?? 0}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Icons.comment size={18} />
+                    {filmList.comments?.length ?? 0}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+      </article>
     </>
   )
 }

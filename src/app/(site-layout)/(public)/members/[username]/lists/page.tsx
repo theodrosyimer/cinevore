@@ -1,10 +1,20 @@
 import { Members } from '@/app/(site-layout)/(public)/members/members'
+import { UserFilmListDisplay } from '@/components/film-user-card-list'
+import { Icons } from '@/components/icons'
+import { MemberFilmListDisplay } from '@/components/member-film-card-list'
 import { MemberReviews } from '@/components/member-reviews'
 import { MembersSidebarNav } from '@/components/members-sidebar-nav'
+import { buttonVariants } from '@/components/ui/button'
 import { UserInfos } from '@/components/user-infos'
 import { membersNavConfig } from '@/config/members'
 import { db } from '@/lib/db'
+import { getCurrentUser } from '@/lib/session'
+import { handleSlug } from '@/lib/utils/slugify'
+import { cn } from '@/lib/utils/utils'
+import listsModel from '@/models/lists'
 import { Separator } from '@radix-ui/react-dropdown-menu'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Member Films Lists Page',
@@ -18,61 +28,57 @@ export type MemberFilmListsPageProps = {
 export default async function MemberFilmListsPage({
   params,
 }: MemberFilmListsPageProps) {
-  // console.log('PARAMS:', params)
+  const { user } = await getCurrentUser()
 
-  const userLists = await db.query.user.findMany({
-    where: (user, { eq }) => eq(user.name, params.username),
+  if (!user) {
+    notFound()
+  }
+  const userPublicLists = await listsModel.getAllByUserName(params.username)
 
-    with: {
-      // movies: {
-      //   with: {
-      //     movie: true,
-      //   },
-      // },
-      lists: true,
-    },
-  })
-  console.log('USER LISTS:', JSON.stringify(userLists, null, 2))
-
-  if (!userLists.length) {
+  if (!userPublicLists) {
     return <div>No lists found</div>
   }
 
   return (
     <>
-      <h1 className="text-center text-4xl">Member Film Lists Page</h1>
-      {userLists.map((lists) =>
-        lists.lists.map((list) => (
-          <div key={list.id}>
-            <h2>{list.title}</h2>
-          </div>
-        )),
-      )}
-      {/* <div className="space-y-6 pb-16">
-        <div className="grid grid-cols-[_1fr,auto]">
-          <div className="space-y-0.5">
-            <UserInfos
-              user={userLists}
-              showUserName={false}
-              avatarWidth="h-14 w-14"
-              className="h-16 w-16 text-lg font-bold"
-            />
-          </div>
-          <div>Test</div>
-        </div>
-        <Separator className="my-6" />
-        <div className="flex flex-col space-y-8 md:flex-row md:space-x-12 md:space-y-0">
-          <aside className="hidden md:block md:w-1/5">
-            <MembersSidebarNav
-              member={userLists}
-              items={membersNavConfig.mainNav}
-            />
-          </aside>
-          <div className="grid flex-1 gap-8 md:max-w-2xl">
-            <MemberReviews user={userLists} />
-          </div>
-        </div>
-      </div> */}
+      <div className="flex items-center justify-between justify-items-center">
+        <h2 className="text-md mb-2 uppercase text-muted-foreground">Lists</h2>
+        <Link
+          href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?popular=all-time`}
+          className={cn(
+            'text-sm uppercase',
+            buttonVariants({
+              variant: 'link',
+              className: 'pr-0 text-muted-foreground/50',
+            }),
+          )}
+        >
+          <Icons.watched size={24} />
+        </Link>
+      </div>
+      <div className="mb-4 divide-y divide-border rounded-md border"></div>
+      {userPublicLists.lists.map((list, index) => (
+        <>
+          <article key={index} className="flex gap-4">
+            <Link
+              href={`/members/${userPublicLists.name}/list/${handleSlug(
+                list.title,
+              )?.slug}?id=${list.id}`}
+            >
+              <MemberFilmListDisplay
+                movieImageWidth="w92"
+                aspectRatio="portrait"
+                columnsCount={4}
+                width={92}
+                limit={4}
+                filmList={list}
+                hasInfos={true}
+              />
+            </Link>
+          </article>
+          <div className="my-4 divide-y divide-border rounded-md border"></div>
+        </>
+      ))}
     </>
   )
 }

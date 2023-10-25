@@ -1,14 +1,12 @@
-import { FilmCardList } from '@/components/film-card-list'
 import { UserFilmListDisplay } from '@/components/film-user-card-list'
-import { buttonVariants } from '@/components/ui/button'
-import { authOptions } from '@/lib/auth'
-import { getCurrentUser } from '@/lib/session'
-import { cn } from '@/lib/utils/utils'
-import Link from 'next/link'
-import { notFound, redirect } from 'next/navigation'
-import listModel from '@/models/lists'
 import { Icons } from '@/components/icons'
+import { buttonVariants } from '@/components/ui/button'
+import { getCurrentUser } from '@/lib/session'
 import { handleSlug } from '@/lib/utils/slugify'
+import { cn } from '@/lib/utils/utils'
+import listModel from '@/models/lists'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Lists Page',
@@ -24,7 +22,7 @@ export default async function UserListsPage() {
 
   const userLists = await listModel.getAllByUserId(user.id)
 
-  console.log('userList', userLists)
+  // console.log('userList', userLists)
 
   return (
     <>
@@ -38,63 +36,36 @@ export default async function UserListsPage() {
         Start a new list
       </Link>
 
-      <section className="grid gap-2">
-        {/* <h2>My awesome list</h2> */}
-        {/* <FilmCardList
-          // limit={12}
-          columnsCount={12}
-          aspectRatio="portrait"
-          width={92}
-          movieImageWidth="w92"
-          isSlider={true}
-          isSnapped={true}
-        /> */}
+      <section className="grid grid-cols-2 gap-2">
         {userLists?.length &&
-          userLists.map((list) => {
+          userLists.map((list, index) => {
             return (
-              <div className="flex gap-4">
-                <UserFilmListDisplay
-                  movieImageWidth="w92"
-                  aspectRatio="portrait"
-                  columnsCount={4}
-                  width={92}
-                  limit={4}
-                  filmList={list}
-                />
+              <article key={index} className="flex gap-4">
+                <Link
+                  href={`/me/list/${handleSlug(list.title)?.slug}?id=${
+                    list.id
+                  }`}
+                >
+                  <UserFilmListDisplay
+                    movieImageWidth="w92"
+                    aspectRatio="portrait"
+                    columnsCount={4}
+                    width={92}
+                    limit={4}
+                    filmList={list}
+                    hasInfos={false}
+                  />
+                </Link>
                 <Link
                   href={`/me/list/${handleSlug(list.title)?.slug}/edit/?id=${
                     list.id
                   }`}
                 >
-                  <Icons.pencil className="h-6 w-6" />
+                  <Icons.pencil className="h-5 w-5" />
                 </Link>
-              </div>
+              </article>
             )
           })}
-      </section>
-      <section className="grid gap-2">
-        <h2>My list for lovers</h2>
-        <FilmCardList
-          // limit={12}
-          columnsCount={12}
-          aspectRatio="portrait"
-          width={92}
-          movieImageWidth="w92"
-          isSlider={true}
-          isSnapped={true}
-        />
-      </section>
-      <section className="grid gap-2">
-        <h2>Horror films</h2>
-        <FilmCardList
-          // limit={12}
-          columnsCount={12}
-          aspectRatio="portrait"
-          width={92}
-          movieImageWidth="w92"
-          isSlider={true}
-          isSnapped={true}
-        />
       </section>
     </>
   )

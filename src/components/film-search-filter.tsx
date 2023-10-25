@@ -40,7 +40,7 @@ export function FilmSearchFilter() {
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams)
       params.set(name, value)
-      console.log(name, value, params.toString())
+      // console.log(name, value, params.toString())
 
       return params.toString()
     },

@@ -155,7 +155,7 @@ export async function getSimilarByID({
     page,
   })
 
-  console.log('URL', url.href)
+  // console.log('URL', url.href)
   const response = await fetch(url.href)
 
   if (!response.ok) {
@@ -175,7 +175,7 @@ export async function searchMulti({
   // category,
   language = globalConfig.language,
 }: Omit<QueryOptions, 'category'>) {
-  console.log('QUERY', query)
+  // console.log('QUERY', query)
   const url = generateTMDBUrl(`search/multi`, {
     query,
     language,
@@ -212,7 +212,7 @@ export async function searchByTitle({
     language,
     page,
   })
-  console.log('SEARCH URL', url.href)
+  // console.log('SEARCH URL', url.href)
   const response = await fetch(url)
 
   if (!response.ok) {
@@ -235,7 +235,7 @@ export async function discover({
     language,
     page,
   })
-  console.log('SEARCH URL', url.href)
+  // console.log('SEARCH URL', url.href)
   const response = await fetch(url)
 
   if (!response.ok) {
@@ -335,5 +335,5 @@ export async function getTvAndMovieGenresList({ language }: QueryOptions) {
       language,
     }),
   ])
-  console.log(movieGenresList, tvGenresList)
+  // console.log(movieGenresList, tvGenresList)
 }

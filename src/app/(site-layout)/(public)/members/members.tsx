@@ -19,18 +19,25 @@ export async function Members() {
               <React.Fragment key={user.id}>
                 <article
                   className={cn(
-                    'grid grid-cols-[_1.5fr,_1fr,_1fr,_1fr] items-baseline sm:grid-cols-[_2fr,_1fr,_1fr,_1fr]',
+                    'grid grid-cols-[_1.5fr,_0.7fr,_0.7fr,_0.7fr] items-baseline sm:grid-cols-[_2fr,_1fr,_1fr,_1fr]',
                   )}
                 >
                   <div className="flex items-center gap-2">
-                    <MemberAvatar user={user} className="md:h-12 md:w-12" />
+                    <MemberAvatar
+                      user={user}
+                      className="h-8 w-8 md:h-12 md:w-12"
+                    />
                     <div className="grid">
-                      <Link href={`/members/${user.name}?id=${user.id}`}>
+                      <Link
+                        href={`/members/${user.name}?id=${user.id}`}
+                        className="text-xs sm:text-base"
+                      >
                         {user.name}
                       </Link>
                       <p className="text-muted-foreground/60">
                         <Link
                           href={`/members/${user.name}/reviews?id=${user.id}`}
+                          className="text-xs sm:text-base"
                         >
                           {user.reviews.length} reviews
                         </Link>

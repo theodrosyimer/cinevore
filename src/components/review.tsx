@@ -1,4 +1,5 @@
 import { FilmCard } from '@/components/film-card'
+import { MemberInfos } from '@/components/member-infos'
 import { UserInfos } from '@/components/user-infos'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { MovieDetails } from '@/lib/tmdb/types/tmdb-api'
@@ -47,7 +48,7 @@ export function Review({
         >
           {film.title}
         </Link>
-        <UserInfos user={review.user} showUserName={false} />
+        <MemberInfos user={review.user} showUserName={false} />
         <p className="text-muted-foreground">{review.content}</p>
         <p>{likesCount} likes</p>
         {/* {review.commentsToMovieReview.map(comment => comment?.comments?.content)} */}
