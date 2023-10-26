@@ -116,8 +116,8 @@ function MobileLink({
       }}
       className={cn(
         'hover:text-foreground/100',
-        pathname === href && theme === 'light' && 'text-accent-foreground',
-        pathname === href && theme === 'dark' && 'text-accent',
+        pathname === href && theme === 'light' && 'text-foreground',
+        pathname === href && theme === 'dark' && 'text-foreground',
         pathname !== href && 'text-foreground/60',
         className,
       )}
