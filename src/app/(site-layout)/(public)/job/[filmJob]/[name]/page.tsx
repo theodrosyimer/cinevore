@@ -60,7 +60,7 @@ export default async function JobDetailsPage({
     <>
       <div className="relative grid gap-8 md:grid-cols-[_minmax(_12rem,_0.33fr),_1fr] md:gap-8 lg:gap-12">
         <div className="sm:grid sm:grid-cols-[_0.33fr,_1fr] sm:gap-4 md:block">
-          <div className="xs:justify-items-center col-auto grid gap-2">
+          <div className="col-auto grid gap-2 xs:justify-items-center">
             <img
               src={posterImageUrl!}
               alt={person?.name!}
@@ -71,9 +71,9 @@ export default async function JobDetailsPage({
                 'col-auto mb-4 aspect-[0.667] h-auto rounded-md object-cover',
               )}
             />
-            <p className="text-md text-center font-bold md:hidden">
+            {/* <p className="text-md text-center font-bold md:hidden">
               {person?.name}
-            </p>
+            </p> */}
           </div>
           <p className="text-sm text-muted-foreground lg:text-base ">
             {person.biography}
