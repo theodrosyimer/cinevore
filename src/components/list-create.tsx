@@ -41,6 +41,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '@radix-ui/react-alert-dialog'
+import { getCurrentUser } from '@/lib/session'
 
 interface NewListFormProps extends React.HTMLAttributes<HTMLDivElement> {
   user: User
@@ -111,7 +112,7 @@ export function NewListForm({
     setIsLoading(true)
 
     const response = await fetch(
-      list ? `/api/lists/${list.id}` : '/api/lists',
+      list ? `/api/users/${user?.id}/lists/${list.id}` : '/api/lists',
       {
         method: list ? 'PATCH' : 'POST',
         credentials: 'include',
@@ -132,7 +133,7 @@ export function NewListForm({
       })
       return
     })
-    console.log('response:', response)
+    // console.log('response:', response)
 
     setIsLoading(false)
 
@@ -153,107 +154,109 @@ export function NewListForm({
   }
 
   return (
-    <div className={cn('', className)} {...props}>
-      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
-        <div className="mb-4 grid gap-2 md:grid-cols-2">
-          <div className="grid items-start gap-2">
-            <div className="grid gap-2">
-              <div className="grid gap-1">
-                <Label className="sr-only" htmlFor="title">
-                  Title
-                </Label>
-                <Input
-                  id="title"
-                  placeholder="Title"
-                  type="text"
-                  autoCapitalize="none"
-                  autoComplete="text"
-                  autoCorrect="off"
-                  autoFocus
-                  disabled={isLoading}
-                  {...register('title')}
-                />
-                {errors?.title && (
-                  <p className="px-1 text-xs text-red-600">
-                    {errors.title.message}
-                  </p>
-                )}
-              </div>
-              <div className="grid gap-1">
-                <Label className="sr-only" htmlFor="privacy">
-                  Privacy
-                </Label>
-                <Controller
-                  control={control}
-                  name="isPrivate"
-                  render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value ? '1' : '0'}
-                    >
-                      <SelectTrigger>
-                        <SelectValue
-                          placeholder="Privacy settings"
-                          className="placeholder-muted-foreground"
-                        />
-                        {errors?.isPrivate && (
-                          <p className="px-1 text-xs text-red-600">
-                            {errors.isPrivate.message}
-                          </p>
-                        )}
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Privacy</SelectLabel>
-                          <SelectItem value="0">Public</SelectItem>
-                          <SelectItem value="1">Private</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
+    <>
+      <div className={cn('', className)} {...props}>
+        <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
+          <div className="mb-4 grid gap-2 md:grid-cols-2">
+            <div className="grid items-start gap-2">
+              <div className="grid gap-2">
+                <div className="grid gap-1">
+                  <Label className="sr-only" htmlFor="title">
+                    Title
+                  </Label>
+                  <Input
+                    id="title"
+                    placeholder="Title"
+                    type="text"
+                    autoCapitalize="none"
+                    autoComplete="text"
+                    autoCorrect="off"
+                    autoFocus
+                    disabled={isLoading}
+                    {...register('title')}
+                  />
+                  {errors?.title && (
+                    <p className="px-1 text-xs text-red-600">
+                      {errors.title.message}
+                    </p>
                   )}
-                />
+                </div>
+                <div className="grid gap-1">
+                  <Label className="sr-only" htmlFor="privacy">
+                    Privacy
+                  </Label>
+                  <Controller
+                    control={control}
+                    name="isPrivate"
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value ? '1' : '0'}
+                      >
+                        <SelectTrigger>
+                          <SelectValue
+                            placeholder="Privacy settings"
+                            className="placeholder-muted-foreground"
+                          />
+                          {errors?.isPrivate && (
+                            <p className="px-1 text-xs text-red-600">
+                              {errors.isPrivate.message}
+                            </p>
+                          )}
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Privacy</SelectLabel>
+                            <SelectItem value="0">Public</SelectItem>
+                            <SelectItem value="1">Private</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                </div>
               </div>
             </div>
+            <div className="grid gap-1">
+              <Label className="sr-only" htmlFor="description">
+                Description
+              </Label>
+              <Textarea
+                placeholder="Describe what makes this list unique."
+                id="description"
+                disabled={isLoading}
+                className="h-64"
+                {...register('description')}
+              />
+              {errors?.description && (
+                <p className="px-1 text-xs text-red-600">
+                  {errors.description.message}
+                </p>
+              )}
+            </div>
           </div>
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="description">
-              Description
-            </Label>
-            <Textarea
-              placeholder="Describe what makes this list unique."
-              id="description"
-              disabled={isLoading}
-              className="h-64"
-              {...register('description')}
-            />
-            {errors?.description && (
-              <p className="px-1 text-xs text-red-600">
-                {errors.description.message}
-              </p>
-            )}
-          </div>
-        </div>
-        <div className="flex justify-end gap-4">
-          {list ? (
-            <button
-              onClick={() => setShowDeleteAlert(true)}
-              className={cn(buttonVariants({ variant: 'destructive' }))}
-              disabled={isLoading}
-            >
+          <div className="flex justify-end gap-4">
+            {list ? (
+              <button
+                onClick={() => setShowDeleteAlert(true)}
+                className={cn(buttonVariants({ variant: 'destructive' }))}
+                disabled={isLoading}
+              >
+                {isLoading && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                Delete
+              </button>
+            ) : null}
+            <button className={cn(buttonVariants())} disabled={isLoading}>
               {isLoading && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Delete
+              {list ? 'Update' : 'Save'}
             </button>
-          ) : null}
-          <button className={cn(buttonVariants())} disabled={isLoading}>
-            {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            {list ? 'Update' : 'Save'}
-          </button>
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
       <AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
         <AlertDialogOverlay>
           <AlertDialogContent>
@@ -296,6 +299,6 @@ export function NewListForm({
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
-    </div>
+    </>
   )
 }

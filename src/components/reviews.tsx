@@ -17,6 +17,19 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
     })
 
     // console.log('Reviews Page:', reviews)
+    // const films = reviews.map(async (review) => {
+    //   const film = await searchByID({
+    //     id: review.movieId.toString(),
+    //     category: 'movie',
+    //   }).catch((error) => {
+    //     console.log(error.message)
+    //   })
+
+    //   if (!film) return
+
+    //   return film
+    // })
+
     return (
       <>
         <section className="grid gap-4">

@@ -8,7 +8,7 @@ export const footerConfig = [
     href: '/help',
   },
   {
-    title: 'Terms',
+    title: 'Terms of use',
     href: '/terms',
   },
   {

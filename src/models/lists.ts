@@ -224,8 +224,8 @@ class ListsModel {
       },
     })
 
-  deleteById = async (listId: number, userId: string) =>
-    db.delete(list).where(and(eq(list.id, listId), eq(list.userId, userId)))
+  deleteById = async (listId: number) =>
+    db.delete(list).where(eq(list.id, listId))
 
   updateById = async (
     listId: number,

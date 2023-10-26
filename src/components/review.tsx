@@ -1,3 +1,5 @@
+'use client'
+
 import { FilmCard } from '@/components/film-card'
 import { MemberInfos } from '@/components/member-infos'
 import { UserInfos } from '@/components/user-infos'

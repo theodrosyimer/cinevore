@@ -10,8 +10,16 @@ import { MobileNav } from '@/components/mobile-nav'
 import { buttonVariants } from '@/components/ui/button'
 import { getCurrentUser } from '@/lib/session'
 import { UserAccountNav } from '@/components/user-account-nav'
-import { SearchCombo } from '@/components/search-combo'
+import { UserAvatar } from '@/components/user-avatar'
 
+import { SearchCombo } from '@/components/search-combo'
+// import dynamic from 'next/dynamic'
+// const { UserAccountNav } = dynamic(
+//   () => import('@/components/user-account-nav'),
+//   {
+//     ssr: false,
+//   },
+// )
 export async function SiteHeader() {
   const { user, isAdmin } = await getCurrentUser()
 
@@ -54,7 +62,12 @@ export async function SiteHeader() {
                 image: user?.image,
                 email: user?.email,
               }}
-            />
+            >
+              <UserAvatar
+                user={{ name: user?.name ?? '', image: user?.image || null }}
+                className={cn('h-8 w-8', !user?.email ? 'hidden' : '')}
+              />
+            </UserAccountNav>
           </div>
         </div>
       </header>

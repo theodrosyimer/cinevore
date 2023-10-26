@@ -68,6 +68,7 @@ export default async function UserListPage({
           </Link>
         </div>
       ) : null}
+      <p className="">{userList?.description}</p>
     </section>
   )
 }

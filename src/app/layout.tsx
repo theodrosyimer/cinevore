@@ -86,7 +86,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           'grid min-h-screen w-screen grid-rows-layout font-sans antialiased',

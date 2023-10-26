@@ -4,6 +4,7 @@ import { hashPassword } from '@/lib/bcrypt'
 import { db } from '@/lib/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { userPOSTSchema } from '@/lib/validations/user'
+import usersModel from '@/models/users'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import * as z from 'zod'
@@ -46,12 +47,16 @@ export async function POST(req: NextRequest) {
     if (body?.password) {
       hashedPassword = await hashPassword(body?.password)
     }
-
-    await db.insert(user).values({
+    await usersModel.create({
       ...body,
       // have to cast out `void` type returned from `hashPassword`
       password: hashedPassword ?? null,
     })
+    // await db.insert(user).values({
+    //   ...body,
+    //   // have to cast out `void` type returned from `hashPassword`
+    //   password: hashedPassword ?? null,
+    // })
 
     return new Response('User created successfully', { status: 201 })
   } catch (error) {

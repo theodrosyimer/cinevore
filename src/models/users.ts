@@ -24,7 +24,15 @@ class UsersModel {
       .limit(limit)
       .offset((page - 1) * limit)
 
-  getById = async (id: string) => db.select().from(user).where(eq(user.id, id))
+  // getById = async (id: string) => db.select().from(user).where(eq(user.id, id))
+
+  getById = async (id: string) =>
+    db.query.user.findFirst({
+      where: (user, { eq }) => eq(user.id, id),
+      columns: {
+        password: false,
+      },
+    })
 
   getByEmail = async (email: string) =>
     db.select().from(user).where(eq(user.email, email))

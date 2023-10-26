@@ -8,6 +8,7 @@ import { insertListSchema } from '@/lib/validations/list'
 import { verifyUserAccessPrivileges } from '@/lib/validations/user-access-privileges'
 import { eq } from 'drizzle-orm'
 import { NextResponse } from 'next/server'
+import listsModel from '@/models/lists'
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -104,7 +105,7 @@ export async function DELETE(
     }
 
     // Delete the list.
-    // await db.delete(schema.movieList).where(and(eq(schema.movieList.listId, params.listId), eq(schema.movieList.userId, user.id)))
+    await listsModel.deleteById(params.listId)
 
     return new Response(null, { status: 204 })
   } catch (error) {

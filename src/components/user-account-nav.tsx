@@ -17,16 +17,18 @@ import { userAccountNavConfig } from '@/config/user-account-nav'
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, 'name' | 'image' | 'email'>
+  children?: React.ReactNode
 }
 
-export function UserAccountNav({ user }: UserAccountNavProps) {
+export function UserAccountNav({ user, children }: UserAccountNavProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <UserAvatar
+        {children}
+        {/* <UserAvatar
           user={{ name: user.name ?? '', image: user.image || null }}
           className={cn('h-8 w-8', !user.email ? 'hidden' : '')}
-        />
+        /> */}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="z-[100]">
         <div className="flex items-center justify-start gap-2 p-2">

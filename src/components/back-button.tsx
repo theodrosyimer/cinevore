@@ -4,11 +4,12 @@ import { Icons } from '@/components/icons'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'
-import router from 'next/router'
+import { useRouter } from 'next/router'
 
 export type BackButtonProps = {}
 
 export function BackButton(props: BackButtonProps) {
+  const router = useRouter()
   return (
     <>
       <Link

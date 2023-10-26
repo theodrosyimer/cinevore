@@ -32,20 +32,6 @@ export async function POST(req: Request) {
       return new Response('Unauthorized', { status: 403 })
     }
 
-    // const subscriptionPlan = await getUserSubscriptionPlan(user.id)
-
-    // If user is on a free plan.
-    // Check if user has reached limit of 3 posts.
-    // if (!subscriptionPlan?.isPro) {
-    //   const result = await db.query.list.findMany({
-    //     where: eq(list.authorId, user.id),
-    //   })
-
-    //   if (result.length >= 3) {
-    //     throw new RequiresProPlanError()
-    //   }
-    // }
-
     // const json = await req.json()
     // const body = movieListPostSchema.parse(json)
 

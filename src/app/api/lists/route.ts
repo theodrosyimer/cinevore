@@ -30,31 +30,30 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const { user: currentUser, isAdmin } = await getCurrentUser()
+    console.log('currentUser', currentUser)
 
-    if (!currentUser || !isAdmin) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+    if (currentUser && (currentUser.id || isAdmin)) {
+      const json = await req.json()
+      const body = insertListSchema.parse(json)
+
+      const results = await db
+        .insert(list)
+        .values({ ...body, userId: currentUser?.id })
+
+      if (!results) {
+        return new Response(null, { status: 500 })
+      }
+
+      // console.log("insert id:", results[0].insertId)
+
+      // if (body?.movieId) {
+      //   await db.insert(movieList).values({ ...body, listId: results[0].insertId, movieId: body.movieId, userId: currentUser.id })
+
+      //   return new Response("List created", { status: 201 })
+      // }
+
+      return NextResponse.json({ message: 'List created' }, { status: 201 })
     }
-
-    const json = await req.json()
-    const body = insertListSchema.parse(json)
-
-    const results = await db
-      .insert(list)
-      .values({ ...body, userId: currentUser.id })
-
-    if (!results) {
-      return new Response(null, { status: 500 })
-    }
-
-    // console.log("insert id:", results[0].insertId)
-
-    // if (body?.movieId) {
-    //   await db.insert(movieList).values({ ...body, listId: results[0].insertId, movieId: body.movieId, userId: currentUser.id })
-
-    //   return new Response("List created", { status: 201 })
-    // }
-
-    return NextResponse.json({ message: 'List created' }, { status: 201 })
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.issues }, { status: 422 })

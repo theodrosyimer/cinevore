@@ -51,7 +51,7 @@ export default function RegisterPage() {
               href="/terms"
               className="hover:text-brand underline underline-offset-4"
             >
-              Terms of Service
+              Terms of Use
             </Link>{' '}
             and{' '}
             <Link

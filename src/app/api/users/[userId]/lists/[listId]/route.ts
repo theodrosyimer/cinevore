@@ -21,9 +21,11 @@ export async function GET(
   context: z.infer<typeof reviewRouteContextSchema>,
 ) {
   try {
+    // Validate the route context.
     const { params } = reviewRouteContextSchema.parse(context)
     const { listId, userId } = params
 
+    // Ensure user is authenticated and has access to this resource.
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
@@ -67,10 +69,10 @@ export async function PATCH(
       const json = await req.json()
       const body = listPATCHSchema.parse(json)
 
-      // Update the review.
+      // Update the list.
       await db.update(list).set(body).where(eq(list.id, listId))
 
-      return new Response('Review updated successfully!', { status: 200 })
+      return new Response('List updated successfully!', { status: 200 })
     }
 
     return new Response('Unauthorized', { status: 403 })

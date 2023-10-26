@@ -25,7 +25,7 @@ export async function GET(
     const token = await getToken({ req })
 
     if (token && (params.userId === token.id || isAdmin(token))) {
-      const [dbUser] = await UsersModel.getById(params.userId)
+      const dbUser = await UsersModel.getById(params.userId)
 
       if (!dbUser) {
         return new Response('User not found', { status: 404 })
@@ -55,7 +55,7 @@ export async function PATCH(
     // Validate the route context.
     const { params } = routeContextSchema.parse(context)
 
-    // Ensure user is authenticated and has access to this user.
+    // Ensure user is authenticated and has access to this resource.
     const token = await getToken({ req })
 
     if (token && (params.userId === token.id || isAdmin(token))) {

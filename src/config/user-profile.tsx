@@ -2,20 +2,20 @@ import { SiteLayoutConfig } from '@/types'
 
 export const userNavigationConfig: SiteLayoutConfig = {
   mainNav: [
-    // {
-    //   title: 'Profile',
-    //   href: '/me',
-    // },
     {
-      title: 'Films',
+      title: 'Profile',
+      href: '/me',
+    },
+    {
+      title: 'My Films',
       href: '/me/films',
     },
     {
-      title: 'Lists',
+      title: 'My Lists',
       href: '/me/lists',
     },
     {
-      title: 'Reviews',
+      title: 'My Reviews',
       href: '/me/reviews',
       disabled: false,
     },
@@ -42,17 +42,17 @@ export const userNavigationConfig: SiteLayoutConfig = {
         //   items: [],
         // },
         {
-          title: 'Films',
+          title: 'My Films',
           href: '/me/films',
           items: [],
         },
         {
-          title: 'Lists',
+          title: 'My Lists',
           href: '/me/lists',
           items: [],
         },
         {
-          title: 'Reviews',
+          title: 'My Reviews',
           href: '/me/reviews',
           disabled: false,
           items: [],
