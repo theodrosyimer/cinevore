@@ -62,7 +62,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
       title: 'Logged in.',
       // description: 'Your account has been created.',
     })
-    return router.push(signInResult?.url ?? '/me')
+    return router.push(/* signInResult?.url ??  */ '/me')
   }
 
   return (
