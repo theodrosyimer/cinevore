@@ -1,15 +1,10 @@
-// import debug from 'debug'
 import { eq } from 'drizzle-orm'
 import { db } from '@/lib/db'
 import { user } from '@/db/planetscale'
 import { NewUser, SelectUser } from '@/types/db'
 
-// const log: debug.IDebugger = debug('app:users-model')
-
 class UsersModel {
-  constructor() {
-    // log('Created new instance of UsersModel')
-  }
+  constructor() {}
 
   create = async (newUser: NewUser) => {
     return db.insert(user).values(newUser)

@@ -52,11 +52,6 @@ export async function POST(req: NextRequest) {
       // have to cast out `void` type returned from `hashPassword`
       password: hashedPassword ?? null,
     })
-    // await db.insert(user).values({
-    //   ...body,
-    //   // have to cast out `void` type returned from `hashPassword`
-    //   password: hashedPassword ?? null,
-    // })
 
     return new Response('User created successfully', { status: 201 })
   } catch (error) {

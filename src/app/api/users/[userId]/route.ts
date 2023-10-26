@@ -96,7 +96,7 @@ export async function DELETE(
     const token = await getToken({ req })
 
     if (token && (params.userId === token.id || isAdmin(token))) {
-      // Delete the list.
+      // Delete the user.
       const resultHeader = await db
         .delete(user)
         .where(eq(user.id, params.userId))

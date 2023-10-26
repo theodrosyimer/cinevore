@@ -29,16 +29,6 @@ console.log(
   process.env.DB_PORT,
 )
 
-// const client = await mysql.createConnection({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_ADMIN,
-//   database: process.env.DB_NAME,
-//   port: Number(process.env.DB_PORT),
-//   // password: process.env.DB_PASSWORD,
-// })
-
-// const dbMigrationOnly = drizzle(client)
-
 async function main() {
   await clearDbTables().catch((e) => {
     console.error(e)
