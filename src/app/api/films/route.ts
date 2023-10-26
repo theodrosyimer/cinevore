@@ -6,19 +6,10 @@ import { db } from '@/lib/db'
 export async function GET() {
   const session = await getServerSession(authOptions)
 
-  const movies = await db.query.movie.findMany({
-    with: {
-      movieInfosToUsers: true,
-    },
-  })
+  const movies = await db.query.movie.findMany({})
 
   if (session) {
-    return NextResponse.json({
-      movies: [
-        { title: 'Alien vs Predator', id: 1 },
-        { title: 'Reservoir Dogs', id: 2 },
-      ],
-    })
+    return NextResponse.json(movies)
   } else {
     return NextResponse.json({
       error: 'You must sign in to view movies.',

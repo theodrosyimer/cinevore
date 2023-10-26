@@ -13,13 +13,15 @@ const insertRefineOptions = {
     .string()
     .min(12)
     .max(25)
-    .regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g, {
-      message:
-        'Password must contain at least 12 characters, one uppercase, one lowercase, one number and one of these special characters: #?!@$ %^&*-',
-    }),
+    .regex(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{12,}$/g,
+      {
+        message:
+          'Password must contain at least 12 characters, one uppercase, one lowercase, one number and one of these special characters: #?!@$ %^&*-',
+      },
+    ),
 }
 
-// For admin actions
 export const insertUserSchema = createInsertSchema(user, insertRefineOptions)
 
 export const userPatchSchema = createInsertSchema(user, {

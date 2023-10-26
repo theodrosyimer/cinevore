@@ -16,16 +16,13 @@ const loginRefineOptionsd = {
 
 export const userRegisterSchema = z
   .object({
-    // email: z.string().email(),
-    // password: z.string().min(5),
-    // name: z.string().min(3),
     name: z.string().min(2).max(50),
     email: z.string().email(),
     password: z
       .string()
       .max(25)
       .regex(
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g,
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{12,}$/g,
         {
           message:
             'Password must contain at least 12 characters, one uppercase, one lowercase, one number and one of these special characters: #?!@$ %^&*-',

@@ -236,7 +236,7 @@ export function NewListForm({
             </div>
           </div>
           <div className="flex justify-end gap-4">
-            {list ? (
+            {/* {list ? (
               <button
                 onClick={() => setShowDeleteAlert(true)}
                 className={cn(buttonVariants({ variant: 'destructive' }))}
@@ -247,7 +247,7 @@ export function NewListForm({
                 )}
                 Delete
               </button>
-            ) : null}
+            ) : null} */}
             <button className={cn(buttonVariants())} disabled={isLoading}>
               {isLoading && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
