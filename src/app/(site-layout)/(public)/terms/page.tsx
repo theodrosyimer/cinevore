@@ -8,6 +8,11 @@ import { settingsConfig } from '@/config/settings'
 import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'
 
+export const metadata = {
+  title: 'Terms of Use Page',
+  description: 'All you need to know about our terms of use',
+}
+
 export type TermsPageProps = {}
 
 export default function TermsPage(props: TermsPageProps) {
