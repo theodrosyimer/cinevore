@@ -1,16 +1,13 @@
 'use client'
 
 import { CardSkeleton } from '@/components/card-skeleton'
-import { FilmCard, MovieArtworkProps } from '@/components/film-card'
+import { MovieArtworkProps } from '@/components/film-card'
 import { gridColumnsConfig } from '@/components/film-card-list'
 import { FilmCardDisplay } from '@/components/film-user-card'
 import { useFilms } from '@/hooks/useFilms-zod'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
-import { handleSlug } from '@/lib/utils/slugify'
 import { cn } from '@/lib/utils/utils'
-import { useRouter } from 'next/navigation'
-import { useCallback } from 'react'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
   limit?: keyof typeof gridColumnsConfig

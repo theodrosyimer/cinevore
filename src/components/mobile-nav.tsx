@@ -12,7 +12,7 @@ import { Icons } from '@/components/icons'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { MainNavItem, SiteLayoutConfig } from '@/types'
+import { SiteLayoutConfig } from '@/types'
 import { useTheme } from 'next-themes'
 
 type MobileNavProps = {

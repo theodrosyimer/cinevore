@@ -4,12 +4,10 @@ import { Icons } from '@/components/icons'
 import LikeIcon from '@/components/like-icon'
 import {
   Menubar,
-  MenubarCheckboxItem,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger,
 } from '@/components/ui/menubar'
 import { cn } from '@/lib/utils/utils'

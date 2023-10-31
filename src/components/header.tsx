@@ -6,10 +6,8 @@ import { buttonVariants } from '@/components/ui/button'
 import { Search } from '@/components/search-input'
 import { ModeToggle } from '@/components/mode-toggle'
 import { UserAccountNav } from '@/components/user-account-nav'
-import { User } from 'next-auth'
 
 import { getCurrentUser } from '@/lib/session'
-import { notFound } from 'next/navigation'
 
 export async function Header() {
   const { user, isAdmin } = await getCurrentUser()

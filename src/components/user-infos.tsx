@@ -1,31 +1,7 @@
-import { ChevronDownIcon } from '@radix-ui/react-icons'
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import { SelectUser } from '@/types/db'
+import { Card } from '@/components/ui/card'
 import { User } from 'next-auth'
 import { cn } from '@/lib/utils/utils'
-import { Icons } from '@/components/icons'
 import Link from 'next/link'
 
 interface UserInfos {

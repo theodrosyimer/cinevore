@@ -1,7 +1,5 @@
 'use client'
 
-import Fuse from 'fuse.js'
-
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 import { searchMulti } from '@/lib/tmdb/src/tmdb'
@@ -15,13 +13,7 @@ import {
   useState,
 } from 'react'
 import { useDebounce } from 'use-debounce'
-import {
-  SearchMovieMulti,
-  SearchPersonMulti,
-  SearchTvShowMulti,
-  TMDBSearchMulti,
-  TMDBSearchMultiResult,
-} from '@/lib/tmdb/types/tmdb-api'
+import { TMDBSearchMultiResult } from '@/lib/tmdb/types/tmdb-api'
 
 interface SearchProps extends HTMLAttributes<HTMLFormElement> {}
 

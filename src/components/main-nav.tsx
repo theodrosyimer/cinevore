@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils/utils'
 import { Icons } from '@/components/icons'
-import { Badge } from '@/components/ui/badge'
 import { MainNavItem } from '@/types'
 import { useTheme } from 'next-themes'
 

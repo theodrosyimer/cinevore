@@ -2,7 +2,6 @@
 import { MovieArtworkProps } from '@/components/film-card'
 import { FilmCardDisplay } from '@/components/film-user-card'
 import { Icons } from '@/components/icons'
-import { UserInfos } from '@/components/user-infos'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'

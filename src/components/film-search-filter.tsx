@@ -5,7 +5,6 @@ import { Icons } from '@/components/icons'
 import {
   Menubar,
   MenubarContent,
-  MenubarItem,
   MenubarMenu,
   MenubarPortal,
   MenubarRadioGroup,
@@ -19,12 +18,10 @@ import {
   serviceFilters,
   yearFilters,
 } from '@/config/film-search-filter'
-import { DotFilledIcon } from '@radix-ui/react-icons'
 import { MenubarItemIndicator } from '@radix-ui/react-menubar'
-import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 
 export function FilmSearchFilter() {
   const router = useRouter()

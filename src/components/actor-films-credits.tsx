@@ -1,11 +1,8 @@
 'use client'
-import { CardSkeleton } from '@/components/card-skeleton'
-import { FilmCard, MovieArtworkProps } from '@/components/film-card'
-import { getImageFormatSize } from '@/lib/tmdb/src/utils'
+
+import { MovieArtworkProps } from '@/components/film-card'
 import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'
-import { getPersonByID, getPopular, searchByID } from '@/lib/tmdb/src/tmdb'
-import { useQuery } from '@tanstack/react-query'
 import { MovieCast } from '@/lib/tmdb/types/tmdb-api-movie-details'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {

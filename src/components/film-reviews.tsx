@@ -1,5 +1,4 @@
 import { FilmReview } from '@/components/film-review'
-import { Review } from '@/components/review'
 import { db } from '@/lib/db'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
 

@@ -1,10 +1,8 @@
 import Link from 'next/link'
-import { movieReview } from '@/db/planetscale'
 
 import { formatDate } from '@/lib/utils/utils'
 import { Skeleton } from '@/components/ui/skeleton'
-import { UserOperations } from '@/components/user-operations'
-import { SelectUser, SelectMovieReview } from '@/types/db'
+import { SelectUser } from '@/types/db'
 import { EditDialog } from '@/components/settings-dialog-form'
 
 interface UserItemProps {

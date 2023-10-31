@@ -2,7 +2,6 @@
 
 import { FilmCard } from '@/components/film-card'
 import { MemberInfos } from '@/components/member-infos'
-import { UserInfos } from '@/components/user-infos'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { MovieDetails } from '@/lib/tmdb/types/tmdb-api'
 import {

@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { SelectMovieReview } from '@/types/db'
-import { movieReview } from '@/db/planetscale'
 
 import { formatDate } from '@/lib/utils/utils'
 import { Skeleton } from '@/components/ui/skeleton'

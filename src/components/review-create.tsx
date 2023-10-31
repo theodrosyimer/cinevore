@@ -1,7 +1,6 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
@@ -14,7 +13,6 @@ import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils/utils'
 import { insertListSchema } from '@/lib/validations/list'
-import { getCurrentUser } from '@/lib/session'
 import { Textarea } from '@/components/ui/textarea'
 
 interface NewListFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -73,7 +71,7 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
     <div className={cn('', className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2">
         <div className="grid gap-2 md:grid-cols-2">
-          <div className="grid gap-2 items-start">
+          <div className="grid items-start gap-2">
             <div className="grid gap-2">
               <div className="grid gap-1">
                 <Label className="sr-only" htmlFor="title">

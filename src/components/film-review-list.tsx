@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { UserAvatar } from '@/components/user-avatar'
 import { db } from '@/lib/db'
 import { getCurrentUser } from '@/lib/session'
 

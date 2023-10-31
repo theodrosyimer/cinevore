@@ -1,7 +1,5 @@
-import FilmRatingStars from '@/components/film-rating-stars'
 import { Icons } from '@/components/icons'
 import LikeIcon from '@/components/like-icon'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils/utils'
 
