@@ -1,12 +1,10 @@
 import { UserFilmListDisplay } from '@/components/film-user-card-list'
 import { Icons } from '@/components/icons'
-import { NewListForm } from '@/components/list-create'
 import { getCurrentUser } from '@/lib/session'
 import { handleSlug } from '@/lib/utils/slugify'
 import listsModel from '@/models/lists'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { list } from 'postcss'
 
 export const metadata = {
   title: 'User List Page',

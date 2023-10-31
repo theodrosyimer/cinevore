@@ -1,9 +1,6 @@
 // import { env } from "@env.mjs"
 import * as dotenv from 'dotenv'
 dotenv.config()
-import { authOptions } from '@/lib/auth'
-import { getCurrentUser } from '@/lib/session'
-import { redirect } from 'next/navigation'
 
 export const metadata = {
   title: 'Upload Image',

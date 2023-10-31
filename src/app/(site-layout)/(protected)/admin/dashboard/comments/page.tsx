@@ -7,7 +7,7 @@ import { EmptyPlaceholder } from '@/components/empty-placeholder'
 import { DashboardHeader } from '@/components/dashboard-header'
 import { UserCreateButton } from '@/components/admin-create-user-button'
 import { DashboardShell } from '@/components/shell'
-import { desc, eq } from 'drizzle-orm'
+import { desc } from 'drizzle-orm'
 import { user } from '@/db/planetscale'
 import { UserItem } from '@/components/user-item'
 

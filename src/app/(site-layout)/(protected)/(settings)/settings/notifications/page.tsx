@@ -1,8 +1,5 @@
 import { Separator } from '@/components/ui/separator'
 import { NotificationsForm } from '@/app/(site-layout)/(protected)/(settings)/settings/notifications/notifications-form'
-import { getCurrentUser } from '@/lib/session'
-import { redirect } from 'next/navigation'
-import { authOptions } from '@/lib/auth'
 
 export default async function SettingsNotificationsPage() {
   // const { user, isAdmin } = await getCurrentUser()

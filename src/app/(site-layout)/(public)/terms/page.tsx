@@ -1,12 +1,5 @@
-import { SidebarNav } from '@/components/sidebar-nav'
-import { BackButton } from '@/components/back-button'
 import { Icons } from '@/components/icons'
-import { buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { UserLoginForm } from '@/components/user-login-form'
-import { settingsConfig } from '@/config/settings'
-import { cn } from '@/lib/utils/utils'
-import Link from 'next/link'
 
 export const metadata = {
   title: 'Terms of Use Page',

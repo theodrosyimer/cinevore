@@ -1,7 +1,5 @@
-import { SidebarNav } from '@/components/sidebar-nav'
 import { ProfileForm } from '@/app/(site-layout)/(protected)/(settings)/settings/profile-form'
 import { Separator } from '@/components/ui/separator'
-import { settingsConfig } from '@/config/settings'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {

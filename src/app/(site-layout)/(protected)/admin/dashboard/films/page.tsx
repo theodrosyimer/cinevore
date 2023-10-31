@@ -1,17 +1,12 @@
 export type DashboardFilmsPage = {}
 
-import { redirect } from 'next/navigation'
-
-import { authOptions } from '@/lib/auth'
 import { db } from '@/lib/db'
-import { getCurrentUser } from '@/lib/session'
 import { EmptyPlaceholder } from '@/components/empty-placeholder'
 import { DashboardHeader } from '@/components/dashboard-header'
 import { UserCreateButton } from '@/components/admin-create-user-button'
 import { DashboardShell } from '@/components/shell'
-import { desc, eq } from 'drizzle-orm'
+import { desc } from 'drizzle-orm'
 import { user } from '@/db/planetscale'
-import { UserItem } from '@/components/user-item'
 import { FilmCardDisplay } from '@/components/film-user-card'
 import { AddFilmButton } from '@/components/admin-add-films'
 

@@ -1,8 +1,6 @@
-import { buttonVariants } from '@/components/ui/button'
 import { UserFilmCard } from '@/components/user-film-card'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
 import listsModel from '@/models/lists'
-import Link from 'next/link'
 
 export type MemberListPageProps = {
   params: {

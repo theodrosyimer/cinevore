@@ -4,8 +4,6 @@ import { cn } from '@/lib/utils/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Icons } from '@/components/icons'
 import { UserRegisterForm } from '@/components/user-register-form'
-import { MovieBackdrop } from '@/components/film-backdrop'
-import { globalConfig } from '@/lib/tmdb/src/tmdb'
 
 export const metadata = {
   title: 'Create an account',

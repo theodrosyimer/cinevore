@@ -1,8 +1,4 @@
-import { SidebarNav } from '@/components/sidebar-nav'
-import { Members } from '@/app/(site-layout)/(public)/members/members'
 import { Separator } from '@/components/ui/separator'
-import { UserInfos } from '@/components/user-infos'
-import { userNavigationConfig } from '@/config/user-profile'
 import { db } from '@/lib/db'
 import { MembersSidebarNav } from '@/components/members-sidebar-nav'
 import { membersNavConfig } from '@/config/members'

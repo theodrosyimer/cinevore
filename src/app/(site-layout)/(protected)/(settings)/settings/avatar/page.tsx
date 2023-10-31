@@ -5,8 +5,6 @@ import '@uploadthing/react/styles.css'
 
 import { UploadDropzone } from '@/lib/utils/uploadthing'
 
-import { OurFileRouter } from '@/app/api/uploadthing/core'
-
 import { useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils/utils'

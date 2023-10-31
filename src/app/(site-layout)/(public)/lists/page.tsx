@@ -1,7 +1,5 @@
-import { Lists } from '@/app/(site-layout)/(public)/lists/lists'
 import { UserFilmListDisplay } from '@/components/film-user-card-list'
-import { Reviews } from '@/components/reviews'
-import { Button, buttonVariants } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { db } from '@/lib/db'
 import { handleSlug } from '@/lib/utils/slugify'
 import { cn } from '@/lib/utils/utils'

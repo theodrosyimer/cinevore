@@ -1,7 +1,4 @@
 import { FilmCardList } from '@/components/film-card-list'
-import { authOptions } from '@/lib/auth'
-import { getCurrentUser } from '@/lib/session'
-import { redirect } from 'next/navigation'
 
 export const metadata = {
   title: 'Diary Page',

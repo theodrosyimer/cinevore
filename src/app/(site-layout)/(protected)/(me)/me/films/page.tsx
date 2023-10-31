@@ -1,9 +1,7 @@
-import { FilmCardList } from '@/components/film-card-list'
 import { UserFilmsTabs } from '@/components/user-films-tabs'
-import { authOptions } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { getCurrentUser } from '@/lib/session'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Films Page',

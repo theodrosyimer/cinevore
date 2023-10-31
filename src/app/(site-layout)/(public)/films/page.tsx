@@ -1,7 +1,6 @@
 import { FilmCardList } from '@/components/film-card-list'
 import { FilmSearchFilter } from '@/components/film-search-filter'
 import { FilmSearchFilterPopover } from '@/components/film-search-filter-popover'
-import { UserFilmListDisplay } from '@/components/film-user-card-list'
 import { Reviews } from '@/components/reviews'
 import { buttonVariants } from '@/components/ui/button'
 import { db } from '@/lib/db'

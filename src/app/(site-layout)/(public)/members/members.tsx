@@ -1,7 +1,5 @@
-import { getUsers } from '@/app/(site-layout)/(public)/members/getUsers'
 import { Icons } from '@/components/icons'
 import { MemberAvatar } from '@/components/member-avatar'
-import { UserAvatar } from '@/components/user-avatar'
 import { getAllUsersListsAndWatchedFilmsAndLikes } from '@/lib/actions/admin/getUserListsAndReviewsWithCommentsAndLikes'
 import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'

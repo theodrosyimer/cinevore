@@ -1,9 +1,6 @@
-import { FilmCardList } from '@/components/film-card-list'
-import { Reviews } from '@/components/reviews'
 import { UserReviews } from '@/components/user-reviews'
-import { authOptions } from '@/lib/auth'
 import { getCurrentUser } from '@/lib/session'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Diary Page',

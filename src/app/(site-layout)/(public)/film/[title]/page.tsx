@@ -1,26 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import { MovieBackdrop } from '@/components/film-backdrop'
-import MovieReviewList from '@/components/film-review-list'
 import { FilmReviews } from '@/components/film-reviews'
 import { MovieInfosTabs } from '@/components/film-tabs'
-import { FilmCardDisplay } from '@/components/film-user-card'
-import { Reviews } from '@/components/reviews'
 import { SimilarFilmCardDisplay } from '@/components/similar-film-user-card'
-import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { UserMovieActions } from '@/components/user-movie-infos'
 import { getCurrentUser } from '@/lib/session'
-import {
-  getSimilarByID,
-  globalConfig,
-  searchByID,
-  searchByTitle,
-} from '@/lib/tmdb/src/tmdb'
+import { getSimilarByID, globalConfig, searchByID } from '@/lib/tmdb/src/tmdb'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
 import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils/utils'
 import Link from 'next/link'
-import { notFound, useSearchParams } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Film Details ',

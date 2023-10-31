@@ -1,7 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ActorFilmCardList } from '@/components/actor-films-credits'
 import { FilmCardList } from '@/components/film-card-list'
-import { FilmCardDisplay } from '@/components/film-user-card'
 import { toast } from '@/components/ui/use-toast'
 import { getPersonByID } from '@/lib/tmdb/src/tmdb'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
