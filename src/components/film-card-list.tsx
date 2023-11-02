@@ -56,7 +56,6 @@ export function FilmCardList(
     queryKey: ['popularMovies'],
     queryFn: () => getPopular({ category: 'movie', page: '1' }),
   })
-  // const { data: films, isLoading } = useFilms()
 
   if (isLoading) {
     return <CardSkeleton />

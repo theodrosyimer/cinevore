@@ -1,17 +1,15 @@
 import { FilmCardList } from '@/components/film-card-list'
 import { FilmSearchFilter } from '@/components/film-search-filter'
+import { FilmSearchFilterPopover } from '@/components/film-search-filter-popover'
 import { Button, buttonVariants } from '@/components/ui/button'
+import { getPopular } from '@/lib/tmdb/src/tmdb'
 import { cn } from '@/lib/utils/utils'
-import * as dotenv from 'dotenv'
-import Link from 'next/link'
 import {
-  dehydrate,
   HydrationBoundary,
   QueryClient,
+  dehydrate,
 } from '@tanstack/react-query'
-import { getPopular } from '@/lib/tmdb/src/tmdb'
-import { FilmSearchFilterPopover } from '@/components/film-search-filter-popover'
-dotenv.config()
+import Link from 'next/link'
 
 export const metadata = {
   title: 'Films Search Page',
