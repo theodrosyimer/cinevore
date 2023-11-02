@@ -8,7 +8,7 @@ import { user } from '@/db/planetscale'
 import { UserItem } from '@/components/user-item'
 
 export const metadata = {
-  title: 'Dashboard',
+  title: 'Dashboard'
 }
 
 export default async function DashboardPage() {

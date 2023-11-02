@@ -14,7 +14,7 @@ import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 
 export const metadata = {
   title: 'Home Page',
-  description: 'Welcome to Cinevore, the social network for film lovers',
+  description: 'Welcome to Cinevore, the social network for film lovers'
 }
 export default async function IndexPage() {
   return (

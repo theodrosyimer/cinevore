@@ -10,7 +10,7 @@ import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Lists Page',
-  description: 'Your lists of films.',
+  description: 'Your lists of films.'
 }
 
 export default async function UserListsPage() {

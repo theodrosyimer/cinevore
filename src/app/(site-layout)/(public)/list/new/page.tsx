@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Create List Page',
-  description: 'Create a new list of films.',
+  description: 'Create a new list of films.'
 }
 
 export default async function NewListPage() {
