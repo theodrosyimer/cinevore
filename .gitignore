@@ -24,8 +24,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+.env
 # local env files
 .env*.local
+
 env.ts
 env.mjs
 
@@ -38,3 +40,4 @@ next-env.d.ts
 
 **/playground.ts
 playground.ts
+mcd.excalidraw
