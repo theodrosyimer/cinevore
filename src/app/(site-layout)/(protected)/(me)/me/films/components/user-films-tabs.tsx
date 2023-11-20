@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { UserFilmCard } from '@/components/user-film-card'
+import { UserFilmCard } from '@/components/film/user-film-card'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
 import { cn } from '@/lib/utils/utils'
 import { SelectMovieInfosToUser, SelectUser } from '@/types/db'
