@@ -1,28 +1,34 @@
 'use client'
 
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icon/icons'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
-export type BackButtonProps = {}
+export interface BackButtonProps extends React.HTMLAttributes<HTMLAnchorElement> {
+  className?: string
+  children?: React.ReactNode
+  href?: string
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
+}
 
-export function BackButton(props: BackButtonProps) {
+export function BackButton({className, children, href, onClick, ...props}: BackButtonProps) {
   const router = useRouter()
   return (
     <>
       <Link
-        href="#"
-        className={cn(buttonVariants({ variant: 'link' }), '')}
-        onClick={(e) => {
+        href={href ?? "#"}
+        className={cn(buttonVariants({ variant: 'link' }), className)}
+        onClick={onClick ? (e) => onClick(e) : (e) => {
           e.preventDefault()
           router.back()
         }}
+        {...props}
       >
         <>
           <Icons.chevronLeft className="mr-2 h-4 w-4" />
-          Back
+          {children ?? 'Back'}
         </>
       </Link>
     </>

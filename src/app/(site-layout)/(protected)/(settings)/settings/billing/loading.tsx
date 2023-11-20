@@ -1,6 +1,6 @@
 import { CardSkeleton } from '@/components/card-skeleton'
-import { DashboardHeader } from '@/components/dashboard-header'
-import { DashboardShell } from '@/components/shell'
+import { DashboardHeader } from '@/app/(site-layout)/(protected)/components/dashboard-header'
+import { DashboardShell } from '@/app/(site-layout)/(protected)/components/shell'
 
 export default function DashboardBillingLoading() {
   return (

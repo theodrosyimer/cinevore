@@ -1,14 +1,14 @@
 export type DashboardFilmsPage = {}
 
-import { db } from '@/lib/db'
-import { EmptyPlaceholder } from '@/components/empty-placeholder'
-import { DashboardHeader } from '@/components/dashboard-header'
-import { UserCreateButton } from '@/components/admin-create-user-button'
-import { DashboardShell } from '@/components/shell'
-import { desc } from 'drizzle-orm'
+import { DashboardHeader } from '@/app/(site-layout)/(protected)/components/dashboard-header'
+import { EmptyPlaceholder } from '@/app/(site-layout)/(protected)/admin/dashboard/components/empty-placeholder'
+import { FilmCardDisplay } from '@/components/film/film-user-card'
+import { DashboardShell } from '@/app/(site-layout)/(protected)/components/shell'
 import { user } from '@/db/planetscale'
-import { FilmCardDisplay } from '@/components/film-user-card'
-import { AddFilmButton } from '@/components/admin-add-films'
+import { db } from '@/lib/db'
+import { desc } from 'drizzle-orm'
+import { UserCreateButton } from '../components/admin-create-user-button'
+import { AddFilmButton } from './components/admin-add-films'
 
 export const metadata = {
   title: 'Dashboard',

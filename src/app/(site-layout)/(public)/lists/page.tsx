@@ -1,4 +1,4 @@
-import { UserFilmListDisplay } from '@/components/film-user-card-list'
+import { UserFilmListDisplay } from '@/components/film/film-user-card-list'
 import { buttonVariants } from '@/components/ui/button'
 import { db } from '@/lib/db'
 import { handleSlug } from '@/lib/utils/slugify'

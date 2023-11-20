@@ -1,6 +1,6 @@
 import { AvatarProps } from '@radix-ui/react-avatar'
 
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icon/icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { SelectUser } from '@/types/db'
 import { cn } from '@/lib/utils/utils'

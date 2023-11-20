@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { FilmCardList } from '@/components/film-card-list'
+import { FilmCardList } from '@/components/film/film-card-list'
 import { toast } from '@/components/ui/use-toast'
 import { getPersonByID } from '@/lib/tmdb/src/tmdb'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'

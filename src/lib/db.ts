@@ -79,7 +79,9 @@ export async function getTablesName(
   }
 
   const rows = result['rows'] as MySql2InformationSchemaTables[]
+
   // log(JSON.stringify(results), 'fg.red')
+
   return rows.map(
     (row: MySql2InformationSchemaTables) => row['TABLE_NAME'],
   ) as MySql2InformationSchemaTables['TABLE_NAME'][]

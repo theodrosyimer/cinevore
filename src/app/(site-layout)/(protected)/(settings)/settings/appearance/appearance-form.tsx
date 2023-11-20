@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icon/icons'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 

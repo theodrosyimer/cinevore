@@ -1,15 +1,15 @@
 import Link from 'next/link'
 
 // import { env } from "@env.mjs"
-import { MovieBackdrop } from '@/components/film-backdrop'
-import { FilmCardList } from '@/components/film-card-list'
-import { Icons } from '@/components/icons'
+import { MovieBackdrop } from '@/components/film/film-backdrop'
+import { FilmCardList } from '@/components/film/film-card-list'
+import { Icons } from '@/components/icon/icons'
 import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardDescription } from '@/components/ui/card'
 import { featuresConfig } from '@/config/features'
 import { globalConfig } from '@/lib/tmdb/src/tmdb'
 import { cn } from '@/lib/utils/utils'
-import { Reviews } from '@/components/reviews'
+import { Reviews } from '@/components/review/reviews'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 
 export const metadata = {

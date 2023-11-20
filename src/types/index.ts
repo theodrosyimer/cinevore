@@ -1,4 +1,4 @@
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icon/icons'
 import { SelectUser } from '@/types/db'
 
 export interface NavItem {

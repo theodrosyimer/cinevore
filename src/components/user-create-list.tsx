@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils/utils'
 import { Button, ButtonProps, buttonVariants } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icon/icons'
 
 interface UserCreateListButtonProps extends ButtonProps {}
 

@@ -1,5 +1,5 @@
-import { Icons } from '@/components/icons'
-import { MemberFilmListDisplay } from '@/components/member-film-card-list'
+import { Icons } from '@/components/icon/icons'
+import { MemberFilmListDisplay } from '@/app/(site-layout)/(public)/members/components/member-film-card-list'
 import { buttonVariants } from '@/components/ui/button'
 import { getCurrentUser } from '@/lib/session'
 import { handleSlug } from '@/lib/utils/slugify'

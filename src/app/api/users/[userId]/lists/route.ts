@@ -6,7 +6,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
 import { insertReviewSchema } from '@/lib/validations/routes/review'
 import { list, movieReview } from '@/db/planetscale'
-import { insertListSchema } from '@/lib/validations/list'
+import { insertListSchema } from '@/lib/validations/routes/list'
 import listsModel from '@/models/lists'
 
 const routeContextSchema = z.object({

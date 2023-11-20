@@ -1,4 +1,4 @@
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icon/icons'
 import { Separator } from '@/components/ui/separator'
 
 export const metadata = {

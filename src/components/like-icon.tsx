@@ -1,6 +1,6 @@
 'use client'
 
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icon/icons'
 import { cn } from '@/lib/utils/utils'
 import type { LucideProps } from 'lucide-react'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'

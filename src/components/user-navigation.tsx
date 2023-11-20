@@ -1,6 +1,6 @@
 'use client'
 
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icon/icons'
 import { cn } from '@/lib/utils/utils'
 import { MainNavItem } from '@/types'
 import { useTheme } from 'next-themes'

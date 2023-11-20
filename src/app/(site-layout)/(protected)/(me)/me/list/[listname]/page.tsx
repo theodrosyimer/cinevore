@@ -1,5 +1,5 @@
-import { UserFilmListDisplay } from '@/components/film-user-card-list'
-import { Icons } from '@/components/icons'
+import { UserFilmListDisplay } from '@/components/film/film-user-card-list'
+import { Icons } from '@/components/icon/icons'
 import { getCurrentUser } from '@/lib/session'
 import { handleSlug } from '@/lib/utils/slugify'
 import listsModel from '@/models/lists'

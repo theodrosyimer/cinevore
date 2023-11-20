@@ -66,6 +66,9 @@ module.exports = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      boxShadow: {
+        neon: '0 0 5px theme(colors.purple.200), 0 0 20px theme(colors.purple.700)'
+      },
       keyframes: {
         'accordion-down': {
           from: { height: 0 },

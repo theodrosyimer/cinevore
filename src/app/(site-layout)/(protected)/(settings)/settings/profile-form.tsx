@@ -26,7 +26,7 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/use-toast'
-import { userSettingsFormSchema } from '@/lib/validations/user'
+import { userSettingsFormSchema } from '@/lib/validations/routes/user'
 
 const profileFormSchema = z.object({
   name: z

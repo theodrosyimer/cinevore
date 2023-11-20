@@ -4,7 +4,7 @@ import { watchlistToMovies } from '@/db/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { RequiresProPlanError } from '@/lib/exceptions'
-import { movieToWatchlistPOSTSchema } from '@/lib/validations/watchlist'
+import { movieToWatchlistPOSTSchema } from '@/lib/validations/routes/watchlist'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 

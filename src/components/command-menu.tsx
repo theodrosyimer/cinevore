@@ -26,7 +26,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils/utils'
 import { userNavigationConfig } from '@/config/user-profile'
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icon/icons'
 
 export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
   const router = useRouter()
@@ -119,7 +119,7 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
                   key={navItem.href}
                   value={navItem.title}
                   onSelect={() => {
-                    runCommand(() => router.push(navItem.href as string))
+                    runCommand(() => router.push(navItem.href))
                   }}
                 >
                   <FileIcon className="mr-2 h-4 w-4" />
@@ -136,7 +136,7 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
                     key={navItem.href}
                     value={navItem.title}
                     onSelect={() => {
-                      runCommand(() => router.push(navItem.href as string))
+                      runCommand(() => router.push(navItem.href))
                     }}
                   >
                     <div className="mr-2 flex h-4 w-4 items-center justify-center">

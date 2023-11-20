@@ -10,7 +10,7 @@ import {
   TMDBImageSizesCategoryKey,
 } from '@/lib/tmdb/types/tmdb-api'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
-import { MovieMenubar } from '@/components/film-menubar'
+import { MovieMenubar } from '@/components/film/film-menubar'
 import Link from 'next/link'
 import { handleSlug } from '@/lib/utils/slugify'
 

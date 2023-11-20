@@ -6,13 +6,13 @@ import * as React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Icons } from '@/components/icons'
+import { Icons } from '@/components/icon/icons'
 import { buttonVariants } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils/utils'
-import { insertListSchema } from '@/lib/validations/list'
+import { insertListSchema } from '@/lib/validations/routes/list'
 import { Textarea } from '@/components/ui/textarea'
 
 import {
@@ -82,7 +82,7 @@ async function deleteUserList(userId: string, listId: number) {
     title: 'Your list was deleted succesfully.',
   })
 }
-export function NewListForm({
+export function ListForm({
   user,
   list,
   className,

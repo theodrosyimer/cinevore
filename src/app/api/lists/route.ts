@@ -5,7 +5,7 @@ import { RequiresProPlanError } from '@/lib/exceptions'
 import { getCurrentUser } from '@/lib/session'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { NextResponse } from 'next/server'
-import { insertListSchema } from '@/lib/validations/list'
+import { insertListSchema } from '@/lib/validations/routes/list'
 import { list } from '@/db/planetscale'
 
 export async function GET() {

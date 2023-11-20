@@ -1,4 +1,4 @@
-import { FilmCardList } from '@/components/film-card-list'
+import { FilmCardList } from '@/components/film/film-card-list'
 
 export const metadata = {
   title: 'Diary Page',

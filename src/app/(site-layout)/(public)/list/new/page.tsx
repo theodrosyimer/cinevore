@@ -1,4 +1,4 @@
-import { NewListForm } from '@/components/list-create'
+import { ListForm } from '@/components/list-create'
 import { getCurrentUser } from '@/lib/session'
 import { notFound } from 'next/navigation'
 
@@ -21,7 +21,7 @@ export default async function NewListPage() {
         <h1 className="text-2xl font-semibold tracking-tight">New List</h1>
         <p className="text-sm text-muted-foreground">Add a new list</p>
       </div>
-      <NewListForm user={user} />
+      <ListForm user={user} />
     </section>
   )
 }

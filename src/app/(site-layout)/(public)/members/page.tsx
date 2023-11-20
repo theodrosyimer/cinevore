@@ -1,5 +1,5 @@
 import { Members } from '@/app/(site-layout)/(public)/members/members'
-import { MemberAvatar } from '@/components/member-avatar'
+import { MemberAvatar } from '@/app/(site-layout)/(public)/members/components/member-avatar'
 import { buttonVariants } from '@/components/ui/button'
 import { db } from '@/lib/db'
 import { cn } from '@/lib/utils/utils'

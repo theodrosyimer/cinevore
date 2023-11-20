@@ -1,4 +1,4 @@
-import { userGETSchema } from '@/lib/validations/user'
+import { userGETSchema } from '@/lib/validations/routes/user'
 import { z } from 'zod'
 
 const usersSchemas = z.array(userGETSchema)

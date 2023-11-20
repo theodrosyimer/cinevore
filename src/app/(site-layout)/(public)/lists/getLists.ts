@@ -1,4 +1,4 @@
-import { selectListSchema } from '@/lib/validations/list'
+import { selectListSchema } from '@/lib/validations/routes/list'
 import { z } from 'zod'
 
 const listsSchema = z.array(selectListSchema)

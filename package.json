@@ -11,7 +11,7 @@
     "ts": "npx tsc -p tsconfig.json",
     "vercel": "vercel --local-config ./vercel.json",
     "vercel:git": "vercel git connect",
-    "vercel:init": "npm run vercel:config && npm run vercel:git",
+    "vercel:init": "npm run vercel && npm run vercel:git",
     "vercel:prod": "vercel --prod",
     "introspect": "drizzle-kit introspect:mysql --config=drizzle.config.ts",
     "generate": "drizzle-kit generate:mysql --config=drizzle.config.ts",
