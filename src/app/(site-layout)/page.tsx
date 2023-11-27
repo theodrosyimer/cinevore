@@ -7,16 +7,28 @@ import { Icons } from '@/components/icon/icons'
 import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardDescription } from '@/components/ui/card'
 import { featuresConfig } from '@/config/features'
-import { globalConfig } from '@/lib/tmdb/src/tmdb'
+import { getPopular, globalConfig } from '@/lib/tmdb/src/tmdb'
 import { cn } from '@/lib/utils/utils'
 import { Reviews } from '@/components/review/reviews'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from '@tanstack/react-query'
 
 export const metadata = {
   title: 'Home Page',
   description: 'Welcome to Cinevore, the social network for film lovers'
 }
 export default async function IndexPage() {
+    const queryClient = new QueryClient()
+  await queryClient.prefetchQuery({
+    queryKey: ['popularMovies'],
+    queryFn: () => getPopular({ category: 'movie', page: '1' }),
+  })
+  const dehydratedState = dehydrate(queryClient)
+
   return (
     <>
       <div className="grid gap-12">
@@ -59,6 +71,7 @@ export default async function IndexPage() {
             </div>
           </section>
           <section>
+        <HydrationBoundary state={dehydratedState}>
             <FilmCardList
               limit={4}
               columnsCount={4}
@@ -67,7 +80,9 @@ export default async function IndexPage() {
               movieImageWidth={getImageFormatSize('poster_sizes', 'w342')}
               isSlider={false}
               hasMenu={false}
-            />
+              />
+        </HydrationBoundary>
+
           </section>
           <section>
             <h2

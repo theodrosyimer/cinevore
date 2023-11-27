@@ -1,6 +1,4 @@
 import { env } from "../../../env.mjs"
-import * as dotenv from 'dotenv'
-dotenv.config()
 
 import {
   type MovieDetails,
@@ -10,6 +8,7 @@ import {
   TMDBMovieResponse,
   SearchMovie,
   PersonCredits,
+
 } from '../types/tmdb-api'
 import { extractLanguageFromLanguageCode, generateTMDBUrl } from './utils'
 import { type GlobalConfig, type QueryOptions } from '../types'

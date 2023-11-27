@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { redirect, usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils/utils'
 import { insertLoginUserSchema } from '@/lib/validations/auth'
+import { authOptions } from '@/lib/auth'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 type FormData = z.infer<typeof insertLoginUserSchema>
@@ -55,14 +56,16 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
         description: 'Your sign in request failed. Please try again.',
         variant: 'destructive',
       })
-      return router.push('/login')
+      // return router.push('/login')
+    redirect(authOptions?.pages?.signIn || '/login')
     }
 
     toast({
       title: 'Logged in.',
       // description: 'Your account has been created.',
     })
-    return router.push(/* signInResult?.url ??  */ '/me')
+    // return router.push(/* signInResult?.url ??  */ '/me')
+    redirect(authOptions?.pages?.signIn || '/me')
   }
 
   return (
