@@ -19,10 +19,10 @@ import {
 
 export const metadata = {
   title: 'Home Page',
-  description: 'Welcome to Cinevore, the social network for film lovers'
+  description: 'Welcome to Cinevore, the social network for film lovers',
 }
 export default async function IndexPage() {
-    const queryClient = new QueryClient()
+  const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
     queryKey: ['popularMovies'],
     queryFn: () => getPopular({ category: 'movie', page: '1' }),
@@ -71,18 +71,17 @@ export default async function IndexPage() {
             </div>
           </section>
           <section>
-        <HydrationBoundary state={dehydratedState}>
-            <FilmCardList
-              limit={4}
-              columnsCount={4}
-              aspectRatio="portrait"
-              width={342}
-              movieImageWidth={getImageFormatSize('poster_sizes', 'w342')}
-              isSlider={false}
-              hasMenu={false}
+            <HydrationBoundary state={dehydratedState}>
+              <FilmCardList
+                limit={4}
+                columnsCount={4}
+                aspectRatio="portrait"
+                width={342}
+                movieImageWidth={getImageFormatSize('poster_sizes', 'w342')}
+                isSlider={false}
+                hasMenu={false}
               />
-        </HydrationBoundary>
-
+            </HydrationBoundary>
           </section>
           <section>
             <h2

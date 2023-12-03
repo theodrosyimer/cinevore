@@ -13,7 +13,7 @@ import Link from 'next/link'
 
 export const metadata = {
   title: 'Films Search Page',
-  description: 'Find all your preferred films here.'
+  description: 'Find all your preferred films here.',
 }
 
 export default async function SearchFilmsPage() {
