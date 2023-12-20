@@ -90,7 +90,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'grid min-h-screen w-screen grid-rows-layout font-sans antialiased',
+          'min-h-svh grid w-screen grid-rows-layout font-sans antialiased',
           // inter.className,
           fontSans.variable,
           fontHeading.variable,

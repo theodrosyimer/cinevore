@@ -66,7 +66,7 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)',
       },
       boxShadow: {
-        neon: '0 0 5px theme(colors.purple.200), 0 0 20px theme(colors.purple.700)'
+        neon: '0 0 5px theme(colors.purple.200), 0 0 20px theme(colors.purple.700)',
       },
       keyframes: {
         'accordion-down': {
@@ -85,6 +85,10 @@ module.exports = {
       gridTemplateRows: {
         // Complex site-specific row configuration
         layout: 'auto 1fr auto',
+      },
+      minHeight: {
+        svh: ['100vh', '100svh'],
+        dynamic: ['100vh', '100dvh'],
       },
       backgroundImage: {
         'not-found': "url('/bg-404.jpg')",
