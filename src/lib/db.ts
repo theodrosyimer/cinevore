@@ -1,23 +1,12 @@
-import * as dotenv from 'dotenv'
-dotenv.config({ path: '.env.local' })
-
-import * as schema from '@/db/planetscale'
-import { connect, type ExecutedQuery, Client } from '@planetscale/database'
+import * as schema from '@/db/schema/planetscale'
+import { Client, type ExecutedQuery } from '@planetscale/database'
 import { sql } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/planetscale-serverless'
 // import mysql, { FieldPacket } from "mysql2/promise"
 import { env } from '@/env.mjs'
-import { TableColumns, TableName } from '@/types/db'
-import { MySql2InformationSchemaTables } from '@/types/sql'
-
-const connection = connect({
-  host: process.env.DATABASE_HOST,
-  username: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-})
-
-// export const db = drizzle(connection, { schema })
-export const db = drizzle(new Client({url: env.DATABASE_URL}).connection(), { schema })
+import type { TableColumns, TableName } from '@/types/db'
+import type { MySql2InformationSchemaTables } from '@/types/sql'
+import { db } from "@/db"
 
 export async function clearDbTables(databaseName?: string) {
   const dbName = getDbName(databaseName)

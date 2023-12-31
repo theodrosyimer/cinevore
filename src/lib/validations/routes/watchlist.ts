@@ -1,4 +1,4 @@
-import { watchlist, watchlistToMovies } from '@/db/planetscale'
+import { watchlist, watchlistToMovies } from '@/db/schema/planetscale'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 const insertRefineOptions = {}

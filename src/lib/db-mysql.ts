@@ -1,25 +1,11 @@
-import * as dotenv from 'dotenv'
-dotenv.config({ path: '.env.local' })
-
-import * as schema from '@/db/mysql2'
 import { sql } from 'drizzle-orm'
-import { drizzle } from 'drizzle-orm/mysql2'
-import mysql, { FieldPacket } from 'mysql2/promise'
+import { FieldPacket } from 'mysql2/promise'
 
 // import { env } from '@env'
 
-import { TableColumns, TableName } from '@/types/db'
-import { MySql2InformationSchemaTables, MySql2TableStatus } from '@/types/sql'
-
-const clientPool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_ADMIN,
-  database: process.env.DB_NAME,
-  port: Number(process.env.DB_PORT),
-  // password: process.env.DB_PASSWORD,
-})
-
-export const db = drizzle(clientPool, { schema, mode: 'default' })
+import { db } from "@/db/index-mysql2"
+import type { TableColumns, TableName } from '@/types/db'
+import type { MySql2InformationSchemaTables, MySql2TableStatus } from '@/types/sql'
 
 export async function clearDbTables(databaseName?: string) {
   const dbName = getDbName(databaseName)

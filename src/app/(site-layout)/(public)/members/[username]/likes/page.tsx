@@ -1,8 +1,8 @@
 import { Separator } from '@/components/ui/separator'
-import { db } from '@/lib/db'
-import { MembersSidebarNav } from '@/app/(site-layout)/(public)/members/components/members-sidebar-nav'
+import { db } from '@/db'
+import { MembersSidebarNav } from '@/app/(site-layout)/(public)/members/_components/members-sidebar-nav'
 import { membersNavConfig } from '@/config/members'
-import { MemberInfos } from '@/app/(site-layout)/(public)/members/components/member-infos'
+import { MemberInfos } from '@/app/(site-layout)/(public)/members/_components/member-infos'
 
 export const metadata = {
   title: 'Member Films Likes Page',

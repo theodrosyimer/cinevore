@@ -1,7 +1,7 @@
 import { Members } from '@/app/(site-layout)/(public)/members/members'
-import { MemberAvatar } from '@/app/(site-layout)/(public)/members/components/member-avatar'
+import { MemberAvatar } from '@/app/(site-layout)/(public)/members/_components/member-avatar'
 import { buttonVariants } from '@/components/ui/button'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'
 

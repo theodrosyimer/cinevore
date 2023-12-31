@@ -1,12 +1,12 @@
 import * as z from 'zod'
 
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { RequiresProPlanError } from '@/lib/exceptions'
 import { getCurrentUser } from '@/lib/session'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { NextResponse } from 'next/server'
 import { insertListSchema } from '@/lib/validations/routes/list'
-import { list } from '@/db/planetscale'
+import { list } from '@/db/schema/planetscale'
 
 export async function GET() {
   try {

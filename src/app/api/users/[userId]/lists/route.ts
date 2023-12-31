@@ -1,11 +1,11 @@
 import { isAdmin } from '@/lib/auth'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
 import { insertReviewSchema } from '@/lib/validations/routes/review'
-import { list, movieReview } from '@/db/planetscale'
+import { list, movieReview } from '@/db/schema/planetscale'
 import { insertListSchema } from '@/lib/validations/routes/list'
 import listsModel from '@/models/lists'
 

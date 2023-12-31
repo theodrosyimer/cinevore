@@ -1,4 +1,4 @@
-import * as schema from '@/db/planetscale/index'
+import * as schema from '@/db/schema/planetscale'
 import { hashPassword } from '@/lib/bcrypt'
 import type {
   NewComment,
@@ -22,7 +22,7 @@ import type {
   MySql2QueryResultHKT,
   MySql2PreparedQueryHKT,
 } from 'drizzle-orm/mysql2'
-import { makeColumnEmojiFriendly } from '@/lib/db'
+import { makeColumnEmojiFriendly } from '@/db'
 import {
   firstHalve,
   firstHalveIndex,
@@ -35,13 +35,19 @@ import type {
   PlanetScalePreparedQueryHKT,
   PlanetScaleDatabase,
 } from 'drizzle-orm/planetscale-serverless'
+import * as dotenv from 'dotenv'
+dotenv.config({ path: '.env.local' })
 
-const adminPassword = (await hashPassword('!Theotheotheo1')) as string
-const superAdminPassword = (await hashPassword('!#tHeodros1')) as string
-const yetuP = (await hashPassword('!Yetuyetuyetu1')) as string
-const mathiasP = (await hashPassword('!Mathiasmathiasmathias1')) as string
-const edenP = (await hashPassword('!Edenedeneden1')) as string
-const antoineP = (await hashPassword('!Antoineantoineantoine1')) as string
+const adminPassword = (await hashPassword(
+  process.env.ADMIN_PASSWORD!,
+)) as string
+const superAdminPassword = (await hashPassword(
+  process.env.SUPER_ADMIN_PASSWORD!,
+)) as string
+const yetuP = (await hashPassword(process.env.YETU_PASSWORD!)) as string
+const mathiasP = (await hashPassword(process.env.MATHIAS_PASSWORD!)) as string
+const edenP = (await hashPassword(process.env.EDEN_PASSWORD!)) as string
+const antoineP = (await hashPassword(process.env.ANTOINE_PASSWORD!)) as string
 
 // type MySql2DrizzleTransaction = MySqlTransaction<MySql2QueryResultHKT, MySql2PreparedQueryHKT, Record<string, never>, ExtractTablesWithRelations<Record<string, never>>>
 

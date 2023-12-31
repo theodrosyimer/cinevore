@@ -4,7 +4,7 @@ import { env } from "@/env.mjs"
 // dotenv.config({ path: '.env.local' })
 
 export default {
-  schema: "./src/db/planetscale/index.ts",
+  schema: "./src/db/schema/planetscale/index.ts",
   out: "./drizzle",
   driver: 'mysql2',
   dbCredentials: {

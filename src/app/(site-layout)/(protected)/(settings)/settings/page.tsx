@@ -1,4 +1,4 @@
-import { ProfileForm } from '@/app/(site-layout)/(protected)/(settings)/settings/profile-form'
+import { ProfileForm } from '@/app/(site-layout)/(protected)/(settings)/settings/_components/profile-form'
 import { Separator } from '@/components/ui/separator'
 import { Metadata } from 'next'
 

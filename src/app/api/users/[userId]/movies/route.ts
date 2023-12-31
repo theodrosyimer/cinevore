@@ -1,6 +1,6 @@
 import { routeContextSchema } from '@/app/api/users/[userId]/route'
 import { isAdmin } from '@/lib/auth'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { and, or, sql } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'

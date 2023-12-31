@@ -1,5 +1,5 @@
-import { UserFilmsTabs } from '@/app/(site-layout)/(protected)/(me)/me/films/components/user-films-tabs'
-import { db } from '@/lib/db'
+import { UserFilmsTabs } from '@/app/(site-layout)/(protected)/(me)/me/films/_components/user-films-tabs'
+import { db } from '@/db'
 import { getCurrentUser } from '@/lib/session'
 import { notFound } from 'next/navigation'
 

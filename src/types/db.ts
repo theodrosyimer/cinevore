@@ -1,4 +1,4 @@
-import * as schema from '@/db/planetscale'
+import * as schema from '@/db/schema/planetscale'
 import { Inspect } from '@/types/utility'
 import { InferInsertModel, InferSelectModel } from 'drizzle-orm'
 

@@ -1,7 +1,7 @@
 import { getCurrentUser } from '@/lib/session'
-import { DashboardHeader } from '@/app/(site-layout)/(protected)/components/dashboard-header'
-import { DashboardShell } from '@/app/(site-layout)/(protected)/components/shell'
-import { UserNameForm } from '@/app/(site-layout)/(protected)/components/user-name-form'
+import { DashboardHeader } from '@/app/(site-layout)/(protected)/_components/dashboard-header'
+import { DashboardShell } from '@/app/(site-layout)/(protected)/_components/shell'
+import { UserNameForm } from '@/app/(site-layout)/(protected)/_components/user-name-form'
 
 export const metadata = {
   title: 'Settings',

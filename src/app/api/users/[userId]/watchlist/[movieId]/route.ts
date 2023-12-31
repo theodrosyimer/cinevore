@@ -1,6 +1,6 @@
-import { watchlistToMovies } from '@/db/planetscale'
+import { watchlistToMovies } from '@/db/schema/planetscale'
 import { isAdmin } from '@/lib/auth'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { movieToWatchlistDELETESchema } from '@/lib/validations/routes/watchlist'
 import { and, eq } from 'drizzle-orm'

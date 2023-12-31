@@ -4,7 +4,7 @@ import Stripe from 'stripe'
 // import { env } from "@env.mjs"
 import * as dotenv from 'dotenv'
 dotenv.config()
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { stripe } from '@/lib/stripe'
 
 export async function POST(req: Request) {

@@ -1,4 +1,4 @@
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { getCurrentUser } from '@/lib/session'
 import { NextResponse } from 'next/server'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'

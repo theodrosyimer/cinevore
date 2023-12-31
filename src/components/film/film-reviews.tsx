@@ -1,5 +1,5 @@
 import { FilmReview } from '@/components/film/film-review'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
 
 type ReviewsProps = {

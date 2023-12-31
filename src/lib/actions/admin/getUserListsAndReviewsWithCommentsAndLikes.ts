@@ -1,4 +1,4 @@
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { sql } from 'drizzle-orm'
 
 const preparedUser = db.query.user

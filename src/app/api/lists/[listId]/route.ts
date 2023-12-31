@@ -1,7 +1,7 @@
 import * as z from 'zod'
 
-import * as schema from '@/db/planetscale'
-import { db } from '@/lib/db'
+import * as schema from '@/db/schema/planetscale'
+import { db } from '@/db'
 import { getCurrentUser } from '@/lib/session'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { insertListSchema } from '@/lib/validations/routes/list'

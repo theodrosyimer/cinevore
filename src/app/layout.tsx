@@ -1,15 +1,16 @@
+import { ourFileRouter } from '@/app/api/uploadthing/core'
+import { TailwindIndicator } from '@/app/_components/tailwind-indicator'
+import { ThemeProvider } from '@/app/_providers/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
+import { siteConfig } from '@/config/site'
+import { cn } from '@/lib/utils/utils'
+import { ReactQueryProvider } from '@/providers/react-query'
 import '@/styles/globals.css'
-import { Providers } from '@/providers/react-query'
+import { HydrationOverlay } from '@builder.io/react-hydration-overlay'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { Inter as FontSans } from 'next/font/google'
 import localFont from 'next/font/local'
 import { extractRouterConfig } from 'uploadthing/server'
-import { TailwindIndicator } from '@/components/tailwind-indicator'
-import { ThemeProvider } from '@/components/theme-provider'
-import { Toaster } from '@/components/ui/toaster'
-import { siteConfig } from '@/config/site'
-import { cn } from '@/lib/utils/utils'
-import { ourFileRouter } from '@/app/api/uploadthing/core'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -90,20 +91,24 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'min-h-svh grid w-screen grid-rows-layout font-sans antialiased',
+          'grid min-h-svh w-screen grid-rows-layout font-sans antialiased',
           // inter.className,
           fontSans.variable,
           fontHeading.variable,
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Providers>
-            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-            {children}
-            <Toaster />
-            <TailwindIndicator />
-          </Providers>
-        </ThemeProvider>
+        <HydrationOverlay>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <ReactQueryProvider>
+              <NextSSRPlugin
+                routerConfig={extractRouterConfig(ourFileRouter)}
+              />
+              {children}
+              <Toaster />
+              <TailwindIndicator />
+            </ReactQueryProvider>
+          </ThemeProvider>
+        </HydrationOverlay>
       </body>
     </html>
   )

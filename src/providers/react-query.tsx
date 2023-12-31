@@ -6,7 +6,11 @@ import { useState } from 'react'
 
 // ! `QueryClient` is only for prefetching data on the server
 // ! not the same as react-query's `useQueryClient` which is for the client.
-export function Providers({ children }: { children: React.ReactNode }) {
+export function ReactQueryProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const [queryClient] = useState(
     () =>
       new QueryClient({

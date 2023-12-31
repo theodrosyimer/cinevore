@@ -1,5 +1,5 @@
-import { user } from '@/db/planetscale'
-import { db } from '@/lib/db'
+import { user } from '@/db/schema/planetscale'
+import { db } from '@/db'
 import { getCurrentUser } from '@/lib/session'
 import { eq } from 'drizzle-orm'
 import { type NextRequest } from 'next/server'

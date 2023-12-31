@@ -1,6 +1,6 @@
 import { eq } from 'drizzle-orm'
-import { db } from '@/lib/db'
-import { user } from '@/db/planetscale'
+import { db } from '@/db'
+import { user } from '@/db/schema/planetscale'
 import { NewUser, SelectUser } from '@/types/db'
 
 class UsersModel {

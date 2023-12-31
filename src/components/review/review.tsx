@@ -1,7 +1,7 @@
 'use client'
 
 import { FilmCard } from '@/components/film/film-card'
-import { MemberInfos } from '@/app/(site-layout)/(public)/members/components/member-infos'
+import { MemberInfos } from '@/app/(site-layout)/(public)/members/_components/member-infos'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { MovieDetails } from '@/lib/tmdb/types/tmdb-api'
 import {

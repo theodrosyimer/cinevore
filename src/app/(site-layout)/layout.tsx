@@ -1,6 +1,6 @@
 import Loading from '@/app/(site-layout)/loading'
-import { SiteFooter } from '@/components/footer'
-import { SiteHeader } from '@/components/header'
+import { SiteFooter } from '@/app/(site-layout)/_components/footer'
+import { SiteHeader } from '@/app/(site-layout)/_components/header'
 import { Suspense } from 'react'
 
 interface SiteLayoutProps {

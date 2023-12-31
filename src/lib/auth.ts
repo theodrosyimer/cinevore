@@ -3,7 +3,7 @@ import { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
 import { hashPassword, validateUserPassword } from '@/lib/bcrypt'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import UsersModel from '@/models/users'
 
 export const authOptions: NextAuthOptions = {

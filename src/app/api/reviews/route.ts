@@ -1,6 +1,6 @@
 import * as z from 'zod'
 
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { RequiresProPlanError } from '@/lib/exceptions'
 import { getCurrentUser } from '@/lib/session'
 import { NextResponse } from 'next/server'

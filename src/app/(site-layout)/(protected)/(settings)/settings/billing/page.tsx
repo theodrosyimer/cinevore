@@ -2,10 +2,10 @@ import { getCurrentUser } from '@/lib/session'
 import { stripe } from '@/lib/stripe'
 import { getUserSubscriptionPlan } from '@/lib/subscription'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { BillingForm } from '@/app/(site-layout)/(protected)/components/billing-form'
-import { DashboardHeader } from '@/app/(site-layout)/(protected)/components/dashboard-header'
+import { BillingForm } from '@/app/(site-layout)/(protected)/_components/billing-form'
+import { DashboardHeader } from '@/app/(site-layout)/(protected)/_components/dashboard-header'
 import { Icons } from '@/components/icon/icons'
-import { DashboardShell } from '@/app/(site-layout)/(protected)/components/shell'
+import { DashboardShell } from '@/app/(site-layout)/(protected)/_components/shell'
 
 export const metadata = {
   title: 'Billing',

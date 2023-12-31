@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { formatDate } from '@/lib/utils/utils'
 import { Skeleton } from '@/components/ui/skeleton'
 import { SelectUser } from '@/types/db'
-import { EditDialog } from '@/app/(site-layout)/(protected)/components/settings-dialog-form'
+import { EditDialog } from '@/app/(site-layout)/(protected)/_components/settings-dialog-form'
 
 interface UserItemProps {
   user: Pick<SelectUser, 'id' | 'name' | 'updatedAt' | 'createdAt'>

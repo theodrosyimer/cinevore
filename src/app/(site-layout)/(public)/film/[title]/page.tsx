@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { UserMovieActions } from '@/app/(site-layout)/(public)/film/[title]/components/user-movie-infos'
+import { UserMovieActions } from '@/app/(site-layout)/(public)/film/[title]/_components/user-movie-infos'
 import { MovieBackdrop } from '@/components/film/film-backdrop'
 import { FilmReviews } from '@/components/film/film-reviews'
 import { SimilarFilmCardDisplay } from '@/components/film/similar-film-user-card'
@@ -11,7 +11,7 @@ import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
 import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils/utils'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { MovieInfosTabs } from './components/film-tabs'
+import { MovieInfosTabs } from './_components/film-tabs'
 
 export const metadata = {
   title: 'Film Details ',

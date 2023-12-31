@@ -33,8 +33,10 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+tsconfig.tsbuildinfo
 next-env.d.ts
 
 **/playground.ts
 playground.ts
 mcd.excalidraw
+.vscode

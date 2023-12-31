@@ -1,5 +1,5 @@
-import * as schema from '@/db/planetscale'
-import { db } from '@/lib/db'
+import * as schema from '@/db/schema/planetscale'
+import { db } from '@/db'
 
 import { getCurrentUser } from '@/lib/session'
 import { TableName, TableColumns } from '@/types/db'

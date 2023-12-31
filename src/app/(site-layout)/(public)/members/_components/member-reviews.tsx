@@ -1,5 +1,5 @@
 import { Review } from '@/components/review/review'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
 import { User } from 'next-auth'
 

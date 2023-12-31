@@ -15,7 +15,7 @@
     "vercel:prod": "vercel --prod",
     "introspect": "drizzle-kit introspect:mysql --config=drizzle.config.ts",
     "generate": "drizzle-kit generate:mysql --config=drizzle.config.ts",
-    "migrate": "pnpm generate && tsx ./src/lib/migrate-planetscale.ts",
+    "migrate": "pnpm generate && tsx ./src/db/migrate-planetscale.ts",
     "push": "drizzle-kit push:mysql --config=drizzle.config.ts",
     "drop": "drizzle-kit drop --config=drizzle.config.ts",
     "up": "drizzle-kit up:mysql --config=drizzle.config.ts",
@@ -25,6 +25,7 @@
   "dependencies": {
     "@auth/core": "^0.13.0",
     "@auth/drizzle-adapter": "^0.3.2",
+    "@builder.io/react-hydration-overlay": "^0.0.5",
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.1",
     "@planetscale/database": "^1.11.0",

@@ -1,13 +1,9 @@
-import * as schema from '@/db/planetscale'
-// import { migrate } from 'drizzle-orm/mysql2/migrator'
-import { migrate } from 'drizzle-orm/planetscale-serverless/migrator'
-import { connect } from '@planetscale/database'
-import { drizzle } from 'drizzle-orm/planetscale-serverless'
-// import { drizzle } from 'drizzle-orm/mysql2'
+import { migrate } from 'drizzle-orm/mysql2/migrator'
+// import { migrate } from 'drizzle-orm/planetscale-serverless/migrator'
 
 // import * as dotenv from "dotenv"
 // dotenv.config({ path: '.env.local' })
-import { clearDbTables, db, makeColumnEmojiFriendly } from '@/lib/db'
+import { db } from "@/db/index-mysql2"
 import {
   addComments,
   addFollowers,
@@ -23,7 +19,8 @@ import {
   addUsers,
   addWatchlistToMovies,
   addWatchlists,
-} from '@/lib/migrate-data'
+} from '@/db/seed'
+import { clearDbTables, makeColumnEmojiFriendly } from '@/lib/db-mysql'
 
 console.log(
   process.env.DB_HOST,
