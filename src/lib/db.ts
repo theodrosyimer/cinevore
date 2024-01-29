@@ -1,12 +1,9 @@
-import * as schema from '@/db/schema/planetscale'
-import { Client, type ExecutedQuery } from '@planetscale/database'
+import { type ExecutedQuery } from '@planetscale/database'
 import { sql } from 'drizzle-orm'
-import { drizzle } from 'drizzle-orm/planetscale-serverless'
 // import mysql, { FieldPacket } from "mysql2/promise"
-import { env } from '@/env.mjs'
+import { db } from "@/db"
 import type { TableColumns, TableName } from '@/types/db'
 import type { MySql2InformationSchemaTables } from '@/types/sql'
-import { db } from "@/db"
 
 export async function clearDbTables(databaseName?: string) {
   const dbName = getDbName(databaseName)

@@ -1,11 +1,8 @@
-import { sql } from 'drizzle-orm'
-import { FieldPacket } from 'mysql2/promise'
-
-// import { env } from '@env'
-
 import { db } from "@/db/index-mysql2"
 import type { TableColumns, TableName } from '@/types/db'
 import type { MySql2InformationSchemaTables, MySql2TableStatus } from '@/types/sql'
+import { sql } from 'drizzle-orm'
+import { FieldPacket } from 'mysql2/promise'
 
 export async function clearDbTables(databaseName?: string) {
   const dbName = getDbName(databaseName)

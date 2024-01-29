@@ -22,7 +22,7 @@ import type {
   MySql2QueryResultHKT,
   MySql2PreparedQueryHKT,
 } from 'drizzle-orm/mysql2'
-import { makeColumnEmojiFriendly } from '@/db'
+// import { makeColumnEmojiFriendly } from '@/db'
 import {
   firstHalve,
   firstHalveIndex,

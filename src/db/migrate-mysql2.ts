@@ -19,7 +19,7 @@ import {
   addUsers,
   addWatchlistToMovies,
   addWatchlists,
-} from '@/db/seed'
+} from '@/db/seed-mysql2'
 import { clearDbTables, makeColumnEmojiFriendly } from '@/lib/db-mysql'
 
 console.log(
