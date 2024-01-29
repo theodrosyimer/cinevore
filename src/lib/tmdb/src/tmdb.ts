@@ -93,7 +93,8 @@ export async function searchByID({
   category,
   language = globalConfig.language,
   page = '1',
-}: QueryOptions) {
+}: QueryOptions,
+  requestOptions?: RequestInit) {
   const url = generateTMDBUrl(`${category}/${id}`, {
     language,
     page,
@@ -103,7 +104,7 @@ export async function searchByID({
   })
 
   // console.log('URL', url.href);
-  const response = await fetch(url.href)
+  const response = await fetch(url.href, requestOptions)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
@@ -120,7 +121,8 @@ export async function getPersonByID({
   id,
   language = globalConfig.language,
   page = '1',
-}: Omit<QueryOptions, 'category'>) {
+}: Omit<QueryOptions, 'category'>,
+  requestOptions?: RequestInit) {
   const url = generateTMDBUrl(`person/${id}`, {
     language,
     page,
@@ -130,7 +132,7 @@ export async function getPersonByID({
   })
 
   // console.log('URL', url.href);
-  const response = await fetch(url.href)
+  const response = await fetch(url.href, requestOptions)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
@@ -148,14 +150,15 @@ export async function getSimilarByID({
   category,
   language = globalConfig.language,
   page = '1',
-}: QueryOptions) {
+}: QueryOptions,
+  requestOptions?: RequestInit) {
   const url = generateTMDBUrl(`${category}/${id}/similar`, {
     language,
     page,
   })
 
   // console.log('URL', url.href)
-  const response = await fetch(url.href)
+  const response = await fetch(url.href, requestOptions)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
@@ -173,14 +176,15 @@ export async function searchMulti({
   query,
   // category,
   language = globalConfig.language,
-}: Omit<QueryOptions, 'category'>) {
+}: Omit<QueryOptions, 'category'>,
+  requestOptions?: RequestInit) {
   // console.log('QUERY', query)
   const url = generateTMDBUrl(`search/multi`, {
     query,
     language,
   })
 
-  const response = await fetch(url)
+  const response = await fetch(url, requestOptions)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
@@ -205,14 +209,15 @@ export async function searchByTitle({
   category,
   language = globalConfig.language,
   page = '1',
-}: QueryOptions) {
+}: QueryOptions,
+  requestOptions?: RequestInit) {
   const url = generateTMDBUrl(`search/${category}`, {
     query,
     language,
     page,
   })
   // console.log('SEARCH URL', url.href)
-  const response = await fetch(url)
+  const response = await fetch(url, requestOptions)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
@@ -228,14 +233,15 @@ export async function discover({
   category,
   language = globalConfig.language,
   page = '1',
-}: QueryOptions) {
+}: QueryOptions,
+  requestOptions?: RequestInit) {
   const url = generateTMDBUrl(`discover/${category}`, {
     ...filters,
     language,
     page,
   })
   // console.log('SEARCH URL', url.href)
-  const response = await fetch(url)
+  const response = await fetch(url, requestOptions)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
@@ -250,13 +256,14 @@ export async function getTopRated({
   category,
   language = globalConfig.language,
   page = '1',
-}: QueryOptions) {
+}: QueryOptions,
+  requestOptions?: RequestInit) {
   const url = generateTMDBUrl(`${category}/top_rated`, {
     page,
     language,
   })
 
-  const response = await fetch(url.href)
+  const response = await fetch(url.href, requestOptions)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
@@ -271,13 +278,14 @@ export async function getPopular({
   category,
   language = globalConfig.language,
   page = '1',
-}: QueryOptions) {
+}: QueryOptions,
+  requestOptions?: RequestInit) {
   const url = generateTMDBUrl(`${category}/popular`, {
     page,
     language,
   })
 
-  const response = await fetch(url.href)
+  const response = await fetch(url.href, requestOptions)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
@@ -293,13 +301,14 @@ export async function getUpcoming({
   category,
   language = globalConfig.language,
   page = '1',
-}: QueryOptions) {
+}: QueryOptions,
+  requestOptions?: RequestInit) {
   const url = generateTMDBUrl(`${category}/upcoming`, {
     page,
     language,
   })
 
-  const response = await fetch(url.href)
+  const response = await fetch(url.href, requestOptions)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
@@ -313,10 +322,10 @@ export async function getUpcoming({
 export async function getGenresList({
   category = 'movie',
   language = globalConfig.language,
-}: QueryOptions) {
+}: QueryOptions,
+  requestOptions?: RequestInit) {
   const response = await fetch(
-    `${globalConfig.BASE_URI}/genre/${category}/list?api_key=${globalConfig.API_KEY}&language=${language}`,
-  )
+    `${globalConfig.BASE_URI}/genre/${category}/list?api_key=${globalConfig.API_KEY}&language=${language}`, requestOptions)
 
   if (!response.ok) {
     throw new Error(`Returned with a ${response.status} code`)
