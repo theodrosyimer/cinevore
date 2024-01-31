@@ -49,8 +49,6 @@ const mathiasP = (await hashPassword(process.env.MATHIAS_PASSWORD!)) as string
 const edenP = (await hashPassword(process.env.EDEN_PASSWORD!)) as string
 const antoineP = (await hashPassword(process.env.ANTOINE_PASSWORD!)) as string
 
-// type MySql2DrizzleTransaction = MySqlTransaction<MySql2QueryResultHKT, MySql2PreparedQueryHKT, Record<string, never>, ExtractTablesWithRelations<Record<string, never>>>
-
 type PlanetScaleDrizzleTransaction = MySqlTransaction<
   PlanetscaleQueryResultHKT,
   PlanetScalePreparedQueryHKT,
@@ -153,44 +151,6 @@ export async function addLikes(tx: PlanetScaleDatabase<typeof schema>) {
     .finally(() => {})
   console.log(`\t🎬  Added ${defaultLikes.length} likes to movies\n`)
 }
-
-// export async function addLikesToMovieLists(
-//   tx: PlanetScaleDatabase<typeof schema>,
-// ) {
-//   await Promise.all(
-//     defaultLikesToMovieLists.map(async (defaultLikesToMovieList) => {
-//       if (defaultLikesToMovieList)
-//         await tx.insert(schema.likeToMovieList).values(defaultLikesToMovieList)
-//     }),
-//   )
-//     .catch(() => {
-//       throw new Error('Failed to add likes to movies lists to the database')
-//     })
-//     .finally(() => {})
-//   console.log(
-//     `\t🎬  Added ${defaultLikesToMovieLists.length} likes to movies lists\n`,
-//   )
-// }
-
-// export async function addLikesToMovieReviews(
-//   tx: PlanetScaleDatabase<typeof schema>,
-// ) {
-//   await Promise.all(
-//     defaultLikesToMovieReviews.map(async (defaultLikesToMovieReview) => {
-//       if (defaultLikesToMovieReview)
-//         await tx
-//           .insert(schema.likeToMovieReview)
-//           .values(defaultLikesToMovieReview)
-//     }),
-//   )
-//     .catch(() => {
-//       throw new Error('Failed to add likes to movies reviews to the database')
-//     })
-//     .finally(() => {})
-//   console.log(
-//     `\t🎬  Added ${defaultLikesToMovieReviews.length} likes to movies reviews\n`,
-//   )
-// }
 
 export async function addRatings(tx: PlanetScaleDatabase<typeof schema>) {
   await Promise.all(
