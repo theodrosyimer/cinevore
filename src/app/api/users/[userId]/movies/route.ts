@@ -1,4 +1,4 @@
-import { routeContextSchema } from '@/app/api/users/[userId]/route'
+import { routeContextSchema } from '@/app/api/users/[userId]/route-schema'
 import { isAdmin } from '@/lib/auth'
 import { db } from '@/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
