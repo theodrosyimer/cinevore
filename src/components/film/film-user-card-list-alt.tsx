@@ -1,10 +1,8 @@
-'use client'
-
 import { CardSkeleton } from '@/components/card-skeleton'
 import { MovieArtworkProps } from '@/components/film/film-card'
 import { gridColumnsConfig } from '@/components/film/film-card-list'
 import { FilmCardDisplay } from '@/components/film/film-user-card'
-import { useFilms } from '@/hooks/useFilms-zod'
+import { getPopular } from '@/lib/tmdb/src/tmdb'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'
@@ -22,7 +20,7 @@ export interface FilmListOptions {
   isSnapped?: boolean
 }
 
-export function UserFilmListDisplay(
+export async function UserFilmListDisplay(
   {
     limit = 8,
     className,
@@ -33,12 +31,12 @@ export function UserFilmListDisplay(
     isSnapped = false,
   }: FilmCardProps & FilmListOptions = {} as FilmCardProps & FilmListOptions,
 ) {
-  const { data: films, isLoading } = useFilms()
 
-  if (isLoading) {
-    return <CardSkeleton />
-  }
+  // if (isLoading) {
+  //   return <CardSkeleton />
+  // }
 
+  const films = await getPopular({ category: 'movie', page: '3' })
   if (!films) {
     return <div>No films found</div>
   }

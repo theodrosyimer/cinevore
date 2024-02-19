@@ -6,7 +6,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { db } from '@/db'
 import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'
-import { env } from "@/env.mjs"
+import { env } from "@/env.js"
 
 export const metadata = {
   title: 'Films Search Page',

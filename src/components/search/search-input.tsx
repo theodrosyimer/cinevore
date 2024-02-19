@@ -63,7 +63,11 @@ export function Search({ className, ...props }: SearchProps) {
     }
   }, [query, router])
 
-  function onSubmit(event: SyntheticEvent) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setText(event.currentTarget.value)
+}
+
+  function handleSubmit(event: SyntheticEvent) {
     event.preventDefault()
     // console.log('event target', text)
     return toast({
@@ -74,7 +78,7 @@ export function Search({ className, ...props }: SearchProps) {
 
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       className={cn('relative ml-4 w-full', className)}
       {...props}
     >
@@ -83,10 +87,7 @@ export function Search({ className, ...props }: SearchProps) {
         autoFocus
         placeholder="Search for Films, Actors..."
         className="h-8 w-auto "
-        onChange={(e) => {
-          const { value } = e.currentTarget
-          setText(value)
-        }}
+        onChange={handleChange}
       />
       {/* <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 sm:flex">
         <span className="text-xs">⌘</span>K
@@ -97,3 +98,4 @@ export function Search({ className, ...props }: SearchProps) {
     </form>
   )
 }
+

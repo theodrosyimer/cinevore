@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils/utils'
 import { CommandMenu } from '@/app/(site-layout)/_components/header/command-menu'
 import { MainNav } from '@/app/(site-layout)/_components/header/main-nav'
 import { MobileNav } from '@/app/(site-layout)/_components/header/mobile-nav'
-// import { buttonVariants } from "@/registry/new-york/ui/button"
 import { buttonVariants } from '@/components/ui/button'
 import { getCurrentUser } from '@/lib/session'
 import { UserAccountNav } from '@/app/(site-layout)/_components/header/user-account-nav'
@@ -20,8 +19,9 @@ import { SearchCombo } from '@/components/search/search-combo'
 //     ssr: false,
 //   },
 // )
+
 export async function SiteHeader() {
-  const { user, isAdmin } = await getCurrentUser()
+  const { user  } = await getCurrentUser()
 
   siteLayoutConfig.mainNav =
     user?.role === 'user' || !user?.role
@@ -64,7 +64,7 @@ export async function SiteHeader() {
               }}
             >
               <UserAvatar
-                user={{ name: user?.name ?? '', image: user?.image || null }}
+                user={{ name: user?.name ?? '', image: user?.image ?? null }}
                 className={cn('h-8 w-8', !user?.email ? 'hidden' : '')}
               />
             </UserAccountNav>

@@ -1,5 +1,3 @@
-'use client'
-
 import { MovieArtworkProps } from '@/components/film/film-card'
 import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'
@@ -51,11 +49,6 @@ export async function ActorFilmCardList(
     moviesCredits,
   }: FilmCardProps & FilmListOptions = {} as FilmCardProps & FilmListOptions,
 ) {
-  // const { data: films, isLoading } = useQuery({
-  //   queryKey: ['personCredits'],
-  //   queryFn: () => getPersonByID({ id }),
-  // })
-  // // const { data: films, isLoading } = useFilms()
 
   // if (isLoading) {
   //   return <CardSkeleton />

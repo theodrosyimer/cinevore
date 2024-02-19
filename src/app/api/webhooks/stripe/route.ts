@@ -1,7 +1,7 @@
 import { headers } from 'next/headers'
 import Stripe from 'stripe'
 
-import { env } from "@/env.mjs"
+import { env } from "@/env.js"
 import { db } from '@/db'
 import { stripe } from '@/lib/stripe'
 

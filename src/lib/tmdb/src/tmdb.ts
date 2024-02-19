@@ -1,13 +1,13 @@
-import { env } from "../../../env.mjs"
+import { env } from "../../../env.js"
 
 import {
   type MovieDetails,
   tMDBMovieResponseSchema,
   tMDBMovieResponseSchemaWithDateInterval,
   tMDBSearchMultiSchema,
-  TMDBMovieResponse,
-  SearchMovie,
-  PersonCredits,
+  type TMDBMovieResponse,
+  // SearchMovie,
+  type PersonCredits,
 
 } from '../types/tmdb-api'
 import { extractLanguageFromLanguageCode, generateTMDBUrl } from './utils'
@@ -335,6 +335,7 @@ export async function getGenresList({
 
   return genres
 }
+
 export async function getTvAndMovieGenresList({ language }: QueryOptions) {
   const [movieGenresList, tvGenresList] = await Promise.all([
     getGenresList({ category: 'movie', language }),
@@ -343,5 +344,5 @@ export async function getTvAndMovieGenresList({ language }: QueryOptions) {
       language,
     }),
   ])
-  // console.log(movieGenresList, tvGenresList)
+  console.log(movieGenresList, tvGenresList)
 }

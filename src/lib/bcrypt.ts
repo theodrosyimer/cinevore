@@ -9,7 +9,11 @@ export async function validateUserPassword(
   return bcrypt
     .compare(password, hash)
     .then((isValidPassword) => isValidPassword)
-    .catch((err) => console.error(err.message))
+    .catch((err) => {
+      if (err instanceof Error) {
+        console.error(err.message)
+      }
+    })
 }
 
 export async function hashPassword(
@@ -19,5 +23,9 @@ export async function hashPassword(
   return bcrypt
     .hash(password, saltRounds)
     .then((hash) => hash)
-    .catch((err) => console.error(err.message))
+    .catch((err) => {
+      if (err instanceof Error) {
+        console.error(err.message)
+      }
+    })
 }

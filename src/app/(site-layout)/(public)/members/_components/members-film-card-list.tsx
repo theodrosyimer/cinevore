@@ -1,11 +1,9 @@
-'use client'
 import { CardSkeleton } from '@/components/card-skeleton'
 import { FilmCard, MovieArtworkProps } from '@/components/film/film-card'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'
 import { getPopular } from '@/lib/tmdb/src/tmdb'
-import { useQuery } from '@tanstack/react-query'
 import { SelectComment, SelectLike, SelectMovie, SelectUser } from '@/types/db'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
@@ -63,19 +61,14 @@ export async function MemberFilmCardList(
     columnsCount,
   }: FilmCardProps & FilmListOptions = {} as FilmCardProps & FilmListOptions,
 ) {
-  const { data: filmsPages, isLoading } = useQuery({
-    queryKey: ['popularMovies'],
-    queryFn: async () => getPopular({ category: 'movie', page: '1' }),
-  })
-  // const { data: films, isLoading } = useFilms()
+  // if (isLoading) {
+  //   return <CardSkeleton />
+  // }
 
-  if (isLoading) {
-    return <CardSkeleton />
-  }
-
-  if (!filmsPages) {
-    return <div>No films found</div>
-  }
+  // if (!filmsPages) {
+  //   return <div>No films found</div>
+  // }
+  const filmsPages = await getPopular({ category: 'movie', page: '1' })
 
   if (limit) {
     filmsPages.results = filmsPages.results.slice(0, limit)

@@ -1,40 +1,34 @@
 import Link from 'next/link'
 
-// import { env } from "@env.mjs"
+// import { env } from "@/env.js"
 import { MovieBackdrop } from '@/components/film/film-backdrop'
 import { FilmCardList } from '@/components/film/film-card-list'
 import { Icons } from '@/components/icon/icons'
+import { Reviews } from '@/components/review/reviews'
 import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardDescription } from '@/components/ui/card'
 import { featuresConfig } from '@/config/features'
-import { getPopular, globalConfig } from '@/lib/tmdb/src/tmdb'
-import { cn } from '@/lib/utils/utils'
-import { Reviews } from '@/components/review/reviews'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from '@tanstack/react-query'
+import { cn } from '@/lib/utils/utils'
 
 export const metadata = {
   title: 'Home Page',
   description: 'Welcome to Cinevore, the social network for film lovers',
 }
 export default async function IndexPage() {
-  const queryClient = new QueryClient()
-  await queryClient.prefetchQuery({
-    queryKey: ['popularMovies'],
-    queryFn: () => getPopular({ category: 'movie', page: '1' }),
-  })
-  const dehydratedState = dehydrate(queryClient)
+  // const queryClient = new QueryClient()
+  // await queryClient.prefetchQuery({
+  //   queryKey: ['popularMovies'],
+  //   queryFn: () => getPopular({ category: 'movie', page: '1' }),
+  // })
+  // const dehydratedState = dehydrate(queryClient)
 
   return (
     <>
       <div className="grid gap-12">
         <div className="relative -mt-14 grid">
           <MovieBackdrop
-            url={`${globalConfig.IMAGE_BASE_URI}/w1280/nuO8o9ltxhI7AZQxePavEZ4TyHa.jpg`}
+            url={`https://image.tmdb.org/t/p/w1280/nuO8o9ltxhI7AZQxePavEZ4TyHa.jpg`}
             altText="training day backdrop image"
             className="rounded-b-md opacity-40"
           ></MovieBackdrop>
@@ -71,7 +65,7 @@ export default async function IndexPage() {
             </div>
           </section>
           <section>
-            <HydrationBoundary state={dehydratedState}>
+            {/* <HydrationBoundary state={dehydratedState}> */}
               <FilmCardList
                 limit={4}
                 columnsCount={4}
@@ -81,7 +75,7 @@ export default async function IndexPage() {
                 isSlider={false}
                 hasMenu={false}
               />
-            </HydrationBoundary>
+            {/* </HydrationBoundary> */}
           </section>
           <section>
             <h2

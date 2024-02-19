@@ -1,6 +1,4 @@
-import { toast } from '@/components/ui/use-toast'
-import { KeysOf } from '@/types/utility'
-import { type ClassValue, clsx } from 'clsx'
+import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
@@ -23,7 +21,7 @@ export function baseUrl() {
       return process.env.NEXT_PUBLIC_APP_URL
     }
   }
-  return `http://localhost:${process.env.PORT || 3000}`
+  return `http://localhost:${process.env.PORT ?? 3000}`
 }
 
 export function absoluteUrl(path: string) {
@@ -37,6 +35,15 @@ export function convertMinutesToHoursAndMinutes(minutes: number) {
   return `${format(() => Math.trunc(minutes / 60))}h${format(
     () => minutes % 60,
   )} `
+}
+
+export function assert(condition: boolean, message?: string | (() => string)): asserts condition {
+  if (condition) {
+    return
+  }
+  const givenMessage: string | undefined = typeof message === 'function' ? message() : message
+
+  throw new Error(givenMessage)
 }
 
 /**
@@ -53,25 +60,25 @@ export function randomMinMax(min = 0, max = 0) {
   return Math.max(Math.round(Math.random() * max), min)
 }
 
-export function firstHalveIndex(arr: any[]) {
+export function firstHalveIndex(arr: unknown[]) {
   return [0, Math.ceil(arr.length / 2)]
 }
 
-export function secondHalveIndex(arr: any[]) {
+export function secondHalveIndex(arr: unknown[]) {
   return [Math.ceil(arr.length / 2), arr.length]
 }
-export function firstHalve(arr: any[]) {
+export function firstHalve(arr: unknown[]) {
   return arr.slice(0, Math.ceil(arr.length / 2))
 }
 
-export function secondHalve(arr: any[]) {
+export function secondHalve(arr: unknown[]) {
   return arr.slice(Math.ceil(arr.length / 2), arr.length)
 }
 
-export function randomFromArrayFirstHalve(arr: any[]) {
+export function randomFromArrayFirstHalve(arr: unknown[]) {
   return arr[randomMinMax(0, Math.ceil(arr.length / 2))]
 }
 
-export function randomFromArraySecondHalve(arr: any[]) {
+export function randomFromArraySecondHalve(arr: unknown[]) {
   return arr[randomMinMax(Math.ceil(arr.length / 2), arr.length)]
 }

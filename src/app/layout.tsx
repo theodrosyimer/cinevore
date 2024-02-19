@@ -6,7 +6,7 @@ import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils/utils'
 import { ReactQueryProvider } from '@/providers/react-query'
 import '@/styles/globals.css'
-import { HydrationOverlay } from '@builder.io/react-hydration-overlay'
+// import { HydrationOverlay } from '@builder.io/react-hydration-overlay'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { Inter as FontSans } from 'next/font/google'
 import localFont from 'next/font/local'
@@ -30,6 +30,7 @@ interface RootLayoutProps {
 }
 
 export const metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
@@ -76,7 +77,7 @@ export const metadata = {
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png',
   },
-  // manifest: `${siteConfig.url}/site.webmanifest`,
+  manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
 export const viewport = {
@@ -97,7 +98,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontHeading.variable,
         )}
       >
-        <HydrationOverlay>
+        {/* <HydrationOverlay> */}
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ReactQueryProvider>
               <NextSSRPlugin
@@ -108,7 +109,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
               <TailwindIndicator />
             </ReactQueryProvider>
           </ThemeProvider>
-        </HydrationOverlay>
+        {/* </HydrationOverlay> */}
       </body>
     </html>
   )
