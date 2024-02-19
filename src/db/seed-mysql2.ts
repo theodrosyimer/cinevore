@@ -45,7 +45,11 @@ const mathiasP = (await hashPassword(process.env.MATHIAS_PASSWORD!)) as string
 const edenP = (await hashPassword(process.env.EDEN_PASSWORD!)) as string
 const antoineP = (await hashPassword(process.env.ANTOINE_PASSWORD!)) as string
 
-type MySqlTransactionSeed = MySqlTransaction<MySql2QueryResultHKT, MySql2PreparedQueryHKT, typeof import("/Users/mac/Code/projects/personal/cinevore/src/db/schema/mysql2/index"), ExtractTablesWithRelations<typeof schema>>
+const mySqlType = await import("/Users/mac/Code/projects/personal/cinevore/src/db/schema/mysql2/index")
+
+type MySqlType = typeof mySqlType
+
+type MySqlTransactionSeed = MySqlTransaction<MySql2QueryResultHKT, MySql2PreparedQueryHKT, MySqlType, ExtractTablesWithRelations<typeof schema>>
 export async function addUsers(tx: MySqlTransactionSeed) {
   await Promise.all(
     defaultUsers.map(async (defaultUser) => {
