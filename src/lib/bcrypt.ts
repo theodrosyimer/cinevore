@@ -1,42 +1,9 @@
-// import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
-import { hash, compare } from "@node-rs/bcrypt";
-
-const DEFAULT_COST = 10
-
-// export async function validateUserPassword(
-//   password: string | Buffer,
-//   hash: string,
-// ) {
-//   return bcrypt
-//     .compare(password, hash)
-//     .then((isValidPassword) => isValidPassword)
-//     .catch((err) => {
-//       if (err instanceof Error) {
-//         console.error(err.message)
-//       }
-//     })
-// }
-
-// export async function hashPassword(
-//   password: string | Buffer,
-//   saltRounds: string | number = DEFAULT_COST,
-// ) {
-//   return bcrypt
-//     .hash(password, saltRounds)
-//     .then((hash) => hash)
-//     .catch((err) => {
-//       if (err instanceof Error) {
-//         console.error(err.message)
-//       }
-//     })
-// }
-
-export async function validateUserPassword(
-  password: string | Buffer,
-  hash: string,
-) {
-  return compare(password, hash)
+const DEFAULT_SALT = 10
+export async function validateUserPassword(password: string, hash: string) {
+  return bcrypt
+    .compare(password, hash)
     .then((isValidPassword) => isValidPassword)
     .catch((err) => {
       if (err instanceof Error) {
@@ -45,15 +12,12 @@ export async function validateUserPassword(
     })
 }
 
-export async function hashPassword(
-  password: string | Buffer,
-  cost: number | null | undefined = DEFAULT_COST,
+export async function hashPassword(password: string, saltRounds: string | number = DEFAULT_SALT,
 ) {
-  return hash(password, cost)
-    .then((hash) => hash)
-    .catch((err) => {
-      if (err instanceof Error) {
-        console.error(err.message)
-      }
-    })
+  return bcrypt.hash(password, saltRounds, (err, hash) => {
+    if (err) {
+      console.error(err.message)
+    }
+    return hash
+  })
 }
