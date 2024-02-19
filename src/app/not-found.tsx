@@ -5,10 +5,10 @@ import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-export default function NotFound({ params }: { params: { pathname: string } }) {
+export default function NotFound(/* { params }: { params: { pathname: string } } */) {
   const router = useRouter()
   return (
-    <div className="bg-not-found h-screen w-screen grid items-start justify-center img">
+    <div className="h-screen w-screen grid items-start justify-center img">
       <Link
         href="#"
         className={cn(
