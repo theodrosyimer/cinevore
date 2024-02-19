@@ -1,9 +1,7 @@
 import { headers } from 'next/headers'
 import Stripe from 'stripe'
 
-// import { env } from "@env.mjs"
-import * as dotenv from 'dotenv'
-dotenv.config()
+import { env } from "@/env.mjs"
 import { db } from '@/db'
 import { stripe } from '@/lib/stripe'
 
@@ -17,7 +15,7 @@ export async function POST(req: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!,
+      env.STRIPE_WEBHOOK_SECRET!,
     )
   } catch (error) {
     if (error instanceof Error) {

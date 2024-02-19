@@ -1,7 +1,4 @@
 import { migrate } from 'drizzle-orm/planetscale-serverless/migrator'
-
-// import * as dotenv from "dotenv"
-// dotenv.config({ path: '.env.local' })
 import { clearDbTables, makeColumnEmojiFriendly } from '@/lib/db'
 import { db } from "@/db"
 import {
@@ -40,7 +37,7 @@ async function main() {
     await migrate(db, { migrationsFolder: './drizzle' })
 
     await makeColumnEmojiFriendly('comment', 'content')
-    // @ts-ignore
+    // @ts-expect-error - complaining about the table name format but no problem
     await makeColumnEmojiFriendly('movie_review', 'content')
     await makeColumnEmojiFriendly('list', 'title')
     await makeColumnEmojiFriendly('list', 'description')

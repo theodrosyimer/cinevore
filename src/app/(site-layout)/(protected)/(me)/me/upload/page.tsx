@@ -1,7 +1,4 @@
-// import { env } from "@env.mjs"
-import * as dotenv from 'dotenv'
-dotenv.config()
-
+import { env } from "@/env.mjs"
 export const metadata = {
   title: 'Upload Image',
   description: "Upload your avatar's image.",
@@ -17,7 +14,7 @@ export default async function UploadPage({
       <form
         className="mt-4"
         // action={`${env.NEXT_PUBLIC_APP_URL}/upload`}
-        action={`${process.env.NEXT_PUBLIC_APP_URL}/api/upload`}
+        action={`${env.NEXT_PUBLIC_APP_URL}/api/upload`}
         method="POST"
         encType="multipart/form-data"
       >

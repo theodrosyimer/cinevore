@@ -1,8 +1,6 @@
 import { migrate } from 'drizzle-orm/mysql2/migrator'
 // import { migrate } from 'drizzle-orm/planetscale-serverless/migrator'
 
-// import * as dotenv from "dotenv"
-// dotenv.config({ path: '.env.local' })
 import { db } from "@/db/index-mysql2"
 import {
   addComments,

@@ -1,7 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import * as dotenv from 'dotenv'
-dotenv.config()
-
 import { cn } from '@/lib/utils/utils'
 
 import {

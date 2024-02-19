@@ -35,8 +35,6 @@ import type {
   PlanetScalePreparedQueryHKT,
   PlanetScaleDatabase,
 } from 'drizzle-orm/planetscale-serverless'
-import * as dotenv from 'dotenv'
-dotenv.config({ path: '.env.local' })
 
 const adminPassword = (await hashPassword(
   process.env.ADMIN_PASSWORD!,
@@ -833,7 +831,7 @@ export const defaultRatings = [
 //   } as NewRating)
 // }
 
-let [start, end] = firstHalveIndex(defaultRatings)
+const [start, end] = firstHalveIndex(defaultRatings)
 export const defaultRatingsToMovieLists = [
   {
     ratingId: 2,
