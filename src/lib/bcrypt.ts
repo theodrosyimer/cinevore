@@ -2,7 +2,7 @@
 
 import { hash, compare } from "@node-rs/bcrypt";
 
-const SALT_ROUNDS = 10
+const DEFAULT_COST = 10
 
 // export async function validateUserPassword(
 //   password: string | Buffer,
@@ -20,7 +20,7 @@ const SALT_ROUNDS = 10
 
 // export async function hashPassword(
 //   password: string | Buffer,
-//   saltRounds: string | number = SALT_ROUNDS,
+//   saltRounds: string | number = DEFAULT_COST,
 // ) {
 //   return bcrypt
 //     .hash(password, saltRounds)
@@ -47,10 +47,8 @@ export async function validateUserPassword(
 
 export async function hashPassword(
   password: string | Buffer,
-  cost: string | number,
+  cost: number | null | undefined = DEFAULT_COST,
 ) {
-  cost ??= SALT_ROUNDS
-
   return hash(password, cost)
     .then((hash) => hash)
     .catch((err) => {
