@@ -101,7 +101,7 @@ export default {
         dynamic: ['100vh', '100dvh'],
       },
       backgroundImage: {
-        'not-found': "url('/bg-404.jpg')",
+        'not-found': "url('../public/bg-404.jpg')",
       },
       padding: {
         DEFAULT: '1rem',
