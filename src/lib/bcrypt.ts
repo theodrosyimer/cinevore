@@ -14,10 +14,12 @@ export async function validateUserPassword(password: string, hash: string) {
 
 export async function hashPassword(password: string, saltRounds: string | number = DEFAULT_SALT,
 ) {
-  return bcrypt.hash(password, saltRounds, (err, hash) => {
-    if (err) {
-      console.error(err.message)
-    }
-    return hash
-  })
+  return bcrypt
+    .hash(password, saltRounds)
+    .then((hash) => hash)
+    .catch((err) => {
+      if (err instanceof Error) {
+        console.error(err.message)
+      }
+    })
 }
