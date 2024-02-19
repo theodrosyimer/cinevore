@@ -45,7 +45,7 @@ const mathiasP = (await hashPassword(process.env.MATHIAS_PASSWORD!)) as string
 const edenP = (await hashPassword(process.env.EDEN_PASSWORD!)) as string
 const antoineP = (await hashPassword(process.env.ANTOINE_PASSWORD!)) as string
 
-const mySqlType = await import("/Users/mac/Code/projects/personal/cinevore/src/db/schema/mysql2/index")
+const mySqlType = await import("/Users/mac/Code/projects/personal/cinevore/src/db/schema/mysql2/index.js")
 
 type MySqlType = typeof mySqlType
 

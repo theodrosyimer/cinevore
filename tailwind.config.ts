@@ -97,8 +97,10 @@ export default {
         layout: 'auto 1fr auto',
       },
       minHeight: {
-        svh: ['100vh', '100svh'],
-        dynamic: ['100vh', '100dvh'],
+        // svh: ['100vh', '100svh'],
+        // dynamic: ['100vh', '100dvh'],
+        svh: '100svh',
+        dynamic: '100dvh',
       },
       backgroundImage: {
         'not-found': "url('../public/bg-404.jpg')",
