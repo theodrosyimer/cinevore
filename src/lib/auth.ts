@@ -68,9 +68,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         if (dbUser?.password) {
-          if (
-            await validateUserPassword(credentials.password, dbUser.password)
-          ) {
+          if ((await validateUserPassword(credentials.password, dbUser.password))) {
             return dbUser
           } else {
             return null
