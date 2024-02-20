@@ -1,6 +1,6 @@
 // import { ListForm } from '@/components/list-create'
 // import { getCurrentUser } from '@/lib/session'
-import listsModel from '@/models/lists'
+// import listsModel from '@/models/lists'
 // import { notFound } from 'next/navigation'
 
 export const metadata = {
@@ -9,9 +9,9 @@ export const metadata = {
 }
 
 export type UserListPageProps = {
-  list: typeof listsModel
+  list: string
 }
 
-export default function UserListPage(props: UserListPageProps) {
+export default function UserListPage(_props: UserListPageProps) {
   return <></>
 }
