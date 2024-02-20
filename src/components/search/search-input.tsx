@@ -28,7 +28,7 @@ export function Search({ className, ...props }: SearchProps) {
   const [text, setText] = useState(search)
   const [query] = useDebounce(text, 500, { leading: true })
 
-  useEffect(() => {
+  useEffect(async () => {
     if (initialRender.current) {
       initialRender.current = false
       return
@@ -38,7 +38,7 @@ export function Search({ className, ...props }: SearchProps) {
       router.push(`/search`)
     } else {
       router.push(`/search?search=${query}`)
-      await searchMulti({ query }).then((res) => {
+      void searchMulti({ query }).then((res) => {
         // console.log('res', res)
         // TODO: do better handling of results
         if (!res?.results) return
