@@ -35,9 +35,7 @@ export function Review({
     <article className="flex gap-6">
       <FilmCard
         aspectRatio="portrait"
-        // @ts-expect-error - fix type
         width={imageWidth}
-        // @ts-expect-error - fix type
         movieImageWidth={getImageFormatSize('poster_sizes', 'w92')}
         movie={film}
         hasMenu={false}
