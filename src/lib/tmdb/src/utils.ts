@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { set } from 'zod'
-import { LANGUAGE } from '../constants/languages'
+import { type LANGUAGE } from '../constants/languages'
 import type {
   CommonFilterCategory,
   MovieCategory,
@@ -13,10 +14,10 @@ import type {
   TvShowCategory,
 } from '../types'
 import {
-  TMDBImageSizesCategoryKey,
-  TMDBImageSizesCategory,
+  type TMDBImageSizesCategoryKey,
+  type TMDBImageSizesCategory,
 } from '../types/tmdb-api'
-import { MoviePoster } from '../types/tmdb-api-movie-details'
+import { type MoviePoster } from '../types/tmdb-api-movie-details'
 import { globalConfig } from './tmdb'
 
 export function mergeSearchParamsToUrl(
@@ -128,48 +129,4 @@ export function extractLanguageFromLanguageCode(languageCode: LANGUAGE) {
 
 export function extractCountryFromLanguageCode(languageCode: LANGUAGE) {
   return languageCode.split('-')[1]
-}
-
-export async function promiseRaceAbort(
-  fns: (() => Promise<any>)[],
-  maxTimeOut = 5000,
-) {
-  const abortController = new AbortController()
-  const { signal } = abortController
-
-  // add the same abort controller to each promise
-  fns.forEach((promise) => {
-    promise.bind({ signal })
-  })
-
-  fns.push(() => new Promise((_, reject) => setTimeout(reject, maxTimeOut)))
-
-  try {
-    await Promise.race(fns)
-  } catch (error) {
-    abortController.abort()
-    console.log('promiseAbortRace error', error)
-  }
-}
-
-export async function promiseAllAbort(
-  fns: (() => Promise<any>)[],
-  maxTimeOut = 5000,
-) {
-  const abortController = new AbortController()
-  const { signal } = abortController
-
-  // add the same abort controller to each promise
-  fns.forEach((promise) => {
-    promise.bind({ signal })
-  })
-
-  fns.push(() => new Promise((_, reject) => setTimeout(reject, maxTimeOut)))
-
-  try {
-    return await Promise.all(fns)
-  } catch (error) {
-    abortController.abort()
-    console.log('promiseAbortRace error', error)
-  }
 }

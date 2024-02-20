@@ -1,4 +1,5 @@
-import { env } from "../../../env.js"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { env } from '../../../env.js'
 
 import {
   type MovieDetails,
@@ -8,21 +9,18 @@ import {
   type TMDBMovieResponse,
   // SearchMovie,
   type PersonCredits,
-
 } from '../types/tmdb-api'
 import { extractLanguageFromLanguageCode, generateTMDBUrl } from './utils'
 import { type GlobalConfig, type QueryOptions } from '../types'
 
 export const globalConfig = {
   API_KEY: env.TMDB_API_KEY ?? '10473fa5b39f51105676dd9fd05a9af0',
-  API_VERSION:
-    (env.TMDB_API_VERSION as GlobalConfig['API_VERSION']) ?? '3',
+  API_VERSION: (env.TMDB_API_VERSION as GlobalConfig['API_VERSION']) ?? '3',
   BASE_URI: env.TMDB_BASE_URI ?? 'https://api.themoviedb.org/3',
   IMDB_BASE_URI: env.IMDB_BASE_URI ?? 'https://imdb.com/title',
   IMAGE_BASE_URI_HTTP:
     env.TMDB_IMAGE_BASE_URI_HTTP ?? 'http://image.tmdb.org/t/p',
-  IMAGE_BASE_URI:
-    env.TMDB_IMAGE_BASE_URI ?? 'https://image.tmdb.org/t/p',
+  IMAGE_BASE_URI: env.TMDB_IMAGE_BASE_URI ?? 'https://image.tmdb.org/t/p',
   language: 'en-US',
   timeout: 5000,
 } satisfies GlobalConfig
@@ -31,7 +29,7 @@ export function setQuery<
   T extends
     | string
     | string[][]
-    | Record<string, any>
+    | Record<string, unknown>
     | URLSearchParams
     | undefined,
 >(options = {} as T) {
@@ -58,8 +56,10 @@ export function setQuery<
     if (Array.isArray(options.body)) {
       return baseQuery
     }
-    if (typeof options.body === 'object') {
-      for (const [key, value] of Object.entries(options.body)) {
+    if (options?.body && typeof options.body === 'object') {
+      for (const [key, value] of Object.entries(
+        options.body as Record<string, unknown>,
+      )) {
         baseQuery.append(key, value as string)
       }
     }
@@ -88,13 +88,10 @@ export function validateRequired() {
   return {}
 }
 
-export async function searchByID({
-  id,
-  category,
-  language = globalConfig.language,
-  page = '1',
-}: QueryOptions,
-  requestOptions?: RequestInit) {
+export async function searchByID(
+  { id, category, language = globalConfig.language, page = '1' }: QueryOptions,
+  requestOptions?: RequestInit,
+) {
   const url = generateTMDBUrl(`${category}/${id}`, {
     language,
     page,
@@ -117,12 +114,14 @@ export async function searchByID({
   return data
 }
 
-export async function getPersonByID({
-  id,
-  language = globalConfig.language,
-  page = '1',
-}: Omit<QueryOptions, 'category'>,
-  requestOptions?: RequestInit) {
+export async function getPersonByID(
+  {
+    id,
+    language = globalConfig.language,
+    page = '1',
+  }: Omit<QueryOptions, 'category'>,
+  requestOptions?: RequestInit,
+) {
   const url = generateTMDBUrl(`person/${id}`, {
     language,
     page,
@@ -145,13 +144,10 @@ export async function getPersonByID({
   return data
 }
 
-export async function getSimilarByID({
-  id,
-  category,
-  language = globalConfig.language,
-  page = '1',
-}: QueryOptions,
-  requestOptions?: RequestInit) {
+export async function getSimilarByID(
+  { id, category, language = globalConfig.language, page = '1' }: QueryOptions,
+  requestOptions?: RequestInit,
+) {
   const url = generateTMDBUrl(`${category}/${id}/similar`, {
     language,
     page,
@@ -172,12 +168,14 @@ export async function getSimilarByID({
 }
 
 // ! this function is not working properly
-export async function searchMulti({
-  query,
-  // category,
-  language = globalConfig.language,
-}: Omit<QueryOptions, 'category'>,
-  requestOptions?: RequestInit) {
+export async function searchMulti(
+  {
+    query,
+    // category,
+    language = globalConfig.language,
+  }: Omit<QueryOptions, 'category'>,
+  requestOptions?: RequestInit,
+) {
   // console.log('QUERY', query)
   const url = generateTMDBUrl(`search/multi`, {
     query,
@@ -191,7 +189,7 @@ export async function searchMulti({
   }
 
   // TODO: need to get each type of response (movies, tv shows, and persons) and parse it
-  const data = await response.json() /*  as TMDBMovieResponse */
+  const data = (await response.json()) as unknown /*  as TMDBMovieResponse */
 
   // console.log(data)
   const parsedSearch = tMDBSearchMultiSchema.safeParse(data)
@@ -204,13 +202,15 @@ export async function searchMulti({
   return parsedSearch.data
 }
 
-export async function searchByTitle({
-  query,
-  category,
-  language = globalConfig.language,
-  page = '1',
-}: QueryOptions,
-  requestOptions?: RequestInit) {
+export async function searchByTitle(
+  {
+    query,
+    category,
+    language = globalConfig.language,
+    page = '1',
+  }: QueryOptions,
+  requestOptions?: RequestInit,
+) {
   const url = generateTMDBUrl(`search/${category}`, {
     query,
     language,
@@ -228,13 +228,15 @@ export async function searchByTitle({
   return data
 }
 
-export async function discover({
-  filters,
-  category,
-  language = globalConfig.language,
-  page = '1',
-}: QueryOptions,
-  requestOptions?: RequestInit) {
+export async function discover(
+  {
+    filters,
+    category,
+    language = globalConfig.language,
+    page = '1',
+  }: QueryOptions,
+  requestOptions?: RequestInit,
+) {
   const url = generateTMDBUrl(`discover/${category}`, {
     ...filters,
     language,
@@ -252,12 +254,10 @@ export async function discover({
   return data
 }
 
-export async function getTopRated({
-  category,
-  language = globalConfig.language,
-  page = '1',
-}: QueryOptions,
-  requestOptions?: RequestInit) {
+export async function getTopRated(
+  { category, language = globalConfig.language, page = '1' }: QueryOptions,
+  requestOptions?: RequestInit,
+) {
   const url = generateTMDBUrl(`${category}/top_rated`, {
     page,
     language,
@@ -269,17 +269,15 @@ export async function getTopRated({
     throw new Error(`Returned with a ${response.status} code`)
   }
 
-  const data = await response.json()
+  const data = (await response.json()) as unknown
 
   return tMDBMovieResponseSchema.parse(data)
 }
 
-export async function getPopular({
-  category,
-  language = globalConfig.language,
-  page = '1',
-}: QueryOptions,
-  requestOptions?: RequestInit) {
+export async function getPopular(
+  { category, language = globalConfig.language, page = '1' }: QueryOptions,
+  requestOptions?: RequestInit,
+) {
   const url = generateTMDBUrl(`${category}/popular`, {
     page,
     language,
@@ -291,18 +289,16 @@ export async function getPopular({
     throw new Error(`Returned with a ${response.status} code`)
   }
 
-  const data = await response.json()
+  const data = (await response.json()) as unknown
   // console.log(data)
 
   return tMDBMovieResponseSchema.parse(data)
 }
 
-export async function getUpcoming({
-  category,
-  language = globalConfig.language,
-  page = '1',
-}: QueryOptions,
-  requestOptions?: RequestInit) {
+export async function getUpcoming(
+  { category, language = globalConfig.language, page = '1' }: QueryOptions,
+  requestOptions?: RequestInit,
+) {
   const url = generateTMDBUrl(`${category}/upcoming`, {
     page,
     language,
@@ -314,35 +310,36 @@ export async function getUpcoming({
     throw new Error(`Returned with a ${response.status} code`)
   }
 
-  const data = await response.json()
+  const data = (await response.json()) as unknown
 
   return tMDBMovieResponseSchemaWithDateInterval.parse(data)
 }
 
-export async function getGenresList({
-  category = 'movie',
-  language = globalConfig.language,
-}: QueryOptions,
-  requestOptions?: RequestInit) {
-  const response = await fetch(
-    `${globalConfig.BASE_URI}/genre/${category}/list?api_key=${globalConfig.API_KEY}&language=${language}`, requestOptions)
+// export async function getGenresList(
+//   { category = 'movie', language = globalConfig.language }: QueryOptions,
+//   requestOptions?: RequestInit,
+// ) {
+//   const response = await fetch(
+//     `${globalConfig.BASE_URI}/genre/${category}/list?api_key=${globalConfig.API_KEY}&language=${language}`,
+//     requestOptions,
+//   )
 
-  if (!response.ok) {
-    throw new Error(`Returned with a ${response.status} code`)
-  }
+//   if (!response.ok) {
+//     throw new Error(`Returned with a ${response.status} code`)
+//   }
 
-  const { genres } = await response.json()
+//   const { genres } = (await response.json()) as unknown
 
-  return genres
-}
+//   return genres
+// }
 
-export async function getTvAndMovieGenresList({ language }: QueryOptions) {
-  const [movieGenresList, tvGenresList] = await Promise.all([
-    getGenresList({ category: 'movie', language }),
-    getGenresList({
-      category: 'tv',
-      language,
-    }),
-  ])
-  console.log(movieGenresList, tvGenresList)
-}
+// export async function getTvAndMovieGenresList({ language }: QueryOptions) {
+//   const [movieGenresList, tvGenresList] = await Promise.all([
+//     getGenresList({ category: 'movie', language }),
+//     getGenresList({
+//       category: 'tv',
+//       language,
+//     }),
+//   ])
+//   console.log(movieGenresList, tvGenresList)
+// }
