@@ -28,7 +28,7 @@ export function Search({ className, ...props }: SearchProps) {
   const [text, setText] = useState(search)
   const [query] = useDebounce(text, 500, { leading: true })
 
-  useEffect(async () => {
+  useEffect(() => {
     if (initialRender.current) {
       initialRender.current = false
       return
