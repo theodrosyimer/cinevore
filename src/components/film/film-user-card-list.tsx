@@ -1,17 +1,17 @@
 'use client'
-import { MovieArtworkProps } from '@/components/film/film-card'
+import { type MovieArtworkProps } from '@/components/film/film-card'
 import { FilmCardDisplay } from '@/components/film/film-user-card'
 import { Icons } from '@/components/icon/icons'
 import { UserInfos } from '@/components/user-infos'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
-import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
+import { type TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'
 import {
-  SelectComment,
-  SelectLike,
-  SelectList,
-  SelectMovie,
-  SelectUser,
+  type SelectComment,
+  type SelectLike,
+  type SelectList,
+  type SelectMovie,
+  type SelectUser,
 } from '@/types/db'
 import type { MouseEvent } from 'react'
 
@@ -124,11 +124,11 @@ export function UserFilmListDisplay(
         <article
           className={cn(
             `grid ${
-              gridColumnsConfig['default'][
+              gridColumnsConfig.default[
                 columnsCount as keyof (typeof gridColumnsConfig)['default']
               ]
             } xs:${
-              gridColumnsConfig['xs'][
+              gridColumnsConfig.xs[
                 columnsCount as keyof (typeof gridColumnsConfig)['xs']
               ]
             } grid-rows-[min-content] overflow-x-hidden overscroll-x-contain rounded-md transition-all hover:z-50 hover:scale-[1.01]  hover:brightness-75`,
@@ -147,11 +147,11 @@ export function UserFilmListDisplay(
                 )}
                 aspectRatio={aspectRatio ?? 'portrait'}
                 // TODO: fix `width` type
-                // @ts-ignore
+                // @ts-expect-error - need to fix this type
                 width={width}
                 movieImageWidth={getImageFormatSize(
                   'poster_sizes',
-                  // @ts-ignore
+                  // @ts-expect-error - need to fix this type
                   movieImageWidth,
                 )}
               />
