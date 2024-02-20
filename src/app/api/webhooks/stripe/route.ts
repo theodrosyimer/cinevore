@@ -29,9 +29,9 @@ export async function POST(req: Request) {
 
   if (event.type === 'checkout.session.completed') {
     // Retrieve the subscription details from Stripe.
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription!,
-    )
+    // const subscription = await stripe.subscriptions.retrieve(
+    //   session.subscription,
+    // )
 
     // Update the user stripe into in our database.
     // Since this is the initial subscription, we need to update
@@ -53,9 +53,9 @@ export async function POST(req: Request) {
 
   if (event.type === 'invoice.payment_succeeded') {
     // Retrieve the subscription details from Stripe.
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription!,
-    )
+    // const subscription = await stripe.subscriptions.retrieve(
+    //   session.subscription,
+    // )
 
     // Update the price id and set the new period end.
     // await db.update({
