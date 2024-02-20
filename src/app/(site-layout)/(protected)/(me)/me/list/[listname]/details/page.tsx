@@ -8,7 +8,7 @@ export const metadata = {
   description: 'User list of films.',
 }
 
-export type UserListPageProps = {
+type UserListPageProps = {
   list: string
 }
 
