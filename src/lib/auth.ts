@@ -1,6 +1,6 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import type { Adapter } from "next-auth/adapters"
-import { NextAuthOptions } from 'next-auth'
+import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
 import { hashPassword, validateUserPassword } from '@/lib/bcrypt'
@@ -92,7 +92,7 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     async jwt({ token, user }) {
-      const [dbUser] = await UsersModel.getByEmail(token.email as string)
+      const [dbUser] = await UsersModel.getByEmail(token.email!)
 
       if (!dbUser) {
         if (user) {
@@ -115,10 +115,10 @@ export const authOptions: NextAuthOptions = {
   },
 }
 
-export function isAdmin(token: any) {
+export function isAdmin(token: string | null | undefined) {
   return token?.role === 'admin' || token?.role === 'superadmin'
 }
 
-export function isSuperAdmin(token: any) {
+export function isSuperAdmin(token: string | null | undefined) {
   return token?.role === 'superadmin'
 }
