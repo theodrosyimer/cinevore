@@ -55,7 +55,7 @@ export default async function MemberFilmListsPage({
             <Link
               href={`/members/${userPublicLists.name}/list/${handleSlug(
                 list.title,
-              )?.slug}?id=${list.id}`}
+              )}?id=${list.id}`}
             >
               <MemberFilmListDisplay
                 movieImageWidth="w92"

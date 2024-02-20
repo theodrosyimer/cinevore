@@ -79,7 +79,7 @@ export function FilmCard({
       {...props}
     >
       <Link
-        href={`/film/${handleSlug(movie?.title ?? '')?.slug}/?id=${movie.id}`}
+        href={`/film/${handleSlug(movie?.title ?? '')}/?id=${movie.id}`}
         // tabindex="-1"
         className={cn(`w-[${movieImageWidth.slice(1)}px]`)}
       >

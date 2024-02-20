@@ -57,8 +57,9 @@ export default async function ListsPage() {
           {userLists.map((list) => (
             <Link
               key={list.user.name}
-              href={`/members/${list.user.name}/list/${handleSlug(list.title)
-                ?.slug}?id=${list.id}`}
+              href={`/members/${list.user.name}/list/${handleSlug(
+                list.title,
+              )}?id=${list.id}`}
               className="justify-self-center"
             >
               {' '}

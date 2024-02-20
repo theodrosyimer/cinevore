@@ -10,7 +10,7 @@ import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Lists Page',
-  description: 'Your lists of films.'
+  description: 'Your lists of films.',
 }
 
 export default async function UserListsPage() {
@@ -41,11 +41,7 @@ export default async function UserListsPage() {
           userLists.map((list, index) => {
             return (
               <article key={index} className="flex gap-4">
-                <Link
-                  href={`/me/list/${handleSlug(list.title)?.slug}?id=${
-                    list.id
-                  }`}
-                >
+                <Link href={`/me/list/${handleSlug(list.title)}?id=${list.id}`}>
                   <UserFilmListDisplay
                     movieImageWidth="w92"
                     aspectRatio="portrait"
@@ -57,7 +53,7 @@ export default async function UserListsPage() {
                   />
                 </Link>
                 <Link
-                  href={`/me/list/${handleSlug(list.title)?.slug}/edit/?id=${
+                  href={`/me/list/${handleSlug(list.title)}/edit/?id=${
                     list.id
                   }`}
                 >
