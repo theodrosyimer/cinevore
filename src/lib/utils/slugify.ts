@@ -47,39 +47,35 @@ const sanitizeString = (text: string) =>
     .join('-')
     .replace(/(^.*)(-)$/g, '$1')
 
-export const slugify = (text: string): { slug: string } | { error: Error } => {
+export function slugify(text: string | null | undefined) {
   const _text = text
-  const maxLength = 80
+  const maxLength = 100
 
   if (typeof _text !== 'string' || _text == null) {
-    return {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      error: new Error(`Expected a 'string', received '${getTypeName(_text)}'`),
-    }
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    throw new Error(`Expected a 'string', received '${getTypeName(_text)}'`)
   }
 
   if (_text.length > maxLength) {
-    return {
-      error: new Error(
-        `The text's length limit has been reached, please retry with less than ${maxLength} characters (received: ${_text.length}).`,
-      ),
-    }
+    throw new Error(
+      `The text's length limit has been reached, please retry with less than ${maxLength} characters (received: ${_text.length}).`,
+    )
   }
 
-  return { slug: sanitizeString(_text) }
+  return sanitizeString(_text)
 }
 
 export function handleSlug(title: string) {
-  const result = slugify(title)
-  if ('error' in result) {
-    console.log(result.error)
-    toast({
-      title: result.error.name,
-      description: result.error.message,
-    })
-    return
-  }
-  if (result) {
-    return slugify(title) as { slug: string }
+  try {
+    return slugify(title)
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error)
+      toast({
+        title: error.name,
+        description: error.message,
+      })
+      return
+    }
   }
 }
