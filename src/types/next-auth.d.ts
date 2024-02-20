@@ -27,7 +27,7 @@ declare module 'next-auth/jwt' {
 }
 
 declare module 'next-auth' {
-  interface User extends UserAuth {}
+  type User = UserAuth
   interface Session {
     user?: User
   }

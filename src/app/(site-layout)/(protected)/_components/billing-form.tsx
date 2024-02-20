@@ -47,10 +47,10 @@ export function BillingForm({
     // Redirect to the Stripe session.
     // This could be a checkout page for initial upgrade.
     // Or portal to manage existing subscription.
-    const session = await response.json()
-    if (session) {
-      window.location.href = session.url
-    }
+    // const session = await response.json()
+    // if (session) {
+    //   window.location.href = session.url
+    // }
   }
 
   return (
