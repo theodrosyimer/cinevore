@@ -30,7 +30,7 @@ export function UserLoginForm({ className, ...props }: React.ComponentPropsWitho
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
   const searchParams = useSearchParams()
-  const pathname = usePathname()
+  // const pathname = usePathname()
 
   // const isRegisterPage = pathname === '/register'
 
@@ -56,7 +56,7 @@ export function UserLoginForm({ className, ...props }: React.ComponentPropsWitho
         variant: 'destructive',
       })
       // return router.push('/login')
-    redirect(authOptions?.pages?.signIn ?? '/login')
+    redirect(/* authOptions?.pages?.signIn ??  */'/login')
     }
 
     toast({
@@ -64,7 +64,7 @@ export function UserLoginForm({ className, ...props }: React.ComponentPropsWitho
       // description: 'Your account has been created.',
     })
     // return router.push(/* signInResult?.url ??  */ '/me')
-    redirect(authOptions?.pages?.signIn ?? '/me')
+    redirect(/* authOptions?.pages?.signIn ??  */'/me')
   }
 
   return (
