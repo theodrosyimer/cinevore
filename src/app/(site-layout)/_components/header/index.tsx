@@ -58,9 +58,9 @@ export async function SiteHeader() {
             ) : null}
             <UserAccountNav
               user={{
-                name: user?.name,
-                image: user?.image,
-                email: user?.email,
+                name: user?.name ?? '',
+                image: user?.image ?? '',
+                email: user?.email ?? '',
               }}
             >
               <UserAvatar
