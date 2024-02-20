@@ -1,8 +1,8 @@
-import { NewUser } from '@/types/db'
-import { ValuesOf } from '@/types/utility'
-import { DefaultUser } from 'next-auth'
+import { type NewUser } from '@/types/db'
+import { type ValuesOf } from '@/types/utility'
+import { type DefaultUser } from 'next-auth'
 // import { User } from "next-auth"
-import { JWT } from 'next-auth/jwt'
+import 'next-auth/jwt'
 
 type UserId = string
 
