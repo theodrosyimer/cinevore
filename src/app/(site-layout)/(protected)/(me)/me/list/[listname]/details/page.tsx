@@ -12,6 +12,6 @@ export type UserListPageProps = {
   list: string
 }
 
-export default function UserListPage(_props: UserListPageProps) {
+export default async function UserListPage(_props: UserListPageProps) {
   return <></>
 }
