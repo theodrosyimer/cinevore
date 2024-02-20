@@ -8,10 +8,12 @@ export const metadata = {
   description: 'User list of films.',
 }
 
-type UserListPageProps = {
-  list: string
-}
-
-export default async function UserListPage(_props: UserListPageProps) {
+export default async function UserListPage({
+  params,
+  searchParams,
+}: {
+  params: { listname: string }
+  searchParams: { id: string }
+}) {
   return <></>
 }
