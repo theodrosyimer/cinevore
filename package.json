@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ts": "npx tsc -p tsconfig.json",
+    "lint:types": "npx tsc -p tsconfig.json",
     "vercel": "vercel --local-config ./vercel.json",
     "vercel:git": "vercel git connect",
     "vercel:init": "npm run vercel && npm run vercel:git",
