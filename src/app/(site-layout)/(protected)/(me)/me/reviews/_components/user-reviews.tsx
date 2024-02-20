@@ -1,7 +1,7 @@
 import { Review } from '@/components/review/review'
 import { db } from '@/db'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
-import { User } from 'next-auth'
+import { type User } from 'next-auth'
 
 export async function UserReviews({
   children,
@@ -40,7 +40,6 @@ export async function UserReviews({
 
             return (
               // TODO: fix this type error
-              // @ts-expect-error - film is not defined
               <Review key={review.id} review={review} film={film} />
             )
           })}
