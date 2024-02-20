@@ -6,10 +6,9 @@ import GitHubProvider from 'next-auth/providers/github'
 import { hashPassword, validateUserPassword } from '@/lib/bcrypt'
 import { db } from '@/db'
 import UsersModel from '@/models/users'
-import { type getToken } from 'next-auth/jwt'
 import { type DefaultUserAuth } from '@/types/next-auth'
 
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
   adapter: DrizzleAdapter(db) as Adapter,
   session: {
     strategy: 'jwt',
@@ -115,7 +114,7 @@ export const authOptions: NextAuthOptions = {
       }
     },
   },
-}
+} satisfies NextAuthOptions
 
 export function isAdmin(token: DefaultUserAuth | null) {
   return token?.role === 'admin' || token?.role === 'superadmin'

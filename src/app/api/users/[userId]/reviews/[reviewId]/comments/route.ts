@@ -65,17 +65,15 @@ export async function POST(
       return new Response('Unauthorized', { status: 403 })
     }
 
-    const json = await req.json()
+    const json = (await req.json()) as unknown
     const body = userCommentSchema.parse(json)
 
-    await db
-      .insert(comment)
-      .values({
-        ...body,
-        authorId: userId,
-        resourceId: reviewId,
-        resourceType: 'movie_review',
-      })
+    await db.insert(comment).values({
+      ...body,
+      authorId: userId,
+      resourceId: reviewId,
+      resourceType: 'movie_review',
+    })
 
     return NextResponse.json(
       { message: 'Review comment created successfully' },

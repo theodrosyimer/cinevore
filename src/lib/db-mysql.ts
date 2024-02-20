@@ -1,8 +1,14 @@
-import { db } from "@/db/index-mysql2"
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { db } from '@/db/index-mysql2'
 import type { TableColumns, TableName } from '@/types/db'
-import type { MySql2InformationSchemaTables, MySql2TableStatus } from '@/types/sql'
+import type {
+  MySql2InformationSchemaTables,
+  MySql2TableStatus,
+} from '@/types/sql'
 import { sql } from 'drizzle-orm'
-import { FieldPacket } from 'mysql2/promise'
+import { type MySqlRawQueryResult } from 'drizzle-orm/mysql2'
+import { type FieldPacket } from 'mysql2/promise'
 
 export async function clearDbTables(databaseName?: string) {
   const dbName = getDbName(databaseName)
@@ -23,7 +29,7 @@ export async function clearDbTables(databaseName?: string) {
 
   await db.transaction(async (tx) => {
     console.log('\nSetting foreign key checks to 0 before sending queries...')
-    tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 0;'))
+    await tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 0;'))
 
     console.log('\n📨 Sending delete queries...')
 
@@ -39,7 +45,7 @@ export async function clearDbTables(databaseName?: string) {
       .finally(() => {
         console.log('\nSetting foreign key checks back to 1\n')
 
-        tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 1;'))
+        void tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 1;'))
       })
     console.log('🗑️   Database emptied  ✅')
   })
@@ -52,16 +58,21 @@ async function getTablesCountFromDb(databaseName?: string): Promise<number> {
     sql.raw(
       `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = \'${dbName}\' and TABLE_TYPE='BASE TABLE';`,
     ),
-  )) as any
+  )) as unknown as [[unknown[]], FieldPacket[]]
 
-  if (!total[0] || !total[0][0] || !total[0][0]['COUNT(*)']) {
+  // @ts-expect-error - that's fine
+  if (!total?.[0]?.[0]?.['COUNT(*)']) {
+    // @ts-expect-error - that's fine
     return (total = 0)
   }
 
+  // @ts-expect-error - that's fine
   total[0] = total[0][0]['COUNT(*)']
 
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   console.log(`\n📊 Total tables in the database: ${total[0]}\n`)
 
+  // @ts-expect-error - that's fine
   return total[0] as number
 }
 
@@ -83,9 +94,9 @@ export async function getTableStatus(
 ): Promise<MySql2TableStatus> {
   const results = (await db.execute(
     sql.raw(`show table status like ${tableName}`),
-  )) as any as [MySql2TableStatus[], FieldPacket[]]
+  )) as unknown as [MySql2TableStatus[], FieldPacket[]]
 
-  return results[0][0] as MySql2TableStatus
+  return results[0][0]!
 }
 
 export async function getRowsCount(tableName: TableName) {
@@ -100,7 +111,7 @@ export async function getTablesInfos(databaseName?: string) {
     sql.raw(
       `SELECT * FROM information_schema.tables WHERE table_schema = ${dbName} and TABLE_TYPE='BASE TABLE';`,
     ),
-  )) as any as [MySql2InformationSchemaTables[], FieldPacket[]]
+  )) as unknown as [MySql2InformationSchemaTables[], FieldPacket[]]
 
   return results
 }
@@ -112,7 +123,7 @@ export async function getTablesName(databaseName?: string) {
     sql.raw(
       `SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema = ${dbName} and TABLE_TYPE='BASE TABLE';`,
     ),
-  )) as any as [MySql2InformationSchemaTables[], FieldPacket[]]
+  )) as unknown as [MySql2InformationSchemaTables[], FieldPacket[]]
 
   if (!results || (results && !results?.length)) {
     return []

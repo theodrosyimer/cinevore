@@ -60,7 +60,7 @@ export async function POST(
       return new Response('Unauthorized', { status: 403 })
     }
 
-    const json = await req.json()
+    const json = (await req.json()) as unknown
     const body = movieToWatchlistPOSTSchema.parse(json)
 
     const userWatchlist = await db.query.watchlist.findFirst({
@@ -73,7 +73,11 @@ export async function POST(
       },
     })
 
-    const isFound = userWatchlist?.movies?.find(
+    if (!userWatchlist) {
+      return new Response("User's watchlist not found", { status: 404 })
+    }
+
+    const isFound = userWatchlist.movies.find(
       (movie) => movie.movieId === body.movieId,
     )
 
@@ -83,7 +87,7 @@ export async function POST(
 
     await db
       .insert(watchlistToMovies)
-      .values({ ...body, watchlistId: userWatchlist?.id! })
+      .values({ ...body, watchlistId: userWatchlist.id })
 
     return new Response('Movie added successfully to watchlist', {
       status: 201,

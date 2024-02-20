@@ -61,7 +61,7 @@ export async function PATCH(
     const token = await getToken({ req })
 
     if (token && (userId === token.id || isAdmin(token))) {
-      const json = await req.json()
+      const json = (await req.json()) as unknown
       const body = userCommentPATCHSchema.parse(json)
 
       const result = await db

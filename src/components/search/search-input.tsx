@@ -6,21 +6,21 @@ import { searchMulti } from '@/lib/tmdb/src/tmdb'
 import { cn } from '@/lib/utils/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
-  HTMLAttributes,
-  SyntheticEvent,
+  type HTMLAttributes,
+  type SyntheticEvent,
   useEffect,
   useRef,
   useState,
 } from 'react'
 import { useDebounce } from 'use-debounce'
-import { TMDBSearchMultiResult } from '@/lib/tmdb/types/tmdb-api'
+import { type TMDBSearchMultiResult } from '@/lib/tmdb/types/tmdb-api'
 
-interface SearchProps extends HTMLAttributes<HTMLFormElement> {}
+type SearchProps = HTMLAttributes<HTMLFormElement>
 
 export function Search({ className, ...props }: SearchProps) {
   const [results, setResults] = useState<TMDBSearchMultiResult | null>(null)
   const searchParams = useSearchParams()
-  const search = searchParams.get('search') || ''
+  const search = searchParams.get('search') ?? ''
   const router = useRouter()
 
   const initialRender = useRef(true)
@@ -38,7 +38,7 @@ export function Search({ className, ...props }: SearchProps) {
       router.push(`/search`)
     } else {
       router.push(`/search?search=${query}`)
-      searchMulti({ query }).then((res) => {
+      await searchMulti({ query }).then((res) => {
         // console.log('res', res)
         // TODO: do better handling of results
         if (!res?.results) return
@@ -65,7 +65,7 @@ export function Search({ className, ...props }: SearchProps) {
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setText(event.currentTarget.value)
-}
+  }
 
   function handleSubmit(event: SyntheticEvent) {
     event.preventDefault()
@@ -98,4 +98,3 @@ export function Search({ className, ...props }: SearchProps) {
     </form>
   )
 }
-

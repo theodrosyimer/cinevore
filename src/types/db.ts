@@ -1,20 +1,20 @@
-import * as schema from '@/db/schema/planetscale'
+import type * as schema from '@/db/schema/planetscale'
 import { Inspect } from '@/types/utility'
-import { InferInsertModel, InferSelectModel } from 'drizzle-orm'
+import { type InferInsertModel, type InferSelectModel } from 'drizzle-orm'
 
 export type DbSchema = typeof schema
 export type TableName = keyof DbSchema
 export type TableColumns<T extends TableName> = keyof ((typeof schema)[T] & {
   $columns: unknown
 })['$columns']
-// @ts-ignore
+// @ts-expect-error - type error but its okay it is just for internal script
 type ColumnInfos<T extends TableName> = DbSchema[T][TableColumns<T>]
 export type ColumnInfosKeys<T extends TableName> = keyof ColumnInfos<T>
 export type ColumnType<
   T extends TableName,
   C extends TableColumns<T>,
   K extends ColumnInfosKeys<T>,
-  // @ts-ignore
+  // @ts-expect-error - type error but its okay it is just for internal script
 > = DbSchema[T][C][K]
 
 // TODO: it works but i may do a better job at typing this!
@@ -22,16 +22,16 @@ export type ColumnDataType<
   T extends TableName,
   C extends TableColumns<T> /*  K extends ColumnInfosKeys<T>['dataType'] */,
 > =
-  // @ts-ignore
+  // @ts-expect-error - type error but its okay it is just for internal script
   ColumnType<T, C, 'dataType'> extends 'string'
     ? string
-    : // @ts-ignore
+    : // @ts-expect-error - type error but its okay it is just for internal script
     ColumnType<T, C, 'dataType'> extends 'number'
     ? number
-    : // @ts-ignore
+    : // @ts-expect-error - type error but its okay it is just for internal script
     ColumnType<T, C, 'dataType'> extends 'boolean'
     ? boolean
-    : // @ts-ignore
+    : // @ts-expect-error - type error but its okay it is just for internal script
     ColumnType<T, C, 'dataType'> extends 'Date'
     ? Date
     : object

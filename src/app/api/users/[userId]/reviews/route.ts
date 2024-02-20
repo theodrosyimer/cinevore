@@ -60,7 +60,7 @@ export async function POST(
       return new Response('Unauthorized', { status: 403 })
     }
 
-    const json = await req.json()
+    const json = (await req.json()) as unknown
     const body = insertReviewSchema.parse(json)
 
     await db.insert(movieReview).values(body)

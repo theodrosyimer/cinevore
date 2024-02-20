@@ -1,7 +1,7 @@
 import { type ExecutedQuery } from '@planetscale/database'
 import { sql } from 'drizzle-orm'
 // import mysql, { FieldPacket } from "mysql2/promise"
-import { db } from "@/db"
+import { db } from '@/db'
 import type { TableColumns, TableName } from '@/types/db'
 import type { MySql2InformationSchemaTables } from '@/types/sql'
 
@@ -28,7 +28,7 @@ export async function clearDbTables(databaseName?: string) {
 
   await db.transaction(async (tx) => {
     console.log('\nSetting foreign key checks to 0 before sending queries...')
-    tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 0;'))
+    await tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 0;'))
 
     console.log('\n📨 Sending delete queries...')
 
@@ -44,7 +44,7 @@ export async function clearDbTables(databaseName?: string) {
       .finally(() => {
         console.log('\nSetting foreign key checks back to 1\n')
 
-        tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 1;'))
+        void tx.execute(sql.raw('SET FOREIGN_KEY_CHECKS = 1;'))
       })
     console.log('🗑️   Database emptied  ✅')
   })
@@ -58,19 +58,19 @@ export async function getTablesName(
     sql.raw(
       `SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema = '${dbName}' and TABLE_TYPE='BASE TABLE';`,
     ),
-  )) as ExecutedQuery
+  )) as unknown as ExecutedQuery
 
   if (!result) {
     return []
   }
 
-  const rows = result['rows'] as MySql2InformationSchemaTables[]
+  const rows = result.rows as MySql2InformationSchemaTables[]
 
   // log(JSON.stringify(results), 'fg.red')
 
   return rows.map(
-    (row: MySql2InformationSchemaTables) => row['TABLE_NAME'],
-  ) as MySql2InformationSchemaTables['TABLE_NAME'][]
+    (row: MySql2InformationSchemaTables) => row.TABLE_NAME,
+  ) as unknown as MySql2InformationSchemaTables['TABLE_NAME'][]
 }
 
 async function getTablesCountFromDb(databaseName?: string): Promise<number> {
@@ -80,14 +80,14 @@ async function getTablesCountFromDb(databaseName?: string): Promise<number> {
     sql.raw(
       `SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema = '${dbName}' and TABLE_TYPE='BASE TABLE';`,
     ),
-  )) as ExecutedQuery
+  )) as unknown as ExecutedQuery
 
-  if (!result || !result['size']) {
+  if (!result?.size) {
     return 0
   }
 
   // log(JSON.stringify(results), 'fg.red')
-  return result['size']
+  return result.size
 }
 
 // async function getTablesCountFromDb(databaseName?: string): Promise<number> {
@@ -124,7 +124,7 @@ export async function getTableStatus(
 ) /* : Promise<MySql2TableStatus> */ {
   const results = (await db.execute(
     sql.raw(`show table status like ${tableName}`),
-  )) as ExecutedQuery
+  )) as unknown as ExecutedQuery
 
   return results /* as MySql2TableStatus */
 }
@@ -141,7 +141,7 @@ export async function getTablesInfos(databaseName?: string) {
     sql.raw(
       `SELECT * FROM information_schema.tables WHERE table_schema = ${dbName} and TABLE_TYPE='BASE TABLE';`,
     ),
-  )) as ExecutedQuery
+  )) as unknown as ExecutedQuery
 
   return results
 }

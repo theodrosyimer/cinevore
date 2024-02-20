@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import Link, { LinkProps } from 'next/link'
+import Link, { type LinkProps } from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { ViewVerticalIcon } from '@radix-ui/react-icons'
 
@@ -12,7 +12,7 @@ import { Icons } from '@/components/icon/icons'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { SiteLayoutConfig } from '@/types'
+import { type SiteLayoutConfig } from '@/types'
 import { useTheme } from 'next-themes'
 
 type MobileNavProps = {
@@ -107,11 +107,22 @@ function MobileLink({
   const pathname = usePathname()
   const { theme } = useTheme()
 
+  if (typeof href === 'string') {
+    href = href.toString()
+  }
+
+  if (typeof href === 'object' && href?.href) {
+    const { href: _href } = href
+    href = _href
+  }
+
   return (
     <Link
       href={href}
       onClick={() => {
-        router.push(href.toString())
+        // TODO: fix this type bu NOT using `LinkProps` from `next/link`
+        // @ts-expect-error - type `Url` is ...aaarrgh!
+        router.push(href)
         onOpenChange?.(false)
       }}
       className={cn(

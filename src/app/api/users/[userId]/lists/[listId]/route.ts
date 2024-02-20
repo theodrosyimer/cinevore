@@ -66,7 +66,7 @@ export async function PATCH(
 
     if (token && (userId === token.id || isAdmin(token))) {
       // Get the request body and validate it.
-      const json = await req.json()
+      const json = (await req.json()) as unknown
       const body = listPATCHSchema.parse(json)
 
       // Update the list.

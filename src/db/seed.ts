@@ -63,7 +63,7 @@ export async function addUsers(tx: PlanetScaleDatabase<typeof schema>) {
     .catch(() => {
       throw new Error('Failed to add users to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(
     '\t👤  Created 6 new users:\n\t\t1 superadmin\n\t\t1 admin\n\t\t4 users\n',
   )
@@ -78,7 +78,7 @@ export async function addMovies(tx: PlanetScaleDatabase<typeof schema>) {
     .catch(() => {
       throw new Error('Failed to add movies to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(`\t🎬  Added ${defaultMovies.length} movies\n`)
 }
 
@@ -91,7 +91,7 @@ export async function addLists(tx: PlanetScaleDatabase<typeof schema>) {
     .catch(() => {
       throw new Error('Failed to add users to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(`\t🎬  Added ${defaultLists.length} list\n`)
 }
 
@@ -105,7 +105,7 @@ export async function addMovieLists(tx: PlanetScaleDatabase<typeof schema>) {
     .catch(() => {
       throw new Error('Failed to add movies lists to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(`\t🎬  Added ${defaultMovieLists.length} movies to lists\n`)
 }
 
@@ -119,7 +119,7 @@ export async function addMovieReviews(tx: PlanetScaleDatabase<typeof schema>) {
     .catch(() => {
       throw new Error('Failed to add movies reviews to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(`\t🎬  Added ${defaultMovieReviews.length} movie reviews\n`)
 }
 
@@ -133,7 +133,7 @@ export async function addComments(tx: PlanetScaleDatabase<typeof schema>) {
       console.log(e)
       throw new Error('Failed to add comments to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(`\t🎬  Added ${defaultComments.length} comments\n`)
 }
 
@@ -146,7 +146,7 @@ export async function addLikes(tx: PlanetScaleDatabase<typeof schema>) {
     .catch(() => {
       throw new Error('Failed to add movies lists to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(`\t🎬  Added ${defaultLikes.length} likes to movies\n`)
 }
 
@@ -159,7 +159,7 @@ export async function addRatings(tx: PlanetScaleDatabase<typeof schema>) {
     .catch(() => {
       throw new Error('Failed to add ratings to movies lists to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(`\t🎬  Added ${defaultRatings.length} ratings\n`)
 }
 
@@ -177,7 +177,7 @@ export async function addRatingsToMovieLists(
     .catch(() => {
       throw new Error('Failed to add ratings to movies lists to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(
     `\t🎬  Added ${defaultRatingsToMovieLists.length} ratings to movies lists\n`,
   )
@@ -197,7 +197,7 @@ export async function addRatingsToMovieReviews(
     .catch(() => {
       throw new Error('Failed to add ratings to movies reviews to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(
     `\t🎬  Added ${defaultRatingsToMovieReviews.length} ratings to movies reviews\n`,
   )
@@ -213,7 +213,7 @@ export async function addFollowers(tx: PlanetScaleDatabase<typeof schema>) {
     .catch(() => {
       throw new Error('Failed to add movies lists to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(`\t🎬  Added ${defaultFollowers.length} followers\n`)
 }
 
@@ -229,7 +229,7 @@ export async function addMovieInfosToUsers(
     .catch(() => {
       throw new Error('Failed to add movies infos to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(
     `\t🎬  Added ${defaultMovieInfosToUsers.length} movies infos from users\n`,
   )
@@ -245,7 +245,7 @@ export async function addWatchlists(tx: PlanetScaleDatabase<typeof schema>) {
     .catch(() => {
       throw new Error('Failed to add watchlists to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(`\t🎬  Added ${defaultWatchlists.length} watchlists\n`)
 }
 
@@ -263,7 +263,7 @@ export async function addWatchlistToMovies(
     .catch(() => {
       throw new Error('Failed to add movies watchlists to the database')
     })
-    .finally(() => {})
+    .finally(() => ({}))
   console.log(
     `\t🎬  Added ${defaultWatchlistToMovies.length} movies to watchlists\n`,
   )

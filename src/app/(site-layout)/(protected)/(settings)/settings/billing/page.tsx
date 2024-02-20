@@ -1,6 +1,6 @@
 import { getCurrentUser } from '@/lib/session'
 import { stripe } from '@/lib/stripe'
-import { getUserSubscriptionPlan } from '@/lib/subscription'
+// import { getUserSubscriptionPlan } from '@/lib/subscription'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { BillingForm } from '@/app/(site-layout)/(protected)/_components/billing-form'
 import { DashboardHeader } from '@/app/(site-layout)/(protected)/_components/dashboard-header'
@@ -9,7 +9,7 @@ import { DashboardShell } from '@/app/(site-layout)/(protected)/_components/shel
 
 export const metadata = {
   title: 'Billing',
-  description: 'Manage billing and your subscription plan.'
+  description: 'Manage billing and your subscription plan.',
 }
 
 export default async function BillingPage() {
@@ -19,16 +19,16 @@ export default async function BillingPage() {
     return null
   }
 
-  const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+  // const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
-  // If user has a pro plan, check cancel status on Stripe.
-  let isCanceled = false
-  if (subscriptionPlan.isPro && subscriptionPlan.stripeSubscriptionId) {
-    const stripePlan = await stripe.subscriptions.retrieve(
-      subscriptionPlan.stripeSubscriptionId,
-    )
-    isCanceled = stripePlan.cancel_at_period_end
-  }
+  // // If user has a pro plan, check cancel status on Stripe.
+  // let isCanceled = false
+  // if (subscriptionPlan.isPro && subscriptionPlan.stripeSubscriptionId) {
+  //   const stripePlan = await stripe.subscriptions.retrieve(
+  //     subscriptionPlan.stripeSubscriptionId,
+  //   )
+  //   isCanceled = stripePlan.cancel_at_period_end
+  // }
 
   return (
     <DashboardShell>
@@ -54,12 +54,12 @@ export default async function BillingPage() {
             .
           </AlertDescription>
         </Alert>
-        <BillingForm
+        {/* <BillingForm
           subscriptionPlan={{
             ...subscriptionPlan,
             isCanceled,
           }}
-        />
+        /> */}
       </div>
     </DashboardShell>
   )

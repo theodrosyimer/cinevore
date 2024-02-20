@@ -2,9 +2,9 @@
 import { cn } from '@/lib/utils/utils'
 
 import {
-  SearchMovie,
-  TMDBImageSizesCategory,
-  TMDBImageSizesCategoryKey,
+  type SearchMovie,
+  type TMDBImageSizesCategory,
+  type TMDBImageSizesCategoryKey,
 } from '@/lib/tmdb/types/tmdb-api'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
 import { MovieMenubar } from '@/components/film/film-menubar'
@@ -62,7 +62,7 @@ export function UserFilmCard({
     imageUrl = generateTMDBImageUrl({
       format: kind,
       // TODO: fix this type
-      // @ts-ignore
+      // @ts-expect-error - fix type
       size: `w${calculatedWidth}`,
       defaultImage: movie.poster_path!,
     })
@@ -73,7 +73,7 @@ export function UserFilmCard({
     imageUrl = generateTMDBImageUrl({
       format: kind,
       // TODO: fix this type
-      // @ts-ignore
+      // @ts-expect-error - fix type
       size: `w${calculatedWidth}`,
       defaultImage: movie.backdrop_path!,
     })
@@ -96,8 +96,8 @@ export function UserFilmCard({
         // tabindex="-1"
       >
         <img
-          src={imageUrl!}
-          alt={movie.title!}
+          src={imageUrl}
+          alt={movie.title}
           width={Number(calculatedWidth)}
           lang="en"
           className={cn(

@@ -10,7 +10,9 @@ export type Inspect<T> = {
   [key in keyof T]: T[key]
 }
 
-export type ArrayValues<T extends Record<any, Array<string>>> = {
+export type ArrayValues<
+  T extends Record<string | number | symbol, Array<string>>,
+> = {
   [key in keyof T]: T[key][number]
 }
 

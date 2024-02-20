@@ -59,14 +59,11 @@ export function SearchCombo() {
       //   // console.log('res', res)
       //   // TODO: do better handling of results
       //   // if (!res?.results) return
-
       //   const movies = res?.results
       //     .filter((result) => result.media_type !== 'tv')
       //     .map((result) => {
       //       if (!result) return
-
       //       setOpen(true)
-
       //       const { id, media_type } = result
       //       if (media_type === 'movie') {
       //         // return { id, title: result.title, media_type }
@@ -84,9 +81,9 @@ export function SearchCombo() {
     }
   }, [query])
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setText(event.currentTarget.value)
-}
+  }
 
   function handleSubmit(event: SyntheticEvent) {
     event.preventDefault()
@@ -144,13 +141,13 @@ export function SearchCombo() {
                     setOpen(false)
                     result.media_type === 'movie'
                       ? router.push(
-                          `/film/${slugify(result.title ?? '')}/?id=${
+                          `/film/${slugify(result.title).slug ?? ''}/?id=${
                             result.id
                           }`,
                         )
                       : result.media_type === 'person'
                       ? router.push(
-                          `/person/${slugify(result.name ?? '')}/?id=${
+                          `/person/${slugify(result.name).slug ?? ''}/?id=${
                             result.id
                           }`,
                         )

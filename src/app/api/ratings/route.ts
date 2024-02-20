@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     //   }
     // }
 
-    // const json = await req.json()
+    // const json = (await req.json()) as unknown
     // const body = movieListPostSchema.parse(json)
 
     // const results = await db.insert(list).values({}).catch((error) => {

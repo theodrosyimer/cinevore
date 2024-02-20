@@ -5,11 +5,11 @@ import mysql from 'mysql2/promise'
 // import { env } from '@env'
 
 // need to check if it works
-declare global {
-  var db: MySql2Database<typeof schema> | undefined
-}
+// declare global {
+//   var db: MySql2Database<typeof schema> | undefined
+// }
 
-let db: MySql2Database<typeof schema>
+// let db: MySql2Database<typeof schema>
 
 const mysqlClientPool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -19,31 +19,31 @@ const mysqlClientPool = mysql.createPool({
   // password: process.env.DB_PASSWORD,
 })
 
-if (process.env.NODE_ENV === 'production') {
-  // db = drizzle(mysql.createPool(process.env.DATABASE_URL as string), {
-  //   schema,
-  //   mode: 'default',
-  // })
+// if (process.env.NODE_ENV === 'production') {
+//   // db = drizzle(mysql.createPool(process.env.DATABASE_URL as string), {
+//   //   schema,
+//   //   mode: 'default',
+//   // })
 
-  db = drizzle(mysql.createPool(mysqlClientPool), {
-    schema,
-    mode: 'default',
-  })
-} else {
-  if (!global.db) {
-    // global.db = drizzle(mysql.createPool(process.env.DATABASE_URL as string), {
-    //   schema,
-    //   mode: 'default',
-    // })
+//   db = drizzle(mysql.createPool(mysqlClientPool), {
+//     schema,
+//     mode: 'default',
+//   })
+// } else {
+//   if (!global.db) {
+//     // global.db = drizzle(mysql.createPool(process.env.DATABASE_URL as string), {
+//     //   schema,
+//     //   mode: 'default',
+//     // })
 
-    global.db = drizzle(mysql.createPool(mysqlClientPool), {
-      schema,
-      mode: 'default',
-    })
-  }
-  db = global.db
-}
+//     global.db = drizzle(mysql.createPool(mysqlClientPool), {
+//       schema,
+//       mode: 'default',
+//     })
+//   }
+//   db = global.db
+// }
 
+// export { db }
 
-export { db }
-// export const db = drizzle(mysqlClientPool, { schema, mode: 'default' })
+export const db = drizzle(mysqlClientPool, { schema, mode: 'default' })

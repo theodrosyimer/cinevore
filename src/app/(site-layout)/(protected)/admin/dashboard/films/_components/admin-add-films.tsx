@@ -4,17 +4,17 @@ import * as React from 'react'
 import { useRouter } from 'next/navigation'
 
 import { cn } from '@/lib/utils/utils'
-import { ButtonProps, buttonVariants } from '@/components/ui/button'
+import { type ButtonProps, buttonVariants } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { Icons } from '@/components/icon/icons'
 
-interface UserCreateButtonProps extends ButtonProps {}
+type AddFilmsButtonProps = ButtonProps
 
 export function AddFilmButton({
   className,
   variant,
   ...props
-}: UserCreateButtonProps) {
+}: AddFilmsButtonProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
@@ -49,12 +49,8 @@ export function AddFilmButton({
       })
     }
 
-    const post = await response.json()
-
     // This forces a cache invalidation.
     router.refresh()
-
-    router.push(`/editor/${post.id}`)
   }
 
   return (

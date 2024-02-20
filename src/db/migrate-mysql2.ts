@@ -1,7 +1,7 @@
 import { migrate } from 'drizzle-orm/mysql2/migrator'
 // import { migrate } from 'drizzle-orm/planetscale-serverless/migrator'
 
-import { db } from "@/db/index-mysql2"
+import { db } from '@/db/index-mysql2'
 import {
   addComments,
   addFollowers,
@@ -38,7 +38,7 @@ async function main() {
   await migrate(db, { migrationsFolder: './drizzle' })
 
   await makeColumnEmojiFriendly('comment', 'content')
-  // @ts-ignore
+  // @ts-expect-error - TS doesn't know about the makeColumnEmojiFriendly function
   await makeColumnEmojiFriendly('movie_review', 'content')
   await makeColumnEmojiFriendly('list', 'title')
   await makeColumnEmojiFriendly('list', 'description')

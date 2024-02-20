@@ -5,11 +5,11 @@ import { UserNameForm } from '@/app/(site-layout)/(protected)/_components/user-n
 
 export const metadata = {
   title: 'Settings',
-  description: 'Manage account and website settings.'
+  description: 'Manage account and website settings.',
 }
 
 export default async function SettingsPage() {
-  const { user, isAdmin } = await getCurrentUser()
+  const { user } = await getCurrentUser()
 
   return (
     <DashboardShell>
@@ -19,7 +19,7 @@ export default async function SettingsPage() {
       />
       <div className="grid gap-10">
         {!!user ? (
-          <UserNameForm user={{ id: user.id, name: user.name || '' }} />
+          <UserNameForm user={{ id: user.id, name: user.name ?? '' }} />
         ) : null}
       </div>
     </DashboardShell>

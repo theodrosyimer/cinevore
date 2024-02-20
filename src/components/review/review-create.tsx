@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { type z } from 'zod'
 
 import { Icons } from '@/components/icon/icons'
 import { buttonVariants } from '@/components/ui/button'
@@ -15,7 +15,7 @@ import { cn } from '@/lib/utils/utils'
 import { insertListSchema } from '@/lib/validations/routes/list'
 import { Textarea } from '@/components/ui/textarea'
 
-interface NewListFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+type NewListFormProps = React.HTMLAttributes<HTMLDivElement>
 
 type FormData = z.infer<typeof insertListSchema>
 
@@ -41,12 +41,14 @@ export function NewReviewForm({ className, ...props }: NewListFormProps) {
         method: 'POST',
       },
     ).catch((error) => {
-      toast({
-        title: 'Server error. Please try later.',
-        description: `${error.message}`,
-        variant: 'destructive',
-      })
-      return
+      if (error instanceof Error) {
+        toast({
+          title: 'Server error. Please try later.',
+          description: `${error.message}`,
+          variant: 'destructive',
+        })
+        return
+      }
     })
 
     setIsLoading(false)

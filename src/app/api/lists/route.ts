@@ -1,12 +1,11 @@
 import * as z from 'zod'
 
 import { db } from '@/db'
-import { RequiresProPlanError } from '@/lib/exceptions'
+import { list } from '@/db/schema/planetscale'
 import { getCurrentUser } from '@/lib/session'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
-import { NextResponse } from 'next/server'
 import { insertListSchema } from '@/lib/validations/routes/list'
-import { list } from '@/db/schema/planetscale'
+import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
@@ -33,7 +32,7 @@ export async function POST(req: Request) {
     console.log('currentUser', currentUser)
 
     if (currentUser && (currentUser.id || isAdmin)) {
-      const json = await req.json()
+      const json = (await req.json()) as unknown
       const body = insertListSchema.parse(json)
 
       const results = await db

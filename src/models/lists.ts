@@ -2,7 +2,7 @@
 import { and, eq } from 'drizzle-orm'
 import { db } from '@/db'
 import { list } from '@/db/schema/planetscale'
-import { NewList, SelectList } from '@/types/db'
+import { type NewList, type SelectList } from '@/types/db'
 
 // const log: debug.IDebugger = debug('app:lists-model')
 
@@ -15,7 +15,7 @@ class ListsModel {
     return db.insert(list).values(newList)
   }
 
-  getAll = async (userId: string) =>
+  getAll = async () =>
     db.query.list.findMany({
       with: {
         movies: true,

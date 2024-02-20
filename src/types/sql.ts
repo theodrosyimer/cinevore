@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 export type MySql2TableStatus = {
   Name: string
   Engine: 'InnoDB' | (string & {})

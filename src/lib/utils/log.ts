@@ -1,4 +1,4 @@
-import { KeysOf } from '@/types/utility'
+import { type KeysOf } from '@/types/utility'
 
 const Log = {
   reset: '\x1b[0m',
@@ -49,7 +49,7 @@ export const log = (text: unknown, color: Color = 'fg.black') => {
     LogTypeFgKeys | LogTypeBgKeys,
   ]
 
-  if (!fgOrBg || !colorName || !Log[fgOrBg] || !Log[fgOrBg][colorName]) {
+  if (!fgOrBg || !colorName || !Log?.[fgOrBg]?.[colorName]) {
     throw new Error(`Invalid color: ${color} `)
   }
   if (typeof text === 'object') {

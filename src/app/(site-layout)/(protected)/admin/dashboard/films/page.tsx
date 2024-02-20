@@ -1,5 +1,3 @@
-export type DashboardFilmsPage = {}
-
 import { DashboardHeader } from '@/app/(site-layout)/(protected)/_components/dashboard-header'
 import { EmptyPlaceholder } from '@/app/(site-layout)/(protected)/admin/dashboard/_components/empty-placeholder'
 import { FilmCardDisplay } from '@/components/film/film-user-card'
@@ -14,7 +12,7 @@ export const metadata = {
   title: 'Dashboard',
 }
 
-export default async function DashboardFilmsPage({}: DashboardFilmsPage) {
+export default async function DashboardFilmsPage() {
   const movies = await db.query.movie.findMany({
     // where: eq(user.id, currentUser.id),
     // columns: {

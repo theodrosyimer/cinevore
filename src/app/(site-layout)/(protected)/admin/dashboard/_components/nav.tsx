@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { SidebarNavItem } from '@/types'
+import { type SidebarNavItem } from '@/types'
 import { cn } from '@/lib/utils/utils'
 import { Icons } from '@/components/icon/icons'
 
@@ -21,7 +21,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
   return (
     <nav className="flex space-x-2 overflow-hidden md:flex-col md:space-x-0 md:space-y-1">
       {items.map((item, index) => {
-        const Icon = Icons[item.icon || 'arrowRight']
+        const Icon = Icons[item.icon ?? 'arrowRight']
         return (
           item.href && (
             <Link key={index} href={item.disabled ? '/' : item.href}>

@@ -2,9 +2,9 @@
 import { cn } from '@/lib/utils/utils'
 
 import {
-  SearchMovie,
-  TMDBImageSizesCategory,
-  TMDBImageSizesCategoryKey,
+  type SearchMovie,
+  type TMDBImageSizesCategory,
+  type TMDBImageSizesCategoryKey,
 } from '@/lib/tmdb/types/tmdb-api'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
 import { MovieMenubar } from '@/components/film/film-menubar'
@@ -26,7 +26,7 @@ type T = TMDBImageSizesCategory[keyof TMDBImageSizesCategory]
 
 type LT<T extends string> = T extends `w${infer Width}` ? Width : never
 
-let a: LT<T> = '154'
+const a: LT<T> = '154'
 
 export function FilmCardDisplay({
   movie,
@@ -46,24 +46,24 @@ export function FilmCardDisplay({
   // console.log('WIDTH:', width)
   if (aspectRatio === 'portrait') {
     kind = 'poster_sizes'
-    // size = 'w154'
+    size = movieImageWidth // 'w154'
     imageUrl = generateTMDBImageUrl({
       format: kind,
       // TODO: fix this type
-      // @ts-ignore
-      size: movieImageWidth,
+      // @ts-expect-error - fix type
+      size,
       defaultImage: movie.poster_path!,
     })
   }
 
   if (aspectRatio === 'video') {
     kind = 'backdrop_sizes'
-    // size = 'w300'
+    size = movieImageWidth // 'w300'
     imageUrl = generateTMDBImageUrl({
       format: kind,
       // TODO: fix this type
-      // @ts-ignore
-      size: movieImageWidth,
+      // @ts-expect-error - fix type
+      size,
       defaultImage: movie.backdrop_path!,
     })
   }
@@ -82,8 +82,8 @@ export function FilmCardDisplay({
         className={cn('w-[154px]')}
       >
         <img
-          src={imageUrl!}
-          alt={movie.title!}
+          src={imageUrl}
+          alt={movie.title}
           width={width}
           lang="en"
           className={cn(

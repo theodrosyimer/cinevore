@@ -21,7 +21,7 @@ import { SearchCombo } from '@/components/search/search-combo'
 // )
 
 export async function SiteHeader() {
-  const { user  } = await getCurrentUser()
+  const { user } = await getCurrentUser()
 
   siteLayoutConfig.mainNav =
     user?.role === 'user' || !user?.role

@@ -113,7 +113,7 @@ export function UserFilmListDisplay(
     zindex = limit
   }
 
-  function handleCLick(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {}
+  // function handleCLick(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {}
 
   return (
     <>

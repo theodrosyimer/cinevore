@@ -1,4 +1,5 @@
 import { FilmReview } from '@/components/film/film-review'
+import { toast } from '@/components/ui/use-toast'
 import { db } from '@/db'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
 
@@ -30,14 +31,19 @@ export async function FilmReviews({ movieId, children }: ReviewsProps) {
               id: review.movieId.toString(),
               category: 'movie',
             }).catch((error) => {
-              console.log(error.message)
+              if (error instanceof Error) {
+                toast({
+                  title: error.name,
+                  description: error.message,
+                })
+                return
+              }
             })
 
-            if (!film) return
+            if (!film) return null
 
             return (
               // TODO: fix this type error
-              // @ts-ignore
               <FilmReview key={review.id} review={review} film={film} />
             )
           })}

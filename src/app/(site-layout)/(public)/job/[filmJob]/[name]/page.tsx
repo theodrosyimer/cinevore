@@ -28,11 +28,13 @@ export default async function JobDetailsPage({
   const person = await getPersonByID({
     id: `${searchParams.id}`,
   }).catch((error) => {
-    toast({
-      title: error.name,
-      description: error.message,
-    })
-    return
+    if (error instanceof Error) {
+      toast({
+        title: error.name,
+        description: error.message,
+      })
+      return
+    }
   })
 
   if (!person) {
@@ -60,8 +62,8 @@ export default async function JobDetailsPage({
         <div className="sm:grid sm:grid-cols-[_0.33fr,_1fr] sm:gap-4 md:block">
           <div className="col-auto grid gap-2 xs:justify-items-center">
             <img
-              src={posterImageUrl!}
-              alt={person?.name!}
+              src={posterImageUrl}
+              alt={person?.name}
               width={300}
               // height="200"
               lang="en"

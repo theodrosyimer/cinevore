@@ -1,11 +1,11 @@
 'use client'
-import { MovieArtworkProps } from '@/components/film/film-card'
+import { type MovieArtworkProps } from '@/components/film/film-card'
 import { FilmCardDisplay } from '@/components/film/film-user-card'
 import { Icons } from '@/components/icon/icons'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
-import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
+import type { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'
-import {
+import type {
   SelectComment,
   SelectLike,
   SelectList,
@@ -112,7 +112,7 @@ export function MemberFilmListDisplay(
     zindex = limit
   }
 
-  function handleCLick(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {}
+  // function handleCLick(e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) {}
 
   return (
     <>
@@ -123,11 +123,11 @@ export function MemberFilmListDisplay(
         <div
           className={cn(
             `grid ${
-              gridColumnsConfig['default'][
+              gridColumnsConfig.default[
                 columnsCount as keyof (typeof gridColumnsConfig)['default']
               ]
             } xs:${
-              gridColumnsConfig['xs'][
+              gridColumnsConfig.xs[
                 columnsCount as keyof (typeof gridColumnsConfig)['xs']
               ]
             } grid-rows-[min-content] overflow-x-hidden overscroll-x-contain rounded-md transition-all hover:z-50 hover:scale-[1.01]  hover:brightness-75`,
@@ -146,11 +146,12 @@ export function MemberFilmListDisplay(
                 )}
                 aspectRatio={aspectRatio ?? 'portrait'}
                 // TODO: fix `width` type
-                // @ts-ignore
+                // @ts-expect-error - fix type error
                 width={width}
                 movieImageWidth={getImageFormatSize(
                   'poster_sizes',
-                  // @ts-ignore
+                  // TODO: fix `movieImageWidth` type
+                  // @ts-expect-error - fix type error
                   movieImageWidth,
                 )}
               />

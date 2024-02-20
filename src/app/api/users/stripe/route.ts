@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { proPlan } from '@/config/subscriptions'
 import { authOptions } from '@/lib/auth'
 import { stripe } from '@/lib/stripe'
-import { getUserSubscriptionPlan } from '@/lib/subscription'
+// import { getUserSubscriptionPlan } from '@/lib/subscription'
 import { absoluteUrl } from '@/lib/utils/utils'
 import { NextResponse } from 'next/server'
 
@@ -14,22 +14,22 @@ export async function GET(req: Request) {
   try {
     const session = await getServerSession(authOptions)
 
-    if (!session?.user || !session?.user.email) {
+    if (!session?.user?.email) {
       return new Response(null, { status: 403 })
     }
 
-    const subscriptionPlan = await getUserSubscriptionPlan(session.user.id)
+    // const subscriptionPlan = await getUserSubscriptionPlan(session.user.id)
 
-    // The user is on the pro plan.
-    // Create a portal session to manage subscription.
-    if (subscriptionPlan.isPro && subscriptionPlan.stripeCustomerId) {
-      const stripeSession = await stripe.billingPortal.sessions.create({
-        customer: subscriptionPlan.stripeCustomerId,
-        return_url: billingUrl,
-      })
+    // // The user is on the pro plan.
+    // // Create a portal session to manage subscription.
+    // if (subscriptionPlan.isPro && subscriptionPlan.stripeCustomerId) {
+    //   const stripeSession = await stripe.billingPortal.sessions.create({
+    //     customer: subscriptionPlan.stripeCustomerId,
+    //     return_url: billingUrl,
+    //   })
 
-      return NextResponse.json({ url: stripeSession.url })
-    }
+    //   return NextResponse.json({ url: stripeSession.url })
+    // }
 
     // The user is on the free plan.
     // Create a checkout session to upgrade.

@@ -5,14 +5,14 @@ import { cn } from '@/lib/utils/utils'
 import type { LucideProps } from 'lucide-react'
 import dynamicIconImports from 'lucide-react/dynamicIconImports'
 import dynamic from 'next/dynamic'
-import { MouseEvent, useEffect, useState } from 'react'
+import { type MouseEvent, useEffect, useState } from 'react'
 
-interface IconProps extends LucideProps {}
+interface IconProps extends LucideProps {
+  className?: string
+  size?: number
+}
 
-export default function LikeIcon({
-  className,
-  size,
-}: IconProps & { className?: string; size?: number }) {
+export default function LikeIcon({ className, size }: IconProps) {
   /* { name, ...props }: IconProps */
   const [liked, setLiked] = useState(false)
 

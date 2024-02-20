@@ -13,7 +13,7 @@ type TypeName<T> = T extends string
   ? 'symbol'
   : T extends bigint
   ? 'bigint'
-  : T extends (...args: any) => unknown
+  : T extends ((...args: unknown[]) => unknown) | (() => unknown)
   ? 'function'
   : T extends Array<unknown>
   ? 'array'
@@ -53,6 +53,7 @@ export const slugify = (text: string): { slug: string } | { error: Error } => {
 
   if (typeof _text !== 'string' || _text == null) {
     return {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       error: new Error(`Expected a 'string', received '${getTypeName(_text)}'`),
     }
   }

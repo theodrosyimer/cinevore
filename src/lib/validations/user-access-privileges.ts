@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as schema from '@/db/schema/planetscale'
 import { db } from '@/db'
 
 import { getCurrentUser } from '@/lib/session'
-import { TableName, TableColumns } from '@/types/db'
+import { type TableName, type TableColumns } from '@/types/db'
 import { eq } from 'drizzle-orm'
 
 export async function verifyUserAccessPrivileges<
@@ -20,11 +23,12 @@ export async function verifyUserAccessPrivileges<
   if (column in schema[tableName]) {
     // schema['user']['id']
     // TODO: fix this type
-    // @ts-ignore
+    // @ts-expect-error - fix type
     const key = schema[tableName][column]
-    // @ts-ignore
+
+    // TODO: fix this type
+    // @ts-expect-error - fix type
     result = await db.query[tableName].findFirst({
-      // @ts-ignore
       where: eq(key, user.id),
     })
   }

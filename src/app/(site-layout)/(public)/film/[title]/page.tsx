@@ -30,22 +30,26 @@ export default async function FilmPage({
     id: `${searchParams.id}`,
     category: 'movie',
   }).catch((error) => {
-    toast({
-      title: error.name,
-      description: error.message,
-    })
-    return
+    if (error instanceof Error) {
+      toast({
+        title: error.name,
+        description: error.message,
+      })
+      return
+    }
   })
 
   const similarFilms = await getSimilarByID({
     id: `${searchParams.id}`,
     category: 'movie',
   }).catch((error) => {
-    toast({
-      title: error.name,
-      description: error.message,
-    })
-    return
+    if (error instanceof Error) {
+      toast({
+        title: error.name,
+        description: error.message,
+      })
+      return
+    }
   })
 
   if (!film) {
@@ -108,9 +112,7 @@ export default async function FilmPage({
                 TMDB
               </Link>{' '}
               or{' '}
-              <Link
-                href={`https://imdb.com/title/${film.imdb_id}/maindetails`}
-              >
+              <Link href={`https://imdb.com/title/${film.imdb_id}/maindetails`}>
                 iMDB
               </Link>
             </span>

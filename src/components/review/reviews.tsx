@@ -1,4 +1,5 @@
 import { Review } from '@/components/review/review'
+import { toast } from '@/components/ui/use-toast'
 import { db } from '@/db'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
 
@@ -38,14 +39,20 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
               id: review.movieId.toString(),
               category: 'movie',
             }).catch((error) => {
-              console.log(error.message)
+              if (error instanceof Error) {
+                toast({
+                  title: error.name,
+                  description: error.message,
+                  variant: 'destructive',
+                })
+                return
+              }
             })
 
             if (!film) return
 
             return (
               // TODO: fix this type error
-              // @ts-ignore
               <Review key={review.id} review={review} film={film} />
             )
           })}

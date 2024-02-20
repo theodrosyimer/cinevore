@@ -20,7 +20,7 @@ import {
   Loader2,
   StarHalf,
   Star,
-  LucideProps,
+  type LucideProps,
   MessageCircle,
   Moon,
   Library,

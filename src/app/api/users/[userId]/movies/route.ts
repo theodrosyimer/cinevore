@@ -1,11 +1,11 @@
 import { routeContextSchema } from '@/app/api/users/[userId]/route-schema'
-import { isAdmin } from '@/lib/auth'
 import { db } from '@/db'
+import { isAdmin } from '@/lib/auth'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
-import { and, or, sql } from 'drizzle-orm'
+import { and, or } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'
-import { NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
+import { NextResponse, type NextRequest } from 'next/server'
+import { type z } from 'zod'
 
 export async function GET(
   req: NextRequest,
@@ -16,7 +16,7 @@ export async function GET(
 
     const token = await getToken({ req })
 
-    if ((token && params.userId === token.id) || isAdmin(token)) {
+    if ((token && params.userId === token.id) ?? isAdmin(token)) {
       const moviesInfos = await db.query.movieInfosToUser.findMany({
         where: (movieInfosToUser, { eq }) =>
           and(

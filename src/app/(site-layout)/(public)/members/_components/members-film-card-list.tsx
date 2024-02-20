@@ -1,10 +1,15 @@
 import { CardSkeleton } from '@/components/card-skeleton'
-import { FilmCard, MovieArtworkProps } from '@/components/film/film-card'
+import { FilmCard, type MovieArtworkProps } from '@/components/film/film-card'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
-import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
+import { type TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'
 import { getPopular } from '@/lib/tmdb/src/tmdb'
-import { SelectComment, SelectLike, SelectMovie, SelectUser } from '@/types/db'
+import {
+  type SelectComment,
+  type SelectLike,
+  type SelectMovie,
+  type SelectUser,
+} from '@/types/db'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
   columnsCount: keyof typeof gridColumnsConfig
@@ -101,11 +106,12 @@ export async function MemberFilmCardList(
               className={cn('', isSnapped ? 'snap-start' : '', className)}
               aspectRatio={aspectRatio ?? 'portrait'}
               // TODO: fix `width` type
-              // @ts-ignore
+              // @ts-expect-error - fix type
               width={width}
               movieImageWidth={getImageFormatSize(
                 'poster_sizes',
-                // @ts-ignore
+                // TODO: fix `movieImageWidth` type
+                // @ts-expect-error - fix type
                 movieImageWidth,
               )}
               hasMenu={hasMenu}

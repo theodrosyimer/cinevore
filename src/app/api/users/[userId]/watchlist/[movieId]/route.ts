@@ -27,7 +27,7 @@ export async function DELETE(
     // Ensure user is authentication and has access to this resource.
     const token = await getToken({ req })
 
-    // const json = await req.json()
+    // const json = (await req.json()) as unknown
     // const body = movieTowatchlistDELETESchema.parse(json)
 
     if (token && (userId === token.id || isAdmin(token))) {
@@ -42,12 +42,16 @@ export async function DELETE(
         },
       })
 
+      if (!userWatchlist) {
+        return new Response("User's watchlist not found", { status: 404 })
+      }
+
       // Delete the movie from the user watchlist.
       const resultHeader = await db
         .delete(watchlistToMovies)
         .where(
           and(
-            eq(watchlistToMovies.watchlistId, userWatchlist?.id!),
+            eq(watchlistToMovies.watchlistId, userWatchlist.id),
             eq(watchlistToMovies.movieId, movieId),
           ),
         )

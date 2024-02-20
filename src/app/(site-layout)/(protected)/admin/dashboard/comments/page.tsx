@@ -19,7 +19,7 @@ export default async function DashboardPage() {
   const { user: currentUser } = await getCurrentUser()
 
   if (!currentUser) {
-    redirect(authOptions?.pages?.signIn || '/login')
+    redirect(authOptions?.pages?.signIn ?? '/login')
   }
 
   const users = await db.query.user.findMany({
