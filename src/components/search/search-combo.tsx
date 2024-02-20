@@ -141,15 +141,11 @@ export function SearchCombo() {
                     setOpen(false)
                     result.media_type === 'movie'
                       ? router.push(
-                          `/film/${slugify(result.title).slug ?? ''}/?id=${
-                            result.id
-                          }`,
+                          `/film/${slugify(result?.title)}/?id=${result.id}`,
                         )
                       : result.media_type === 'person'
                       ? router.push(
-                          `/person/${slugify(result.name).slug ?? ''}/?id=${
-                            result.id
-                          }`,
+                          `/person/${slugify(result?.name)}/?id=${result.id}`,
                         )
                       : null
                   }}
