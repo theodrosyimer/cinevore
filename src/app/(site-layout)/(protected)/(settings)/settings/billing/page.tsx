@@ -13,7 +13,7 @@ export const metadata = {
 }
 
 export default async function BillingPage() {
-  const { user, isAdmin } = await getCurrentUser()
+  const { user } = await getCurrentUser()
 
   if (!user) {
     return null

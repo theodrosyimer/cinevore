@@ -40,7 +40,7 @@ export async function UserReviews({
 
             return (
               // TODO: fix this type error
-              // @ts-ignore
+              // @ts-expect-error - film is not defined
               <Review key={review.id} review={review} film={film} />
             )
           })}

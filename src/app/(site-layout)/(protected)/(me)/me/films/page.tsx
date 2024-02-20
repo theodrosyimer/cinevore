@@ -8,15 +8,15 @@ export const metadata = {
   description: 'All your films in one place.',
 }
 
-export default async function UserFilmsPage({
+export default async function UserFilmsPage(/* {
   params,
 }: {
   params: {
     username: string
     id: number
   }
-}) {
-  const { user: currentUser, isAdmin } = await getCurrentUser()
+} */) {
+  const { user: currentUser } = await getCurrentUser()
 
   if (!currentUser) {
     notFound()

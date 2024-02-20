@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react'
 import { redirect, usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { type z } from 'zod'
 
 import { Icons } from '@/components/icon/icons'
 import { buttonVariants } from '@/components/ui/button'
@@ -16,10 +16,10 @@ import { cn } from '@/lib/utils/utils'
 import { insertLoginUserSchema } from '@/lib/validations/auth'
 import { authOptions } from '@/lib/auth'
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+// interface UserAuthFormProps extends React.ComponentPropsWithoutRef<'div'> {}
 type FormData = z.infer<typeof insertLoginUserSchema>
 
-export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
+export function UserLoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   const {
     register,
     handleSubmit,
@@ -30,10 +30,9 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
   const searchParams = useSearchParams()
-  const router = useRouter()
   const pathname = usePathname()
 
-  const isRegisterPage = pathname === '/register'
+  // const isRegisterPage = pathname === '/register'
 
   async function onSubmit(data: FormData) {
     setIsLoading(true)
@@ -43,7 +42,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
       password: data.password,
       name: data.name,
       redirect: false,
-      callbackUrl: searchParams?.get('from') || '/me',
+      callbackUrl: searchParams?.get('from') ?? '/me',
     })
 
     // console.log('signInResult', signInResult)
@@ -57,7 +56,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
         variant: 'destructive',
       })
       // return router.push('/login')
-    redirect(authOptions?.pages?.signIn || '/login')
+    redirect(authOptions?.pages?.signIn ?? '/login')
     }
 
     toast({
@@ -65,7 +64,7 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
       // description: 'Your account has been created.',
     })
     // return router.push(/* signInResult?.url ??  */ '/me')
-    redirect(authOptions?.pages?.signIn || '/me')
+    redirect(authOptions?.pages?.signIn ?? '/me')
   }
 
   return (
@@ -191,10 +190,10 @@ export function UserLoginForm({ className, ...props }: UserAuthFormProps) {
       <button
         type="button"
         className={cn(buttonVariants({ variant: 'outline' }))}
-        onClick={() => {
+        onClick={async () => {
           setIsGitHubLoading(true)
-          signIn('github', {
-            callbackUrl: searchParams?.get('from') || '/me',
+          await signIn('github', {
+            callbackUrl: searchParams?.get('from') ?? '/me',
           })
         }}
         disabled={isLoading || isGitHubLoading}

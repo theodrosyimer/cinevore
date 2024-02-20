@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { UserSubscriptionPlan } from '@/types'
+import type { UserSubscriptionPlan } from '@/types'
 import { cn, formatDate } from '@/lib/utils/utils'
 import { buttonVariants } from '@/components/ui/button'
 import {

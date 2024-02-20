@@ -9,7 +9,7 @@ interface MeLayoutProps {
   children: React.ReactNode
 }
 export default async function MeLayout({ children }: MeLayoutProps) {
-  const { user, isAdmin } = await getCurrentUser()
+  const { user } = await getCurrentUser()
 
   return (
     <>

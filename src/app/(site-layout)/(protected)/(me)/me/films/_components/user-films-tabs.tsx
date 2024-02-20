@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { UserFilmCard } from '@/components/film/user-film-card'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
 import { cn } from '@/lib/utils/utils'
-import { SelectMovieInfosToUser, SelectUser } from '@/types/db'
+import type { SelectMovieInfosToUser, SelectUser } from '@/types/db'
 
 type MovieInfosTabsProps = {
   className?: string

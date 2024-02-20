@@ -1,5 +1,5 @@
-import { Icons } from '@/components/icon/icons'
-import { SelectUser } from '@/types/db'
+import { type Icons } from '@/components/icon/icons'
+import type { SelectUser } from '@/types/db'
 
 export interface NavItem {
   title: string
@@ -15,9 +15,9 @@ export interface NavItemWithChildren extends NavItem {
   items: NavItemWithChildren[]
 }
 
-export interface MainNavItem extends NavItem {}
+export type MainNavItem = NavItem
 
-export interface SidebarNavItem extends NavItemWithChildren {}
+export type SidebarNavItem = NavItemWithChildren
 
 // export type NavItem = {
 //   title: string

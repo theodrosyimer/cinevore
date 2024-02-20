@@ -21,17 +21,12 @@ import type {
 import { type ExtractTablesWithRelations } from 'drizzle-orm'
 import { type MySqlTransaction } from 'drizzle-orm/mysql-core'
 import type {
-  MySql2QueryResultHKT,
   MySql2PreparedQueryHKT,
-  MySql2Transaction,
+  MySql2QueryResultHKT
 } from 'drizzle-orm/mysql2'
 // import { makeColumnEmojiFriendly } from '@/db'
 import {
-  firstHalve,
-  firstHalveIndex,
-  randomFromArrayFirstHalve,
-  randomFromArraySecondHalve,
-  secondHalveIndex,
+  firstHalveIndex
 } from '@/lib/utils/utils'
 
 const adminPassword = (await hashPassword(
