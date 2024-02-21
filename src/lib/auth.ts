@@ -1,5 +1,5 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
-// import type { Adapter } from 'next-auth/adapters'
+import type { Adapter } from 'next-auth/adapters'
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
@@ -9,7 +9,7 @@ import UsersModel from '@/models/users'
 import { type DefaultUserAuth } from '@/types/next-auth'
 
 export const authOptions = {
-  adapter: DrizzleAdapter(db),
+  adapter: DrizzleAdapter(db) as Adapter,
   session: {
     strategy: 'jwt',
   },
