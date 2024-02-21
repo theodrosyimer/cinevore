@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
-import { redirect, useSearchParams } from 'next/navigation'
+import { redirect, useSearchParams, useRouter } from 'next/navigation'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { type z } from 'zod'
@@ -32,6 +32,7 @@ export function UserLoginForm({
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isGitHubLoading, setIsGitHubLoading] = React.useState<boolean>(false)
   const searchParams = useSearchParams()
+  const router = useRouter()
   // const pathname = usePathname()
 
   // const isRegisterPage = pathname === '/register'
@@ -57,16 +58,16 @@ export function UserLoginForm({
         description: 'Your sign in request failed. Please try again.',
         variant: 'destructive',
       })
-      // return router.push('/login')
-      redirect(/* authOptions?.pages?.signIn ??  */ '/login')
+      return router.push('/login')
+      // redirect(/* authOptions?.pages?.signIn ??  */ '/login')
     }
 
     toast({
       title: 'Logged in.',
       // description: 'Your account has been created.',
     })
-    // return router.push(/* signInResult?.url ??  */ '/me')
-    redirect(/* authOptions?.pages?.signIn ??  */ '/me')
+    return router.push(signInResult?.url ?? '/me')
+    // redirect(/* authOptions?.pages?.signIn ??  */ '/me')
   }
 
   return (
