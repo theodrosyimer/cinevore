@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
-import { redirect, usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { redirect, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { type z } from 'zod'
@@ -14,12 +14,14 @@ import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils/utils'
 import { insertLoginUserSchema } from '@/lib/validations/auth'
-import { authOptions } from '@/lib/auth'
 
 // interface UserAuthFormProps extends React.ComponentPropsWithoutRef<'div'> {}
 type FormData = z.infer<typeof insertLoginUserSchema>
 
-export function UserLoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
+export function UserLoginForm({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<'div'>) {
   const {
     register,
     handleSubmit,
@@ -56,7 +58,7 @@ export function UserLoginForm({ className, ...props }: React.ComponentPropsWitho
         variant: 'destructive',
       })
       // return router.push('/login')
-    redirect(/* authOptions?.pages?.signIn ??  */'/login')
+      redirect(/* authOptions?.pages?.signIn ??  */ '/login')
     }
 
     toast({
@@ -64,82 +66,83 @@ export function UserLoginForm({ className, ...props }: React.ComponentPropsWitho
       // description: 'Your account has been created.',
     })
     // return router.push(/* signInResult?.url ??  */ '/me')
-    redirect(/* authOptions?.pages?.signIn ??  */'/me')
+    redirect(/* authOptions?.pages?.signIn ??  */ '/me')
   }
 
   return (
-    <div className={cn('grid gap-6', className)} {...props}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid gap-2">
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
-              Email
-            </Label>
-            <Input
-              id="email"
-              placeholder="name@example.com"
-              type="email"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              autoFocus
-              disabled={isLoading || isGitHubLoading}
-              {...register('email')}
-            />
-            {errors?.email && (
-              <p className="px-1 text-xs text-red-600">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-          {
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <div className={cn('grid gap-6', className)} {...props}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid gap-2">
             <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="name">
-                Name
+              <Label className="sr-only" htmlFor="email">
+                Email
               </Label>
               <Input
-                id="name"
-                placeholder="Enter your username..."
-                type="text"
+                id="email"
+                placeholder="name@example.com"
+                type="email"
                 autoCapitalize="none"
-                autoComplete="text"
+                autoComplete="email"
                 autoCorrect="off"
+                autoFocus
                 disabled={isLoading || isGitHubLoading}
-                {...register('name')}
+                {...register('email')}
               />
-              {errors?.name && (
+              {errors?.email && (
                 <p className="px-1 text-xs text-red-600">
-                  {errors.name.message}
+                  {errors.email.message}
                 </p>
               )}
             </div>
-          }
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="password">
-              Password
-            </Label>
-            <Input
-              id="password"
-              placeholder="password"
-              type="password"
-              disabled={isLoading || isGitHubLoading}
-              {...register('password')}
-            />
-            {errors?.password && (
-              <p className="px-1 text-xs text-red-600">
-                {errors.password.message}
-              </p>
-            )}
+            {
+              <div className="grid gap-1">
+                <Label className="sr-only" htmlFor="name">
+                  Name
+                </Label>
+                <Input
+                  id="name"
+                  placeholder="Enter your username..."
+                  type="text"
+                  autoCapitalize="none"
+                  autoComplete="text"
+                  autoCorrect="off"
+                  disabled={isLoading || isGitHubLoading}
+                  {...register('name')}
+                />
+                {errors?.name && (
+                  <p className="px-1 text-xs text-red-600">
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
+            }
+            <div className="grid gap-1">
+              <Label className="sr-only" htmlFor="password">
+                Password
+              </Label>
+              <Input
+                id="password"
+                placeholder="password"
+                type="password"
+                disabled={isLoading || isGitHubLoading}
+                {...register('password')}
+              />
+              {errors?.password && (
+                <p className="px-1 text-xs text-red-600">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+            <button className={cn(buttonVariants())} disabled={isLoading}>
+              {isLoading && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Sign In
+            </button>
           </div>
-          <button className={cn(buttonVariants())} disabled={isLoading}>
-            {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            Sign In
-          </button>
-        </div>
-      </form>
-      {/* <div className="relative">
+        </form>
+        {/* <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
@@ -177,34 +180,35 @@ export function UserLoginForm({ className, ...props }: React.ComponentPropsWitho
           Sign In with Email
         </button>
       </div> */}
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">
+              Or {/*{continue with} */}
+            </span>
+          </div>
         </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or {/*{continue with} */}
-          </span>
-        </div>
+        <button
+          type="button"
+          className={cn(buttonVariants({ variant: 'outline' }))}
+          onClick={async () => {
+            setIsGitHubLoading(true)
+            await signIn('github', {
+              callbackUrl: searchParams?.get('from') ?? '/me',
+            })
+          }}
+          disabled={isLoading || isGitHubLoading}
+        >
+          {isGitHubLoading ? (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Icons.gitHub className="mr-2 h-4 w-4" />
+          )}{' '}
+          Github
+        </button>
       </div>
-      <button
-        type="button"
-        className={cn(buttonVariants({ variant: 'outline' }))}
-        onClick={async () => {
-          setIsGitHubLoading(true)
-          await signIn('github', {
-            callbackUrl: searchParams?.get('from') ?? '/me',
-          })
-        }}
-        disabled={isLoading || isGitHubLoading}
-      >
-        {isGitHubLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.gitHub className="mr-2 h-4 w-4" />
-        )}{' '}
-        Github
-      </button>
-    </div>
+    </React.Suspense >
   )
 }

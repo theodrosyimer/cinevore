@@ -60,8 +60,8 @@ const defaultValues: Partial<ProfileFormValues> = {
   email: 'theo@example.com',
   bio: 'I own a computer.',
   urls: [
-    { value: 'https://shadcn.com' },
-    { value: 'http://twitter.com/shadcn' },
+    { value: 'https://example.com' },
+    { value: 'https://twitter.com/username' },
   ],
 }
 
