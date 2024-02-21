@@ -4,10 +4,11 @@ import { cn } from '@/lib/utils/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Icons } from '@/components/icon/icons'
 import { UserRegisterForm } from '@/app/(auth)/register/register-form'
+import { Suspense } from 'react'
 
 export const metadata = {
   title: 'Create an account',
-  description: 'Create an account to get started.'
+  description: 'Create an account to get started.',
 }
 
 export default function RegisterPage() {
@@ -42,7 +43,9 @@ export default function RegisterPage() {
               Enter your credentials below to create your account
             </p>
           </div>
-          <UserRegisterForm />
+          <Suspense fallback={<p>Loading...</p>}>
+            <UserRegisterForm />
+          </Suspense>
           <p className="px-8 text-center text-sm text-muted-foreground">
             By clicking continue, you agree to our{' '}
             <Link
