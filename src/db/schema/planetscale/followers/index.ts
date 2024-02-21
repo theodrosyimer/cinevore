@@ -24,7 +24,7 @@ export const follower = mysqlTable(
     // unfollowedDate: timestamp('unfollowed_date'),
   },
   (table) => ({
-    compositeKey: primaryKey(table.followee, table.follower),
+    compositeKey: primaryKey({ columns: [table.followee, table.follower] }),
     compositeKeyIndex: uniqueIndex('composite_key').on(
       table.follower,
       table.followee,

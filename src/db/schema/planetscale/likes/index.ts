@@ -35,7 +35,7 @@ export const like = mysqlTable(
   },
   (table) => {
     return {
-      id: primaryKey(table.id, table.authorId, table.resourceId),
+      id: primaryKey({ columns: [table.id, table.authorId, table.resourceId] }),
       fkAuthorId: index('FK_author_id').on(table.authorId),
       fkResourceId: index('FK_resource_id').on(table.resourceId),
       fkResourceType: index('FK_resource_type').on(table.resourceType),

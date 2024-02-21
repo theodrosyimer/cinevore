@@ -29,7 +29,7 @@ export const movieList = mysqlTable(
       .notNull(),
   },
   (table) => ({
-    compositeKey: primaryKey(table.listId, table.movieId),
+    compositeKey: primaryKey({columns: [table.listId, table.movieId]}),
     compositeKeyIndex: uniqueIndex('composite_key').on(
       table.movieId,
       table.listId,

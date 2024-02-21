@@ -51,7 +51,7 @@ export const movieInfosToUser = mysqlTable(
   },
   (table) => {
     return {
-      compositeKey: primaryKey(table.userId, table.movieId),
+      compositeKey: primaryKey({ columns: [table.userId, table.movieId] }),
       compositeKeyIndex: uniqueIndex('composite_key').on(
         table.movieId,
         table.userId,
