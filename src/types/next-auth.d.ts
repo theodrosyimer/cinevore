@@ -27,7 +27,8 @@ declare module 'next-auth/jwt' {
 }
 
 declare module 'next-auth' {
-  type User = UserAuth
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface User extends UserAuth {}
   interface Session {
     user?: User
   }
