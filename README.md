@@ -1,9 +1,6 @@
 # Cinevore
 
-## Context
-
-Formation Assofac DWWM 2022-2023
-> Projet de réseau social autour du cinéma.
+> A social network for movie lovers
 
 ## Usage
 
