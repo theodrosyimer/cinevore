@@ -95,7 +95,7 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.9",
     "@tanstack/eslint-plugin-query": "^5.20.1",
-    "@tanstack/react-query-devtools": "^5.21.7",
+    "@tanstack/react-query-devtools": "^5.24.0",
     "@types/bcrypt": "^5.0.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/eslint": "^8.56.2",
