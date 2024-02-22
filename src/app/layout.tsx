@@ -89,7 +89,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
         className={cn(
           'grid min-h-svh w-screen grid-rows-layout font-sans antialiased',
@@ -99,16 +99,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         {/* <HydrationOverlay> */}
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <ReactQueryProvider>
-              <NextSSRPlugin
-                routerConfig={extractRouterConfig(ourFileRouter)}
-              />
-              {children}
-              <Toaster />
-              <TailwindIndicator />
-            </ReactQueryProvider>
-          </ThemeProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ReactQueryProvider>
+            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+            {children}
+            <Toaster />
+            <TailwindIndicator />
+          </ReactQueryProvider>
+        </ThemeProvider>
         {/* </HydrationOverlay> */}
       </body>
     </html>

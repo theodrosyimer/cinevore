@@ -15,55 +15,73 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
         comments: true,
         likes: true,
       },
+      limit: 10,
     })
-
-    // console.log('Reviews Page:', reviews)
-    // const films = reviews.map(async (review) => {
-    //   const film = await searchByID({
-    //     id: review.movieId.toString(),
-    //     category: 'movie',
-    //   }).catch((error) => {
-    //     console.log(error.message)
-    //   })
-
-    //   if (!film) return
-
-    //   return film
-    // })
-
-    return (
-      <>
-        <section className="grid gap-4">
-          {reviews.map(async (review) => {
-            const film = await searchByID({
-              id: review.movieId.toString(),
-              category: 'movie',
-            }).catch((error) => {
-              if (error instanceof Error) {
-                toast({
-                  title: error.name,
-                  description: error.message,
-                  variant: 'destructive',
-                })
-                return
-              }
-            })
-
-            if (!film) return
-
-            return (
-              // TODO: fix this type error
-              <Review key={review.id} review={review} film={film} />
-            )
-          })}
-        </section>
-      </>
-    )
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message)
+      toast({
+        title: error.name,
+        description: error.message,
+        variant: 'destructive',
+      })
       return
     }
     return /* notFound() */
   }
+
+  const filmsReviewed = await Promise.all(
+    reviews.map(async (review) => {
+      const film = await searchByID({
+        id: review.movieId.toString(),
+        category: 'movie',
+      }).catch((error) => {
+        if (error instanceof Error) {
+          toast({
+            title: error.name,
+            description: error.message,
+            variant: 'destructive',
+          })
+          return
+        }
+      })
+
+      if (!film) return
+
+      return { review, film }
+    }),
+  )
+  console.log('Reviews Page:', filmsReviewed)
+  // const filmsReviewed = reviews.map(async (review) => {
+  //   const film = await searchByID({
+  //     id: review.movieId.toString(),
+  //     category: 'movie',
+  //   }).catch((error) => {
+  //     if (error instanceof Error) {
+  //       toast({
+  //         title: error.name,
+  //         description: error.message,
+  //         variant: 'destructive',
+  //       })
+  //       return
+  //     }
+  //   })
+
+  //   if (!film) return
+
+  //   return { review, film }
+  // })
+
+  return (
+    <section className="grid gap-4">
+      {filmsReviewed.map((filmReviewed) =>
+        filmReviewed ? (
+          <Review
+            key={filmReviewed.review.id}
+            review={filmReviewed.review}
+            film={filmReviewed.film}
+          />
+        ) : null,
+      )}
+    </section>
+  )
 }
