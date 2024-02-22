@@ -3,10 +3,7 @@ import { toast } from '@/components/ui/use-toast'
 import { db } from '@/db'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
 
-export async function Reviews({ children }: { children?: React.ReactNode }) {
-  // const searchParams = useSearchParams()
-  // const sortBy = searchParams.get('sortBy') /* || 'popular' */
-
+export async function Reviews() {
   let reviews = []
   try {
     reviews = await db.query.movieReview.findMany({
@@ -36,6 +33,7 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
         category: 'movie',
       }).catch((error) => {
         if (error instanceof Error) {
+          // ? Should i use `toast` here?
           toast({
             title: error.name,
             description: error.message,
@@ -50,26 +48,6 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
       return { review, film }
     }),
   )
-  console.log('Reviews Page:', filmsReviewed)
-  // const filmsReviewed = reviews.map(async (review) => {
-  //   const film = await searchByID({
-  //     id: review.movieId.toString(),
-  //     category: 'movie',
-  //   }).catch((error) => {
-  //     if (error instanceof Error) {
-  //       toast({
-  //         title: error.name,
-  //         description: error.message,
-  //         variant: 'destructive',
-  //       })
-  //       return
-  //     }
-  //   })
-
-  //   if (!film) return
-
-  //   return { review, film }
-  // })
 
   return (
     <section className="grid gap-4">
