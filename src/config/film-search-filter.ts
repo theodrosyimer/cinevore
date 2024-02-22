@@ -1,7 +1,7 @@
 type FilmSearchFilter = { title: string; value: string }
 
 function createYearSearchFilter() {
-  let yearFilters: FilmSearchFilter[] = []
+  const yearFilters: FilmSearchFilter[] = []
   let decade: string
 
   for (let i = 20; i >= 18; i--) {

@@ -1,11 +1,9 @@
 import { eq } from 'drizzle-orm'
-import { db } from '@/lib/db'
-import { user } from '@/db/planetscale'
-import { NewUser, SelectUser } from '@/types/db'
+import { db } from '@/db'
+import { user } from '@/db/schema/planetscale'
+import type { NewUser, SelectUser } from '@/types/db'
 
 class UsersModel {
-  constructor() {}
-
   create = async (newUser: NewUser) => {
     return db.insert(user).values(newUser)
   }

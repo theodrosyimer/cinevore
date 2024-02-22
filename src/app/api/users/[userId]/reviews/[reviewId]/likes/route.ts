@@ -1,6 +1,6 @@
-import { like } from '@/db/planetscale'
+import { like } from '@/db/schema/planetscale'
 import { isAdmin } from '@/lib/auth'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { and, eq } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'

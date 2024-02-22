@@ -1,7 +1,7 @@
 import * as z from 'zod'
 
-import { list, movieList } from '@/db/planetscale'
-import { db } from '@/lib/db'
+import { list, movieList } from '@/db/schema/planetscale'
+import { db } from '@/db'
 import { RequiresProPlanError } from '@/lib/exceptions'
 import { getCurrentUser } from '@/lib/session'
 import { NextResponse } from 'next/server'
@@ -39,7 +39,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const { user, isAdmin } = await getCurrentUser()
+    const { user } = await getCurrentUser()
 
     if (!user || !(user?.role === 'admin' || user?.role === 'superadmin')) {
       return new Response('Unauthorized', { status: 403 })
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     //   }
     // }
 
-    // const json = await req.json()
+    // const json = (await req.json()) as unknown
     // const body = movieListPostSchema.parse(json)
 
     // const results = await db.insert(list).values({}).catch((error) => {

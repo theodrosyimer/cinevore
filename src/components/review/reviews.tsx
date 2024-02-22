@@ -1,11 +1,9 @@
 import { Review } from '@/components/review/review'
-import { db } from '@/lib/db'
+import { toast } from '@/components/ui/use-toast'
+import { db } from '@/db'
 import { searchByID } from '@/lib/tmdb/src/tmdb'
 
-export async function Reviews({ children }: { children?: React.ReactNode }) {
-  // const searchParams = useSearchParams()
-  // const sortBy = searchParams.get('sortBy') /* || 'popular' */
-
+export async function Reviews() {
   let reviews = []
   try {
     reviews = await db.query.movieReview.findMany({
@@ -14,49 +12,54 @@ export async function Reviews({ children }: { children?: React.ReactNode }) {
         comments: true,
         likes: true,
       },
+      limit: 10,
     })
-
-    // console.log('Reviews Page:', reviews)
-    // const films = reviews.map(async (review) => {
-    //   const film = await searchByID({
-    //     id: review.movieId.toString(),
-    //     category: 'movie',
-    //   }).catch((error) => {
-    //     console.log(error.message)
-    //   })
-
-    //   if (!film) return
-
-    //   return film
-    // })
-
-    return (
-      <>
-        <section className="grid gap-4">
-          {reviews.map(async (review) => {
-            const film = await searchByID({
-              id: review.movieId.toString(),
-              category: 'movie',
-            }).catch((error) => {
-              console.log(error.message)
-            })
-
-            if (!film) return
-
-            return (
-              // TODO: fix this type error
-              // @ts-ignore
-              <Review key={review.id} review={review} film={film} />
-            )
-          })}
-        </section>
-      </>
-    )
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message)
+      toast({
+        title: error.name,
+        description: error.message,
+        variant: 'destructive',
+      })
       return
     }
     return /* notFound() */
   }
+
+  const filmsReviewed = await Promise.all(
+    reviews.map(async (review) => {
+      const film = await searchByID({
+        id: review.movieId.toString(),
+        category: 'movie',
+      }).catch((error) => {
+        if (error instanceof Error) {
+          // ? Should i use `toast` here?
+          toast({
+            title: error.name,
+            description: error.message,
+            variant: 'destructive',
+          })
+          return
+        }
+      })
+
+      if (!film) return
+
+      return { review, film }
+    }),
+  )
+
+  return (
+    <section className="grid gap-4">
+      {filmsReviewed.map((filmReviewed) =>
+        filmReviewed ? (
+          <Review
+            key={filmReviewed.review.id}
+            review={filmReviewed.review}
+            film={filmReviewed.film}
+          />
+        ) : null,
+      )}
+    </section>
+  )
 }

@@ -1,4 +1,4 @@
-import { user } from '@/db/planetscale'
+import { user } from '@/db/schema/planetscale'
 import { createInsertSchema } from 'drizzle-zod'
 import { z } from 'zod'
 

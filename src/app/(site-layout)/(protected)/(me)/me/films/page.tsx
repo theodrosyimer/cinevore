@@ -1,5 +1,5 @@
-import { UserFilmsTabs } from '@/app/(site-layout)/(protected)/(me)/me/films/components/user-films-tabs'
-import { db } from '@/lib/db'
+import { UserFilmsTabs } from '@/app/(site-layout)/(protected)/(me)/me/films/_components/user-films-tabs'
+import { db } from '@/db'
 import { getCurrentUser } from '@/lib/session'
 import { notFound } from 'next/navigation'
 
@@ -8,15 +8,15 @@ export const metadata = {
   description: 'All your films in one place.',
 }
 
-export default async function UserFilmsPage({
+export default async function UserFilmsPage(/* {
   params,
 }: {
   params: {
     username: string
     id: number
   }
-}) {
-  const { user: currentUser, isAdmin } = await getCurrentUser()
+} */) {
+  const { user: currentUser } = await getCurrentUser()
 
   if (!currentUser) {
     notFound()

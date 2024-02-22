@@ -8,13 +8,13 @@ import { Button, ButtonProps, buttonVariants } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { Icons } from '@/components/icon/icons'
 
-interface UserCreateListButtonProps extends ButtonProps {}
+// interface UserCreateListButtonProps extends ButtonProps {}
 
 export function UserCreateListButton({
   className,
   variant,
   ...props
-}: UserCreateListButtonProps) {
+}: ButtonProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
@@ -49,7 +49,7 @@ export function UserCreateListButton({
       })
     }
 
-    const list = await response.json()
+    const list = (await response.json()) as unknown
 
     // This forces a cache invalidation.
     router.refresh()

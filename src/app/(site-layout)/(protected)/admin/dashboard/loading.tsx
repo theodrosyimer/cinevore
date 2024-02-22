@@ -1,7 +1,7 @@
-import { DashboardHeader } from '@/app/(site-layout)/(protected)/components/dashboard-header'
+import { DashboardHeader } from '@/app/(site-layout)/(protected)/_components/dashboard-header'
 import { ReviewCreateButton } from '@/components/review/review-create-button'
-import { DashboardShell } from '@/app/(site-layout)/(protected)/components/shell'
-import { UserItem } from '@/app/(site-layout)/(protected)/components/user-item'
+import { DashboardShell } from '@/app/(site-layout)/(protected)/_components/shell'
+import { UserItem } from '@/app/(site-layout)/(protected)/_components/user-item'
 
 export default function DashboardLoading() {
   return (

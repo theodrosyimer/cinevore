@@ -1,4 +1,4 @@
-import { list } from '@/db/planetscale'
+import { list } from '@/db/schema/planetscale'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import * as z from 'zod'
 

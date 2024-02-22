@@ -1,15 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import * as dotenv from 'dotenv'
-dotenv.config()
-
 import { cn } from '@/lib/utils/utils'
 
 import {
-  TMDBImageSizesCategory,
-  TMDBImageSizesCategoryKey,
+  type TMDBImageSizesCategory,
+  type TMDBImageSizesCategoryKey,
 } from '@/lib/tmdb/types/tmdb-api'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
-import { SelectMovie } from '@/types/db'
+import { type SelectMovie } from '@/types/db'
 
 export interface MovieArtworkProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -25,7 +22,7 @@ type T = TMDBImageSizesCategory[keyof TMDBImageSizesCategory]
 
 type LT<T extends string> = T extends `w${infer Width}` ? Width : never
 
-let a: LT<T> = '154'
+const a: LT<T> = '154'
 
 export function FilmCardDisplay({
   movie,
@@ -44,25 +41,25 @@ export function FilmCardDisplay({
   // console.log('WIDTH:', width)
   if (aspectRatio === 'portrait') {
     kind = 'poster_sizes'
-    // size = 'w154'
+    size = movieImageWidth // 'w154'
     imageUrl = generateTMDBImageUrl({
       format: kind,
       // TODO: fix this type
-      // @ts-ignore
+      // @ts-expect-error - fix type
       size: movieImageWidth,
-      defaultImage: movie.posterPath!,
+      defaultImage: movie.posterPath,
     })
   }
 
   if (aspectRatio === 'video') {
     kind = 'backdrop_sizes'
-    // size = 'w300'
+    size = movieImageWidth // 'w300'
     imageUrl = generateTMDBImageUrl({
       format: kind,
       // TODO: fix this type
-      // @ts-ignore
+      // @ts-expect-error - fix type
       size: movieImageWidth,
-      defaultImage: movie.backdropPath!,
+      defaultImage: movie.backdropPath,
     })
   }
 
@@ -75,9 +72,9 @@ export function FilmCardDisplay({
       {...props}
     >
       <img
-        src={imageUrl!}
+        src={imageUrl}
         // TODO: get the title instead of the tmdbId
-        alt={movie.tmdbId.toString()!}
+        alt={movie.tmdbId.toString()}
         width={width}
         lang="en"
         className={cn(

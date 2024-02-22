@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 import { Separator } from '@/components/ui/separator'
-import { SidebarNav } from '@/app/(site-layout)/(protected)/components/sidebar-nav'
+import { SidebarNav } from '@/app/(site-layout)/(protected)/_components/sidebar-nav'
 import { settingsConfig } from '@/config/settings'
 
 export const metadata: Metadata = {

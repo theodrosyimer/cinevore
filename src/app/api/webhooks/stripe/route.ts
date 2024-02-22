@@ -1,15 +1,13 @@
 import { headers } from 'next/headers'
-import Stripe from 'stripe'
+import type Stripe from 'stripe'
 
-// import { env } from "@env.mjs"
-import * as dotenv from 'dotenv'
-dotenv.config()
-import { db } from '@/lib/db'
+import { env } from '@/env.js'
+import { db } from '@/db'
 import { stripe } from '@/lib/stripe'
 
 export async function POST(req: Request) {
   const body = await req.text()
-  const signature = headers().get('Stripe-Signature') as string
+  const signature = headers().get('Stripe-Signature')!
 
   let event: Stripe.Event
 
@@ -17,7 +15,7 @@ export async function POST(req: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!,
+      env.STRIPE_WEBHOOK_SECRET,
     )
   } catch (error) {
     if (error instanceof Error) {
@@ -31,9 +29,9 @@ export async function POST(req: Request) {
 
   if (event.type === 'checkout.session.completed') {
     // Retrieve the subscription details from Stripe.
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription as string,
-    )
+    // const subscription = await stripe.subscriptions.retrieve(
+    //   session.subscription,
+    // )
 
     // Update the user stripe into in our database.
     // Since this is the initial subscription, we need to update
@@ -44,7 +42,7 @@ export async function POST(req: Request) {
     //   },
     //   data: {
     //     stripeSubscriptionId: subscription.id,
-    //     stripeCustomerId: subscription.customer as string,
+    //     stripeCustomerId: subscription.customer!,
     //     stripePriceId: subscription.items.data[0].price.id,
     //     stripeCurrentPeriodEnd: new Date(
     //       subscription.current_period_end * 1000
@@ -55,9 +53,9 @@ export async function POST(req: Request) {
 
   if (event.type === 'invoice.payment_succeeded') {
     // Retrieve the subscription details from Stripe.
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription as string,
-    )
+    // const subscription = await stripe.subscriptions.retrieve(
+    //   session.subscription,
+    // )
 
     // Update the price id and set the new period end.
     // await db.update({

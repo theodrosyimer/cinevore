@@ -1,5 +1,5 @@
-import { user } from '@/db/planetscale'
-import { db } from '@/lib/db'
+import { user } from '@/db/schema/planetscale'
+import { db } from '@/db'
 import { sql } from 'drizzle-orm'
 
 const preparedSearchByName = db

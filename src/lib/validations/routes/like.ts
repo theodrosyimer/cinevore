@@ -1,5 +1,5 @@
 import * as z from 'zod'
-import { like, list, movieReview } from '@/db/planetscale'
+import { like, list, movieReview } from '@/db/schema/planetscale'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { insertListSchema } from '@/lib/validations/routes/list'
 

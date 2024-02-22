@@ -1,10 +1,11 @@
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { cn } from '@/lib/utils/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Icons } from '@/components/icon/icons'
 import { UserLoginForm } from '@/app/(auth)/login/login-form'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -36,7 +37,9 @@ export default function LoginPage() {
             Enter your credentials to log in to your account
           </p>
         </div>
-        <UserLoginForm />
+        <Suspense fallback={<p>Loading...</p>}>
+          <UserLoginForm />
+        </Suspense>
         <p className="px-8 text-center text-sm text-muted-foreground">
           <Link
             href="/register"

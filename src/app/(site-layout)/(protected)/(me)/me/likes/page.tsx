@@ -5,14 +5,14 @@ export const metadata = {
   description: 'Your diary of films.',
 }
 
-export default async function DiaryPage({
+export default async function DiaryPage(/* {
   params,
 }: {
   params: {
     username: string
     id: number
   }
-}) {
+} */) {
   // const { user, isAdmin } = await getCurrentUser()
 
   return (

@@ -42,9 +42,7 @@ export default async function UserListPage({
       {userList ? (
         <div className="flex gap-4">
           <Link
-            href={`/me/list/${handleSlug(userList.title)?.slug}?id=${
-              userList.id
-            }`}
+            href={`/me/list/${handleSlug(userList.title)}?id=${userList.id}`}
           >
             <UserFilmListDisplay
               movieImageWidth="w92"
@@ -58,7 +56,7 @@ export default async function UserListPage({
             />
           </Link>
           <Link
-            href={`/me/list/${handleSlug(userList.title)?.slug}/edit/?id=${
+            href={`/me/list/${handleSlug(userList.title)}/edit/?id=${
               userList.id
             }`}
           >

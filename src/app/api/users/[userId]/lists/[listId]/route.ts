@@ -1,6 +1,6 @@
-import { list, movieReview } from '@/db/planetscale'
+import { list, movieReview } from '@/db/schema/planetscale'
 import { isAdmin } from '@/lib/auth'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { listPATCHSchema } from '@/lib/validations/routes/list'
 import { reviewPATCHSchema } from '@/lib/validations/routes/review'
@@ -66,7 +66,7 @@ export async function PATCH(
 
     if (token && (userId === token.id || isAdmin(token))) {
       // Get the request body and validate it.
-      const json = await req.json()
+      const json = (await req.json()) as unknown
       const body = listPATCHSchema.parse(json)
 
       // Update the list.

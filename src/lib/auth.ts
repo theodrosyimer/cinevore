@@ -1,13 +1,15 @@
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
-import { NextAuthOptions } from 'next-auth'
+import type { Adapter } from 'next-auth/adapters'
+import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
 import { hashPassword, validateUserPassword } from '@/lib/bcrypt'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import UsersModel from '@/models/users'
+import { type DefaultUserAuth } from '@/types/next-auth'
 
-export const authOptions: NextAuthOptions = {
-  adapter: DrizzleAdapter(db),
+export const authOptions = {
+  adapter: DrizzleAdapter(db) as Adapter,
   session: {
     strategy: 'jwt',
   },
@@ -93,7 +95,7 @@ export const authOptions: NextAuthOptions = {
       return session
     },
     async jwt({ token, user }) {
-      const [dbUser] = await UsersModel.getByEmail(token.email as string)
+      const [dbUser] = await UsersModel.getByEmail(token.email!)
 
       if (!dbUser) {
         if (user) {
@@ -114,12 +116,12 @@ export const authOptions: NextAuthOptions = {
       }
     },
   },
-}
+} satisfies NextAuthOptions
 
-export function isAdmin(token: any) {
+export function isAdmin(token: DefaultUserAuth | null) {
   return token?.role === 'admin' || token?.role === 'superadmin'
 }
 
-export function isSuperAdmin(token: any) {
+export function isSuperAdmin(token: DefaultUserAuth | null) {
   return token?.role === 'superadmin'
 }

@@ -1,23 +1,25 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
-const SALT_ROUNDS = 10
-
-export async function validateUserPassword(
-  password: string | Buffer,
-  hash: string,
-) {
+const DEFAULT_SALT = 10
+export async function validateUserPassword(password: string, hash: string) {
   return bcrypt
     .compare(password, hash)
     .then((isValidPassword) => isValidPassword)
-    .catch((err) => console.error(err.message))
+    .catch((err) => {
+      if (err instanceof Error) {
+        console.error(err.message)
+      }
+    })
 }
 
-export async function hashPassword(
-  password: string | Buffer,
-  saltRounds: string | number = SALT_ROUNDS,
+export async function hashPassword(password: string, saltRounds: string | number = DEFAULT_SALT,
 ) {
   return bcrypt
     .hash(password, saltRounds)
     .then((hash) => hash)
-    .catch((err) => console.error(err.message))
+    .catch((err) => {
+      if (err instanceof Error) {
+        console.error(err.message)
+      }
+    })
 }

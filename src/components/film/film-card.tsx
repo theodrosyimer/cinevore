@@ -1,10 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import * as dotenv from 'dotenv'
-dotenv.config()
-
 import { cn } from '@/lib/utils/utils'
 
-import {
+import type {
   SearchMovie,
   TMDBImageSizesCategory,
   TMDBImageSizesCategoryKey,
@@ -29,7 +26,7 @@ type T = TMDBImageSizesCategory[keyof TMDBImageSizesCategory]
 
 type LT<T extends string> = T extends `w${infer Width}` ? Width : never
 
-let a: LT<T> = '154'
+const a: LT<T> = '154'
 
 export function FilmCard({
   movie,
@@ -49,24 +46,24 @@ export function FilmCard({
   // console.log('WIDTH:', width)
   if (aspectRatio === 'portrait') {
     kind = 'poster_sizes'
-    // size = 'w154'
+    size = movieImageWidth // w154
     imageUrl = generateTMDBImageUrl({
       format: kind,
       // TODO: fix this type
-      // @ts-ignore
-      size: movieImageWidth,
+      // @ts-expect-error - fix type
+      size,
       defaultImage: movie.poster_path!,
     })
   }
 
   if (aspectRatio === 'video') {
     kind = 'backdrop_sizes'
-    // size = 'w300'
+    size = movieImageWidth // 'w300'
     imageUrl = generateTMDBImageUrl({
       format: kind,
       // TODO: fix this type
-      // @ts-ignore
-      size: movieImageWidth,
+      // @ts-expect-error - fix type
+      size,
       defaultImage: movie.backdrop_path!,
     })
   }
@@ -82,13 +79,13 @@ export function FilmCard({
       {...props}
     >
       <Link
-        href={`/film/${handleSlug(movie?.title ?? '')?.slug}/?id=${movie.id}`}
+        href={`/film/${handleSlug(movie?.title ?? '')}/?id=${movie.id}`}
         // tabindex="-1"
         className={cn(`w-[${movieImageWidth.slice(1)}px]`)}
       >
         <img
-          src={imageUrl!}
-          alt={movie.title!}
+          src={imageUrl}
+          alt={movie.title}
           width={width}
           lang="en"
           className={cn(

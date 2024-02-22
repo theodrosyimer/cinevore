@@ -3,11 +3,10 @@ import { FilmSearchFilter } from '@/components/search-filter/search-filter'
 import { FilmSearchFilterPopover } from '@/components/search-filter/search-filter-popover'
 import { Reviews } from '@/components/review/reviews'
 import { buttonVariants } from '@/components/ui/button'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { cn } from '@/lib/utils/utils'
-import * as dotenv from 'dotenv'
 import Link from 'next/link'
-dotenv.config()
+import { env } from "@/env.js"
 
 export const metadata = {
   title: 'Films Search Page',
@@ -59,7 +58,7 @@ async function FilmsPageDefaultContent() {
             Popular films this week
           </h2>
           <Link
-            href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
+            href={`${env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
             className={cn(
               'text-sm uppercase',
               buttonVariants({
@@ -88,7 +87,7 @@ async function FilmsPageDefaultContent() {
             Just reviewed...
           </h2>
           <Link
-            href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
+            href={`${env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
             className={cn(
               'text-sm uppercase',
               buttonVariants({
@@ -118,7 +117,7 @@ async function FilmsPageDefaultContent() {
               Popular reviews this week
             </h2>
             <Link
-              href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
+              href={`${env.NEXT_PUBLIC_APP_URL}/reviews?sortBy=popular`}
               className={cn(
                 'text-sm uppercase',
                 buttonVariants({
@@ -160,7 +159,7 @@ async function FilmsPageDefaultContent() {
               Crew Picks
             </h2>
             <Link
-              href={`${process.env.NEXT_PUBLIC_APP_URL}/lists?sortBy=popular`}
+              href={`${env.NEXT_PUBLIC_APP_URL}/lists?sortBy=popular`}
               className={cn(
                 'text-sm uppercase',
                 buttonVariants({
@@ -180,7 +179,7 @@ async function FilmsPageDefaultContent() {
               Popular reviewers
             </h2>
             <Link
-              href={`${process.env.NEXT_PUBLIC_APP_URL}/members?sortBy=popular`}
+              href={`${env.NEXT_PUBLIC_APP_URL}/members?sortBy=popular`}
               className={cn(
                 'text-sm uppercase',
                 buttonVariants({

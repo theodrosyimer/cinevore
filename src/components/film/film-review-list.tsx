@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { getCurrentUser } from '@/lib/session'
 
 export default async function MovieReviewList() {

@@ -1,6 +1,6 @@
-import { user } from '@/db/planetscale'
+import { user } from '@/db/schema/planetscale'
 import { isAdmin } from '@/lib/auth'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { userPatchSchema } from '@/lib/validations/routes/user'
 import UsersModel from '@/models/users'
@@ -8,12 +8,7 @@ import { eq } from 'drizzle-orm'
 import { getToken } from 'next-auth/jwt'
 import { NextResponse, type NextRequest } from 'next/server'
 import { z } from 'zod'
-
-export const routeContextSchema = z.object({
-  params: z.object({
-    userId: z.string(),
-  }),
-})
+import { routeContextSchema } from '@/app/api/users/[userId]/route-schema'
 
 export async function GET(
   req: NextRequest,
@@ -60,7 +55,7 @@ export async function PATCH(
 
     if (token && (params.userId === token.id || isAdmin(token))) {
       // Get the request body and validate it.
-      const json = await req.json()
+      const json = await req.json() as unknown
       const body = userPatchSchema.parse(json)
 
       // Update the user.

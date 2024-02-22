@@ -5,7 +5,7 @@ import { SignInResponse, signIn } from 'next-auth/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { type z } from 'zod'
 
 import { Icons } from '@/components/icon/icons'
 import { buttonVariants } from '@/components/ui/button'
@@ -14,15 +14,18 @@ import { Label } from '@/components/ui/label'
 import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils/utils'
 import {
-  userRegisterAuthSchema,
+  type userRegisterAuthSchema,
   userRegisterSchema,
 } from '@/lib/validations/auth'
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+// interface UserAuthFormProps extends React.ComponentPropsWithoutRef<'div'> {}
 
 type FormData = z.infer<typeof userRegisterAuthSchema>
 
-export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
+export function UserRegisterForm({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<'div'>) {
   const {
     register,
     handleSubmit,
@@ -44,7 +47,7 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
       confirmPassword: data.confirmPassword,
       name: data.name,
       redirect: false,
-      callbackUrl: searchParams?.get('from') || '/me',
+      callbackUrl: searchParams?.get('from') ?? '/me',
     })
 
     setIsLoading(false)
@@ -201,10 +204,10 @@ export function UserRegisterForm({ className, ...props }: UserAuthFormProps) {
       <button
         type="button"
         className={cn(buttonVariants({ variant: 'outline' }))}
-        onClick={() => {
+        onClick={async () => {
           setIsGitHubLoading(true)
-          signIn('github', {
-            callbackUrl: searchParams?.get('from') || '/me',
+          await signIn('github', {
+            callbackUrl: searchParams?.get('from') ?? '/me',
           })
         }}
         disabled={isLoading || isGitHubLoading}

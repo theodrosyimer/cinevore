@@ -1,6 +1,6 @@
 import { UserFilmListDisplay } from '@/components/film/film-user-card-list'
 import { buttonVariants } from '@/components/ui/button'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { handleSlug } from '@/lib/utils/slugify'
 import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'
@@ -57,8 +57,9 @@ export default async function ListsPage() {
           {userLists.map((list) => (
             <Link
               key={list.user.name}
-              href={`/members/${list.user.name}/list/${handleSlug(list.title)
-                ?.slug}?id=${list.id}`}
+              href={`/members/${list.user.name}/list/${handleSlug(
+                list.title,
+              )}?id=${list.id}`}
               className="justify-self-center"
             >
               {' '}

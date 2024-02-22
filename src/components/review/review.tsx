@@ -1,14 +1,12 @@
-'use client'
-
 import { FilmCard } from '@/components/film/film-card'
-import { MemberInfos } from '@/app/(site-layout)/(public)/members/components/member-infos'
+import { MemberInfos } from '@/app/(site-layout)/(public)/members/_components/member-infos'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
-import { MovieDetails } from '@/lib/tmdb/types/tmdb-api'
+import { type MovieDetails } from '@/lib/tmdb/types/tmdb-api'
 import {
-  SelectComment,
-  SelectLike,
-  SelectMovieReview,
-  SelectUser,
+  type SelectComment,
+  type SelectLike,
+  type SelectMovieReview,
+  type SelectUser,
 } from '@/types/db'
 import Link from 'next/link'
 
@@ -35,9 +33,7 @@ export function Review({
     <article className="flex gap-6">
       <FilmCard
         aspectRatio="portrait"
-        // @ts-ignore
         width={imageWidth}
-        // @ts-ignore
         movieImageWidth={getImageFormatSize('poster_sizes', 'w92')}
         movie={film}
         hasMenu={false}

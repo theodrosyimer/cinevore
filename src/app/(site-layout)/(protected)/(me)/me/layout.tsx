@@ -1,4 +1,4 @@
-import { SidebarNav } from '@/app/(site-layout)/(protected)/components/sidebar-nav'
+import { SidebarNav } from '@/app/(site-layout)/(protected)/_components/sidebar-nav'
 import { UserInfos } from '@/components/user-infos'
 import { userNavigationConfig } from '@/config/user-profile'
 import { getCurrentUser } from '@/lib/session'
@@ -9,7 +9,7 @@ interface MeLayoutProps {
   children: React.ReactNode
 }
 export default async function MeLayout({ children }: MeLayoutProps) {
-  const { user, isAdmin } = await getCurrentUser()
+  const { user } = await getCurrentUser()
 
   return (
     <>

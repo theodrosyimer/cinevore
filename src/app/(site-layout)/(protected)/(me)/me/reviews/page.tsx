@@ -1,4 +1,4 @@
-import { UserReviews } from '@/app/(site-layout)/(protected)/(me)/me/reviews/components/user-reviews'
+import { UserReviews } from '@/app/(site-layout)/(protected)/(me)/me/reviews/_components/user-reviews'
 import { getCurrentUser } from '@/lib/session'
 import { notFound } from 'next/navigation'
 

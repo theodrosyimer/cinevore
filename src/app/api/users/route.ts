@@ -1,7 +1,7 @@
-import { user } from '@/db/planetscale'
+import { user } from '@/db/schema/planetscale'
 import { isAdmin } from '@/lib/auth'
 import { hashPassword } from '@/lib/bcrypt'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { userPOSTSchema } from '@/lib/validations/routes/user'
 import usersModel from '@/models/users'
@@ -17,7 +17,7 @@ export async function GET() {
       },
     })
 
-    if (!users || !users[0]) {
+    if (!users?.[0]) {
       return new Response('Users  not found', { status: 404 })
     }
 
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
       return new Response('Unauthorized', { status: 403 })
     }
 
-    const json = await req.json()
+    const json = (await req.json()) as unknown
     const body = userPOSTSchema.parse(json)
     let hashedPassword = null
 

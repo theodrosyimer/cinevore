@@ -1,10 +1,10 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import * as React from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { type z } from 'zod'
 
 import { Icons } from '@/components/icon/icons'
 import { buttonVariants } from '@/components/ui/button'
@@ -24,10 +24,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { User } from 'next-auth'
-import { handleSlug } from '@/lib/utils/slugify'
+import { type User } from 'next-auth'
 import { useState } from 'react'
-import { SelectList, SelectMovie, SelectUser } from '@/types/db'
+import { type SelectList, type SelectMovie, type SelectUser } from '@/types/db'
 import {
   AlertDialogHeader,
   AlertDialogFooter,
@@ -41,7 +40,6 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '@radix-ui/react-alert-dialog'
-import { getCurrentUser } from '@/lib/session'
 
 interface NewListFormProps extends React.HTMLAttributes<HTMLDivElement> {
   user: User
@@ -97,9 +95,9 @@ export function ListForm({
   } = useForm<FormData>({
     resolver: zodResolver(insertListSchema),
     defaultValues: {
-      title: list?.title || '',
-      description: list?.description || '',
-      isPrivate: list?.isPrivate || false,
+      title: list?.title ?? '',
+      description: list?.description ?? '',
+      isPrivate: list?.isPrivate ?? false,
     },
   })
   const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
@@ -126,12 +124,14 @@ export function ListForm({
         }),
       },
     ).catch((error) => {
-      toast({
-        title: 'Server error. Please try later.',
-        description: `${error.message}`,
-        variant: 'destructive',
-      })
-      return
+      if (error instanceof Error) {
+        toast({
+          title: 'Server error. Please try later.',
+          description: `${error.message}`,
+          variant: 'destructive',
+        })
+        return
+      }
     })
     // console.log('response:', response)
 

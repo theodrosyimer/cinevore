@@ -1,6 +1,6 @@
-import { comment } from '@/db/planetscale'
+import { comment } from '@/db/schema/planetscale'
 import { isAdmin } from '@/lib/auth'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { userCommentSchema } from '@/lib/validations/routes/comment'
 import { getToken } from 'next-auth/jwt'
@@ -65,17 +65,15 @@ export async function POST(
       return new Response('Unauthorized', { status: 403 })
     }
 
-    const json = await req.json()
+    const json = (await req.json()) as unknown
     const body = userCommentSchema.parse(json)
 
-    await db
-      .insert(comment)
-      .values({
-        ...body,
-        authorId: userId,
-        resourceId: reviewId,
-        resourceType: 'movie_review',
-      })
+    await db.insert(comment).values({
+      ...body,
+      authorId: userId,
+      resourceId: reviewId,
+      resourceType: 'movie_review',
+    })
 
     return NextResponse.json(
       { message: 'Review comment created successfully' },

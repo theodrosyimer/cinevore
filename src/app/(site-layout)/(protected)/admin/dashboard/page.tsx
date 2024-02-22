@@ -1,10 +1,10 @@
-import { UserCreateButton } from './components/admin-create-user-button'
-import { DashboardHeader } from '@/app/(site-layout)/(protected)/components/dashboard-header'
-import { EmptyPlaceholder } from '@/app/(site-layout)/(protected)/admin/dashboard/components/empty-placeholder'
-import { DashboardShell } from '@/app/(site-layout)/(protected)/components/shell'
-import { UserItem } from '@/app/(site-layout)/(protected)/components/user-item'
-import { user } from '@/db/planetscale'
-import { db } from '@/lib/db'
+import { UserCreateButton } from './_components/admin-create-user-button'
+import { DashboardHeader } from '@/app/(site-layout)/(protected)/_components/dashboard-header'
+import { EmptyPlaceholder } from '@/app/(site-layout)/(protected)/admin/dashboard/_components/empty-placeholder'
+import { DashboardShell } from '@/app/(site-layout)/(protected)/_components/shell'
+import { UserItem } from '@/app/(site-layout)/(protected)/_components/user-item'
+import { user } from '@/db/schema/planetscale'
+import { db } from '@/db'
 import { desc } from 'drizzle-orm'
 
 export const metadata = {

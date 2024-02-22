@@ -1,5 +1,5 @@
 import * as z from 'zod'
-import { comment } from '@/db/planetscale'
+import { comment } from '@/db/schema/planetscale'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 const insertRefineOptions = {

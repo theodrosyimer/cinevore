@@ -4,17 +4,17 @@ import * as React from 'react'
 import { useRouter } from 'next/navigation'
 
 import { cn } from '@/lib/utils/utils'
-import { ButtonProps, buttonVariants } from '@/components/ui/button'
+import { type ButtonProps, buttonVariants } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { Icons } from '@/components/icon/icons'
 
-interface ReviewCreateButtonProps extends ButtonProps {}
+// interface ReviewCreateButtonProps extends ButtonProps {}
 
 export function ReviewCreateButton({
   className,
   variant,
   ...props
-}: ReviewCreateButtonProps) {
+}: ButtonProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
@@ -49,12 +49,13 @@ export function ReviewCreateButton({
       })
     }
 
-    const post = await response.json()
+    // const post = (await response.json()) as unknown
 
-    // This forces a cache invalidation.
-    router.refresh()
-
-    router.push(`/editor/${post.id}`)
+    return toast({
+      title: 'Review created.',
+      description: 'Your review was successfully created.',
+      variant: 'destructive',
+    })
   }
 
   return (

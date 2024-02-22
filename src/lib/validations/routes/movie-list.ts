@@ -1,4 +1,4 @@
-import { movieList } from '@/db/planetscale'
+import { movieList } from '@/db/schema/planetscale'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const insertMovieListSchema = createInsertSchema(movieList)

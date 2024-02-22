@@ -6,21 +6,21 @@ import { searchMulti } from '@/lib/tmdb/src/tmdb'
 import { cn } from '@/lib/utils/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
-  HTMLAttributes,
-  SyntheticEvent,
+  type HTMLAttributes,
+  type SyntheticEvent,
   useEffect,
   useRef,
   useState,
 } from 'react'
 import { useDebounce } from 'use-debounce'
-import { TMDBSearchMultiResult } from '@/lib/tmdb/types/tmdb-api'
+import { type TMDBSearchMultiResult } from '@/lib/tmdb/types/tmdb-api'
 
-interface SearchProps extends HTMLAttributes<HTMLFormElement> {}
+type SearchProps = HTMLAttributes<HTMLFormElement>
 
 export function Search({ className, ...props }: SearchProps) {
   const [results, setResults] = useState<TMDBSearchMultiResult | null>(null)
   const searchParams = useSearchParams()
-  const search = searchParams.get('search') || ''
+  const search = searchParams.get('search') ?? ''
   const router = useRouter()
 
   const initialRender = useRef(true)
@@ -38,7 +38,7 @@ export function Search({ className, ...props }: SearchProps) {
       router.push(`/search`)
     } else {
       router.push(`/search?search=${query}`)
-      searchMulti({ query }).then((res) => {
+      void searchMulti({ query }).then((res) => {
         // console.log('res', res)
         // TODO: do better handling of results
         if (!res?.results) return
@@ -63,7 +63,11 @@ export function Search({ className, ...props }: SearchProps) {
     }
   }, [query, router])
 
-  function onSubmit(event: SyntheticEvent) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setText(event.currentTarget.value)
+  }
+
+  function handleSubmit(event: SyntheticEvent) {
     event.preventDefault()
     // console.log('event target', text)
     return toast({
@@ -74,7 +78,7 @@ export function Search({ className, ...props }: SearchProps) {
 
   return (
     <form
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       className={cn('relative ml-4 w-full', className)}
       {...props}
     >
@@ -83,10 +87,7 @@ export function Search({ className, ...props }: SearchProps) {
         autoFocus
         placeholder="Search for Films, Actors..."
         className="h-8 w-auto "
-        onChange={(e) => {
-          const { value } = e.currentTarget
-          setText(value)
-        }}
+        onChange={handleChange}
       />
       {/* <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 sm:flex">
         <span className="text-xs">⌘</span>K

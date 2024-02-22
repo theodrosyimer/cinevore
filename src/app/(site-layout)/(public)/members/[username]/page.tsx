@@ -1,9 +1,9 @@
 import { Separator } from '@/components/ui/separator'
 import { membersNavConfig } from '@/config/members'
-import { db } from '@/lib/db'
-import { MembersSidebarNav } from '@/app/(site-layout)/(public)/members/components/members-sidebar-nav'
-import { MemberReviews } from '@/app/(site-layout)/(public)/members/components/member-reviews'
-import { MemberInfos } from '@/app/(site-layout)/(public)/members/components/member-infos'
+import { db } from '@/db'
+import { MembersSidebarNav } from '@/app/(site-layout)/(public)/members/_components/members-sidebar-nav'
+import { MemberReviews } from '@/app/(site-layout)/(public)/members/_components/member-reviews'
+import { MemberInfos } from '@/app/(site-layout)/(public)/members/_components/member-infos'
 
 export const metadata = {
   title: 'Member Films Reviews Page',

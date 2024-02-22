@@ -1,5 +1,5 @@
 import { Icons } from '@/components/icon/icons'
-import { MemberAvatar } from '@/app/(site-layout)/(public)/members/components/member-avatar'
+import { MemberAvatar } from '@/app/(site-layout)/(public)/members/_components/member-avatar'
 import { getAllUsersListsAndWatchedFilmsAndLikes } from '@/lib/actions/admin/getUserListsAndReviewsWithCommentsAndLikes'
 import { cn } from '@/lib/utils/utils'
 import Link from 'next/link'

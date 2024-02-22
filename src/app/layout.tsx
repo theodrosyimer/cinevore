@@ -1,15 +1,16 @@
+import { ourFileRouter } from '@/app/api/uploadthing/core'
+import { TailwindIndicator } from '@/app/_components/tailwind-indicator'
+import { ThemeProvider } from '@/app/_providers/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
+import { siteConfig } from '@/config/site'
+import { cn } from '@/lib/utils/utils'
+import { ReactQueryProvider } from '@/providers/react-query'
 import '@/styles/globals.css'
-import { Providers } from '@/providers/react-query'
+// import { HydrationOverlay } from '@builder.io/react-hydration-overlay'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { Inter as FontSans } from 'next/font/google'
 import localFont from 'next/font/local'
 import { extractRouterConfig } from 'uploadthing/server'
-import { TailwindIndicator } from '@/components/tailwind-indicator'
-import { ThemeProvider } from '@/components/theme-provider'
-import { Toaster } from '@/components/ui/toaster'
-import { siteConfig } from '@/config/site'
-import { cn } from '@/lib/utils/utils'
-import { ourFileRouter } from '@/app/api/uploadthing/core'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ interface RootLayoutProps {
 }
 
 export const metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
@@ -75,7 +77,7 @@ export const metadata = {
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png',
   },
-  // manifest: `${siteConfig.url}/site.webmanifest`,
+  manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
 export const viewport = {
@@ -87,23 +89,25 @@ export const viewport = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
         className={cn(
-          'grid min-h-screen w-screen grid-rows-layout font-sans antialiased',
+          'grid min-h-svh w-screen grid-rows-layout font-sans antialiased',
           // inter.className,
           fontSans.variable,
           fontHeading.variable,
         )}
       >
+        {/* <HydrationOverlay> */}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Providers>
+          <ReactQueryProvider>
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             {children}
             <Toaster />
             <TailwindIndicator />
-          </Providers>
+          </ReactQueryProvider>
         </ThemeProvider>
+        {/* </HydrationOverlay> */}
       </body>
     </html>
   )

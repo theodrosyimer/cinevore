@@ -1,12 +1,9 @@
-'use client'
-
 import { CardSkeleton } from '@/components/card-skeleton'
-import { FilmCard, MovieArtworkProps } from '@/components/film/film-card'
+import { FilmCard, type MovieArtworkProps } from '@/components/film/film-card'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
-import { TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
+import { type TMDBImageSizesCategory } from '@/lib/tmdb/types/tmdb-api'
 import { cn } from '@/lib/utils/utils'
 import { getPopular } from '@/lib/tmdb/src/tmdb'
-import { useQuery } from '@tanstack/react-query'
 
 export interface FilmCardProps extends Pick<MovieArtworkProps, 'aspectRatio'> {
   columnsCount: keyof typeof gridColumnsConfig
@@ -39,7 +36,7 @@ export const gridColumnsConfig = {
   14: 'grid-cols-[14]',
 } as const
 
-export function FilmCardList(
+export async function FilmCardList(
   {
     limit,
     className,
@@ -52,22 +49,19 @@ export function FilmCardList(
     columnsCount,
   }: FilmCardProps & FilmListOptions = {} as FilmCardProps & FilmListOptions,
 ) {
-  const { data: films, isLoading } = useQuery({
-    queryKey: ['popularMovies'],
-    queryFn: () => getPopular({ category: 'movie', page: '1' }),
-  })
+  // if (isLoading) {
+  //   return <CardSkeleton />
+  // }
 
-  if (isLoading) {
-    return <CardSkeleton />
-  }
+  const films = await getPopular({ category: 'movie', page: '1' })
 
   if (!films) {
     return <div>No films found</div>
   }
 
-  if (limit) {
-    films.results = films.results.slice(0, limit)
-  }
+  // if (limit) {
+  //   films.results = films.results.slice(0, limit)
+  // }
 
   return (
     <>
@@ -96,11 +90,12 @@ export function FilmCardList(
               className={cn('', isSnapped ? 'snap-start' : '', className)}
               aspectRatio={aspectRatio ?? 'portrait'}
               // TODO: fix `width` type
-              // @ts-ignore
+              // @ts-expect-error - fix type
               width={width}
               movieImageWidth={getImageFormatSize(
                 'poster_sizes',
-                // @ts-ignore
+                // TODO: fix `movieImageWidth` type
+                // @ts-expect-error - fix type
                 movieImageWidth,
               )}
               hasMenu={hasMenu}

@@ -1,7 +1,7 @@
 import * as z from 'zod'
 
-import * as schema from '@/db/planetscale'
-import { db } from '@/lib/db'
+import * as schema from '@/db/schema/planetscale'
+import { db } from '@/db'
 import { getCurrentUser } from '@/lib/session'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { insertListSchema } from '@/lib/validations/routes/list'
@@ -23,7 +23,7 @@ export async function GET(
   try {
     const { params } = routeContextSchema.parse(context)
 
-    const { user, isAdmin } = await getCurrentUser()
+    const { user } = await getCurrentUser()
 
     if (!user || !(await verifyUserAccessPrivileges('list', 'userId'))) {
       return new Response('Unauthorized', { status: 403 })
@@ -65,7 +65,7 @@ export async function PATCH(
     }
 
     // Get the request body and validate it.
-    const json = await req.json()
+    const json = (await req.json()) as unknown
     const body = insertListSchema.parse(json)
 
     // Update the list.

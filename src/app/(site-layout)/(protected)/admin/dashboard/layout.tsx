@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 
 import { adminDashboardConfig } from '@/config/admin-dashboard'
 import { getCurrentUser } from '@/lib/session'
-import { DashboardNav } from './components/nav'
+import { DashboardNav } from './_components/nav'
 
 interface AdminDashboardLayoutProps {
   children?: React.ReactNode

@@ -1,6 +1,6 @@
-import { comment } from '@/db/planetscale'
+import { comment } from '@/db/schema/planetscale'
 import { isAdmin } from '@/lib/auth'
-import { db } from '@/lib/db'
+import { db } from '@/db'
 import { formatSimpleErrorMessage } from '@/lib/utils/utils'
 import { userCommentPATCHSchema } from '@/lib/validations/routes/comment'
 import { and, eq } from 'drizzle-orm'
@@ -64,7 +64,7 @@ export async function PATCH(
 
     if (token && (userId === token.id || isAdmin(token))) {
       // Get the request body and validate it.
-      const json = await req.json()
+      const json = (await req.json()) as unknown
       const body = userCommentPATCHSchema.parse(json)
 
       // Update the comment review.

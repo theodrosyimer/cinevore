@@ -1,17 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
-import { UserMovieActions } from '@/app/(site-layout)/(public)/film/[title]/components/user-movie-infos'
+import { UserMovieActions } from '@/app/(site-layout)/(public)/film/[title]/_components/user-movie-infos'
 import { MovieBackdrop } from '@/components/film/film-backdrop'
 import { FilmReviews } from '@/components/film/film-reviews'
 import { SimilarFilmCardDisplay } from '@/components/film/similar-film-user-card'
 import { buttonVariants } from '@/components/ui/button'
 import { toast } from '@/components/ui/use-toast'
 import { getCurrentUser } from '@/lib/session'
-import { getSimilarByID, globalConfig, searchByID } from '@/lib/tmdb/src/tmdb'
+import { getSimilarByID, searchByID } from '@/lib/tmdb/src/tmdb'
 import { generateTMDBImageUrl } from '@/lib/tmdb/src/utils'
 import { cn, convertMinutesToHoursAndMinutes } from '@/lib/utils/utils'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { MovieInfosTabs } from './components/film-tabs'
+import { MovieInfosTabs } from './_components/film-tabs'
 
 export const metadata = {
   title: 'Film Details ',
@@ -30,22 +30,26 @@ export default async function FilmPage({
     id: `${searchParams.id}`,
     category: 'movie',
   }).catch((error) => {
-    toast({
-      title: error.name,
-      description: error.message,
-    })
-    return
+    if (error instanceof Error) {
+      toast({
+        title: error.name,
+        description: error.message,
+      })
+      return
+    }
   })
 
   const similarFilms = await getSimilarByID({
     id: `${searchParams.id}`,
     category: 'movie',
   }).catch((error) => {
-    toast({
-      title: error.name,
-      description: error.message,
-    })
-    return
+    if (error instanceof Error) {
+      toast({
+        title: error.name,
+        description: error.message,
+      })
+      return
+    }
   })
 
   if (!film) {
@@ -81,8 +85,8 @@ export default async function FilmPage({
         {/* <div className="relative grid grid-cols-[_minmax(_4rem,_6rem),_1fr,max-content] gap-4 sm:grid-cols-[_minmax(_5rem,_8rem),_1fr,max-content] md:grid-cols-[max-content,_1fr,max-content]"> */}
         <div className="relative grid grid-cols-[1] gap-4 sm:grid-cols-[_minmax(_5rem,_8rem),_1fr,max-content] md:grid-cols-[max-content,_1fr,max-content]">
           <img
-            src={posterImageUrl!}
-            alt={film?.title!}
+            src={posterImageUrl}
+            alt={film?.title}
             // width={width}
             // height="200"
             lang="en"
@@ -104,13 +108,11 @@ export default async function FilmPage({
             </section>
             <span className={cn('text-sm text-muted-foreground')}>
               {convertMinutesToHoursAndMinutes(film.runtime)}min. More at{' '}
-              <Link href={`${globalConfig.BASE_URI}/movie/${film.id}`}>
+              <Link href={`https://api.themoviedb.org/3/movie/${film.id}`}>
                 TMDB
               </Link>{' '}
               or{' '}
-              <Link
-                href={`${globalConfig.IMDB_BASE_URI}/${film.imdb_id}/maindetails`}
-              >
+              <Link href={`https://imdb.com/title/${film.imdb_id}/maindetails`}>
                 iMDB
               </Link>
             </span>
