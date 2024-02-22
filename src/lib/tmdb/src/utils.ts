@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { set } from 'zod'
 import { type LANGUAGE } from '../constants/languages'
 import type {
   CommonFilterCategory,
@@ -14,8 +13,8 @@ import type {
   TvShowCategory,
 } from '../types'
 import {
-  type TMDBImageSizesCategoryKey,
   type TMDBImageSizesCategory,
+  type TMDBImageSizesCategoryKey,
 } from '../types/tmdb-api'
 import { type MoviePoster } from '../types/tmdb-api-movie-details'
 import { globalConfig } from './tmdb'
