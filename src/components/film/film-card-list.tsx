@@ -49,7 +49,6 @@ export async function FilmCardList(
     columnsCount,
   }: FilmCardProps & FilmListOptions = {} as FilmCardProps & FilmListOptions,
 ) {
-
   // if (isLoading) {
   //   return <CardSkeleton />
   // }
