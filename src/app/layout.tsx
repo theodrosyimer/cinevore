@@ -11,9 +11,9 @@ import { Inter as FontSans } from 'next/font/google'
 import localFont from 'next/font/local'
 import { extractRouterConfig } from 'uploadthing/server'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { env } from '@/env'
 
 // const inter = Inter({ subsets: ['latin'] })
-
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',
@@ -73,7 +73,21 @@ export const metadata = {
     creator: '@thyi',
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      {
+        url:
+          env.NODE_ENV === 'production' ? '/favicon.ico' : '/favicon-dev.ico',
+      },
+      // { url: '/icon-dark.png', media: '(prefers-color-scheme: dark)' },
+      {
+        url: '/favicon-16x16.png',
+        sizes: '16x16',
+      },
+      {
+        url: '/favicon-32x32.png',
+        sizes: '32x32',
+      },
+    ],
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png',
   },
