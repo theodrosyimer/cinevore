@@ -56,7 +56,7 @@ export const metadata = {
       url: 'https://github.com/theodrosyimer',
     },
   ],
-  creator: 'theodros yimer',
+  creator: 'Theodros Yimer',
   openGraph: {
     type: 'website',
     locale: 'en_US',
