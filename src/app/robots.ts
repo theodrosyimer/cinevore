@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: [
         '/',
-        /*  '/about', '/members', '/films', '/reviews',  */ '/api/og/*',
+        // /*  '/about', '/members', '/films', '/reviews',  */ '/api/og/*',
       ],
     },
   }
