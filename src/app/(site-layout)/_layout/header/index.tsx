@@ -1,17 +1,14 @@
 import Link from 'next/link'
-
 import { siteLayoutConfig } from '@/config/nav'
-
-import { cn } from '@/lib/utils/utils'
-import { CommandMenu } from '@/app/(site-layout)/_layout/header/command-menu'
-import { MainNav } from '@/app/(site-layout)/_layout/header/main-nav'
-import { MobileNav } from '@/app/(site-layout)/_layout/header/mobile-nav'
-import { buttonVariants } from '@/components/ui/button'
 import { getCurrentUser } from '@/lib/session'
-import { UserAccountNav } from '@/app/(site-layout)/_layout/header/user-account-nav'
+import { cn } from '@/lib/utils/utils'
+import { buttonVariants } from '@/components/ui/button'
 import { UserAvatar } from '@/components/user-avatar'
-
 import { SearchCombo } from '@/components/search/search-combo'
+import { CommandMenu } from './command-menu'
+import { MainNav } from './main-nav'
+import { MobileNav } from './mobile-nav'
+import { UserAccountNav } from './user-account-nav'
 // import dynamic from 'next/dynamic'
 // const { UserAccountNav } = dynamic(
 //   () => import('@/components/user-account-nav'),
