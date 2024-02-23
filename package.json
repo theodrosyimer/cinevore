@@ -55,7 +55,7 @@
     "@t3-oss/env-nextjs": "0.7.1",
     "@tanstack/react-query": "^5.21.7",
     "@uploadthing/react": "^5.7.0",
-    "@vercel/og": "^0.5.17",
+    "@vercel/og": "^0.6.2",
     "autoprefixer": "10.4.15",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
