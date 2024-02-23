@@ -11,6 +11,7 @@ import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { Inter as FontSans } from 'next/font/google'
 import localFont from 'next/font/local'
 import { extractRouterConfig } from 'uploadthing/server'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -108,6 +109,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           </ReactQueryProvider>
         </ThemeProvider>
         {/* </HydrationOverlay> */}
+        <SpeedInsights />
       </body>
     </html>
   )
