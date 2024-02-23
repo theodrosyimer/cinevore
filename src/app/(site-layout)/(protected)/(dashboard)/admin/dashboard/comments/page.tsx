@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 
 import { DashboardHeader } from '@/app/(site-layout)/(protected)/_components/dashboard-header'
-import { EmptyPlaceholder } from '@/app/(site-layout)/(protected)/admin/dashboard/_components/empty-placeholder'
+import { EmptyPlaceholder } from '@/app/(site-layout)/(protected)/(dashboard)/admin/dashboard/_components/empty-placeholder'
 import { DashboardShell } from '@/app/(site-layout)/(protected)/_components/shell'
 import { UserItem } from '@/app/(site-layout)/(protected)/_components/user-item'
 import { user } from '@/db/schema/planetscale'
@@ -12,7 +12,7 @@ import { desc } from 'drizzle-orm'
 import { UserCreateButton } from '../_components/admin-create-user-button'
 
 export const metadata = {
-  title: 'Dashboard'
+  title: 'Dashboard',
 }
 
 export default async function DashboardPage() {

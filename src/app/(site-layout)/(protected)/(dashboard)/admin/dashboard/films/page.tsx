@@ -1,5 +1,5 @@
 import { DashboardHeader } from '@/app/(site-layout)/(protected)/_components/dashboard-header'
-import { EmptyPlaceholder } from '@/app/(site-layout)/(protected)/admin/dashboard/_components/empty-placeholder'
+import { EmptyPlaceholder } from '@/app/(site-layout)/(protected)/(dashboard)/admin/dashboard/_components/empty-placeholder'
 import { FilmCardDisplay } from '@/components/film/film-user-card'
 import { DashboardShell } from '@/app/(site-layout)/(protected)/_components/shell'
 import { user } from '@/db/schema/planetscale'
