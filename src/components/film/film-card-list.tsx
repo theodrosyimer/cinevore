@@ -64,45 +64,43 @@ export async function FilmCardList(
   // }
 
   return (
-    <>
-      <div className="relative grid grid-flow-col grid-cols-[12] gap-2 overflow-x-auto overscroll-x-contain hover:rounded-md">
-        <article
-          className={cn(
-            'grid',
-            isSlider
-              ? `${
-                  gridColumnsConfig[
-                    columnsCount as keyof typeof gridColumnsConfig
-                  ]
-                } gap-4 overflow-x-auto overscroll-x-contain`
-              : `${
-                  gridColumnsConfig[
-                    columnsCount as keyof typeof gridColumnsConfig
-                  ]
-                } gap-4`,
-            isSnapped ? 'snap-x snap-mandatory' : '',
-          )}
-        >
-          {films.results.map((film) => (
-            <FilmCard
-              key={film.id}
-              movie={film}
-              className={cn('', isSnapped ? 'snap-start' : '', className)}
-              aspectRatio={aspectRatio ?? 'portrait'}
-              // TODO: fix `width` type
+    <div className="relative grid grid-flow-col grid-cols-[12] gap-2 overflow-x-auto overscroll-x-contain hover:rounded-md">
+      <article
+        className={cn(
+          'grid',
+          isSlider
+            ? `${
+                gridColumnsConfig[
+                  columnsCount as keyof typeof gridColumnsConfig
+                ]
+              } gap-4 overflow-x-auto overscroll-x-contain`
+            : `${
+                gridColumnsConfig[
+                  columnsCount as keyof typeof gridColumnsConfig
+                ]
+              } gap-4`,
+          isSnapped ? 'snap-x snap-mandatory' : '',
+        )}
+      >
+        {films.results.map((film) => (
+          <FilmCard
+            key={film.id}
+            movie={film}
+            className={cn('', isSnapped ? 'snap-start' : '', className)}
+            aspectRatio={aspectRatio ?? 'portrait'}
+            // TODO: fix `width` type
+            // @ts-expect-error - fix type
+            width={width}
+            movieImageWidth={getImageFormatSize(
+              'poster_sizes',
+              // TODO: fix `movieImageWidth` type
               // @ts-expect-error - fix type
-              width={width}
-              movieImageWidth={getImageFormatSize(
-                'poster_sizes',
-                // TODO: fix `movieImageWidth` type
-                // @ts-expect-error - fix type
-                movieImageWidth,
-              )}
-              hasMenu={hasMenu}
-            />
-          ))}
-        </article>
-      </div>
-    </>
+              movieImageWidth,
+            )}
+            hasMenu={hasMenu}
+          />
+        ))}
+      </article>
+    </div>
   )
 }
