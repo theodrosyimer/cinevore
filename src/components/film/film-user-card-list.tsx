@@ -1,4 +1,3 @@
-'use client'
 import { type MovieArtworkProps } from '@/components/film/film-card'
 import { FilmCardDisplay } from '@/components/film/film-user-card'
 import { Icons } from '@/components/icon/icons'
