@@ -1,38 +1,5 @@
 type FilmSearchFilter = { title: string; value: string }
 
-function createYearSearchFilter() {
-  const yearFilters: FilmSearchFilter[] = []
-  let decade: string
-
-  for (let i = 20; i >= 18; i--) {
-    let j = 0
-
-    if (i === 20) {
-      j = 2
-    }
-
-    if (i === 19) {
-      j = 9
-    }
-
-    if (i === 18) {
-      j = 9
-      for (j; j >= 6; j--) {
-        decade = `${i}${j}0s`
-        // console.log(decade)
-        yearFilters.push({ title: decade, value: decade })
-      }
-    } else {
-      for (j; j >= 0; j--) {
-        decade = `${i}${j}0s`
-        // console.log(decade)
-        yearFilters.push({ title: decade, value: decade })
-      }
-    }
-  }
-  return yearFilters
-}
-
 const decadeFilters = createYearSearchFilter()
 
 export const yearFilters: FilmSearchFilter[] = [
@@ -178,3 +145,36 @@ export const serviceFilters: FilmSearchFilter[] = [
     value: '/docs/primitives/tooltip',
   },
 ]
+
+function createYearSearchFilter() {
+  const yearFilters: FilmSearchFilter[] = []
+  let decade: string
+
+  for (let i = 20; i >= 18; i--) {
+    let j = 0
+
+    if (i === 20) {
+      j = 2
+    }
+
+    if (i === 19) {
+      j = 9
+    }
+
+    if (i === 18) {
+      j = 9
+      for (j; j >= 6; j--) {
+        decade = `${i}${j}0s`
+        // console.log(decade)
+        yearFilters.push({ title: decade, value: decade })
+      }
+    } else {
+      for (j; j >= 0; j--) {
+        decade = `${i}${j}0s`
+        // console.log(decade)
+        yearFilters.push({ title: decade, value: decade })
+      }
+    }
+  }
+  return yearFilters
+}
