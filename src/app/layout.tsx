@@ -6,7 +6,6 @@ import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils/utils'
 import { ReactQueryProvider } from '@/providers/react-query'
 import '@/styles/globals.css'
-// import { HydrationOverlay } from '@builder.io/react-hydration-overlay'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
 import { Inter as FontSans } from 'next/font/google'
 import localFont from 'next/font/local'
@@ -99,7 +98,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontHeading.variable,
         )}
       >
-        {/* <HydrationOverlay> */}
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ReactQueryProvider>
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
@@ -108,7 +106,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <TailwindIndicator />
           </ReactQueryProvider>
         </ThemeProvider>
-        {/* </HydrationOverlay> */}
         <SpeedInsights />
       </body>
     </html>
