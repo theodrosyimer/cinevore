@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import { type Metadata } from 'next'
 
 import { Separator } from '@/components/ui/separator'
 import { SidebarNav } from '@/app/(site-layout)/(protected)/_components/sidebar-nav'

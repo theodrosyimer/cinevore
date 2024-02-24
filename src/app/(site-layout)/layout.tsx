@@ -1,6 +1,6 @@
-import Loading from '@/app/(site-layout)/loading'
-import { SiteFooter } from '@/app/(site-layout)/_layout/footer'
-import { SiteHeader } from '@/app/(site-layout)/_layout/header'
+import Loading from './loading'
+import { SiteFooter } from './_layout/footer'
+import { SiteHeader } from './_layout/header'
 import { Suspense } from 'react'
 
 interface SiteLayoutProps {
@@ -11,9 +11,9 @@ export default async function SiteLayout({ children }: SiteLayoutProps) {
   return (
     <>
       <SiteHeader />
-      <Suspense fallback={<Loading />}>
-        <main className="container relative mt-14">{children}</main>
-      </Suspense>
+      {/* <Suspense fallback={<Loading />}> */}
+      <main className="container relative mt-14">{children}</main>
+      {/* </Suspense> */}
       <SiteFooter className="mt-8" />
     </>
   )

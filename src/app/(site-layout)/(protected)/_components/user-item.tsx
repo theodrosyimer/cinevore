@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { formatDate } from '@/lib/utils/utils'
 import { Skeleton } from '@/components/ui/skeleton'
-import { SelectUser } from '@/types/db'
+import { type SelectUser } from '@/types/db'
 import { EditDialog } from '@/app/(site-layout)/(protected)/_components/settings-dialog-form'
 
 interface UserItemProps {
