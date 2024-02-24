@@ -30,10 +30,6 @@ export default withAuth(
     }
 
     if (hasNoAccessToAdminProtectedRoutes || hasNoAccessToUserProtectedRoutes) {
-      return NextResponse.redirect(new URL('/', req.url))
-    }
-
-    if (!isAuthorized) {
       let from = req.nextUrl.pathname
 
       if (req.nextUrl.search) {
