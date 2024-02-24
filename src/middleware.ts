@@ -7,11 +7,12 @@ export default withAuth(
     const token = await getToken({ req })
     const isAuthorized = !!token
 
+    // under the (protected) route group
     const isAdminSegment = req.nextUrl.pathname.startsWith('/admin')
     const isMeSegment = req.nextUrl.pathname.startsWith('/me')
     const isSettingsSegment = req.nextUrl.pathname.startsWith('/settings')
 
-    const isAuthPage =
+    const isAuthSegment =
       req.nextUrl.pathname.startsWith('/login') ||
       req.nextUrl.pathname.startsWith('/register')
 
@@ -22,7 +23,7 @@ export default withAuth(
       isAdminSegment &&
       !(token?.role === 'admin' || token?.role === 'superadmin')
 
-    if (isAuthPage) {
+    if (isAuthSegment) {
       if (isAuthorized) {
         return NextResponse.redirect(new URL('/me', req.url))
       }
