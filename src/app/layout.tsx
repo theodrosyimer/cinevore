@@ -75,18 +75,11 @@ export const metadata = {
   icons: {
     icon: [
       {
+        rel: 'icon',
         url:
           env.NODE_ENV === 'production' ? '/favicon.ico' : '/favicon-dev.ico',
       },
       // { url: '/icon-dark.png', media: '(prefers-color-scheme: dark)' },
-      {
-        url: '/favicon-16x16.png',
-        sizes: '16x16',
-      },
-      {
-        url: '/favicon-32x32.png',
-        sizes: '32x32',
-      },
     ],
     shortcut: '/favicon-16x16.png',
     apple: '/apple-touch-icon.png',
