@@ -1,5 +1,5 @@
 import { type Config } from 'tailwindcss'
-import { fontFamily } from 'tailwindcss/defaultTheme'
+
 export default {
   darkMode: ['class'],
   content: ['./src/**/*.{ts,tsx}'],
@@ -94,8 +94,6 @@ export default {
         layout: 'auto 1fr auto',
       },
       minHeight: {
-        // svh: ['100vh', '100svh'],
-        // dynamic: ['100vh', '100dvh'],
         svh: '100svh',
         dynamic: '100dvh',
       },
