@@ -1,6 +1,6 @@
-import { AdminDashboardConfig } from '@/types'
+import { type AdminDashboardConfig } from '@/types'
 
-export const adminDashboardConfig: AdminDashboardConfig = {
+export const adminDashboardConfig = {
   mainNav: [],
   sidebarNav: [
     {
@@ -50,4 +50,4 @@ export const adminDashboardConfig: AdminDashboardConfig = {
       items: [],
     },
   ],
-}
+} satisfies AdminDashboardConfig

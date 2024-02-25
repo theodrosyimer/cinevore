@@ -1,6 +1,6 @@
-import { SettingsConfig } from '@/types'
+import type { SettingsConfig } from '@/types'
 
-export const settingsConfig: SettingsConfig = {
+export const settingsConfig = {
   sidebarNav: [
     {
       title: 'Account',
@@ -36,4 +36,4 @@ export const settingsConfig: SettingsConfig = {
       disabled: true,
     },
   ],
-}
+} satisfies SettingsConfig

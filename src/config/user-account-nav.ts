@@ -1,6 +1,6 @@
-import { MainNavItem } from '@/types'
+import { type MainNavItem } from '@/types'
 
-export const userAccountNavConfig: MainNavItem[] = [
+export const userAccountNavConfig = [
   {
     title: 'Profile',
     href: '/me',
@@ -14,4 +14,4 @@ export const userAccountNavConfig: MainNavItem[] = [
     href: '/settings',
     disabled: true,
   },
-]
+] satisfies MainNavItem[]

@@ -1,8 +1,8 @@
 type FilmSearchFilter = { title: string; value: string }
 
-const decadeFilters = createYearSearchFilter()
+const decadeFilters = generateYearsSearchFilter()
 
-export const yearFilters: FilmSearchFilter[] = [
+export const yearFilters = [
   {
     title: 'All',
     value: '/docs/primitives/alert-dialog',
@@ -12,9 +12,9 @@ export const yearFilters: FilmSearchFilter[] = [
     value: '/docs/primitives/hover-card',
   },
   ...decadeFilters,
-]
+] satisfies FilmSearchFilter[]
 
-export const ratingFilters: FilmSearchFilter[] = [
+export const ratingFilters = [
   {
     title: 'Highest First',
     value: '/docs/primitives/alert-dialog',
@@ -23,9 +23,9 @@ export const ratingFilters: FilmSearchFilter[] = [
     title: 'Lowest First',
     value: '/docs/primitives/hover-card',
   },
-]
+] satisfies FilmSearchFilter[]
 
-export const popularFilters: FilmSearchFilter[] = [
+export const popularFilters = [
   {
     title: 'All Time',
     value: '/docs/primitives/alert-dialog',
@@ -42,9 +42,9 @@ export const popularFilters: FilmSearchFilter[] = [
     title: 'This Week',
     value: '/docs/primitives/scroll-area',
   },
-]
+] satisfies FilmSearchFilter[]
 
-export const genreFilters: FilmSearchFilter[] = [
+export const genreFilters = [
   {
     title: 'Action',
     value: '/docs/primitives/alert-dialog',
@@ -121,9 +121,9 @@ export const genreFilters: FilmSearchFilter[] = [
     title: 'Western',
     value: '/docs/primitives/tooltip',
   },
-]
+] satisfies FilmSearchFilter[]
 
-export const serviceFilters: FilmSearchFilter[] = [
+export const serviceFilters = [
   {
     title: 'Amazon US',
     value: '/docs/primitives/alert-dialog',
@@ -144,9 +144,9 @@ export const serviceFilters: FilmSearchFilter[] = [
     title: 'FRA fr',
     value: '/docs/primitives/tooltip',
   },
-]
+] satisfies FilmSearchFilter[]
 
-function createYearSearchFilter() {
+function generateYearsSearchFilter() {
   const yearFilters: FilmSearchFilter[] = []
   let decade: string
 

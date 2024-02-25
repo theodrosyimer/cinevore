@@ -1,6 +1,6 @@
 import { type SiteConfig } from '@/types'
 
-export const siteConfig: SiteConfig = {
+export const siteConfig = {
   name: 'Cinevore',
   description:
     'Cinevore, your social network for film discovery, built using the new router, server components and everything new in Next.js 14.',
@@ -12,4 +12,4 @@ export const siteConfig: SiteConfig = {
     twitter: 'https://twitter.com/TH2theEO',
     github: 'https://github.com/theodrosyimer/cinevore',
   },
-}
+} satisfies SiteConfig

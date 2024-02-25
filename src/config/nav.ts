@@ -1,7 +1,7 @@
 import { userNavigationConfig } from '@/config/user-profile'
-import { SiteLayoutConfig } from '@/types'
+import { type SiteLayoutConfig } from '@/types'
 
-export const siteLayoutConfig: SiteLayoutConfig = {
+export const siteLayoutConfig = {
   mainNav: [
     {
       title: 'Films',
@@ -30,4 +30,4 @@ export const siteLayoutConfig: SiteLayoutConfig = {
     },
   ],
   sidebarNav: userNavigationConfig.sidebarNav,
-}
+} satisfies SiteLayoutConfig

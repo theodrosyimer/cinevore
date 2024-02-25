@@ -1,11 +1,11 @@
-import { MainNavItem, SidebarNavItem, SiteLayoutConfig } from '@/types'
+import { type MainNavItem, type SidebarNavItem } from '@/types'
 
 type MemberNavConfig = {
   mainNav: MainNavItem[]
   sidebarNav: SidebarNavItem[]
 }
 
-export const membersNavConfig: MemberNavConfig = {
+export const membersNavConfig = {
   mainNav: [
     {
       title: 'Profile',
@@ -88,4 +88,4 @@ export const membersNavConfig: MemberNavConfig = {
       ],
     },
   ],
-}
+} satisfies MemberNavConfig
