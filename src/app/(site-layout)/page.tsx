@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription } from '@/components/ui/card'
 import { featuresConfig } from '@/config/features'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { cn } from '@/lib/utils/utils'
+import { Suspense } from 'react'
 
 export const metadata = {
   title: 'Home Page',
@@ -57,15 +58,17 @@ export default async function IndexPage() {
         </section>
         <section>
           {/* <HydrationBoundary state={dehydratedState}> */}
-          <FilmCardList
-            limit={4}
-            columnsCount={4}
-            aspectRatio="portrait"
-            width={342}
-            movieImageWidth={getImageFormatSize('poster_sizes', 'w342')}
-            isSlider={false}
-            hasMenu={false}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <FilmCardList
+              limit={4}
+              columnsCount={4}
+              aspectRatio="portrait"
+              width={342}
+              movieImageWidth={getImageFormatSize('poster_sizes', 'w342')}
+              isSlider={false}
+              hasMenu={false}
+            />
+          </Suspense>
           {/* </HydrationBoundary> */}
         </section>
         <section>
@@ -159,14 +162,16 @@ export default async function IndexPage() {
           </div>
           <div className="mb-4 divide-y divide-border rounded-md border"></div>
           <div className="grid grid-flow-col gap-4 overflow-x-auto overscroll-x-contain">
-            <FilmCardList
-              limit={12}
-              columnsCount={12}
-              aspectRatio="portrait"
-              width={185}
-              movieImageWidth={getImageFormatSize('poster_sizes', 'w185')}
-              isSlider={true}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+              <FilmCardList
+                limit={12}
+                columnsCount={12}
+                aspectRatio="portrait"
+                width={185}
+                movieImageWidth={getImageFormatSize('poster_sizes', 'w185')}
+                isSlider={true}
+              />
+            </Suspense>
           </div>
         </section>
         <section>
