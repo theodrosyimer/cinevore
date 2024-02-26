@@ -7,19 +7,17 @@ import { cn } from '@/lib/utils/utils'
 import { ReactQueryProvider } from '@/providers/react-query'
 import '@/styles/globals.css'
 import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin'
-import { Inter as FontSans } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import localFont from 'next/font/local'
 import { extractRouterConfig } from 'uploadthing/server'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { env } from '@/env'
 
-// const inter = Inter({ subsets: ['latin'] })
-const fontSans = FontSans({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
 })
 
-// Font files can be colocated inside of `pages`
 const fontHeading = localFont({
   src: '../assets/fonts/CalSans-SemiBold.woff2',
   variable: '--font-heading',
@@ -100,8 +98,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           'grid min-h-svh w-screen grid-rows-layout font-sans antialiased',
-          // inter.className,
-          fontSans.variable,
+          inter.variable,
           fontHeading.variable,
         )}
       >
