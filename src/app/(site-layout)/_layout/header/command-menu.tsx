@@ -1,6 +1,6 @@
 'use client'
 
-import { DialogProps } from '@radix-ui/react-alert-dialog'
+import { type DialogProps } from '@radix-ui/react-alert-dialog'
 import {
   CircleIcon,
   FileIcon,
@@ -21,7 +21,7 @@ import {
   CommandSeparator,
 } from '@/components/ui/command'
 import { siteLayoutConfig } from '@/config/nav'
-import { User } from 'next-auth'
+import { type User } from 'next-auth'
 import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils/utils'
@@ -89,7 +89,7 @@ export function CommandMenu({ user, ...props }: DialogProps & { user?: User }) {
               value="Search"
               onSelect={() => {
                 runCommand(() => {
-                  router.push(`/search`)
+                  router.push(`/search/films`)
                 })
               }}
             >

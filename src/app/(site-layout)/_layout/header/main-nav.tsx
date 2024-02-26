@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils/utils'
 import { Icons } from '@/components/icon/icons'
-import { MainNavItem } from '@/types'
+import { type MainNavItem } from '@/types'
 import { useTheme } from 'next-themes'
 
 type MainNavProps = {

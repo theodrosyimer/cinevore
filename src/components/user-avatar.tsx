@@ -1,8 +1,8 @@
-import { AvatarProps } from '@radix-ui/react-avatar'
+import { type AvatarProps } from '@radix-ui/react-avatar'
 
 import { Icons } from '@/components/icon/icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { SelectUser } from '@/types/db'
+import { type SelectUser } from '@/types/db'
 import { cn } from '@/lib/utils/utils'
 
 interface UserAvatarProps extends AvatarProps {
