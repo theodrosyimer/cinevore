@@ -1,6 +1,6 @@
 import type { SiteLayoutConfig } from '@/types'
 
-export const userNavigationConfig = {
+export const userNavigationConfig: SiteLayoutConfig = {
   mainNav: [
     {
       title: 'Profile',
@@ -73,4 +73,4 @@ export const userNavigationConfig = {
       ],
     },
   ],
-} satisfies SiteLayoutConfig
+}
