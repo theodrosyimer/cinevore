@@ -86,25 +86,8 @@ async function getTablesCountFromDb(databaseName?: string): Promise<number> {
     return 0
   }
 
-  // log(JSON.stringify(results), 'fg.red')
   return result.size
 }
-
-// async function getTablesCountFromDb(databaseName?: string): Promise<number> {
-//   const dbName = getDbName(databaseName)
-
-//   let total = await db.execute(sql.raw(`SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = \'${dbName}\' and TABLE_TYPE='BASE TABLE';`)) as ExecutedQuery
-
-//   log(JSON.stringify(total['fields']), 'fg.red')
-
-//   if (!total || !total['fields'] || !total['fields'][0] || !total['fields'][0]['columnLength']) {
-//     return 0
-//   }
-
-//   console.log(`\n📊 Total tables in the database: ${total['fields'][0]['columnLength']}\n`)
-
-//   return total['fields'][0]['columnLength'] as number
-// }
 
 async function isDbEmpty(databaseName?: string): Promise<boolean> {
   const dbName = getDbName(databaseName)
@@ -167,71 +150,3 @@ export function getDbName(databaseName?: string) {
     (!databaseName ? process.env.DB_NAME : databaseName) ?? throwIfNotFound()
   )
 }
-
-// export async function clearDb(databaseName?: string) {
-//   const dbName = getDbName(databaseName)
-//   const results = await getAllDbNames()
-//   console.log('All DB NAMES:', results)
-//   if (results.filter(result => result.Database === dbName)) {
-
-//     await db.execute(sql.raw(`DROP DATABASE IF EXISTS \`${dbName}\`;`))
-//     console.log("🗑️   Database dropped  ✅")
-
-//   }
-// }
-// export async function getAllDbNames() {
-//   const results = await db.execute(sql.raw(`SHOW DATABASES;`)) as any as [{ Database: string }[], FieldPacket[]]
-//   return results[0]
-// }
-
-// export async function createDb(databaseName?: string) {
-//   const dbName = getDbName(databaseName)
-//   await db.execute(sql.raw(`CREATE DATABASE IF NOT EXISTS \`${dbName}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`)).catch((e) => {
-//     console.error(e)
-//     throw new Error("Failed to create the database ❌")
-//   })
-// }
-
-// export async function clearDbTablesFromSchema() {
-//   if ((await isDbEmpty(process.env.DB_NAME as string))) { return }
-
-//   const tableSchema = db._.schema
-
-//   if (!tableSchema) {
-//     throw new Error("No table schema found")
-//   }
-
-//   console.log("🗑️  Preparing delete queries:")
-
-//   const queries = Object.values(tableSchema).map((table) => {
-//     if (!table.dbName) {
-//       return
-//     }
-
-//     console.log(`🧨 Preparing delete query for table: ${table.dbName}`)
-
-//     return sql.raw(`DROP TABLE \`${table.dbName}\`;`)
-//   })
-//   queries.push(sql.raw(`DROP TABLE \`__drizzle_migrations\`;`))
-
-//   await db.transaction(async (tx) => {
-//     console.log("\nSetting foreign key checks to 0 before sending queries...")
-//     console.log("\n📨 Sending delete queries...")
-
-//     tx.execute(sql.raw("SET FOREIGN_KEY_CHECKS = 0;"))
-
-//     await Promise.all(
-//       queries.map(async (query) => {
-//         if (query) await tx.execute(query)
-//       })
-//     ).catch((e) => {
-//       console.error(e)
-//       throw new Error("Failed to empty the database ❌")
-//     }).finally(() => {
-//       console.log("\nSetting foreign key checks back to 1\n")
-
-//       tx.execute(sql.raw("SET FOREIGN_KEY_CHECKS = 1;"))
-//     })
-//     console.log("🗑️   Database emptied  ✅")
-//   })
-// }
