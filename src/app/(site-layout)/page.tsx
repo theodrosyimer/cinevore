@@ -5,11 +5,13 @@ import { FilmCardList } from '@/components/film/film-card-list'
 import { Icons } from '@/components/icon/icons'
 import { Reviews } from '@/components/review/reviews'
 import { buttonVariants } from '@/components/ui/button'
-import { Card, CardContent, CardDescription } from '@/components/ui/card'
 import { featuresConfig } from '@/config/features'
 import { getImageFormatSize } from '@/lib/tmdb/src/utils'
 import { cn } from '@/lib/utils/utils'
 import { Suspense } from 'react'
+import { FeatureCard } from './_components/feature-card'
+import { Section, SectionContent, SectionTitle } from './_components/section'
+import { PageTitle } from './_components/page-title'
 
 export const metadata = {
   title: 'Home Page',
@@ -26,9 +28,9 @@ export default async function IndexPage() {
         />
       </div>
       <div className="z-10 -mt-20 grid gap-12 sm:-mt-28 lg:-mt-72">
-        <section className="grid items-center justify-items-center gap-4 self-end md:self-center">
+        <Section className="grid items-center justify-items-center gap-4 self-end md:self-center">
           <div className="grid gap-2">
-            <h1 className="text-left font-bold sm:text-xl md:text-3xl lg:text-4xl">
+            <PageTitle>
               Track films you&apos;ve watched.
               <br />
               Save those you want to see.
@@ -36,7 +38,7 @@ export default async function IndexPage() {
               Rate and review them.
               <br />
               Tell your friends what you think.
-            </h1>
+            </PageTitle>
             <p className="text-left text-xs text-muted-foreground sm:text-sm md:text-lg lg:text-xl">
               Cinevore, the social network for film lovers. Join us today!
             </p>
@@ -55,9 +57,9 @@ export default async function IndexPage() {
               </Link>
             </div>
           </div>
-        </section>
-        <section>
-          {/* <HydrationBoundary state={dehydratedState}> */}
+        </Section>
+
+        <Section>
           <Suspense fallback={<div>Loading...</div>}>
             <FilmCardList
               limit={4}
@@ -69,112 +71,52 @@ export default async function IndexPage() {
               hasMenu={false}
             />
           </Suspense>
-          {/* </HydrationBoundary> */}
-        </section>
-        <section>
-          <h2
+        </Section>
+
+        <Section>
+          <SectionTitle
             id="features"
             className="text-md mb-2 scroll-mt-20 uppercase text-muted-foreground"
           >
             Cinevore lets you
-          </h2>
+          </SectionTitle>
           <div className="grid grid-cols-1 gap-2  sm:grid-cols-2 lg:grid-cols-3">
-            {/* {featuresConfig.map((feature, index) => {
-                let icon = Icons[feature.icon]
-                return (
-                  <Card key={index} className="p-4">
-                    <CardContent className="grid grid-cols-2">
-                      <Icons.watched className="col-auto h-10 w-10" />
-                      <CardDescription className="text-foreground">
-                        {feature.description}
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-                )
-              })} */}
-            <Card className="grid items-center p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
-                <Icons.watched className="place-self-center md:h-10 md:w-10" />
-                <CardDescription className="sm:text-foreground">
-                  {featuresConfig[0]?.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="grid items-center p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
-                <Icons.like className="place-self-center md:h-10 md:w-10" />
-                <CardDescription className="sm:text-foreground">
-                  {featuresConfig[1]?.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="grid items-center p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
-                <Icons.page className="place-self-center md:h-10 md:w-10" />
-                <CardDescription className="sm:text-foreground">
-                  {featuresConfig[2]?.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="grid items-center p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
-                <Icons.star className="place-self-center md:h-10 md:w-10" />
-                <CardDescription className="sm:text-foreground">
-                  {featuresConfig[3]?.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="grid items-center p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
-                <Icons.calendar className="place-self-center md:h-10 md:w-10" />
-                <CardDescription className="sm:text-foreground">
-                  {featuresConfig[4]?.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-            <Card className="grid items-center p-4">
-              <CardContent className="grid grid-cols-[auto,_1fr] items-center gap-8 p-2">
-                <Icons.layoutGrid className="place-self-center md:h-10 md:w-10" />
-                <CardDescription className="sm:text-foreground">
-                  {featuresConfig[5]?.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-        <section>
-          <div className="flex items-center justify-between justify-items-center">
-            <h2 className="uppercase text-muted-foreground">
-              Just Reviewed...
-            </h2>
-            <Link
-              href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?popular=all-time`}
-              className={cn(
-                'text-sm uppercase',
-                buttonVariants({
-                  variant: 'link',
-                  className: 'pr-0 text-muted-foreground/50',
-                }),
-              )}
-            >
-              More
-            </Link>
-          </div>
-          <div className="mb-4 divide-y divide-border rounded-md border"></div>
-          <div className="grid grid-flow-col gap-4 overflow-x-auto overscroll-x-contain">
-            <Suspense fallback={<div>Loading...</div>}>
-              <FilmCardList
-                limit={12}
-                columnsCount={12}
-                aspectRatio="portrait"
-                width={185}
-                movieImageWidth={getImageFormatSize('poster_sizes', 'w185')}
-                isSlider={true}
+            {featuresConfig.map((feature, index) => (
+              <FeatureCard
+                key={index}
+                Icon={Icons[feature.icon]}
+                description={feature.description}
               />
-            </Suspense>
+            ))}
           </div>
-        </section>
-        <section>
+        </Section>
+
+        <Section>
+          <SectionContent
+            title={
+              <SectionTitle className="uppercase text-muted-foreground">
+                Just Reviewed...
+              </SectionTitle>
+            }
+            path="/reviews?popular=all-time"
+            className="items-center"
+          >
+            <div className="grid grid-flow-col gap-4 overflow-x-auto overscroll-x-contain">
+              <Suspense fallback={<div>Loading...</div>}>
+                <FilmCardList
+                  limit={12}
+                  columnsCount={12}
+                  aspectRatio="portrait"
+                  width={185}
+                  movieImageWidth={getImageFormatSize('poster_sizes', 'w185')}
+                  isSlider={true}
+                />
+              </Suspense>
+            </div>
+          </SectionContent>
+        </Section>
+
+        <Section>
           <p className="text-center text-2xl">
             Write and share reviews. Compile your own lists. Share your life in
             film.
@@ -183,69 +125,31 @@ export default async function IndexPage() {
             Below are some popular reviews and lists from this week. Sign up to
             create your own.
           </p>
-        </section>
+        </Section>
+
         <div className="grid gap-20 lg:grid-cols-3">
-          <section className="lg:col-span-2 lg:row-span-2">
-            <div className="flex items-center justify-between justify-items-center">
-              <h2 className="text-md mb-2 uppercase text-muted-foreground">
-                Popular reviews this week
-              </h2>
-              <Link
-                href={`${process.env.NEXT_PUBLIC_APP_URL}/reviews?popular=all-time`}
-                className={cn(
-                  'text-sm uppercase',
-                  buttonVariants({
-                    variant: 'link',
-                    className: 'pr-0 text-muted-foreground/50',
-                  }),
-                )}
-              >
-                More
-              </Link>
-            </div>
-            <div className="mb-4 divide-y divide-border rounded-md border"></div>
-            <Reviews />
-          </section>
-          <section className="">
-            <div className="flex items-end justify-between justify-items-center">
-              <h2 className="text-md mb-2 uppercase text-muted-foreground">
-                Popular lists
-              </h2>
-              <Link
-                href={`${process.env.NEXT_PUBLIC_APP_URL}/lists?popular=all-time`}
-                className={cn(
-                  'text-sm uppercase',
-                  buttonVariants({
-                    variant: 'link',
-                    className: 'pr-0 text-muted-foreground/50',
-                  }),
-                )}
-              >
-                More
-              </Link>
-            </div>
-            <div className="divide-y divide-border rounded-md border "></div>
-          </section>
-          <section className="">
-            <div className="flex items-center justify-between justify-items-center">
-              <h2 className="text-md mb-2 uppercase text-muted-foreground">
-                Popular reviewers
-              </h2>
-              <Link
-                href={`${process.env.NEXT_PUBLIC_APP_URL}/members?popular=all-time`}
-                className={cn(
-                  'text-sm uppercase',
-                  buttonVariants({
-                    variant: 'link',
-                    className: 'pr-0 text-muted-foreground/50',
-                  }),
-                )}
-              >
-                More
-              </Link>
-            </div>
-            <div className="divide-y divide-border rounded-md border "></div>
-          </section>
+          <Section className="lg:col-span-2 lg:row-span-2">
+            <SectionContent
+              title="Popular reviews this week"
+              path="/reviews?popular=all-time"
+            >
+              <Reviews />
+            </SectionContent>
+          </Section>
+
+          <Section>
+            <SectionContent
+              title="Popular lists"
+              path="/lists?popular=all-time"
+            />
+          </Section>
+
+          <Section>
+            <SectionContent
+              title="Popular reviewers"
+              path="/members?popular=all-time"
+            />
+          </Section>
         </div>
       </div>
     </div>
