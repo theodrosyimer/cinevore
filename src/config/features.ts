@@ -42,9 +42,9 @@ export const featuresConfig = [
       'Compile and share lists of films on any topic and keep a watchlist of films to see',
     enabled: true,
   },
-] satisfies Feature[]
+] satisfies Features[]
 
-export type Feature = {
+export type Features = {
   name: 'watchlist' | 'likes' | 'reviews' | 'rate-movies' | 'diary' | 'lists'
   description: string
   enabled: boolean
