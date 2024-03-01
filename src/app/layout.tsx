@@ -1,6 +1,6 @@
 import { ourFileRouter } from '@/app/api/uploadthing/core'
-import { TailwindIndicator } from '@/app/_components/tailwind-indicator'
-import { ThemeProvider } from '@/app/_providers/theme-provider'
+import { TailwindIndicator } from './_layout/tailwind-indicator'
+import { ThemeProvider } from './_layout/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils/utils'
